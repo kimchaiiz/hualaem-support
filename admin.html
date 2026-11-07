@@ -170,6 +170,27 @@ th{font-size:12.5px;color:var(--muted);font-weight:500;background:var(--field);p
 tr:last-child td{border-bottom:0}
 td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
 
+/* tabs */
+.tabsbar{border-top:1px solid var(--line)}
+.tabsbar .in{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:4px}
+@media (max-width:600px){.tabsbar .in{padding:0 12px}}
+.tab{border:0;background:none;padding:0 14px;min-height:44px;font-weight:500;font-size:15px;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.tab[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--accent)}
+.badge{min-width:22px;height:22px;border-radius:11px;padding:0 7px;background:var(--err);color:#fff;font-size:12.5px;font-weight:600;display:inline-grid;place-items:center}
+@media (prefers-color-scheme: dark){.badge{color:#0C121B}}
+
+/* member review */
+.mrow{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.mrow .mname{font-size:16.5px;font-weight:600;margin:0 0 2px;overflow-wrap:anywhere}
+.mrow .mact{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:640px){.mrow{grid-template-columns:1fr}.mrow .mact{justify-content:flex-start;border-top:1px solid var(--line);padding-top:10px}}
+.btn.danger{background:var(--err);border-color:var(--err);color:#fff}
+@media (prefers-color-scheme: dark){.btn.danger{color:#0C121B}}
+.btn.ghost.warnbtn{color:var(--err);border-color:var(--err)}
+.dm-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+#decideModal .signin{max-width:460px;width:100%}
+#decideModal textarea{min-height:84px}
+
 /* sign-in */
 .signin{max-width:420px;margin:12vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px}
 .signin h1{font-size:22px;margin:0 0 6px}
@@ -183,6 +204,7 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
 .toast.good{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
 .loading{padding:40px 0;color:var(--muted);text-align:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
 </style>
 </head>
 <body>
@@ -193,6 +215,12 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     <button class="pill-btn" id="langBtn" type="button" aria-label="Language"></button>
     <button class="pill-btn" id="signOutBtn" type="button" hidden data-i18n="signOut"></button>
   </div>
+  <nav class="tabsbar" id="tabs" hidden>
+    <div class="in">
+      <button class="tab" type="button" id="tabEvents" aria-pressed="true"><span data-i18n="events"></span></button>
+      <button class="tab" type="button" id="tabMembers" aria-pressed="false"><span data-i18n="members"></span><span class="badge" id="memBadge" hidden></span></button>
+    </div>
+  </nav>
 </header>
 
 <main class="wrap">
@@ -356,6 +384,25 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
       <tbody id="regBody"></tbody>
     </table></div>
   </section>
+
+  <!-- MEMBERS (review applications) -->
+  <section id="vMembers" hidden>
+    <div class="phead">
+      <div><h1 data-i18n="membersTitle"></h1><p class="sub" id="memSub"></p></div>
+    </div>
+    <div class="chips" role="group" id="mFilters">
+      <button class="chip" type="button" data-mf="pending" aria-pressed="true"></button>
+      <button class="chip" type="button" data-mf="approved" aria-pressed="false"></button>
+      <button class="chip" type="button" data-mf="rejected" aria-pressed="false"></button>
+      <button class="chip" type="button" data-mf="all" aria-pressed="false"></button>
+    </div>
+    <div class="tools">
+      <label class="sr" for="memSearch" data-i18n="search"></label>
+      <input type="search" id="memSearch" data-i18n-ph="memSearchPh">
+    </div>
+    <p class="pdpa" data-i18n="memPdpa"></p>
+    <div class="rows" id="memRows"><div class="loading" data-i18n="loading"></div></div>
+  </section>
 </main>
 
 <div class="modal" id="reauth" hidden>
@@ -365,6 +412,19 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     <div id="gsiBtn2"></div>
   </div>
 </div>
+<div class="modal" id="decideModal" hidden>
+  <div class="signin" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
+    <h1 id="dmTitle"></h1>
+    <p id="dmWho" style="margin-bottom:8px"></p>
+    <p id="dmText"></p>
+    <label class="field"><span class="lbl" data-i18n="noteL"></span>
+      <textarea id="dmNote" maxlength="200"></textarea><p class="hint" data-i18n="noteHint"></p></label>
+    <div class="dm-actions">
+      <button class="btn ghost" type="button" id="dmCancel" data-i18n="cancel"></button>
+      <button class="btn" type="button" id="dmOk" data-i18n="confirm"></button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>
@@ -372,93 +432,32 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
    CONFIG - edit this block only. Nothing here is secret.
    ===================================================================== */
 const CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",            // 1) Google Apps Script web app address (ends with /exec). Empty = demo mode
-  GOOGLE_CLIENT_ID: "42078922636-hbdfb91dg52tcl1u2hgq8t7t6ii5dek0.apps.googleusercontent.com",   // 2) OAuth Client ID, e.g. "1234-abc.apps.googleusercontent.com"
-  REGISTER_LIFF_URL: "https://liff.line.me/2012317989-vPfdP7Zb",  // 3) optional: "https://liff.line.me/YOUR-REGISTER-LIFF-ID" (to copy a share link per event)
+  API_URL: "",            // 1) Google Apps Script web app address (ends with /exec). Empty = demo mode
+  GOOGLE_CLIENT_ID: "",   // 2) OAuth Client ID, e.g. "1234-abc.apps.googleusercontent.com"
+  REGISTER_LIFF_URL: "",  // 3) optional: "https://liff.line.me/YOUR-REGISTER-LIFF-ID" (to copy a share link per event)
   MAX_POSTER_MB: 5,
   POSTER_MAX_PX: 1600,
   DEFAULT_LANG: "th"
 };
 if (window.top !== window.self) { document.documentElement.style.display = "none"; }   // do not run inside other sites' frames
 
+
 /* =====================================================================
-   Text
+   Text: shared words only. Each feature adds its own with Admin.addText (admin/features/NAME/text.json).
    ===================================================================== */
-const T = {
- th:{
-  appName:"จัดการกิจกรรม", signOut:"ออกจากระบบ", langBtn:"EN", demo:"โหมดทดลอง: ข้อมูลอยู่ในหน้านี้เท่านั้น ยังไม่ได้เชื่อมต่อ Google Sheet",
-  signinTitle:"เข้าสู่ระบบผู้ดูแล", signinSub:"ใช้บัญชี Google ที่ได้รับสิทธิ์ผู้ดูแลกิจกรรม", notAdmin:"บัญชีนี้ไม่มีสิทธิ์ผู้ดูแล ติดต่อเจ้าของระบบเพื่อขอสิทธิ์",
-  setupMissing:"ยังไม่ได้ตั้งค่า GOOGLE_CLIENT_ID ในหน้านี้", reauthTitle:"กรุณาเข้าสู่ระบบอีกครั้ง", reauthSub:"เซสชันหมดอายุ ข้อมูลที่กรอกไว้ยังอยู่",
-  events:"กิจกรรม", listSub:"{n} กิจกรรม · {r} คนลงทะเบียนทั้งหมด", newEvent:"+ สร้างกิจกรรม",
-  fAll:"ทั้งหมด", fLive:"แสดงใน LINE", fScheduled:"ตั้งเวลาไว้", fDraft:"ฉบับร่าง", fPast:"จบแล้ว/ปิด",
-  loading:"กำลังโหลด…", emptyT:"ยังไม่มีกิจกรรม", emptyD:"กด “สร้างกิจกรรม” เพื่อเริ่ม", emptyFilter:"ไม่มีกิจกรรมในหมวดนี้",
-  registered:"ลงทะเบียน", edit:"แก้ไข", registrants:"รายชื่อ",
-  backToList:"← กลับไปหน้ากิจกรรม", newTitle:"สร้างกิจกรรมใหม่", editTitle:"แก้ไขกิจกรรม", lastEdit:"แก้ไขล่าสุด {at} โดย {by}",
-  secDetails:"รายละเอียดกิจกรรม", secDetailsD:"ข้อมูลนี้แสดงให้ผู้เข้าร่วมเห็นใน LINE",
-  fName:"ชื่อกิจกรรม", fDate:"วันที่จัด", fStart:"เวลาเริ่ม", fEnd:"เวลาจบ", optional:"(ไม่บังคับ)",
-  fLocation:"สถานที่", fLocationPh:"เช่น ห้องประชุม ชั้น 5 อาคาร A", fDesc:"รายละเอียดเพิ่มเติม", fDescPh:"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย ฯลฯ",
-  fBudget:"งบประมาณที่อนุมัติ (บาท)", fBudgetHint:"ใช้ในฟอร์มเบิกค่าใช้จ่าย ผู้เข้าร่วมไม่เห็น",
-  secPoster:"โปสเตอร์", secPosterD:"แนะนำแนวตั้ง 4:5 ระบบย่อขนาดให้อัตโนมัติ (JPG, PNG, WebP)",
-  noPoster:"ยังไม่มีโปสเตอร์", choosePoster:"เลือกรูป", replacePoster:"เปลี่ยนรูป", removePoster:"ลบโปสเตอร์", posterHint:"ลากรูปมาวางตรงนี้ได้",
-  posterBig:"ไฟล์ใหญ่เกิน {mb} MB หลังย่อขนาด", posterType:"รองรับเฉพาะ JPG, PNG หรือ WebP", posterBusy:"กำลังย่อขนาดรูป…", posterLoading:"กำลังโหลดโปสเตอร์…",
-  secSchedule:"กำหนดเวลา (เวลาประเทศไทย)", secScheduleD:"ผู้เข้าร่วมเห็นกิจกรรมเฉพาะช่วง “แสดงใน LINE” และสมัครได้เฉพาะช่วง “รับสมัคร”",
-  fRegOpen:"เปิดรับสมัคร", fRegClose:"ปิดรับสมัคร", fPubFrom:"แสดงใน LINE ตั้งแต่", fPubUntil:"ซ่อนจาก LINE หลัง",
-  tlPub:"แสดงใน LINE", tlReg:"รับสมัคร", tlEvent:"วันกิจกรรม", tlNow:"ตอนนี้",
-  wRegOutside:"ช่วงรับสมัครบางส่วนอยู่นอกช่วงที่แสดงใน LINE ผู้เข้าร่วมจะสมัครได้เฉพาะช่วงที่ทับกัน",
-  wRegAfterEvent:"ปิดรับสมัครหลังเวลาเริ่มกิจกรรม", wHideBeforeEvent:"กิจกรรมจะถูกซ่อนก่อนถึงวันจัด", wPast:"วันจัดกิจกรรมผ่านไปแล้ว",
-  secStatus:"สถานะ", secStatusD:"เลือกว่าจะให้กิจกรรมนี้แสดงหรือไม่",
-  stDraft:"ฉบับร่าง", stDraftD:"ยังไม่แสดงใน LINE", stPub:"เผยแพร่", stPubD:"แสดงตามเวลาที่ตั้งไว้ และเปิดให้เบิกค่าใช้จ่าย", stClosed:"ปิดกิจกรรม", stClosedD:"ซ่อนจาก LINE และปิดการเบิก",
-  preview:"ตัวอย่างใน LINE", shareLink:"ลิงก์สำหรับแชร์ใน LINE", copy:"คัดลอก", copied:"คัดลอกลิงก์แล้ว",
-  ctaOpen:"ลงทะเบียน", ctaUpcoming:"เปิดรับสมัคร {d}", ctaClosed:"ปิดรับสมัครแล้ว",
-  cancel:"ยกเลิก", save:"บันทึก", saving:"กำลังบันทึก…", saved:"บันทึกแล้ว", unsaved:"มีการแก้ไขที่ยังไม่ได้บันทึก", discard:"ทิ้งการแก้ไขที่ยังไม่ได้บันทึก?",
-  req:"กรอกข้อมูลนี้", fixN:"ตรวจสอบ {n} จุดที่ยังไม่ถูกต้อง", timeOrder:"เวลาจบต้องหลังเวลาเริ่ม", closeAfterOpen:"ต้องหลังเวลาเปิดรับสมัคร", untilAfterFrom:"ต้องหลังเวลาเริ่มแสดง", budgetBad:"ใส่ตัวเลข 0 ขึ้นไป",
-  sDraft:"ฉบับร่าง", sClosed:"ปิดแล้ว", sScheduled:"ตั้งเวลาแสดง {d}", sHidden:"หมดเวลาแสดง", sNoWindow:"ยังไม่ได้ตั้งเวลาแสดง",
-  sRegOpen:"เปิดรับสมัคร", sRegUpcoming:"แสดงอยู่ · รอเปิดรับสมัคร", sRegClosed:"แสดงอยู่ · ปิดรับสมัครแล้ว",
-  pvState_draft:"ผู้เข้าร่วมยังไม่เห็นกิจกรรมนี้ (ฉบับร่าง)", pvState_closed:"ผู้เข้าร่วมไม่เห็นกิจกรรมนี้ (ปิดแล้ว)",
-  pvState_scheduled:"ผู้เข้าร่วมจะเห็นตั้งแต่ {d}", pvState_hidden:"เลยเวลาแสดงแล้ว ผู้เข้าร่วมไม่เห็น", pvState_live:"ผู้เข้าร่วมเห็นกิจกรรมนี้อยู่ตอนนี้",
-  search:"ค้นหา", searchPh:"ค้นหาชื่อ อีเมล IG หรือเบอร์โทร", csv:"ดาวน์โหลด CSV", regSub:"{n} คนลงทะเบียน · {d}",
-  pdpaNote:"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อจัดกิจกรรมนี้เท่านั้น อย่าส่งต่อหรืออัปโหลดไปที่อื่น และลบไฟล์ CSV เมื่อใช้เสร็จ",
-  cFirst:"ชื่อ", cLast:"นามสกุล", cEmail:"อีเมล", cPhone:"โทร", cLine:"ชื่อ LINE", cAt:"เวลาที่สมัคร", cRef:"เลขอ้างอิง", cStatus:"สถานะ",
-  noRegs:"ยังไม่มีคนลงทะเบียน", st_Registered:"ลงทะเบียนแล้ว", st_Cancelled:"ยกเลิก",
-  errNet:"เชื่อมต่อไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง", errConflict:"มีผู้ดูแลคนอื่นแก้ไขกิจกรรมนี้ระหว่างที่คุณเปิดอยู่ กรุณาโหลดใหม่", errRate:"ส่งคำขอบ่อยเกินไป รอสักครู่แล้วลองใหม่"
- },
- en:{
-  appName:"Event admin", signOut:"Sign out", langBtn:"ไทย", demo:"Demo mode: data lives in this page only. Not connected to the Google Sheet yet.",
-  signinTitle:"Admin sign-in", signinSub:"Use the Google account that has event admin access.", notAdmin:"This account is not an admin. Ask the owner for access.",
-  setupMissing:"GOOGLE_CLIENT_ID is not set in this page yet.", reauthTitle:"Please sign in again", reauthSub:"Your session expired. What you typed is still here.",
-  events:"Events", listSub:"{n} events · {r} registrations in total", newEvent:"+ New event",
-  fAll:"All", fLive:"Showing in LINE", fScheduled:"Scheduled", fDraft:"Drafts", fPast:"Ended/closed",
-  loading:"Loading…", emptyT:"No events yet", emptyD:"Select “New event” to start.", emptyFilter:"No events in this view.",
-  registered:"registered", edit:"Edit", registrants:"Registrants",
-  backToList:"← Back to events", newTitle:"New event", editTitle:"Edit event", lastEdit:"Last edited {at} by {by}",
-  secDetails:"Event details", secDetailsD:"Participants see this in LINE.",
-  fName:"Event name", fDate:"Event date", fStart:"Start time", fEnd:"End time", optional:"(optional)",
-  fLocation:"Location", fLocationPh:"e.g. Meeting room, 5th floor, Building A", fDesc:"More details", fDescPh:"Agenda, what to bring, dress code…",
-  fBudget:"Approved budget (THB)", fBudgetHint:"Used by the reimbursement form. Participants don't see it.",
-  secPoster:"Poster", secPosterD:"Portrait 4:5 works best. We resize it for you (JPG, PNG, WebP).",
-  noPoster:"No poster yet", choosePoster:"Choose image", replacePoster:"Replace image", removePoster:"Remove poster", posterHint:"You can also drag an image here.",
-  posterBig:"File is over {mb} MB after resizing", posterType:"Only JPG, PNG or WebP", posterBusy:"Resizing image…", posterLoading:"Loading poster…",
-  secSchedule:"Schedule (Thailand time)", secScheduleD:"Participants see the event only while it is “Showing in LINE” and can register only during “Registration”.",
-  fRegOpen:"Registration opens", fRegClose:"Registration closes", fPubFrom:"Show in LINE from", fPubUntil:"Hide from LINE after",
-  tlPub:"Showing in LINE", tlReg:"Registration", tlEvent:"Event day", tlNow:"Now",
-  wRegOutside:"Part of the registration period is outside the time the event shows in LINE. People can register only when both overlap.",
-  wRegAfterEvent:"Registration closes after the event starts.", wHideBeforeEvent:"The event will be hidden before it takes place.", wPast:"The event date has already passed.",
-  secStatus:"Status", secStatusD:"Choose whether this event is shown.",
-  stDraft:"Draft", stDraftD:"Not shown in LINE yet", stPub:"Published", stPubD:"Shown on schedule and open for expense claims", stClosed:"Closed", stClosedD:"Hidden in LINE, claims closed",
-  preview:"Preview in LINE", shareLink:"Link to share in LINE", copy:"Copy", copied:"Link copied",
-  ctaOpen:"Register", ctaUpcoming:"Opens {d}", ctaClosed:"Registration closed",
-  cancel:"Cancel", save:"Save", saving:"Saving…", saved:"Saved", unsaved:"You have unsaved changes", discard:"Discard unsaved changes?",
-  req:"Required", fixN:"Fix {n} fields to continue", timeOrder:"End time must be after start time", closeAfterOpen:"Must be after registration opens", untilAfterFrom:"Must be after “Show from”", budgetBad:"Enter 0 or more",
-  sDraft:"Draft", sClosed:"Closed", sScheduled:"Shows from {d}", sHidden:"No longer shown", sNoWindow:"No schedule set",
-  sRegOpen:"Registration open", sRegUpcoming:"Showing · registration not open yet", sRegClosed:"Showing · registration closed",
-  pvState_draft:"Participants can't see this event yet (draft).", pvState_closed:"Participants can't see this event (closed).",
-  pvState_scheduled:"Participants will see it from {d}.", pvState_hidden:"The showing period has ended. Participants can't see it.", pvState_live:"Participants can see this event now.",
-  search:"Search", searchPh:"Search name, email, IG or phone", csv:"Download CSV", regSub:"{n} registered · {d}",
-  pdpaNote:"This list is personal data (PDPA). Use it only to run this event, don't forward or upload it elsewhere, and delete the CSV when you're done.",
-  cFirst:"First name", cLast:"Last name", cEmail:"Email", cPhone:"Phone", cLine:"LINE name", cAt:"Registered at", cRef:"Reference", cStatus:"Status",
-  noRegs:"No registrations yet", st_Registered:"Registered", st_Cancelled:"Cancelled",
-  errNet:"Couldn't connect. Check your internet and try again.", errConflict:"Another admin changed this event while you had it open. Please reload.", errRate:"Too many requests. Wait a moment and try again."
- }
+const T = { th:{}, en:{} };
+
+/* =====================================================================
+   Feature registry (admin/features/NAME): a feature adds its own tab, screens, text and demo data.
+   Nothing here knows a feature by name. See admin/README in backend/README.md.
+   ===================================================================== */
+const Admin = {
+  screens: [], tabs: [], demo: {}, _on: {}, home: function(){},
+  // register({ name, tab: { button: "tabX", view: "vX" }, home: fn (first tab only), onLang: fn })
+  register(s){ this.screens.push(s); if (s.tab) this.tabs.push(s.tab); if (s.home) this.home = s.home; },
+  addText(x){ Object.assign(T.th, x.th || {}); Object.assign(T.en, x.en || {}); },
+  on(name, fn){ (this._on[name] = this._on[name] || []).push(fn); },
+  emit(name, ctx){ (this._on[name] || []).forEach(fn => fn(ctx)); return ctx; }
 };
 
 /* =====================================================================
@@ -501,33 +500,16 @@ function applyLang(){
   $$("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
   $$("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
   $("#langBtn").textContent = t("langBtn");
-  if (!$("#vList").hidden) renderList();
-  if (!$("#vEdit").hidden) { renderEditorHead(); refreshPreview(); }
-  if (!$("#vRegs").hidden) renderRegs();
+  Admin.screens.forEach(s => { if (s.onLang) s.onLang(); });      // each feature redraws its own open screen
 }
 function show(view){
-  ["vSignin","vList","vEdit","vRegs"].forEach(id => $("#"+id).hidden = id !== view);
+  $$("main > section").forEach(s => s.hidden = s.id !== view);
+  const tabbed = Admin.tabs.some(x => x.view === view);
+  $("#tabs").hidden = !tabbed;
+  Admin.tabs.forEach(x => $("#" + x.button).setAttribute("aria-pressed", String(x.view === view)));
   window.scrollTo(0,0);
 }
 
-/* =====================================================================
-   Status rules (same as the server)
-   ===================================================================== */
-function evState(ev, now){
-  if (ev.status === "Draft") return {key:"draft", label:t("sDraft"), cls:""};
-  if (ev.status === "Closed") return {key:"past", label:t("sClosed"), cls:""};
-  if (!ev.publishFrom || !ev.publishUntil) return {key:"draft", label:t("sNoWindow"), cls:"warn"};
-  if (now < ev.publishFrom) return {key:"scheduled", label:t("sScheduled",{d:fmtDT(ev.publishFrom)}), cls:"info"};
-  if (now >= ev.publishUntil) return {key:"past", label:t("sHidden"), cls:""};
-  const r = regState(ev, now);
-  if (r === "open") return {key:"live", label:t("sRegOpen"), cls:"ok", reg:r};
-  return {key:"live", label:t(r === "upcoming" ? "sRegUpcoming" : "sRegClosed"), cls:"warn", reg:r};
-}
-function regState(ev, now){
-  if (!ev.regOpen || now < ev.regOpen) return "upcoming";
-  if (!ev.regClose || now >= ev.regClose) return "closed";
-  return "open";
-}
 
 /* =====================================================================
    Google sign-in + API
@@ -565,7 +547,7 @@ function reauth(){
 }
 function signedIn(){
   $("#who").textContent = auth.email; $("#signOutBtn").hidden = false; $("#signinErr").hidden = true;
-  loadList();
+  Admin.home();                                                  // the first tab opens (events)
 }
 function signOut(){
   try{ google.accounts.id.disableAutoSelect(); }catch(e){}
@@ -574,7 +556,12 @@ function signOut(){
 }
 
 class ApiError extends Error { constructor(msg, code){ super(msg); this.code = code; } }
-async function api(action, data, retried){
+async function api(action, data){
+  const res = await apiCall(action, data, false);
+  Admin.emit("api:" + action, res);                              // lets another feature react (e.g. the members badge)
+  return res;
+}
+async function apiCall(action, data, retried){
   if (demo) return demoApi(action, data || {});
   if (!auth.token || Date.now() > auth.exp - 60000) await reauth();
   let res;
@@ -584,10 +571,47 @@ async function api(action, data, retried){
     res = await r.json();
   }catch(e){ throw new ApiError(t("errNet"), "NET"); }
   if (res.ok) return res;
-  if (res.code === "AUTH" && !retried){ auth.token = null; await reauth(); return api(action, data, true); }
+  if (res.code === "AUTH" && !retried){ auth.token = null; await reauth(); return apiCall(action, data, true); }
   const msg = res.code === "CONFLICT" ? t("errConflict") : res.code === "RATE" ? t("errRate") : res.error;
   throw new ApiError(msg, res.code);
 }
+
+
+/* =====================================================================
+   Demo mode (no API_URL): each feature supplies its own sample data and answers (Admin.demo["admin.x"])
+   ===================================================================== */
+async function demoApi(action, data){
+  await new Promise(r => setTimeout(r, 250));
+  if (action === "admin.me") return {ok:true, email:"demo@example.com"};
+  if (Object.prototype.hasOwnProperty.call(Admin.demo, action)){
+    const res = await Admin.demo[action](data);
+    Admin.emit("demo:" + action, res);                           // same idea as the server hooks: other features may add to the answer
+    return res;
+  }
+  throw new ApiError("Unknown", "VALIDATION");
+}
+Admin.addText({"th":{"appName":"จัดการกิจกรรม","signOut":"ออกจากระบบ","langBtn":"EN","demo":"โหมดทดลอง: ข้อมูลอยู่ในหน้านี้เท่านั้น ยังไม่ได้เชื่อมต่อ Google Sheet","signinTitle":"เข้าสู่ระบบผู้ดูแล","signinSub":"ใช้บัญชี Google ที่ได้รับสิทธิ์ผู้ดูแลกิจกรรม","notAdmin":"บัญชีนี้ไม่มีสิทธิ์ผู้ดูแล ติดต่อเจ้าของระบบเพื่อขอสิทธิ์","setupMissing":"ยังไม่ได้ตั้งค่า GOOGLE_CLIENT_ID ในหน้านี้","reauthTitle":"กรุณาเข้าสู่ระบบอีกครั้ง","reauthSub":"เซสชันหมดอายุ ข้อมูลที่กรอกไว้ยังอยู่","loading":"กำลังโหลด…","cancel":"ยกเลิก","search":"ค้นหา","st_Registered":"ลงทะเบียนแล้ว","st_Cancelled":"ยกเลิก","st_Pending":"รอตรวจสอบ","st_Approved":"อนุมัติแล้ว","st_Rejected":"ไม่อนุมัติ","errNet":"เชื่อมต่อไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง","errConflict":"มีผู้ดูแลคนอื่นแก้ไขกิจกรรมนี้ระหว่างที่คุณเปิดอยู่ กรุณาโหลดใหม่","errRate":"ส่งคำขอบ่อยเกินไป รอสักครู่แล้วลองใหม่"},"en":{"appName":"Event admin","signOut":"Sign out","langBtn":"ไทย","demo":"Demo mode: data lives in this page only. Not connected to the Google Sheet yet.","signinTitle":"Admin sign-in","signinSub":"Use the Google account that has event admin access.","notAdmin":"This account is not an admin. Ask the owner for access.","setupMissing":"GOOGLE_CLIENT_ID is not set in this page yet.","reauthTitle":"Please sign in again","reauthSub":"Your session expired. What you typed is still here.","loading":"Loading…","cancel":"Cancel","search":"Search","st_Registered":"Registered","st_Cancelled":"Cancelled","st_Pending":"Waiting for review","st_Approved":"Approved","st_Rejected":"Not approved","errNet":"Couldn't connect. Check your internet and try again.","errConflict":"Another admin changed this event while you had it open. Please reload.","errRate":"Too many requests. Wait a moment and try again."}});
+// ---- admin/features/events ----
+Admin.addText({"th":{"events":"กิจกรรม","listSub":"{n} กิจกรรม · {r} คนลงทะเบียนทั้งหมด","newEvent":"+ สร้างกิจกรรม","fAll":"ทั้งหมด","fLive":"แสดงใน LINE","fScheduled":"ตั้งเวลาไว้","fDraft":"ฉบับร่าง","fPast":"จบแล้ว/ปิด","emptyT":"ยังไม่มีกิจกรรม","emptyD":"กด “สร้างกิจกรรม” เพื่อเริ่ม","emptyFilter":"ไม่มีกิจกรรมในหมวดนี้","registered":"ลงทะเบียน","edit":"แก้ไข","registrants":"รายชื่อ","backToList":"← กลับไปหน้ากิจกรรม","newTitle":"สร้างกิจกรรมใหม่","editTitle":"แก้ไขกิจกรรม","lastEdit":"แก้ไขล่าสุด {at} โดย {by}","secDetails":"รายละเอียดกิจกรรม","secDetailsD":"ข้อมูลนี้แสดงให้ผู้เข้าร่วมเห็นใน LINE","fName":"ชื่อกิจกรรม","fDate":"วันที่จัด","fStart":"เวลาเริ่ม","fEnd":"เวลาจบ","optional":"(ไม่บังคับ)","fLocation":"สถานที่","fLocationPh":"เช่น ห้องประชุม ชั้น 5 อาคาร A","fDesc":"รายละเอียดเพิ่มเติม","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย ฯลฯ","fBudget":"งบประมาณที่อนุมัติ (บาท)","fBudgetHint":"ใช้ในฟอร์มเบิกค่าใช้จ่าย ผู้เข้าร่วมไม่เห็น","secPoster":"โปสเตอร์","secPosterD":"แนะนำแนวตั้ง 4:5 ระบบย่อขนาดให้อัตโนมัติ (JPG, PNG, WebP)","noPoster":"ยังไม่มีโปสเตอร์","choosePoster":"เลือกรูป","replacePoster":"เปลี่ยนรูป","removePoster":"ลบโปสเตอร์","posterHint":"ลากรูปมาวางตรงนี้ได้","posterBig":"ไฟล์ใหญ่เกิน {mb} MB หลังย่อขนาด","posterType":"รองรับเฉพาะ JPG, PNG หรือ WebP","posterBusy":"กำลังย่อขนาดรูป…","posterLoading":"กำลังโหลดโปสเตอร์…","secSchedule":"กำหนดเวลา (เวลาประเทศไทย)","secScheduleD":"ผู้เข้าร่วมเห็นกิจกรรมเฉพาะช่วง “แสดงใน LINE” และสมัครได้เฉพาะช่วง “รับสมัคร”","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนจาก LINE หลัง","tlPub":"แสดงใน LINE","tlReg":"รับสมัคร","tlEvent":"วันกิจกรรม","tlNow":"ตอนนี้","wRegOutside":"ช่วงรับสมัครบางส่วนอยู่นอกช่วงที่แสดงใน LINE ผู้เข้าร่วมจะสมัครได้เฉพาะช่วงที่ทับกัน","wRegAfterEvent":"ปิดรับสมัครหลังเวลาเริ่มกิจกรรม","wHideBeforeEvent":"กิจกรรมจะถูกซ่อนก่อนถึงวันจัด","wPast":"วันจัดกิจกรรมผ่านไปแล้ว","secStatus":"สถานะ","secStatusD":"เลือกว่าจะให้กิจกรรมนี้แสดงหรือไม่","stDraft":"ฉบับร่าง","stDraftD":"ยังไม่แสดงใน LINE","stPub":"เผยแพร่","stPubD":"แสดงตามเวลาที่ตั้งไว้ และเปิดให้เบิกค่าใช้จ่าย","stClosed":"ปิดกิจกรรม","stClosedD":"ซ่อนจาก LINE และปิดการเบิก","preview":"ตัวอย่างใน LINE","shareLink":"ลิงก์สำหรับแชร์ใน LINE","copy":"คัดลอก","copied":"คัดลอกลิงก์แล้ว","ctaOpen":"ลงทะเบียน","ctaUpcoming":"เปิดรับสมัคร {d}","ctaClosed":"ปิดรับสมัครแล้ว","save":"บันทึก","saving":"กำลังบันทึก…","saved":"บันทึกแล้ว","unsaved":"มีการแก้ไขที่ยังไม่ได้บันทึก","discard":"ทิ้งการแก้ไขที่ยังไม่ได้บันทึก?","req":"กรอกข้อมูลนี้","fixN":"ตรวจสอบ {n} จุดที่ยังไม่ถูกต้อง","timeOrder":"เวลาจบต้องหลังเวลาเริ่ม","closeAfterOpen":"ต้องหลังเวลาเปิดรับสมัคร","untilAfterFrom":"ต้องหลังเวลาเริ่มแสดง","budgetBad":"ใส่ตัวเลข 0 ขึ้นไป","sDraft":"ฉบับร่าง","sClosed":"ปิดแล้ว","sScheduled":"ตั้งเวลาแสดง {d}","sHidden":"หมดเวลาแสดง","sNoWindow":"ยังไม่ได้ตั้งเวลาแสดง","sRegOpen":"เปิดรับสมัคร","sRegUpcoming":"แสดงอยู่ · รอเปิดรับสมัคร","sRegClosed":"แสดงอยู่ · ปิดรับสมัครแล้ว","pvState_draft":"ผู้เข้าร่วมยังไม่เห็นกิจกรรมนี้ (ฉบับร่าง)","pvState_closed":"ผู้เข้าร่วมไม่เห็นกิจกรรมนี้ (ปิดแล้ว)","pvState_scheduled":"ผู้เข้าร่วมจะเห็นตั้งแต่ {d}","pvState_hidden":"เลยเวลาแสดงแล้ว ผู้เข้าร่วมไม่เห็น","pvState_live":"ผู้เข้าร่วมเห็นกิจกรรมนี้อยู่ตอนนี้","searchPh":"ค้นหาชื่อ อีเมล IG หรือเบอร์โทร","csv":"ดาวน์โหลด CSV","regSub":"{n} คนลงทะเบียน · {d}","pdpaNote":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อจัดกิจกรรมนี้เท่านั้น อย่าส่งต่อหรืออัปโหลดไปที่อื่น และลบไฟล์ CSV เมื่อใช้เสร็จ","cFirst":"ชื่อ","cLast":"นามสกุล","cEmail":"อีเมล","cPhone":"โทร","cLine":"ชื่อ LINE","cAt":"เวลาที่สมัคร","cRef":"เลขอ้างอิง","cStatus":"สถานะ","noRegs":"ยังไม่มีคนลงทะเบียน"},"en":{"events":"Events","listSub":"{n} events · {r} registrations in total","newEvent":"+ New event","fAll":"All","fLive":"Showing in LINE","fScheduled":"Scheduled","fDraft":"Drafts","fPast":"Ended/closed","emptyT":"No events yet","emptyD":"Select “New event” to start.","emptyFilter":"No events in this view.","registered":"registered","edit":"Edit","registrants":"Registrants","backToList":"← Back to events","newTitle":"New event","editTitle":"Edit event","lastEdit":"Last edited {at} by {by}","secDetails":"Event details","secDetailsD":"Participants see this in LINE.","fName":"Event name","fDate":"Event date","fStart":"Start time","fEnd":"End time","optional":"(optional)","fLocation":"Location","fLocationPh":"e.g. Meeting room, 5th floor, Building A","fDesc":"More details","fDescPh":"Agenda, what to bring, dress code…","fBudget":"Approved budget (THB)","fBudgetHint":"Used by the reimbursement form. Participants don't see it.","secPoster":"Poster","secPosterD":"Portrait 4:5 works best. We resize it for you (JPG, PNG, WebP).","noPoster":"No poster yet","choosePoster":"Choose image","replacePoster":"Replace image","removePoster":"Remove poster","posterHint":"You can also drag an image here.","posterBig":"File is over {mb} MB after resizing","posterType":"Only JPG, PNG or WebP","posterBusy":"Resizing image…","posterLoading":"Loading poster…","secSchedule":"Schedule (Thailand time)","secScheduleD":"Participants see the event only while it is “Showing in LINE” and can register only during “Registration”.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Show in LINE from","fPubUntil":"Hide from LINE after","tlPub":"Showing in LINE","tlReg":"Registration","tlEvent":"Event day","tlNow":"Now","wRegOutside":"Part of the registration period is outside the time the event shows in LINE. People can register only when both overlap.","wRegAfterEvent":"Registration closes after the event starts.","wHideBeforeEvent":"The event will be hidden before it takes place.","wPast":"The event date has already passed.","secStatus":"Status","secStatusD":"Choose whether this event is shown.","stDraft":"Draft","stDraftD":"Not shown in LINE yet","stPub":"Published","stPubD":"Shown on schedule and open for expense claims","stClosed":"Closed","stClosedD":"Hidden in LINE, claims closed","preview":"Preview in LINE","shareLink":"Link to share in LINE","copy":"Copy","copied":"Link copied","ctaOpen":"Register","ctaUpcoming":"Opens {d}","ctaClosed":"Registration closed","save":"Save","saving":"Saving…","saved":"Saved","unsaved":"You have unsaved changes","discard":"Discard unsaved changes?","req":"Required","fixN":"Fix {n} fields to continue","timeOrder":"End time must be after start time","closeAfterOpen":"Must be after registration opens","untilAfterFrom":"Must be after “Show from”","budgetBad":"Enter 0 or more","sDraft":"Draft","sClosed":"Closed","sScheduled":"Shows from {d}","sHidden":"No longer shown","sNoWindow":"No schedule set","sRegOpen":"Registration open","sRegUpcoming":"Showing · registration not open yet","sRegClosed":"Showing · registration closed","pvState_draft":"Participants can't see this event yet (draft).","pvState_closed":"Participants can't see this event (closed).","pvState_scheduled":"Participants will see it from {d}.","pvState_hidden":"The showing period has ended. Participants can't see it.","pvState_live":"Participants can see this event now.","searchPh":"Search name, email, IG or phone","csv":"Download CSV","regSub":"{n} registered · {d}","pdpaNote":"This list is personal data (PDPA). Use it only to run this event, don't forward or upload it elsewhere, and delete the CSV when you're done.","cFirst":"First name","cLast":"Last name","cEmail":"Email","cPhone":"Phone","cLine":"LINE name","cAt":"Registered at","cRef":"Reference","cStatus":"Status","noRegs":"No registrations yet"}});
+/* =====================================================================
+   Status rules (same as the server)
+   ===================================================================== */
+function evState(ev, now){
+  if (ev.status === "Draft") return {key:"draft", label:t("sDraft"), cls:""};
+  if (ev.status === "Closed") return {key:"past", label:t("sClosed"), cls:""};
+  if (!ev.publishFrom || !ev.publishUntil) return {key:"draft", label:t("sNoWindow"), cls:"warn"};
+  if (now < ev.publishFrom) return {key:"scheduled", label:t("sScheduled",{d:fmtDT(ev.publishFrom)}), cls:"info"};
+  if (now >= ev.publishUntil) return {key:"past", label:t("sHidden"), cls:""};
+  const r = regState(ev, now);
+  if (r === "open") return {key:"live", label:t("sRegOpen"), cls:"ok", reg:r};
+  return {key:"live", label:t(r === "upcoming" ? "sRegUpcoming" : "sRegClosed"), cls:"warn", reg:r};
+}
+function regState(ev, now){
+  if (!ev.regOpen || now < ev.regOpen) return "upcoming";
+  if (!ev.regClose || now >= ev.regClose) return "closed";
+  return "open";
+}
+
 
 /* =====================================================================
    Event list
@@ -626,6 +650,7 @@ function renderList(){
           h("button",{class:"btn ghost sm",type:"button",text:t("registrants"),onclick:() => openRegs(ev)}))));
   }));
 }
+
 
 /* =====================================================================
    Editor
@@ -814,6 +839,7 @@ function back(){
   dirty = false; show("vList"); renderList();
 }
 
+
 /* =====================================================================
    Registrants
    ===================================================================== */
@@ -851,9 +877,8 @@ async function downloadCsv(){
   document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-/* =====================================================================
-   Demo mode (no API_URL): sample data in memory only
-   ===================================================================== */
+
+/* ---- demo mode: sample events and registrants (only used when API_URL is empty) ---- */
 function demoPoster(title, c1, c2){
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="800" height="1000" fill="url(#g)"/><circle cx="640" cy="220" r="160" fill="#fff" opacity=".12"/><circle cx="140" cy="820" r="220" fill="#fff" opacity=".08"/><text x="60" y="700" font-family="sans-serif" font-size="78" font-weight="700" fill="#fff">${title}</text><text x="60" y="770" font-family="sans-serif" font-size="34" fill="#fff" opacity=".85">Community Event</text></svg>`;
   return { type:"image/svg+xml", data: btoa(unescape(encodeURIComponent(svg))) };
@@ -880,27 +905,18 @@ const DEMO = (() => {
     ]
   };
 })();
-async function demoApi(action, data){
-  await new Promise(r => setTimeout(r, 250));
-  if (action === "admin.me") return {ok:true, email:"demo@example.com"};
-  if (action === "admin.listEvents") return {ok:true, events: JSON.parse(JSON.stringify(DEMO.events))};
-  if (action === "admin.getPoster") return {ok:true, poster: DEMO.posters[data.eventId] || null};
-  if (action === "admin.registrants") return {ok:true, registrants: data.eventId === "EV-2611-02" ? DEMO.regs : []};
-  if (action === "admin.saveEvent"){
-    const v = data.event; let ev = DEMO.events.find(e => e.id === v.id);
-    if (!ev){ ev = {id:"EV-"+v.date.slice(2,4)+v.date.slice(5,7)+"-0"+(DEMO.events.length+1), registered:0}; DEMO.events.unshift(ev); }
-    Object.assign(ev, v, {id:ev.id, budget: v.budget === "" ? "" : Number(v.budget), updatedAt:new Date().toISOString(), updatedBy:"demo@example.com"});
-    if (data.poster){ DEMO.posters[ev.id] = data.poster; ev.hasPoster = true; } else if (data.removePoster){ delete DEMO.posters[ev.id]; ev.hasPoster = false; }
-    return {ok:true, event: JSON.parse(JSON.stringify(ev))};
-  }
-  throw new ApiError("Unknown", "VALIDATION");
-}
+Admin.demo["admin.listEvents"] = function(){ return {ok:true, events: JSON.parse(JSON.stringify(DEMO.events))}; };
+Admin.demo["admin.getPoster"] = function(data){ return {ok:true, poster: DEMO.posters[data.eventId] || null}; };
+Admin.demo["admin.registrants"] = function(data){ return {ok:true, registrants: data.eventId === "EV-2611-02" ? DEMO.regs : []}; };
+Admin.demo["admin.saveEvent"] = function(data){
+  const v = data.event; let ev = DEMO.events.find(e => e.id === v.id);
+  if (!ev){ ev = {id:"EV-"+v.date.slice(2,4)+v.date.slice(5,7)+"-0"+(DEMO.events.length+1), registered:0}; DEMO.events.unshift(ev); }
+  Object.assign(ev, v, {id:ev.id, budget: v.budget === "" ? "" : Number(v.budget), updatedAt:new Date().toISOString(), updatedBy:"demo@example.com"});
+  if (data.poster){ DEMO.posters[ev.id] = data.poster; ev.hasPoster = true; } else if (data.removePoster){ delete DEMO.posters[ev.id]; ev.hasPoster = false; }
+  return {ok:true, event: JSON.parse(JSON.stringify(ev))};
+};
 
-/* =====================================================================
-   Wire up
-   ===================================================================== */
-$("#langBtn").addEventListener("click", () => { lang = lang === "th" ? "en" : "th"; store.set("admin.lang", lang); applyLang(); });
-$("#signOutBtn").addEventListener("click", signOut);
+/* ---- wire up ---- */
 $("#newBtn").addEventListener("click", () => openEditor(null));
 $("#filters").addEventListener("click", e => { const b = e.target.closest("[data-filter]"); if (!b) return; filter = b.dataset.filter; renderList(); });
 document.addEventListener("click", e => { if (e.target.closest('[data-act="back"]')) back(); });
@@ -924,8 +940,151 @@ const drop = $("#drop");
 drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) setPosterFile(f); });
 $("#copyBtn").addEventListener("click", async () => { try{ await navigator.clipboard.writeText($("#shareUrl").value); toast(t("copied"), "good"); }catch(e){ $("#shareUrl").select(); } });
 $("#regSearch").addEventListener("input", renderRegs);
+$("#tabEvents").addEventListener("click", () => { if ($("#vList").hidden) loadList(); });
 $("#csvBtn").addEventListener("click", downloadCsv);
 window.addEventListener("beforeunload", e => { if (dirty && !$("#vEdit").hidden){ e.preventDefault(); e.returnValue = ""; } });
+
+Admin.register({
+  name: "events",
+  tab: { button: "tabEvents", view: "vList" },
+  home: loadList,                                                // the first screen after sign-in
+  onLang: function(){
+    if (!$("#vList").hidden) renderList();
+    if (!$("#vEdit").hidden) { renderEditorHead(); refreshPreview(); }
+    if (!$("#vRegs").hidden) renderRegs();
+  }
+});
+
+// ---- admin/features/members ----
+Admin.addText({"th":{"members":"สมาชิก","membersTitle":"สมาชิกและใบสมัคร","memSub":"{p} รอตรวจสอบ · {a} อนุมัติแล้ว · {r} ไม่อนุมัติ","mfPending":"รอตรวจสอบ ({n})","mfApproved":"อนุมัติแล้ว ({n})","mfRejected":"ไม่อนุมัติ ({n})","mfAll":"ทั้งหมด ({n})","memSearchPh":"ค้นหาชื่อ สถานศึกษา/ที่ทำงาน หรือ Service ID","memPdpa":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อพิจารณาการเป็นสมาชิกเท่านั้น หมายเหตุภายในผู้สมัครไม่เห็น ผู้ที่ไม่อนุมัติจะเห็นข้อความทั่วไปและปุ่มแชทหาผู้ดูแลเท่านั้น","approve":"อนุมัติ","reject":"ไม่อนุมัติ","revoke":"ยกเลิกสิทธิ์","reopen":"เปิดใบสมัครใหม่","confirm":"ยืนยัน","occ_studying":"กำลังศึกษา","occ_working":"ทำงานแล้ว","role_organizer":"ผู้จัดกิจกรรม","role_approver":"ผู้อนุมัติ","incompleteTag":"ข้อมูลยังไม่ครบ","appliedAt":"สมัครเมื่อ {d}","decidedLine":"ตัดสินโดย {who} · {d}","noteLine":"หมายเหตุ: {n}","dmReject":"ไม่อนุมัติใบสมัครนี้?","dmRejectD":"ผู้สมัครจะเห็นหน้า “เข้าใช้งานไม่ได้” พร้อม Service ID และปุ่มแชทหาผู้ดูแล ระบบไม่แสดงเหตุผลให้ผู้สมัคร","dmRevoke":"ยกเลิกสิทธิ์สมาชิกคนนี้?","dmRevokeD":"เขาจะลงทะเบียนกิจกรรมและเบิกค่าใช้จ่ายไม่ได้ทันที และสิทธิ์ผู้จัดกิจกรรม/ผู้อนุมัติ (ถ้ามี) จะถูกถอดด้วย","dmReopen":"เปิดใบสมัครนี้อีกครั้ง?","dmReopenD":"สถานะจะกลับเป็น “รอตรวจสอบ” ผู้สมัครแก้ไขข้อมูลได้ แล้วคุณค่อยอนุมัติ","noteL":"หมายเหตุภายใน (ไม่บังคับ)","noteHint":"เฉพาะผู้ดูแลเห็น ผู้สมัครไม่เห็น อย่าใส่ข้อมูลส่วนตัวเกินจำเป็น","tApproved":"อนุมัติแล้ว","tRejected":"บันทึกว่าไม่อนุมัติ","tRevoked":"ยกเลิกสิทธิ์แล้ว","tReopened":"เปิดใบสมัครอีกครั้งแล้ว","noMembers":"ยังไม่มีใบสมัคร","emptyMem":"ไม่มีรายการในหมวดนี้","errMemChanged":"มีผู้ดูแลคนอื่นเปลี่ยนสถานะไปแล้ว โหลดรายการใหม่ให้แล้ว"},"en":{"members":"Members","membersTitle":"Members and applications","memSub":"{p} waiting · {a} approved · {r} not approved","mfPending":"Waiting ({n})","mfApproved":"Approved ({n})","mfRejected":"Not approved ({n})","mfAll":"All ({n})","memSearchPh":"Search name, school/employer or Service ID","memPdpa":"This list is personal data (PDPA). Use it only to review membership. Internal notes are never shown to applicants; people who are not approved see a general message and a button to chat with an admin.","approve":"Approve","reject":"Don't approve","revoke":"Revoke access","reopen":"Reopen","confirm":"Confirm","occ_studying":"Studying","occ_working":"Working","role_organizer":"Organizer","role_approver":"Approver","incompleteTag":"Details incomplete","appliedAt":"Applied {d}","decidedLine":"Decided by {who} · {d}","noteLine":"Note: {n}","dmReject":"Don't approve this application?","dmRejectD":"The applicant will see the “Access not available” page with their Service ID and a button to chat with an admin. No reason is shown to them.","dmRevoke":"Revoke this member's access?","dmRevokeD":"They can't register for events or claim expenses right away, and any organizer/approver role is removed.","dmReopen":"Reopen this application?","dmReopenD":"It goes back to “Waiting for review”. The applicant can edit their details, then you can approve.","noteL":"Internal note (optional)","noteHint":"Only admins see this. Applicants never do. Don't add more personal details than needed.","tApproved":"Approved","tRejected":"Marked as not approved","tRevoked":"Access revoked","tReopened":"Application reopened","noMembers":"No applications yet","emptyMem":"Nothing in this view.","errMemChanged":"Another admin already changed this. The list was reloaded."}});
+/* =====================================================================
+   Members: review applications (approve / not approve / revoke / reopen)
+   ===================================================================== */
+let members = [], mFilter = "pending", pendingCount = 0, decideCtx = null;
+function updateBadge(){ const b = $("#memBadge"); b.hidden = !pendingCount; b.textContent = String(pendingCount); }
+function mCounts(){ const c = {pending:0, approved:0, rejected:0}; members.forEach(m => c[m.status.toLowerCase()]++); return c; }
+async function loadMembers(){
+  show("vMembers");
+  $("#memRows").replaceChildren(h("div",{class:"loading",text:t("loading")}));
+  try{ const r = await api("admin.members"); members = r.members; pendingCount = r.counts.pending; updateBadge(); renderMembers(); }
+  catch(e){ $("#memRows").replaceChildren(h("div",{class:"empty"}, h("h2",{text:e.message}))); }
+}
+function memberBtn(label, cls, fn){ return h("button",{class:cls,type:"button",text:label,onclick:fn}); }
+function renderMembers(){
+  const c = mCounts();
+  $("#memSub").textContent = t("memSub", {p:c.pending, a:c.approved, r:c.rejected});
+  const labels = {pending:"mfPending", approved:"mfApproved", rejected:"mfRejected", all:"mfAll"};
+  const n = {pending:c.pending, approved:c.approved, rejected:c.rejected, all:members.length};
+  $$("#mFilters .chip").forEach(b => { b.textContent = t(labels[b.dataset.mf], {n:n[b.dataset.mf]}); b.setAttribute("aria-pressed", String(b.dataset.mf === mFilter)); });
+  if (!members.length){ $("#memRows").replaceChildren(h("div",{class:"empty"}, h("h2",{text:t("noMembers")}))); return; }
+  const q = $("#memSearch").value.trim().toLowerCase();
+  const list = members.filter(m => (mFilter === "all" || m.status.toLowerCase() === mFilter) &&
+    (!q || [m.firstName, m.lastName, m.organization, m.serviceId, m.lineName].join(" ").toLowerCase().includes(q)));
+  if (!list.length){ $("#memRows").replaceChildren(h("div",{class:"empty"}, h("p",{text:t("emptyMem")}))); return; }
+  $("#memRows").replaceChildren(...list.map(m => {
+    const cls = m.status === "Approved" ? "ok" : m.status === "Pending" ? "warn" : "";
+    const acts = m.status === "Pending" ? [memberBtn(t("approve"), "btn sm", () => decideNow(m, "Approved")), memberBtn(t("reject"), "btn ghost sm warnbtn", () => askDecision(m, "Rejected"))]
+      : m.status === "Approved" ? [memberBtn(t("revoke"), "btn ghost sm warnbtn", () => askDecision(m, "Rejected"))]
+      : [memberBtn(t("reopen"), "btn sec sm", () => askDecision(m, "Pending"))];
+    return h("article",{class:"mrow"},
+      h("div",{},
+        h("h2",{class:"mname",text:((m.firstName||"") + " " + (m.lastName||"")).trim() || m.lineName}),
+        h("p",{class:"emeta",text:[t("occ_"+m.occupation) !== "occ_"+m.occupation ? t("occ_"+m.occupation) : "", m.organization].filter(Boolean).join(" · ")}),
+        h("p",{class:"emeta",text:[m.lineName ? "LINE: " + m.lineName : "", t("appliedAt",{d:fmtDT(m.appliedAt)})].filter(Boolean).join(" · ")}),
+        m.decidedAt && h("p",{class:"emeta",text:t("decidedLine",{who:m.decidedBy, d:fmtDT(m.decidedAt)})}),
+        m.note && h("p",{class:"emeta",text:t("noteLine",{n:m.note})}),
+        h("div",{class:"etags"},
+          h("span",{class:"tag "+cls,text:t("st_"+m.status)}),
+          (m.role === "organizer" || m.role === "approver") && h("span",{class:"tag info",text:t("role_"+m.role)}),
+          !m.profileComplete && m.status === "Approved" && h("span",{class:"tag plain",text:t("incompleteTag")}),
+          h("span",{class:"tag plain",text:m.serviceId}))),
+      h("div",{class:"mact"}, acts));
+  }));
+}
+function applyDecision(m, r, note){
+  m.status = r.status; m.decidedAt = r.decidedAt; m.decidedBy = r.decidedBy; m.note = note || "";
+  if (r.status === "Rejected") m.role = "participant";
+  pendingCount = mCounts().pending; updateBadge();
+}
+async function decideNow(m, to, note){
+  const done = {Approved:"tApproved", Rejected:m.status === "Approved" ? "tRevoked" : "tRejected", Pending:"tReopened"}[to];
+  try{
+    const r = await api("admin.decideMember", {serviceId:m.serviceId, decision:to, expectedStatus:m.status, note:note || ""});
+    applyDecision(m, r, note); toast(t(done), "good"); renderMembers();
+  }catch(e){
+    toast(e.code === "CONFLICT" || e.code === "NOT_FOUND" ? t("errMemChanged") : e.message);
+    if (e.code === "CONFLICT" || e.code === "NOT_FOUND") loadMembers();
+  }
+}
+function askDecision(m, to){
+  const kind = to === "Pending" ? "Reopen" : m.status === "Approved" ? "Revoke" : "Reject";
+  decideCtx = {m, to, opener:document.activeElement};
+  $("#dmTitle").textContent = t("dm" + kind); $("#dmText").textContent = t("dm" + kind + "D");
+  $("#dmWho").textContent = (((m.firstName||"") + " " + (m.lastName||"")).trim() || m.lineName) + " · " + m.serviceId;
+  $("#dmNote").value = "";
+  $("#dmOk").className = "btn" + (to === "Pending" ? "" : " danger");
+  $("#decideModal").hidden = false; $("#dmNote").focus();
+}
+function closeDecision(){ $("#decideModal").hidden = true; const o = decideCtx && decideCtx.opener; decideCtx = null; if (o && o.focus) try{ o.focus(); }catch(e){} }
+async function confirmDecision(){
+  if (!decideCtx) return;
+  const {m, to} = decideCtx, note = $("#dmNote").value.trim();
+  $("#dmOk").disabled = true;
+  await decideNow(m, to, note);
+  $("#dmOk").disabled = false; closeDecision();
+}
+
+
+/* ---- demo mode: sample members (only used when API_URL is empty) ---- */
+const DEMO_MEMBERS = (() => {
+  const d0 = bkkNow().slice(0,10);
+  return {
+    members:[
+      {serviceId:"SV-2611-0006", firstName:"วิภา", lastName:"ตัวอย่าง", occupation:"studying", organization:"มหาวิทยาลัยตัวอย่าง", status:"Pending", role:"participant", lineName:"Wipa", appliedAt:addDays(d0,-1)+" 20:15", decidedAt:"", decidedBy:"", note:"", profileComplete:true},
+      {serviceId:"SV-2611-0007", firstName:"ธนา", lastName:"ทดสอบ", occupation:"working", organization:"บริษัท ตัวอย่าง จำกัด", status:"Pending", role:"participant", lineName:"Thana", appliedAt:addDays(d0,0)+" 08:40", decidedAt:"", decidedBy:"", note:"", profileComplete:true},
+      {serviceId:"SV-2611-0001", firstName:"สมหญิง", lastName:"ตัวอย่าง", occupation:"working", organization:"ชุมชนตัวอย่าง", status:"Approved", role:"organizer", lineName:"Somying", appliedAt:addDays(d0,-20)+" 10:00", decidedAt:addDays(d0,-20)+" 11:30", decidedBy:"demo@example.com", note:"", profileComplete:true},
+      {serviceId:"SV-2611-0003", firstName:"มานี", lastName:"ทดสอบ", occupation:"", organization:"", status:"Approved", role:"participant", lineName:"มานี", appliedAt:addDays(d0,-30)+" 09:00", decidedAt:addDays(d0,-3)+" 09:00", decidedBy:"migration", note:"already using the forms before membership review", profileComplete:false},
+      {serviceId:"SV-2611-0004", firstName:"ปรีชา", lastName:"ตัวอย่าง", occupation:"working", organization:"ไม่ระบุ", status:"Rejected", role:"participant", lineName:"Preecha", appliedAt:addDays(d0,-6)+" 16:20", decidedAt:addDays(d0,-5)+" 10:05", decidedBy:"demo@example.com", note:"cannot verify the employer", profileComplete:true}
+    ]
+  };
+})();
+Admin.demo["admin.members"] = function(){
+  const c = {pending:0, approved:0, rejected:0}; DEMO_MEMBERS.members.forEach(m => c[m.status.toLowerCase()]++);
+  return {ok:true, counts:c, members: JSON.parse(JSON.stringify(DEMO_MEMBERS.members))};
+};
+Admin.demo["admin.decideMember"] = function(data){
+  const m = DEMO_MEMBERS.members.find(x => x.serviceId === data.serviceId), flow = {Pending:["Approved","Rejected"], Approved:["Rejected"], Rejected:["Pending"]};
+  if (!m) throw new ApiError("Member not found", "NOT_FOUND");
+  if (m.status !== data.expectedStatus) throw new ApiError("changed", "CONFLICT");
+  if (!(flow[m.status] || []).includes(data.decision)) throw new ApiError("This change is not allowed.", "VALIDATION");
+  m.status = data.decision; m.note = data.note || ""; m.decidedAt = data.decision === "Pending" ? "" : bkkNow(); m.decidedBy = data.decision === "Pending" ? "" : "demo@example.com";
+  if (data.decision === "Rejected") m.role = "participant";
+  return {ok:true, serviceId:m.serviceId, status:m.status, decidedAt:m.decidedAt, decidedBy:m.decidedBy};
+};
+// the events list also carries the "pending members" number for the badge (same as the server hook)
+Admin.on("demo:admin.listEvents", function(res){ res.pendingMembers = DEMO_MEMBERS.members.filter(m => m.status === "Pending").length; });
+
+/* ---- wire up ---- */
+// the badge number arrives with the events list (admin.listEvents answers with pendingMembers)
+Admin.on("api:admin.listEvents", function(r){ pendingCount = r.pendingMembers || 0; updateBadge(); });
+$("#tabMembers").addEventListener("click", () => { if ($("#vMembers").hidden) loadMembers(); });
+$("#mFilters").addEventListener("click", e => { const b = e.target.closest("[data-mf]"); if (!b) return; mFilter = b.dataset.mf; renderMembers(); });
+$("#memSearch").addEventListener("input", renderMembers);
+$("#dmOk").addEventListener("click", confirmDecision);
+$("#dmCancel").addEventListener("click", closeDecision);
+$("#decideModal").addEventListener("click", e => { if (e.target.id === "decideModal") closeDecision(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#decideModal").hidden) closeDecision(); });
+
+Admin.register({
+  name: "members",
+  tab: { button: "tabMembers", view: "vMembers" },
+  onLang: function(){ if (!$("#vMembers").hidden) renderMembers(); updateBadge(); }
+});
+/* =====================================================================
+   Wire up (shared parts) and start
+   ===================================================================== */
+$("#langBtn").addEventListener("click", () => { lang = lang === "th" ? "en" : "th"; store.set("admin.lang", lang); applyLang(); });
+$("#signOutBtn").addEventListener("click", signOut);
 
 applyLang();
 if (demo){

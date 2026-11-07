@@ -236,8 +236,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
    CONFIG - edit this block only
    ===================================================================== */
 const CONFIG = {
-  LIFF_ID: "2012317989-JIt0K5fX",              // 1) your LIFF ID, e.g. "1234567890-AbCdEfGh". Empty = demo mode
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",              // 2) your Google web app URL (ends with /exec). Empty = demo mode, nothing is sent
+  LIFF_ID: "",              // 1) your LIFF ID, e.g. "1234567890-AbCdEfGh". Empty = demo mode
+  API_URL: "",              // 2) your Google web app URL (ends with /exec). Empty = demo mode, nothing is sent
+  JOIN_LIFF_URL: "",        // 3) "https://liff.line.me/YOUR-JOIN-LIFF-ID". People who are not approved members are sent here
   MAX_ITEMS: 10,            // max expense records per claim
   MAX_FILE_MB: 5,           // max size per receipt file after compression
   MAX_TOTAL_MB: 15,         // max size of all receipts in one claim
@@ -285,8 +286,9 @@ const T = {
   close:"ปิด", again:"ส่งคำขออื่น",
   sumEvent:"กิจกรรม", sumItems:"จำนวนรายการ", sumTotal:"ยอดรวม",
   liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ ลองเปิดจากแชทอีกครั้ง", eventsFail:"โหลดรายการกิจกรรมไม่สำเร็จ ใช้รายการที่บันทึกไว้แทน",
+  gateMemberT:"ต้องเป็นสมาชิกก่อน", gateMemberD:"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาเปิดฟอร์มนี้อีกครั้ง",
   gateRoleT:"ยังไม่มีสิทธิ์เบิกค่าใช้จ่าย", gateRoleD:"ฟอร์มนี้สำหรับผู้จัดกิจกรรมและผู้อนุมัติ ส่งชื่อ LINE ด้านล่างให้ผู้ดูแลเพื่อขอสิทธิ์ แล้วเปิดฟอร์มนี้อีกครั้ง",
-  lineNameL:"ชื่อ LINE", gateNote:"เราบันทึกชื่อและรหัสผู้ใช้ LINE ของคุณไว้ เพื่อให้ผู้ดูแลเพิ่มสิทธิ์ได้ หากต้องการให้ลบ ติดต่อผู้ดูแล",
+  lineNameL:"ชื่อ LINE", gateNote:"ผู้ดูแลกำหนดสิทธิ์ผู้จัดกิจกรรมให้สมาชิกที่ได้รับอนุมัติแล้ว",
   gateFailT:"เปิดฟอร์มไม่สำเร็จ", authFail:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท",
   langBtn:"EN", chatMsg:"ส่งคำขอเบิกแล้ว\nเลขอ้างอิง {ref}\nกิจกรรม: {event}\nยอดรวม {total}"
  },
@@ -318,8 +320,9 @@ const T = {
   close:"Close", again:"Submit another claim",
   sumEvent:"Event", sumItems:"Expenses", sumTotal:"Total",
   liffFail:"Couldn't connect to LINE. Try opening this from the chat again.", eventsFail:"Couldn't load events. Showing the saved list instead.",
+  gateMemberT:"Members only", gateMemberD:"Join the community and wait for an admin to approve you, then open this form again.",
   gateRoleT:"You can't submit claims yet", gateRoleD:"This form is for organizers and approvers. Send the LINE name below to an admin to get access, then open this form again.",
-  lineNameL:"LINE name", gateNote:"We saved your LINE name and LINE user ID so an admin can give you access. Ask an admin if you want it deleted.",
+  lineNameL:"LINE name", gateNote:"Admins give the organizer role to approved members.",
   gateFailT:"Couldn't open the form", authFail:"Your LINE session expired. Close this page and open it again from the chat.",
   langBtn:"ไทย", chatMsg:"Claim submitted\nReference {ref}\nEvent: {event}\nTotal {total}"
  }
@@ -688,6 +691,7 @@ async function onSubmit(){
     sendChatSummary(payload, res.reference);
   }catch(e){
     console.error(e);
+    if (e && e.code === "NOT_MEMBER"){ goJoin(); return; }
     if (e && e.code === "FORBIDDEN"){ showGate("role", state.liff.name); return; }
     toast(e && e.message ? e.message : t("sendFail"));
   }finally{
@@ -706,10 +710,16 @@ function showDone(p, ref){
   });
   window.scrollTo(0,0);
 }
+// Not an approved member: go to the join page (it shows sign-up, "waiting for review" or "access denied" as needed)
+function goJoin(){
+  if (CONFIG.JOIN_LIFF_URL){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
+  showGate("member", state.liff.name);
+}
 function showGate(kind, lineName, message){
   $("#formView").hidden = true; $("#tape").hidden = true; $("#doneView").hidden = true; $("#gateView").hidden = false;
-  setI18n($("#gateTitle"), kind === "role" ? "gateRoleT" : "gateFailT");
+  setI18n($("#gateTitle"), kind === "role" ? "gateRoleT" : kind === "member" ? "gateMemberT" : "gateFailT");
   if (kind === "role") setI18n($("#gateText"), "gateRoleD");
+  else if (kind === "member") setI18n($("#gateText"), "gateMemberD");
   else { $("#gateText").removeAttribute("data-i18n"); $("#gateText").textContent = message || t("liffFail"); }
   $("#gateWho").hidden = kind !== "role" || !lineName;
   $("#gateName").textContent = lineName || "";
@@ -759,7 +769,10 @@ async function initLiff(){
     let r;
     try{ r = await api({action:"claim.bootstrap"}); }
     catch(e){ showGate("fail", null, e.message); return; }
-    if (!r.allowed){ showGate("role", r.lineName || state.liff.name); return; }
+    if (!r.allowed){
+      if (r.memberStatus !== "approved"){ goJoin(); return; }   // not an approved member yet
+      showGate("role", r.lineName || state.liff.name); return;  // approved, but not an organizer or approver
+    }
     fillEvents(r.events);
   } else {
     if (new URLSearchParams(location.search).get("demo") === "blocked"){ showGate("role", "Kim (demo)"); return; }

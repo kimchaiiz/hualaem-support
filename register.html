@@ -227,11 +227,12 @@ input[type=text],input[type=email],input[type=tel]{width:100%;min-height:48px;pa
    CONFIG - edit this block only. Nothing here is secret.
    ===================================================================== */
 const CONFIG = {
-  LIFF_ID: "2012317989-vPfdP7Zb",            // 1) the REGISTRATION LIFF ID, e.g. "1234567890-AbCdEfGh". Empty = demo mode
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",            // 2) Google Apps Script web app address (ends with /exec). Empty = demo mode
-  ORG_NAME: "Hualaem Community",           // 3) community name shown in the consent text, e.g. "Hualaem". Empty = "the organizers"
+  LIFF_ID: "",            // 1) the REGISTRATION LIFF ID, e.g. "1234567890-AbCdEfGh". Empty = demo mode
+  API_URL: "",            // 2) Google Apps Script web app address (ends with /exec). Empty = demo mode
+  ORG_NAME: "",           // 3) community name shown in the consent text, e.g. "Hualaem". Empty = "the organizers"
+  JOIN_LIFF_URL: "",      // 4) "https://liff.line.me/YOUR-JOIN-LIFF-ID". People who are not approved members are sent here
   SEND_CHAT_MESSAGE: true,// post a confirmation in the LINE chat (needs the chat_message.write scope)
-  CONSENT_VERSION: "v1-2026-11",   // must match CONSENT_VERSION in Code.gs
+  CONSENT_VERSION: "v2-2026-11",   // must match CONSENT_VERSION in Code.gs and sign-up.html
   DEFAULT_LANG: "th"
 };
 
@@ -247,7 +248,7 @@ const T = {
   stRegistered:"คุณลงทะเบียนกิจกรรมนี้แล้ว", stRegisteredD:"เลขอ้างอิง {ref}", stUpcoming:"ยังไม่เปิดรับสมัคร", stUpcomingD:"เปิดรับสมัคร {d}", stClosed:"ปิดรับสมัครแล้ว", stClosedD:"ขอบคุณที่สนใจ ติดตามกิจกรรมครั้งถัดไป",
   yourInfo:"ข้อมูลผู้ลงทะเบียน", prefilled:"เราเติมข้อมูลจากครั้งก่อนให้แล้ว ตรวจสอบหรือแก้ไขได้",
   firstName:"ชื่อ", lastName:"นามสกุล", email:"อีเมล", phone:"เบอร์มือถือ", ig:"Instagram", optional:"(ไม่บังคับ)",
-  consent:"ฉันยินยอมให้ {org} เก็บและใช้ชื่อ อีเมล เบอร์มือถือ Instagram และบัญชี LINE ของฉัน เพื่อจัดการการลงทะเบียนและติดต่อเรื่องกิจกรรม",
+  consent:"ฉันยินยอมให้ {org} เก็บและใช้ชื่อ-นามสกุล สถานะ (ศึกษา/ทำงาน) ชื่อสถานศึกษาหรือที่ทำงาน บัญชี LINE และข้อมูลติดต่อที่ฉันให้ตอนลงทะเบียนกิจกรรม (อีเมล เบอร์มือถือ Instagram) เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียน และติดต่อเรื่องกิจกรรม",
   consentSmall:"ข้อมูลเปิดให้เฉพาะทีมผู้จัดงาน และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ขอดูหรือขอลบข้อมูลได้โดยติดต่อผู้จัดงานทาง LINE นี้",
   orgFallback:"ผู้จัดกิจกรรม",
   submit:"ลงทะเบียน", submitting:"กำลังส่ง…", notOpenBtn:"ยังไม่เปิดรับสมัคร", closedBtn:"ปิดรับสมัครแล้ว", doneBtn:"ลงทะเบียนแล้ว",
@@ -259,6 +260,7 @@ const T = {
   errAuth:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท", errNotOpen:"กิจกรรมนี้ปิดรับสมัครแล้วหรือไม่เปิดแสดงแล้ว", errRate:"ส่งบ่อยเกินไป รอสักครู่แล้วลองใหม่",
   errNet:"ส่งไม่สำเร็จ ข้อมูลยังอยู่ ลองอีกครั้ง", errLoad:"โหลดข้อมูลไม่สำเร็จ", errLoadD:"ปิดหน้านี้แล้วเปิดใหม่จาก LINE", liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ",
   notFound:"ไม่พบกิจกรรมนี้หรือปิดไปแล้ว แสดงกิจกรรมอื่นแทน",
+  notMemberT:"ต้องเป็นสมาชิกก่อน", notMemberD:"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาลงทะเบียนกิจกรรมได้",
   chatMsg:"ลงทะเบียนสำเร็จ ✅\n{event}\n🗓 {when}\n📍 {place}\nเลขอ้างอิง {ref}"
  },
  en:{
@@ -269,7 +271,7 @@ const T = {
   stRegistered:"You're registered for this event", stRegisteredD:"Reference {ref}", stUpcoming:"Registration isn't open yet", stUpcomingD:"Opens {d}", stClosed:"Registration has closed", stClosedD:"Thanks for your interest. See you at the next one.",
   yourInfo:"Your details", prefilled:"We filled in your details from last time. Check or edit them.",
   firstName:"First name", lastName:"Last name", email:"Email", phone:"Mobile number", ig:"Instagram", optional:"(optional)",
-  consent:"I agree that {org} may collect and use my name, email, mobile number, Instagram and LINE account to manage registration and contact me about events.",
+  consent:"I agree that {org} may collect and use my name, status (studying or working), school or employer, LINE account and the contact details I give when registering for events (email, mobile number, Instagram) to review my membership, manage registrations and contact me about events.",
   consentSmall:"Only the organizing team can see it, and it is used to fill in the form for you next time. To see or delete your data, message the organizers in this LINE chat.",
   orgFallback:"the organizers",
   submit:"Register", submitting:"Sending…", notOpenBtn:"Not open yet", closedBtn:"Registration closed", doneBtn:"Registered",
@@ -281,6 +283,7 @@ const T = {
   errAuth:"Your LINE session expired. Close this page and open it again from the chat.", errNotOpen:"This event is closed for registration or no longer shown.", errRate:"Too many tries. Wait a moment and try again.",
   errNet:"Couldn't send. Your details are still here. Try again.", errLoad:"Couldn't load events", errLoadD:"Close this page and open it again from LINE.", liffFail:"Couldn't connect to LINE.",
   notFound:"That event isn't available. Showing other events.",
+  notMemberT:"Members only", notMemberD:"Join the community and wait for an admin to approve you, then come back to register for events.",
   chatMsg:"Registered ✅\n{event}\n🗓 {when}\n📍 {place}\nReference {ref}"
  }
 };
@@ -340,6 +343,10 @@ function fatal(title, detail){ $("#fatalT").textContent = title; $("#fatalD").te
 /* =====================================================================
    API
    ===================================================================== */
+function goJoin(){
+  if (CONFIG.JOIN_LIFF_URL){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
+  show("fatal"); $("#fatalT").textContent = t("notMemberT"); $("#fatalD").textContent = t("notMemberD");
+}
 class ApiError extends Error { constructor(m, c){ super(m); this.code = c; } }
 async function post(action, data){
   if (demo) return demoApi(action, data || {});
@@ -352,6 +359,7 @@ async function post(action, data){
   }catch(e){ throw new ApiError(t("errNet"), "NET"); }
   finally{ clearTimeout(to); }
   if (res.ok) return res;
+  if (res.code === "NOT_MEMBER") goJoin();                   // not an approved member (any more): the join page shows where they stand
   const map = {AUTH:"errAuth", NOT_OPEN:"errNotOpen", RATE:"errRate", SERVER:"errNet"};
   throw new ApiError(map[res.code] ? t(map[res.code]) : res.error, res.code);
 }
@@ -434,8 +442,9 @@ function prefill(){
     $("#firstName").value = p.firstName || ""; $("#lastName").value = p.lastName || ""; $("#email").value = p.email || "";
     $("#phone").value = p.phone || ""; $("#instagram").value = p.instagram || "";
     $("#consent").checked = p.consentVersion === CONFIG.CONSENT_VERSION;
-    $("#prefillNote").hidden = false;
-  } else if (state.idEmail){ $("#email").value = state.idEmail; }
+    $("#prefillNote").hidden = !(p.email || p.phone);        // "filled in from last time" only after a first registration
+  }
+  if (!$("#email").value && state.idEmail){ $("#email").value = state.idEmail; }
 }
 function setErr(field, key){
   const e = $(".err", field), i = $("input", field);
@@ -563,7 +572,10 @@ async function initLiff(){
   try{
     const r = await post("reg.bootstrap");
     state.events = r.events; state.profile = r.profile;
-  }catch(e){ fatal(t("errLoad"), e.code === "AUTH" ? t("errAuth") : t("errLoadD")); return; }
+  }catch(e){
+    if (e.code === "NOT_MEMBER") return;                      // goJoin() already took over
+    fatal(t("errLoad"), e.code === "AUTH" ? t("errAuth") : t("errLoadD")); return;
+  }
   prefill();
   const want = new URLSearchParams(location.search).get("event");
   const target = want && state.events.find(e => e.id === want);
