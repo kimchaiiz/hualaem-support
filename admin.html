@@ -427,14 +427,21 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
 
+<script src="config.js"></script>
 <script>
 /* =====================================================================
-   CONFIG - edit this block only. Nothing here is secret.
+   Settings. Shared IDs and addresses come from config.js (one file for all pages). Only admin-specific settings live here.
    ===================================================================== */
+/* Shared settings come from config.js (one file for all pages, see config.example.js). Missing or broken file = demo mode. */
+const SHARED = window.COMMUNITY_CONFIG || {}, SHARED_LIFF = SHARED.LIFF || {};
+if (!window.COMMUNITY_CONFIG) console.warn("config.js not found or has an error: running in demo mode");
+const cfgText = x => { x = typeof x === "string" ? x.trim() : ""; return /^YOUR-/i.test(x) ? "" : x; };
+const cfgLiffId = x => cfgText(x).replace(/^https?:\/\/liff\.line\.me\//i, "").replace(/[\/?#].*$/, "");
+const cfgLiffUrl = x => { const id = cfgLiffId(x); return id ? "https://liff.line.me/" + id : ""; };
 const CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",            // 1) Google Apps Script web app address (ends with /exec). Empty = demo mode
-  GOOGLE_CLIENT_ID: "42078922636-hbdfb91dg52tcl1u2hgq8t7t6ii5dek0.apps.googleusercontent.com",   // 2) OAuth Client ID, e.g. "1234-abc.apps.googleusercontent.com"
-  REGISTER_LIFF_URL: "https://liff.line.me/2012317989-vPfdP7Zb",  // 3) optional: "https://liff.line.me/YOUR-REGISTER-LIFF-ID" (to copy a share link per event)
+  API_URL: cfgText(SHARED.API_URL),                      // Empty = demo mode
+  GOOGLE_CLIENT_ID: cfgText(SHARED.GOOGLE_CLIENT_ID),
+  REGISTER_LIFF_URL: cfgLiffUrl(SHARED_LIFF.event),      // optional: to copy a share link per event (event-join.html)
   MAX_POSTER_MB: 5,
   POSTER_MAX_PX: 1600,
   DEFAULT_LANG: "th"

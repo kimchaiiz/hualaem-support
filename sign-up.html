@@ -242,8 +242,7 @@ input[type=text]{width:100%;min-height:48px;padding:11px 12px;border:1.5px solid
         <button type="button" class="btn" id="completeBtn" data-i18n="completeBtn"></button></div>
     </div>
     <div class="tiles">
-      <button type="button" class="tile" id="tileEvents"><span class="ti" aria-hidden="true">🗓</span><span><b data-i18n="menuEvents"></b><span class="d" data-i18n="menuEventsD"></span></span><span class="go" aria-hidden="true">›</span></button>
-      <button type="button" class="tile" id="tileClaims" hidden><span class="ti" aria-hidden="true">🧾</span><span><b data-i18n="menuClaims"></b><span class="d" data-i18n="menuClaimsD"></span></span><span class="go" aria-hidden="true">›</span></button>
+      <button type="button" class="tile" id="tileHome"><span class="ti" aria-hidden="true">🏠</span><span><b data-i18n="menuHome"></b><span class="d" data-i18n="menuHomeD"></span></span><span class="go" aria-hidden="true">›</span></button>
     </div>
   </section>
 
@@ -258,18 +257,24 @@ input[type=text]{width:100%;min-height:48px;padding:11px 12px;border:1.5px solid
 </div>
 <div class="toast" id="toast" role="alert" hidden></div>
 
+<script src="config.js"></script>
 <script>
 /* =====================================================================
-   CONFIG - edit this block only. Nothing here is secret.
+   Settings. Shared IDs and addresses come from config.js (one file for all pages). Only page-specific settings live here.
    ===================================================================== */
+/* Shared settings come from config.js (one file for all pages, see config.example.js). Missing or broken file = demo mode. */
+const SHARED = window.COMMUNITY_CONFIG || {}, SHARED_LIFF = SHARED.LIFF || {};
+if (!window.COMMUNITY_CONFIG) console.warn("config.js not found or has an error: running in demo mode");
+const cfgText = x => { x = typeof x === "string" ? x.trim() : ""; return /^YOUR-/i.test(x) ? "" : x; };
+const cfgLiffId = x => cfgText(x).replace(/^https?:\/\/liff\.line\.me\//i, "").replace(/[\/?#].*$/, "");
+const cfgLiffUrl = x => { const id = cfgLiffId(x); return id ? "https://liff.line.me/" + id : ""; };
 const CONFIG = {
-  LIFF_ID: "2012317989-nFM3Kj1K",            // 1) the JOIN LIFF ID (a third LIFF app in the same LINE Login channel), e.g. "1234567890-AbCdEfGh". Empty = demo mode
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",            // 2) Google Apps Script web app address (ends with /exec). Empty = demo mode
-  ORG_NAME: "Hualaem Community",           // 3) community name shown in the consent text, e.g. "Hualaem". Empty = "the organizers"
-  REGISTER_LIFF_URL: "https://liff.line.me/2012317989-vPfdP7Zb",  // 4) "https://liff.line.me/YOUR-REGISTER-LIFF-ID"  (opened from the Events menu)
-  REIMBURSE_LIFF_URL: "https://liff.line.me/2012317989-JIt0K5fX", // 5) "https://liff.line.me/YOUR-LIFF-ID"  (opened from the Expense menu, organizers and approvers only)
-  ADMIN_OA_ID: "@106lepjz",        // 6) your LINE Official Account basic ID incl. the @, e.g. "@abc1234d". Used for the "Chat with admin" button
-  CONSENT_VERSION: "v2-2026-11",   // must match CONSENT_VERSION in Code.gs and register.html
+  LIFF_ID: cfgLiffId(SHARED_LIFF.join),                  // JOIN LIFF (this page)
+  API_URL: cfgText(SHARED.API_URL),
+  ORG_NAME: cfgText(SHARED.ORG_NAME),                    // shown in the consent text. Empty = "the organizers"
+  HOME_LIFF_URL: cfgLiffUrl(SHARED_LIFF.home),           // landing page index.html
+  ADMIN_OA_ID: cfgText(SHARED.ADMIN_OA_ID),              // used for the "Chat with admin" button
+  CONSENT_VERSION: "v2-2026-11",   // must match CONSENT_VERSION in Code.gs and event-join.html (it describes the wording on this page, so it is not in config.js)
   DEFAULT_LANG: "th"
 };
 
@@ -301,7 +306,7 @@ const T = {
   deniedPrivacy:"เพื่อความเป็นส่วนตัว หน้านี้ไม่แสดงรายละเอียดการพิจารณา ผู้ดูแลจะแจ้งทางแชท ขอดูหรือขอลบข้อมูลของคุณได้ที่แชทเดียวกัน",
   chat:"แชทกับผู้ดูแล", noChat:"ติดต่อผู้ดูแลทางแชท LINE ของชุมชน และแจ้ง Service ID ของคุณ", copySid:"คัดลอก Service ID", copied:"คัดลอกแล้ว",
   chatPrefill:"สวัสดี ขอสอบถามเรื่องใบสมัครสมาชิก Service ID: {sid}",
-  member:"สมาชิก", menuEvents:"ลงทะเบียนกิจกรรม", menuEventsD:"ดูกิจกรรมที่เปิดรับและลงทะเบียน", menuClaims:"เบิกค่าใช้จ่าย", menuClaimsD:"สำหรับผู้จัดกิจกรรมและผู้อนุมัติ",
+  member:"สมาชิก", menuHome:"ไปหน้าหลัก", menuHomeD:"กิจกรรมที่กำลังจะมาถึง และติดตามสถานะของคุณ",
   incompleteT:"ขอข้อมูลเพิ่มอีกเล็กน้อย", incompleteD:"คุณยังใช้งานได้ตามปกติ แต่ขอให้กรอกสถานะและสถานศึกษา/ที่ทำงานของคุณ", completeBtn:"กรอกข้อมูล",
   noLink:"ยังไม่ได้ตั้งค่าลิงก์เมนูนี้", errAuth:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท", errRate:"ส่งบ่อยเกินไป รอสักครู่แล้วลองใหม่",
   errNet:"ส่งไม่สำเร็จ ข้อมูลยังอยู่ ลองอีกครั้ง", errLoad:"โหลดข้อมูลไม่สำเร็จ", errLoadD:"ปิดหน้านี้แล้วเปิดใหม่จาก LINE", liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ", errSetup:"ระบบยังตั้งค่าไม่เสร็จ แจ้งผู้ดูแล"
@@ -330,7 +335,7 @@ const T = {
   deniedPrivacy:"For privacy, this page doesn't show review details. The admin will explain in chat. You can ask to see or delete your data in the same chat.",
   chat:"Chat with admin", noChat:"Contact the admin in the community's LINE chat and give your Service ID.", copySid:"Copy Service ID", copied:"Copied",
   chatPrefill:"Hello, I have a question about my membership application. Service ID: {sid}",
-  member:"Member", menuEvents:"Event registration", menuEventsD:"See open events and register", menuClaims:"Expense claims", menuClaimsD:"For organizers and approvers",
+  member:"Member", menuHome:"Go to home", menuHomeD:"Upcoming events and the status of your registrations and claims",
   incompleteT:"A little more information, please", incompleteD:"You can keep using everything, but please fill in your status and school or workplace.", completeBtn:"Fill in",
   noLink:"This menu link isn't set up yet.", errAuth:"Your LINE session expired. Close this page and open it again from the chat.", errRate:"Too many tries. Wait a moment and try again.",
   errNet:"Couldn't send. Your details are still here. Try again.", errLoad:"Couldn't load", errLoadD:"Close this page and open it again from LINE.", liffFail:"Couldn't connect to LINE.", errSetup:"The system isn't fully set up yet. Tell the admin."
@@ -443,7 +448,6 @@ function renderHome(){
   $("#hChip").textContent = "✓ " + t("member");
   $("#hKv").replaceChildren(kv(t("sidL"), m.serviceId), ...memberRows(m).slice(1));
   $("#incomplete").hidden = m.profileComplete;
-  $("#tileClaims").hidden = !(m.role === "organizer" || m.role === "approver");
 }
 function renderApply(){
   const titles = {apply:["applyTitle","applySub","submit","barSub"], complete:["completeTitle","completeSub","saveDetails","barSubSave"], edit:["editTitle","editSub","saveDetails","barSub"]}[state.mode];
@@ -611,8 +615,7 @@ $("#pChatBtn").addEventListener("click", openChat);
 $("#chatBtn").addEventListener("click", openChat);
 $("#copyBtn").addEventListener("click", copySid);
 $("#closeBtn").addEventListener("click", () => { if (window.liff && state.inClient) liff.closeWindow(); else window.close(); });
-$("#tileEvents").addEventListener("click", () => go(CONFIG.REGISTER_LIFF_URL));
-$("#tileClaims").addEventListener("click", () => go(CONFIG.REIMBURSE_LIFF_URL));
+$("#tileHome").addEventListener("click", () => go(CONFIG.HOME_LIFF_URL));
 </script>
 </body>
 </html>

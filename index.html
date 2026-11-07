@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>เบิกค่าใช้จ่าย | Expense reimbursement</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.line-scdn.net; connect-src https://script.google.com https://script.googleusercontent.com https://*.line.me https://*.line-scdn.net; frame-src https://*.line.me; object-src 'none'; base-uri 'none'">
+<title>หน้าหลัก | Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,790 +15,457 @@
 <style>
 :root{
   --bg:#E6ECF2; --slip:#FFFFFF; --field:#F3F6F9; --ink:#0E1726; --muted:#586477; --line:#D3DBE5;
-  --accent:#2447D6; --accent-ink:#FFFFFF; --err:#B42318; --err-bg:#FDECEA; --ok:#0F7A55;
-  --bar:#0E1726; --bar-ink:#FFFFFF; --bar-muted:#AEB9CB; --warn:#8A5A00; --warn-bg:#FFF3D1;
+  --accent:#2447D6; --accent-ink:#FFFFFF; --accent-soft:#E7ECFD; --err:#B42318; --err-bg:#FDECEA;
+  --ok:#0F7A55; --ok-bg:#E3F4EC; --warn:#8A5A00; --warn-bg:#FFF3D1; --grey-bg:#EDF1F5;
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark){
+  .seg button[aria-selected=true]{background:var(--line)}
   :root{
     --bg:#0C121B; --slip:#161F2C; --field:#0F1722; --ink:#E8EDF4; --muted:#9AA7B8; --line:#2A3647;
-    --accent:#8AA2FF; --accent-ink:#0C121B; --err:#FF9189; --err-bg:#3A1C1C; --ok:#5CD0A3;
-    --bar:#223046; --bar-ink:#FFFFFF; --bar-muted:#9FB0C8; --warn:#F2C26B; --warn-bg:#33290F;
+    --accent:#8AA2FF; --accent-ink:#0C121B; --accent-soft:#1E2A4A; --err:#FF9189; --err-bg:#3A1C1C;
+    --ok:#5CD0A3; --ok-bg:#12302A; --warn:#F2C26B; --warn-bg:#33290F; --grey-bg:#1C2633;
   }
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:"IBM Plex Sans Thai","Sarabun","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:16px;line-height:1.5;
-  padding:env(safe-area-inset-top,0) 0 calc(120px + env(safe-area-inset-bottom,0));
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Thai","Sarabun","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;
+  padding:env(safe-area-inset-top,0) 0 calc(40px + env(safe-area-inset-bottom,0))}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px}
 [hidden]{display:none!important}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
 /* header */
-.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 0 6px}
-h1{font-size:24px;line-height:1.25;font-weight:600;margin:0}
-.sub{margin:4px 0 0;color:var(--muted);font-size:15px}
-.lang{flex:none;min-width:48px;height:36px;border:1px solid var(--line);background:var(--slip);color:var(--ink);
-  border-radius:18px;font:inherit;font-size:14px;font-weight:500;padding:0 12px;cursor:pointer}
+.top{display:flex;align-items:center;gap:12px;padding:18px 0 4px}
+.avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--accent-soft);color:var(--accent);flex:none;display:grid;place-items:center;font-weight:600;font-size:18px;border:2px solid var(--slip)}
+.hello{flex:1;min-width:0}
+.hello small{display:block;font-size:13px;color:var(--muted)}
+.hello b{display:block;font-size:17px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lang{flex:none;min-width:48px;height:36px;border:1px solid var(--line);background:var(--slip);border-radius:18px;font-size:14px;font-weight:500;padding:0 12px;cursor:pointer}
 .banner{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:14px}
 
-/* generic sections */
-.block{margin-top:20px}
-.block>h2{font-size:15px;font-weight:600;margin:0 0 8px;color:var(--ink)}
-.panel{background:var(--slip);border-radius:14px;padding:16px;border:1px solid var(--line)}
-.field{display:block;margin:0 0 14px}
-.field:last-child{margin-bottom:0}
-.lbl{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-bottom:6px}
-.hint{margin:6px 0 0;font-size:13px;color:var(--muted)}
-input[type=text],input[type=date],input[type=tel],select,textarea{
-  width:100%;min-height:48px;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
-  background:var(--field);color:var(--ink);font:inherit;font-size:16px;appearance:none;-webkit-appearance:none}
-select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-  background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
-textarea{min-height:84px;resize:vertical}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
-[aria-invalid=true]{border-color:var(--err)!important}
-.err{margin:6px 0 0;font-size:13px;color:var(--err);font-weight:500}
-.budget{margin:8px 0 0;font-size:14px;color:var(--muted)}
-.remember{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);min-height:44px}
-.remember input{width:22px;height:22px;accent-color:var(--accent)}
+/* summary */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;margin-top:18px}
+.stat{background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;text-align:left;cursor:pointer;min-height:76px}
+.stat b{display:block;font-size:24px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:13px;color:var(--muted);line-height:1.35}
+.stat.hot b{color:var(--accent)}
 
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:12px;
-  border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+/* sections */
+.block{margin-top:26px}
+.block>h2{font-size:18px;font-weight:600;margin:0 0 10px}
+.seg{display:flex;gap:4px;background:var(--grey-bg);border-radius:12px;padding:4px;margin-bottom:12px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:9px;background:transparent;font-size:14.5px;font-weight:500;color:var(--muted);cursor:pointer;padding:0 8px}
+.seg button[aria-selected=true]{background:var(--slip);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.list{display:flex;flex-direction:column;gap:10px}
+
+/* event row */
+.ev{display:grid;grid-template-columns:56px 1fr 16px;gap:12px;align-items:center;background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;width:100%;cursor:pointer;min-height:76px}
+.datebox{width:56px;height:60px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.datebox b{font-size:22px;font-weight:600}
+.datebox span{font-size:12.5px;font-weight:500}
+.ev .ename{font-size:16px;font-weight:600;line-height:1.35}
+.meta{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
+.go{color:var(--muted);font-size:20px}
+.tag{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:2px 10px;border-radius:13px;font-size:12.5px;font-weight:500;background:var(--grey-bg);color:var(--muted);margin-top:6px}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.tag.info{background:var(--accent-soft);color:var(--accent)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.bad{background:var(--err-bg);color:var(--err)}
+
+/* status rows */
+.item{background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;width:100%;display:block}
+button.item{cursor:pointer}
+.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.item-top b{font-size:15.5px;font-weight:600;line-height:1.35}
+.item-top .tag{margin-top:0;flex:none}
+.amount{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:6px}
+.steps{display:flex;align-items:center;margin-top:12px;font-size:12px;color:var(--muted)}
+.steps .s{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;width:64px;text-align:center;line-height:1.2}
+.steps .dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.steps .s.done .dot{background:var(--ok)}
+.steps .s.done{color:var(--ok)}
+.steps .s.bad .dot{background:var(--err)}
+.steps .s.bad{color:var(--err)}
+.steps .ln{flex:1;height:2px;background:var(--line);margin:0 -14px 16px}
+.steps .ln.done{background:var(--ok)}
+.empty{background:var(--slip);border-radius:14px;padding:26px 18px;text-align:center;color:var(--muted);border:1px dashed var(--line);font-size:14.5px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:2px}
+.more{font-size:13px;color:var(--muted);text-align:center;margin:8px 0 0}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:16px;cursor:pointer;width:100%;margin-top:12px}
 .btn.sec{background:transparent;color:var(--accent)}
-.btn.block-btn{width:100%}
-.btn[disabled]{opacity:.55;cursor:default}
-.link{background:none;border:0;color:var(--accent);font:inherit;font-size:14px;font-weight:500;min-height:44px;padding:0 4px;cursor:pointer}
-.link.danger{color:var(--err)}
+.btn.top{margin:0 0 12px}
+.hint{display:block;font-size:13px;color:var(--err);margin-top:8px}
+.links{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:28px}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:500;font-size:15px;min-height:44px;padding:0 10px;cursor:pointer}
+.asof{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px}
 
-/* receipt slip */
-.slips{display:flex;flex-direction:column;gap:22px}
-.slip{position:relative;background:var(--slip);padding:14px 16px 18px;border-radius:14px 14px 0 0;
-  box-shadow:0 1px 0 var(--line)}
-.slip::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;
-  background:
-    linear-gradient(135deg,var(--slip) 5px,transparent 0) 0 0/14px 10px repeat-x,
-    linear-gradient(225deg,var(--slip) 5px,transparent 0) 0 0/14px 10px repeat-x;}
-.slip.enter{animation:slipin .22s ease-out}
-@keyframes slipin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.slip.enter{animation:none}}
-.slip-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.slip-h h3{margin:0;font-size:15px;font-weight:600}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:360px){.row2{grid-template-columns:1fr}}
-.amount input{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
-
-/* receipt drop zone */
-.drop{border:1.5px dashed var(--line);border-radius:12px;background:var(--field);padding:12px}
-.drop.has{border-style:solid;padding:10px}
-.drop-empty{display:flex;flex-wrap:wrap;gap:10px}
-.drop-empty .btn{flex:1 1 130px}
-.drop-empty .hint{flex:1 0 100%;margin:0}
-.drop-has{display:flex;align-items:center;gap:12px}
-.thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
-.pdfbox{width:64px;height:64px;border-radius:8px;flex:none;background:var(--line);display:grid;place-items:center;font-weight:600;font-size:14px;color:var(--muted)}
-.fileinfo{flex:1;min-width:0}
-.fname{display:block;font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fsize{display:block;font-size:13px;color:var(--muted)}
-.drop-actions{display:flex;flex-direction:column;align-items:flex-end}
-.busy{font-size:14px;color:var(--muted)}
-
-.add{margin-top:22px}
-.limit{margin:8px 0 0;font-size:13px;color:var(--muted);text-align:center}
-
-/* sticky tape */
-.tape{position:fixed;left:0;right:0;bottom:0;background:var(--bar);color:var(--bar-ink);
-  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0));box-shadow:0 -6px 18px rgba(0,0,0,.14);z-index:10}
-.tape-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:14px}
-.tape-sum{flex:1;min-width:0}
-.tape-l{font-size:13px;color:var(--bar-muted)}
-.tape-v{font-size:24px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}
-.tape-warn{display:block;font-size:12.5px;color:#FFD27A;margin-top:2px}
-.tape .btn{background:#fff;color:#0E1726;border-color:#fff;min-width:150px}
-@media (prefers-color-scheme: dark){.tape .btn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}}
-
-/* toast + success */
-.toast{position:fixed;left:16px;right:16px;bottom:calc(96px + env(safe-area-inset-bottom,0));max-width:528px;margin:0 auto;
-  background:var(--err-bg);color:var(--err);border:1px solid var(--err);padding:12px 14px;border-radius:12px;font-weight:500;font-size:14.5px;z-index:11}
-.done{padding:32px 0}
-.done h2{font-size:24px;margin:0 0 6px}
-.done .ref{font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.02em;margin:14px 0 2px}
-.stack{display:flex;flex-direction:column;gap:10px;margin-top:22px}
-.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
-.kv:last-child{border-bottom:0}
-.kv span:last-child{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.skel{background:var(--slip);border-radius:14px;height:76px;border:1px solid var(--line);position:relative;overflow:hidden;margin-top:10px}
+.skel.tall{height:110px;margin-top:18px}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sh 1.2s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.skel::after{animation:none}}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0));max-width:528px;margin:0 auto;background:var(--err-bg);color:var(--err);border:1px solid var(--err);padding:12px 14px;border-radius:12px;font-weight:500;font-size:14.5px;z-index:11}
+.fatal{margin-top:20vh;text-align:center;color:var(--muted)}
+.fatal b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
 </style>
 </head>
 <body>
-<main class="wrap" id="app">
+<main class="wrap">
+  <header class="top">
+    <div class="avatar" id="avatarBox" aria-hidden="true"></div>
+    <div class="hello"><small data-i18n="hello"></small><b id="lineName">&nbsp;</b></div>
+    <button type="button" class="lang" id="langBtn" aria-label="Language"></button>
+  </header>
+  <div class="banner" id="demoBanner" hidden data-i18n="demo"></div>
 
-  <!-- FORM VIEW -->
-  <div id="formView">
-    <header class="top">
-      <div>
-        <h1 data-i18n="title"></h1>
-        <p class="sub" data-i18n="subtitle"></p>
-      </div>
-      <button type="button" class="lang" id="langBtn" aria-label="Language"></button>
-    </header>
-    <div class="banner" id="demoBanner" hidden data-i18n="demo"></div>
-    <div class="banner" id="liffBanner" hidden></div>
+  <!-- LOADING -->
+  <section id="vLoading"><div class="skel tall"></div><div class="skel"></div><div class="skel"></div></section>
 
-    <section class="block">
-      <h2 data-i18n="secEvent"></h2>
-      <div class="panel">
-        <label class="field" data-f="event">
-          <span class="lbl" data-i18n="event"></span>
-          <select id="event" required><option value="" data-i18n="eventPh"></option></select>
-          <p class="budget" id="budgetLine" hidden></p>
-          <p class="err" role="alert" hidden></p>
-        </label>
+  <!-- HOME -->
+  <section id="vHome" hidden>
+    <div class="stats" id="stats"></div>
+
+    <section class="block" id="secUpcoming">
+      <h2 data-i18n="upcomingT"></h2>
+      <div class="seg" role="tablist" id="upSeg">
+        <button type="button" role="tab" id="upAll" aria-selected="true"></button>
+        <button type="button" role="tab" id="upTodo" aria-selected="false"></button>
       </div>
+      <div class="list" id="upList"></div>
     </section>
 
-    <section class="block">
-      <h2 data-i18n="secPayee"></h2>
-      <div class="panel">
-        <label class="field" data-f="name">
-          <span class="lbl" data-i18n="name"></span>
-          <input type="text" id="name" autocomplete="name" maxlength="80" required>
-          <p class="err" role="alert" hidden></p>
-        </label>
-        <label class="field" data-f="pp">
-          <span class="lbl" data-i18n="pp"></span>
-          <input type="tel" id="pp" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="0812345678" required>
-          <p class="hint" data-i18n="ppHint"></p>
-          <p class="err" role="alert" hidden></p>
-        </label>
-        <label class="remember"><input type="checkbox" id="remember" checked><span data-i18n="remember"></span></label>
+    <section class="block" id="secStatus">
+      <h2 data-i18n="statusT"></h2>
+      <div class="seg" role="tablist" id="stSeg">
+        <button type="button" role="tab" id="stEvents" aria-selected="true"></button>
+        <button type="button" role="tab" id="stClaims" aria-selected="false"></button>
       </div>
+      <button type="button" class="btn top" id="newClaimBtn" hidden><span aria-hidden="true">＋</span><span data-i18n="newClaim"></span></button>
+      <div class="list" id="stList"></div>
+      <p class="more" id="stMore" hidden></p>
     </section>
 
-    <section class="block">
-      <h2 data-i18n="secExpenses"></h2>
-      <div class="slips" id="slips"></div>
-      <button type="button" class="btn sec block-btn add" id="addBtn" data-i18n="add"></button>
-      <p class="limit" id="limitLine" hidden></p>
-    </section>
-
-    <section class="block">
-      <h2 data-i18n="secNote"></h2>
-      <div class="panel">
-        <label class="field">
-          <span class="lbl" data-i18n="note"></span>
-          <textarea id="note" maxlength="500"></textarea>
-        </label>
-      </div>
-    </section>
-  </div>
-
-  <!-- NOT ALLOWED / COULD NOT OPEN VIEW -->
-  <div id="gateView" class="done" hidden>
-    <h2 id="gateTitle"></h2>
-    <p class="sub" id="gateText"></p>
-    <div class="panel" style="margin-top:18px" id="gateWho" hidden>
-      <div class="kv"><span data-i18n="lineNameL"></span><span id="gateName"></span></div>
+    <div class="links">
+      <button type="button" class="linkbtn" id="memberBtn" data-i18n="myMembership"></button>
+      <button type="button" class="linkbtn" id="refreshBtn" data-i18n="refresh"></button>
     </div>
-    <p class="hint" id="gateNote" style="margin-top:12px" hidden></p>
-    <div class="stack"><button type="button" class="btn block-btn" id="gateClose" data-i18n="close"></button></div>
-  </div>
+    <p class="asof" id="asOf"></p>
+  </section>
 
-  <!-- SUCCESS VIEW -->
-  <div id="doneView" class="done" hidden>
-    <h2 data-i18n="doneTitle"></h2>
-    <p class="sub" data-i18n="doneSub"></p>
-    <p class="sub" style="margin-top:14px" data-i18n="ref"></p>
-    <p class="ref" id="refNo"></p>
-    <div class="panel" style="margin-top:18px" id="doneSummary"></div>
-    <div class="stack">
-      <button type="button" class="btn block-btn" id="closeBtn" data-i18n="close"></button>
-      <button type="button" class="btn sec block-btn" id="againBtn" data-i18n="again"></button>
-    </div>
-  </div>
+  <div class="fatal" id="vFatal" hidden><b id="fatalT"></b><span id="fatalD"></span></div>
 </main>
-
-<div class="tape" id="tape">
-  <div class="tape-in">
-    <div class="tape-sum">
-      <div class="tape-l" id="tapeLabel"></div>
-      <div class="tape-v" id="tapeTotal">฿0.00</div>
-      <span class="tape-warn" id="tapeWarn" hidden></span>
-    </div>
-    <button type="button" class="btn" id="submitBtn" data-i18n="submit"></button>
-  </div>
-</div>
 <div class="toast" id="toast" role="alert" hidden></div>
 
+<script src="config.js"></script>
 <script>
 /* =====================================================================
-   CONFIG - edit this block only
+   Settings. Shared IDs and addresses come from config.js (one file for all pages). Only page-specific settings live here.
    ===================================================================== */
+/* Shared settings come from config.js (one file for all pages, see config.example.js). Missing or broken file = demo mode. */
+const SHARED = window.COMMUNITY_CONFIG || {}, SHARED_LIFF = SHARED.LIFF || {};
+if (!window.COMMUNITY_CONFIG) console.warn("config.js not found or has an error: running in demo mode");
+const cfgText = x => { x = typeof x === "string" ? x.trim() : ""; return /^YOUR-/i.test(x) ? "" : x; };
+const cfgLiffId = x => cfgText(x).replace(/^https?:\/\/liff\.line\.me\//i, "").replace(/[\/?#].*$/, "");
+const cfgLiffUrl = x => { const id = cfgLiffId(x); return id ? "https://liff.line.me/" + id : ""; };
 const CONFIG = {
-  LIFF_ID: "2012317989-JIt0K5fX",              // 1) your LIFF ID, e.g. "1234567890-AbCdEfGh". Empty = demo mode
-  API_URL: "https://script.google.com/macros/s/AKfycbyHNavTqXEdatGur-8b-xmjI5CKz5QwSo77RlTKhoXMowGWX9oTKGFIwRuzIgPkwuoxkg/exec",              // 2) your Google web app URL (ends with /exec). Empty = demo mode, nothing is sent
-  JOIN_LIFF_URL: "https://liff.line.me/2012317989-nFM3Kj1K",        // 3) "https://liff.line.me/YOUR-JOIN-LIFF-ID". People who are not approved members are sent here
-  MAX_ITEMS: 10,            // max expense records per claim
-  MAX_FILE_MB: 5,           // max size per receipt file after compression
-  MAX_TOTAL_MB: 15,         // max size of all receipts in one claim
-  IMAGE_MAX_PX: 1600,       // longest side for compressed receipt photos
-  IMAGE_QUALITY: 0.82,
-  SEND_CHAT_SUMMARY: true,  // send a summary message to the LINE chat after submit (needs chat_message.write scope)
-  DEFAULT_LANG: "th",
-  CATEGORIES: ["venue","food","supplies","print","transport","other"],
-  // Sample events for demo mode only (API_URL empty). Real events come from the Events tab.
-  EVENTS: [
-    {id:"EV-2026-11", name:"Community Meetup – November", date:"2026-11-21", budget:5000},
-    {id:"EV-2026-12", name:"Year-end Gathering", date:"2026-12-19", budget:12000}
-  ]
+  LIFF_ID: cfgLiffId(SHARED_LIFF.home),                  // HOME LIFF (this page)
+  API_URL: cfgText(SHARED.API_URL),
+  EVENT_JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.event),    // event-join.html
+  REIMBURSE_LIFF_URL: cfgLiffUrl(SHARED_LIFF.reimburse), // expense-reimbursement.html
+  JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.join),           // sign-up.html. People who are not approved members are sent here
+  DEFAULT_LANG: "th"
 };
 
 /* =====================================================================
-   Translations
+   Text
    ===================================================================== */
 const T = {
  th:{
-  title:"เบิกค่าใช้จ่าย", subtitle:"ส่งใบเสร็จของกิจกรรมเพื่อขออนุมัติคืนเงิน",
-  demo:"โหมดทดลอง: ยังไม่ได้ส่งข้อมูลจริง",
-  secEvent:"กิจกรรม", event:"กิจกรรมที่เบิก", eventPh:"เลือกกิจกรรม", budget:"งบที่อนุมัติ {x}",
-  secPayee:"รับเงินคืนที่", name:"ชื่อ-นามสกุลบัญชีพร้อมเพย์", pp:"หมายเลขพร้อมเพย์",
-  ppHint:"เบอร์มือถือ 10 หลัก หรือเลขบัตรประชาชน 13 หลัก", remember:"จำชื่อและพร้อมเพย์ในเครื่องนี้",
-  secExpenses:"รายการค่าใช้จ่าย", expenseN:"รายการที่ {n}", remove:"ลบรายการ",
-  receipt:"ใบเสร็จ", takePhoto:"ถ่ายรูป", chooseFile:"เลือกไฟล์",
-  receiptHint:"ให้เห็นยอดรวมและวันที่ชัดเจน (รูปหรือ PDF ไม่เกิน {mb} MB)", replace:"เปลี่ยน", processing:"กำลังเตรียมไฟล์…",
-  date:"วันที่ในใบเสร็จ", amount:"จำนวนเงิน (บาท)", category:"หมวดหมู่", categoryPh:"เลือกหมวดหมู่",
-  desc:"ใช้ไปกับอะไร", descPh:"เช่น ค่าเช่าห้อง 3 ชั่วโมง",
-  cat_venue:"สถานที่", cat_food:"อาหารและเครื่องดื่ม", cat_supplies:"อุปกรณ์และวัสดุ", cat_print:"สิ่งพิมพ์และป้าย", cat_transport:"เดินทางและขนส่ง", cat_other:"อื่น ๆ",
-  add:"เพิ่มรายการ", limit:"เพิ่มได้สูงสุด {n} รายการต่อคำขอ",
-  secNote:"ข้อความถึงผู้อนุมัติ", note:"หมายเหตุ (ไม่บังคับ)",
-  total:"ยอดรวม", itemsOne:"{n} รายการ", itemsMany:"{n} รายการ",
-  over:"เกินงบ {x} ผู้อนุมัติจะเห็นข้อมูลนี้",
-  submit:"ส่งคำขอเบิก", submitting:"กำลังส่ง…",
-  req:"กรอกข้อมูลนี้", eventReq:"เลือกกิจกรรม", catReq:"เลือกหมวดหมู่",
-  ppBad:"ตรวจสอบหมายเลข: เบอร์มือถือ 10 หลัก หรือเลขบัตรประชาชน 13 หลักที่ถูกต้อง",
-  amountBad:"ใส่จำนวนเงินมากกว่า 0", amountMax:"จำนวนเงินสูงเกินไป ตรวจสอบอีกครั้ง",
-  dateFuture:"วันที่ต้องไม่เป็นวันในอนาคต", dateReq:"เลือกวันที่",
-  receiptReq:"แนบใบเสร็จ", fileBig:"ไฟล์ใหญ่เกิน {mb} MB", fileType:"รองรับเฉพาะรูปภาพและ PDF",
-  totalBig:"ไฟล์ใบเสร็จรวมกันใหญ่เกิน {mb} MB แยกเป็นหลายคำขอหรือลดขนาดไฟล์",
-  fixN:"ตรวจสอบ {n} จุดที่ยังไม่ครบ", sendFail:"ส่งไม่สำเร็จ ข้อมูลของคุณยังอยู่ ลองส่งอีกครั้ง",
-  doneTitle:"ส่งคำขอแล้ว", doneSub:"สถานะ: รอการอนุมัติ", ref:"เลขอ้างอิง",
-  close:"ปิด", again:"ส่งคำขออื่น",
-  sumEvent:"กิจกรรม", sumItems:"จำนวนรายการ", sumTotal:"ยอดรวม",
-  liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ ลองเปิดจากแชทอีกครั้ง", eventsFail:"โหลดรายการกิจกรรมไม่สำเร็จ ใช้รายการที่บันทึกไว้แทน",
-  gateMemberT:"ต้องเป็นสมาชิกก่อน", gateMemberD:"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาเปิดฟอร์มนี้อีกครั้ง",
-  gateRoleT:"ยังไม่มีสิทธิ์เบิกค่าใช้จ่าย", gateRoleD:"ฟอร์มนี้สำหรับผู้จัดกิจกรรมและผู้อนุมัติ ส่งชื่อ LINE ด้านล่างให้ผู้ดูแลเพื่อขอสิทธิ์ แล้วเปิดฟอร์มนี้อีกครั้ง",
-  lineNameL:"ชื่อ LINE", gateNote:"ผู้ดูแลกำหนดสิทธิ์ผู้จัดกิจกรรมให้สมาชิกที่ได้รับอนุมัติแล้ว",
-  gateFailT:"เปิดฟอร์มไม่สำเร็จ", authFail:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท",
-  langBtn:"EN", chatMsg:"ส่งคำขอเบิกแล้ว\nเลขอ้างอิง {ref}\nกิจกรรม: {event}\nยอดรวม {total}"
+  hello:"สวัสดี", langBtn:"EN", demo:"โหมดทดลอง: ข้อมูลตัวอย่าง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์",
+  sTodo:"กิจกรรมที่ยังไม่ได้ลงทะเบียน", sMine:"กิจกรรมที่ลงทะเบียนไว้", sClaims:"คำขอเบิกที่รอดำเนินการ",
+  upcomingT:"กิจกรรมที่กำลังจะมาถึง", segAll:"ทั้งหมด ({n})", segTodo:"ยังไม่ลงทะเบียน ({n})",
+  regOpen:"เปิดรับสมัคร · ปิด {d}", regUpcoming:"เปิดรับสมัคร {d}", regClosed:"ปิดรับสมัครแล้ว", registered:"✓ ลงทะเบียนแล้ว",
+  emptyUpT:"ยังไม่มีกิจกรรมที่กำลังจะมาถึง", emptyUpD:"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่",
+  emptyTodoT:"ลงทะเบียนครบทุกกิจกรรมแล้ว", emptyTodoD:"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”",
+  statusT:"ติดตามสถานะ", segEvents:"กิจกรรมของฉัน", segClaims:"คำขอเบิก",
+  stUpcoming:"กำลังจะมาถึง", stEnded:"จบแล้ว", stCancelled:"ยกเลิกแล้ว",
+  cPending:"รออนุมัติ", cApproved:"อนุมัติแล้ว รอโอน", cRejected:"ไม่อนุมัติ", cPaid:"โอนเงินแล้ว",
+  stepSent:"ส่งคำขอ", stepApproved:"อนุมัติ", stepPaid:"โอนเงิน", stepRejected:"ไม่อนุมัติ",
+  rejectedHint:"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล",
+  refL:"เลขอ้างอิง {ref}", sentL:"ส่งเมื่อ {d}", itemsL:"{n} รายการ",
+  emptyEvT:"ยังไม่เคยลงทะเบียนกิจกรรม", emptyEvD:"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน",
+  emptyClT:"ยังไม่มีคำขอเบิก", emptyClD:"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่",
+  moreN:"แสดง {n} รายการล่าสุด",
+  newClaim:"ขอเบิกค่าใช้จ่าย", myMembership:"บัตรสมาชิกของฉัน", refresh:"รีเฟรช", asOf:"ข้อมูล ณ {d}",
+  noLink:"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล",
+  errAuth:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท", errRate:"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่",
+  errNet:"โหลดไม่สำเร็จ ลองอีกครั้ง", errLoad:"โหลดข้อมูลไม่สำเร็จ", errLoadD:"ปิดหน้านี้แล้วเปิดใหม่จาก LINE", liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ",
+  notMemberT:"ต้องเป็นสมาชิกก่อน", notMemberD:"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้"
  },
  en:{
-  title:"Expense reimbursement", subtitle:"Send receipts for an event to get paid back.",
-  demo:"Demo mode: nothing is sent yet.",
-  secEvent:"Event", event:"Event you spent on", eventPh:"Select an event", budget:"Approved budget {x}",
-  secPayee:"Pay back to", name:"Full name on the PromptPay account", pp:"PromptPay number",
-  ppHint:"10-digit mobile number or 13-digit national ID", remember:"Remember my name and PromptPay on this device",
-  secExpenses:"Expenses", expenseN:"Expense {n}", remove:"Remove",
-  receipt:"Receipt", takePhoto:"Take photo", chooseFile:"Choose file",
-  receiptHint:"Total and date must be readable (photo or PDF, up to {mb} MB)", replace:"Replace", processing:"Preparing file…",
-  date:"Receipt date", amount:"Amount (THB)", category:"Category", categoryPh:"Select a category",
-  desc:"What it was for", descPh:"e.g. Room rental, 3 hours",
-  cat_venue:"Venue", cat_food:"Food & drinks", cat_supplies:"Equipment & supplies", cat_print:"Printing & signage", cat_transport:"Transport", cat_other:"Other",
-  add:"Add expense", limit:"Up to {n} expenses per claim",
-  secNote:"Message to the approver", note:"Note (optional)",
-  total:"Total", itemsOne:"{n} expense", itemsMany:"{n} expenses",
-  over:"Over budget by {x}. The approver will see this.",
-  submit:"Submit claim", submitting:"Submitting…",
-  req:"Required", eventReq:"Select an event", catReq:"Select a category",
-  ppBad:"Enter a valid 10-digit mobile number or 13-digit national ID",
-  amountBad:"Enter an amount above 0", amountMax:"Amount is too high. Check it again.",
-  dateFuture:"Date can't be in the future", dateReq:"Select a date",
-  receiptReq:"Attach a receipt", fileBig:"File is over {mb} MB", fileType:"Only photos and PDFs are supported",
-  totalBig:"Receipts add up to more than {mb} MB. Split into two claims or use smaller files.",
-  fixN:"Fix {n} fields to continue", sendFail:"Couldn't submit. Your entries are still here. Try again.",
-  doneTitle:"Claim submitted", doneSub:"Status: waiting for approval", ref:"Reference",
-  close:"Close", again:"Submit another claim",
-  sumEvent:"Event", sumItems:"Expenses", sumTotal:"Total",
-  liffFail:"Couldn't connect to LINE. Try opening this from the chat again.", eventsFail:"Couldn't load events. Showing the saved list instead.",
-  gateMemberT:"Members only", gateMemberD:"Join the community and wait for an admin to approve you, then open this form again.",
-  gateRoleT:"You can't submit claims yet", gateRoleD:"This form is for organizers and approvers. Send the LINE name below to an admin to get access, then open this form again.",
-  lineNameL:"LINE name", gateNote:"Admins give the organizer role to approved members.",
-  gateFailT:"Couldn't open the form", authFail:"Your LINE session expired. Close this page and open it again from the chat.",
-  langBtn:"ไทย", chatMsg:"Claim submitted\nReference {ref}\nEvent: {event}\nTotal {total}"
+  hello:"Hello", langBtn:"ไทย", demo:"Demo mode: sample data. Add ?demo=organizer or ?demo=new to the address to see other versions.",
+  sTodo:"Events you haven't registered for", sMine:"Events you're registered for", sClaims:"Claims in progress",
+  upcomingT:"Upcoming events", segAll:"All ({n})", segTodo:"Not registered ({n})",
+  regOpen:"Open · closes {d}", regUpcoming:"Opens {d}", regClosed:"Registration closed", registered:"✓ Registered",
+  emptyUpT:"No upcoming events", emptyUpD:"New events will show up here.",
+  emptyTodoT:"You're registered for every event", emptyTodoD:"See them all in the “All” tab.",
+  statusT:"Track status", segEvents:"My events", segClaims:"My claims",
+  stUpcoming:"Upcoming", stEnded:"Ended", stCancelled:"Cancelled",
+  cPending:"Waiting for approval", cApproved:"Approved, payment pending", cRejected:"Not approved", cPaid:"Paid",
+  stepSent:"Sent", stepApproved:"Approved", stepPaid:"Paid", stepRejected:"Not approved",
+  rejectedHint:"Message the approvers in this chat to ask why.",
+  refL:"Reference {ref}", sentL:"Sent {d}", itemsL:"{n} items",
+  emptyEvT:"No registrations yet", emptyEvD:"Pick an event above to register.",
+  emptyClT:"No claims yet", emptyClD:"Expense claims you send will show up here.",
+  moreN:"Showing your latest {n}",
+  newClaim:"New expense claim", myMembership:"My membership", refresh:"Refresh", asOf:"Updated {d}",
+  noLink:"This menu isn't set up yet. Tell an admin.",
+  errAuth:"Your LINE session expired. Close this page and open it again from the chat.", errRate:"Too many tries. Wait a moment and try again.",
+  errNet:"Couldn't load. Try again.", errLoad:"Couldn't load your page", errLoadD:"Close this page and open it again from LINE.", liffFail:"Couldn't connect to LINE.",
+  notMemberT:"Members only", notMemberD:"Join the community and wait for an admin to approve you, then come back here."
  }
 };
 
 /* =====================================================================
    Helpers
    ===================================================================== */
-const $  = (s, r=document) => r.querySelector(s);
+const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
 let lang = CONFIG.DEFAULT_LANG;
-const t = (k, vars) => {
-  let s = (T[lang] && T[lang][k]) ?? T.en[k] ?? k;
-  if (vars) for (const [a,b] of Object.entries(vars)) s = s.split("{"+a+"}").join(b);
-  return s;
-};
-const money = n => "฿" + new Intl.NumberFormat(lang === "th" ? "th-TH" : "en-US",
-  {minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
-const todayStr = () => { const d = new Date(); const p = v => String(v).padStart(2,"0");
-  return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); };
-const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-"+Date.now()+"-"+Math.random().toString(16).slice(2));
-const store = {
-  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
-  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
-  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
-};
-let uidN = 0;
-
-/* i18n: elements with data-i18n are re-rendered whenever language changes */
-function applyLang(){
-  document.documentElement.lang = lang;
-  $$("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n, el._vars); });
-  $$("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
-  $("#langBtn").textContent = t("langBtn");
-  renumber(); updateEventLine(); updateTotals();
-  $("#limitLine").textContent = t("limit", {n:CONFIG.MAX_ITEMS});
-  if (state.submitting) $("#submitBtn").textContent = t("submitting");
+const t = (k, v) => { let s = (T[lang] && T[lang][k]) ?? T.en[k] ?? k; if (v) for (const [a,b] of Object.entries(v)) s = s.split("{"+a+"}").join(b); return s; };
+function h(tag, attrs, ...kids){                     // builds elements; text is always set as text, never as HTML
+  const el = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs || {})){
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v; else if (k === "text") el.textContent = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v);
+  }
+  kids.flat().forEach(c => { if (c != null && c !== false) el.append(c instanceof Node ? c : document.createTextNode(String(c))); });
+  return el;
 }
-function setI18n(el, key, vars){ el.dataset.i18n = key; el._vars = vars; el.textContent = t(key, vars); }
+const loc = () => lang === "th" ? "th-TH" : "en-GB";
+function fmtDate(d, o){ if (!d) return ""; return new Intl.DateTimeFormat(loc(), Object.assign({weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}, o||{})).format(new Date(d.slice(0,10)+"T00:00:00Z")); }
+const fmtDT = s => s ? fmtDate(s, {weekday:undefined}) + " " + s.slice(11,16) : "";
+const fmtTime = ev => ev.startTime ? ev.startTime + (ev.endTime ? "–" + ev.endTime : "") : "";
+const money = n => "฿" + new Intl.NumberFormat("en-US", {minimumFractionDigits:2, maximumFractionDigits:2}).format(Number(n) || 0);
+let toastT;
+function toast(msg){ const el = $("#toast"); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 5000); }
 
 /* =====================================================================
    State
    ===================================================================== */
-const state = { events:[], items:[], submitting:false, liff:{ok:false,userId:null,name:null,idToken:null,inClient:false}, demo:false };
+const params = new URLSearchParams(location.search);
+const demo = !CONFIG.API_URL, demoMode = params.get("demo") || "participant";
+const state = { token:null, inClient:false, name:"", picture:"", data:null, view:"loading", upTab:"all", stTab:"events" };
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  $$("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
+  $("#langBtn").textContent = t("langBtn");
+  if (state.view === "home") renderHome();
+}
+function show(view){
+  state.view = view;
+  $("#vLoading").hidden = view !== "loading"; $("#vHome").hidden = view !== "home"; $("#vFatal").hidden = view !== "fatal";
+}
+function fatal(title, detail){ $("#fatalT").textContent = title; $("#fatalD").textContent = detail || ""; show("fatal"); }
+function go(url){ if (!url){ toast(t("noLink")); return; } location.href = url; }
+function eventUrl(id){ return CONFIG.EVENT_JOIN_LIFF_URL ? CONFIG.EVENT_JOIN_LIFF_URL.replace(/\/$/, "") + "?event=" + encodeURIComponent(id) : ""; }
 
 /* =====================================================================
-   Validation helpers
+   API (the LINE ID token travels in the body; Code.gs checks it with LINE and decides who you are)
    ===================================================================== */
-function setError(fieldEl, key, vars){
-  const err = $(".err", fieldEl);
-  const input = $("input,select,textarea", fieldEl);
-  if (!err) return;
-  if (key){ setI18n(err, key, vars); err.hidden = false; input && input.setAttribute("aria-invalid","true"); }
-  else { err.hidden = true; err.removeAttribute("data-i18n"); input && input.removeAttribute("aria-invalid"); }
-}
-function normPP(v){
-  let d = String(v||"").replace(/\D/g,"");
-  if (d.startsWith("66") && d.length === 11) d = "0" + d.slice(2);
-  return d;
-}
-function thaiIdOk(d){
-  if (!/^\d{13}$/.test(d)) return false;
-  let s = 0; for (let i=0;i<12;i++) s += (+d[i])*(13-i);
-  return ((11 - (s % 11)) % 10) === +d[12];
-}
-function ppOk(raw){
-  const d = normPP(raw);
-  if (/^0\d{9}$/.test(d)) return true;      // mobile
-  if (d.length === 13) return thaiIdOk(d);    // national / tax ID
-  if (/^\d{15}$/.test(d)) return true;      // e-wallet ID
-  return false;
-}
-const toSatang = v => { const n = parseFloat(String(v).replace(/,/g,"")); return isFinite(n) ? Math.round(n*100) : NaN; };
-const fmtBytes = b => b > 1048576 ? (b/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(b/1024))+" KB";
-
-/* =====================================================================
-   Events
-   ===================================================================== */
-function fillEvents(list){
-  state.events = list || [];
-  const sel = $("#event");
-  state.events.forEach(ev => {
-    const o = document.createElement("option");
-    o.value = ev.id;
-    o.textContent = ev.name;
-    sel.appendChild(o);
-  });
-}
-const currentEvent = () => state.events.find(e => e.id === $("#event").value);
-function updateEventLine(){
-  const ev = currentEvent(), el = $("#budgetLine");
-  if (ev && ev.budget){ el.hidden = false; el.textContent = t("budget", {x:money(ev.budget)}); } else el.hidden = true;
-}
-
-/* =====================================================================
-   Expense slips
-   ===================================================================== */
-function slipHTML(id){
-  const cats = CONFIG.CATEGORIES.map(c => `<option value="${c}" data-i18n="cat_${c}"></option>`).join("");
-  return `
-  <div class="slip-h"><h3 data-role="title"></h3><button type="button" class="link danger" data-act="remove" data-i18n="remove"></button></div>
-
-  <div class="field" data-f="receipt" role="group" aria-labelledby="rl${id}">
-    <span class="lbl" id="rl${id}" data-i18n="receipt"></span>
-    <div class="drop" data-role="drop">
-      <div class="drop-empty" data-role="empty">
-        <button type="button" class="btn sec" data-act="cam" data-i18n="takePhoto"></button>
-        <button type="button" class="btn sec" data-act="pick" data-i18n="chooseFile"></button>
-        <p class="hint" data-role="rhint"></p>
-      </div>
-      <div class="drop-has" data-role="has" hidden>
-        <div data-role="thumbWrap"></div>
-        <div class="fileinfo"><span class="fname" data-role="fname"></span><span class="fsize" data-role="fsize"></span></div>
-        <div class="drop-actions">
-          <button type="button" class="link" data-act="pick" data-i18n="replace"></button>
-        </div>
-      </div>
-      <div class="busy" data-role="busy" hidden data-i18n="processing"></div>
-    </div>
-    <input type="file" accept="image/*,application/pdf" hidden data-role="filePick">
-    <input type="file" accept="image/*" capture="environment" hidden data-role="fileCam">
-    <p class="err" role="alert" hidden></p>
-  </div>
-
-  <div class="row2">
-    <label class="field" data-f="date">
-      <span class="lbl" data-i18n="date"></span>
-      <input type="date" data-role="date" required>
-      <p class="err" role="alert" hidden></p>
-    </label>
-    <label class="field amount" data-f="amount">
-      <span class="lbl" data-i18n="amount"></span>
-      <input type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" data-role="amount" required>
-      <p class="err" role="alert" hidden></p>
-    </label>
-  </div>
-
-  <label class="field" data-f="category">
-    <span class="lbl" data-i18n="category"></span>
-    <select data-role="category" required><option value="" data-i18n="categoryPh"></option>${cats}</select>
-    <p class="err" role="alert" hidden></p>
-  </label>
-
-  <label class="field" data-f="desc">
-    <span class="lbl" data-i18n="desc"></span>
-    <input type="text" maxlength="120" data-role="desc" data-i18n-ph="descPh" required>
-    <p class="err" role="alert" hidden></p>
-  </label>`;
-}
-
-function addItem(focus){
-  if (state.items.length >= CONFIG.MAX_ITEMS) return;
-  const id = ++uidN;
-  const el = document.createElement("section");
-  el.className = "slip enter";
-  el.innerHTML = slipHTML(id);
-  $("#slips").appendChild(el);
-  const it = { id, el, file:null, previewUrl:null };
-  state.items.push(it);
-
-  $('[data-role="date"]', el).value = todayStr();
-  $('[data-role="date"]', el).max = todayStr();
-  const rh = $('[data-role="rhint"]', el); rh.dataset.i18n = "receiptHint"; rh._vars = {mb:CONFIG.MAX_FILE_MB};
-
-  el.addEventListener("click", e => {
-    const b = e.target.closest("[data-act]"); if (!b) return;
-    const act = b.dataset.act;
-    if (act === "remove") removeItem(it);
-    if (act === "cam")  $('[data-role="fileCam"]', el).click();
-    if (act === "pick") $('[data-role="filePick"]', el).click();
-  });
-  ["filePick","fileCam"].forEach(r => $('[data-role="'+r+'"]', el).addEventListener("change", e => {
-    const f = e.target.files && e.target.files[0]; e.target.value = ""; if (f) attachFile(it, f);
-  }));
-  const amt = $('[data-role="amount"]', el);
-  amt.addEventListener("input", () => { amt.value = amt.value.replace(/[^0-9.,]/g,""); updateTotals(); });
-  amt.addEventListener("blur", () => { const s = toSatang(amt.value); if (!isNaN(s) && s>0) amt.value = (s/100).toFixed(2); updateTotals(); });
-  ["date","category","desc"].forEach(r => $('[data-role="'+r+'"]', el).addEventListener("input", () => setError($('[data-f="'+r+'"]', el), null)));
-  amt.addEventListener("input", () => setError($('[data-f="amount"]', el), null));
-
-  renumber(); applyLang(); updateAddState();
-  if (focus) el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth", block:"center"});
-  return it;
-}
-
-function removeItem(it){
-  if (state.items.length === 1){ resetItem(it); return; }   // always keep one record
-  if (it.previewUrl) URL.revokeObjectURL(it.previewUrl);
-  it.el.remove();
-  state.items = state.items.filter(x => x !== it);
-  renumber(); updateTotals(); updateAddState();
-}
-function resetItem(it){
-  const el = it.el;
-  if (it.previewUrl) URL.revokeObjectURL(it.previewUrl);
-  it.file = null; it.previewUrl = null;
-  $('[data-role="empty"]', el).hidden = false; $('[data-role="has"]', el).hidden = true;
-  $('[data-role="drop"]', el).classList.remove("has");
-  $('[data-role="amount"]', el).value = ""; $('[data-role="desc"]', el).value = "";
-  $('[data-role="category"]', el).value = ""; $('[data-role="date"]', el).value = todayStr();
-  $$("[data-f]", el).forEach(f => setError(f, null));
-  updateTotals();
-}
-function renumber(){
-  state.items.forEach((it,i) => {
-    const h = $('[data-role="title"]', it.el);
-    h.dataset.i18n = "expenseN"; h._vars = {n:i+1}; h.textContent = t("expenseN", {n:i+1});
-    // the remove button is hidden when only a blank single record remains
-  });
-}
-function updateAddState(){
-  const full = state.items.length >= CONFIG.MAX_ITEMS;
-  $("#addBtn").hidden = full; $("#limitLine").hidden = !full;
-}
-
-/* ---- receipt files ---- */
-async function compressImage(file){
-  const bmp = await createImageBitmap(file, {imageOrientation:"from-image"});
-  const scale = Math.min(1, CONFIG.IMAGE_MAX_PX / Math.max(bmp.width, bmp.height));
-  const c = document.createElement("canvas");
-  c.width = Math.round(bmp.width*scale); c.height = Math.round(bmp.height*scale);
-  const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height);
-  ctx.drawImage(bmp, 0, 0, c.width, c.height);
-  const blob = await new Promise(res => c.toBlob(res, "image/jpeg", CONFIG.IMAGE_QUALITY));
-  if (!blob) throw new Error("encode");
-  return new File([blob], (file.name || "receipt").replace(/\.[^.]+$/,"") + ".jpg", {type:"image/jpeg"});
-}
-async function attachFile(it, file){
-  const field = $('[data-f="receipt"]', it.el), maxB = CONFIG.MAX_FILE_MB*1048576;
-  setError(field, null);
-  const isPdf = file.type === "application/pdf", isImg = file.type.startsWith("image/");
-  if (!isPdf && !isImg){ setError(field, "fileType"); return; }
-  $('[data-role="busy"]', it.el).hidden = false; $('[data-role="empty"]', it.el).hidden = true; $('[data-role="has"]', it.el).hidden = true;
-  let out = file;
-  try{
-    if (isImg){ try{ out = await compressImage(file); }catch(e){ out = file; } }
-    if (out.size > maxB) throw new Error("big");
-  }catch(e){
-    $('[data-role="busy"]', it.el).hidden = true;
-    $('[data-role="empty"]', it.el).hidden = !!it.file ? true : false;
-    $('[data-role="has"]', it.el).hidden = !it.file;
-    setError(field, "fileBig", {mb:CONFIG.MAX_FILE_MB}); return;
-  }
-  if (it.previewUrl) URL.revokeObjectURL(it.previewUrl);
-  it.file = out; it.previewUrl = isImg ? URL.createObjectURL(out) : null;
-  const wrap = $('[data-role="thumbWrap"]', it.el);
-  wrap.innerHTML = isImg ? '<img class="thumb" alt="">' : '<div class="pdfbox">PDF</div>';
-  if (isImg) $("img", wrap).src = it.previewUrl;
-  $('[data-role="fname"]', it.el).textContent = out.name;
-  $('[data-role="fsize"]', it.el).textContent = fmtBytes(out.size);
-  $('[data-role="busy"]', it.el).hidden = true;
-  $('[data-role="empty"]', it.el).hidden = true; $('[data-role="has"]', it.el).hidden = false;
-  $('[data-role="drop"]', it.el).classList.add("has");
-}
-
-/* =====================================================================
-   Totals
-   ===================================================================== */
-function totalSatang(){
-  return state.items.reduce((s,it) => { const v = toSatang($('[data-role="amount"]', it.el).value); return s + (isNaN(v)||v<0 ? 0 : v); }, 0);
-}
-function updateTotals(){
-  const total = totalSatang()/100, n = state.items.length;
-  $("#tapeLabel").textContent = t("total") + " (" + t(n === 1 ? "itemsOne" : "itemsMany", {n}) + ")";
-  $("#tapeTotal").textContent = money(total);
-  const ev = currentEvent(), w = $("#tapeWarn");
-  if (ev && ev.budget && total > ev.budget){ w.hidden = false; w.textContent = t("over", {x:money(total - ev.budget)}); }
-  else w.hidden = true;
-}
-
-/* =====================================================================
-   Validate + submit
-   ===================================================================== */
-function validate(){
-  const errs = [];
-  const check = (field, key, vars) => { setError(field, key, vars); if (key) errs.push(field); };
-
-  const evF = $('[data-f="event"]'); check(evF, $("#event").value ? null : "eventReq");
-  const nmF = $('[data-f="name"]');  check(nmF, $("#name").value.trim().length >= 2 ? null : "req");
-  const ppF = $('[data-f="pp"]');    check(ppF, ppOk($("#pp").value) ? null : "ppBad");
-
-  state.items.forEach(it => {
-    const el = it.el, f = r => $('[data-f="'+r+'"]', el);
-    check(f("receipt"), it.file ? null : "receiptReq");
-    const d = $('[data-role="date"]', el).value;
-    check(f("date"), !d ? "dateReq" : (d > todayStr() ? "dateFuture" : null));
-    const s = toSatang($('[data-role="amount"]', el).value);
-    check(f("amount"), (isNaN(s) || s <= 0) ? "amountBad" : (s > 100000000 ? "amountMax" : null));
-    check(f("category"), $('[data-role="category"]', el).value ? null : "catReq");
-    check(f("desc"), $('[data-role="desc"]', el).value.trim() ? null : "req");
-  });
-  return errs;
-}
-function toast(msg){
-  const el = $("#toast"); el.textContent = msg; el.hidden = false;
-  clearTimeout(toast._t); toast._t = setTimeout(() => el.hidden = true, 4500);
-}
-function buildPayload(key){
-  const ev = currentEvent();
-  return {
-    idempotencyKey:key, submittedAt:new Date().toISOString(), currency:"THB", lang,
-    event:{id:ev.id, name:ev.name},
-    payee:{name:$("#name").value.trim(), promptpay:normPP($("#pp").value)},
-    note:$("#note").value.trim(),
-    total:totalSatang()/100,
-    items:state.items.map((it,i) => ({
-      index:i+1, date:$('[data-role="date"]', it.el).value,
-      category:$('[data-role="category"]', it.el).value,
-      description:$('[data-role="desc"]', it.el).value.trim(),
-      amount:toSatang($('[data-role="amount"]', it.el).value)/100,
-      receiptField:"receipt_"+(i+1), receiptName:it.file.name, receiptType:it.file.type, receiptSize:it.file.size
-    }))
-  };
-}
-function fileToBase64(file){
-  return new Promise((res, rej) => { const r = new FileReader();
-    r.onload = () => res(String(r.result).split(",")[1]); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
-}
-// One plain-text JSON request (Apps Script cannot read custom headers). The LINE ID token travels in the
-// body and Code.gs checks it with LINE; the page never sends its own LINE user ID.
-async function api(body, timeoutMs){
-  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), timeoutMs || 30000);
-  let data;
-  try{
-    const r = await fetch(CONFIG.API_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body: JSON.stringify(Object.assign({}, body, {lineIdToken: state.liff.idToken || null})), signal:ctl.signal});
-    data = await r.json();
-  }catch(e){ const err = new Error(t("sendFail")); err.code = "NET"; throw err; }
-  finally{ clearTimeout(to); }
-  if (!data.ok){ const err = new Error(data.code === "AUTH" ? t("authFail") : (data.error || t("sendFail"))); err.code = data.code; throw err; }
-  return data;
-}
-async function send(payload){
-  if (!CONFIG.API_URL){                       // demo mode
-    await new Promise(r => setTimeout(r, 900));
-    console.log("[demo] payload", payload);
-    return {reference:"DEMO-" + Math.random().toString(36).slice(2,8).toUpperCase()};
-  }
-  const receipts = await Promise.all(state.items.map(async (it,i) => ({
-    field:"receipt_"+(i+1), name:it.file.name, type:it.file.type, data:await fileToBase64(it.file)
-  })));
-  const data = await api(Object.assign({}, payload, {action:"claim.submit", receipts}), 120000);
-  return {reference:data.reference};
-}
-let pendingKey = null;
-async function onSubmit(){
-  if (state.submitting) return;
-  const errs = validate();
-  if (errs.length){
-    toast(t("fixN", {n:errs.length}));
-    const first = errs[0]; first.scrollIntoView({behavior:"smooth", block:"center"});
-    const inp = $("input:not([type=file]),select,textarea", first); inp && setTimeout(() => inp.focus({preventScroll:true}), 300);
-    return;
-  }
-  const totalBytes = state.items.reduce((s,it) => s + (it.file ? it.file.size : 0), 0);
-  if (CONFIG.API_URL && totalBytes > CONFIG.MAX_TOTAL_MB*1048576){ toast(t("totalBig", {mb:CONFIG.MAX_TOTAL_MB})); return; }
-  state.submitting = true; $("#submitBtn").disabled = true; $("#submitBtn").textContent = t("submitting");
-  pendingKey = pendingKey || uuid();         // same key on retry => backend can de-duplicate
-  try{
-    const payload = buildPayload(pendingKey);
-    const res = await send(payload);
-    if ($("#remember").checked) store.set("reimb.payee", {name:$("#name").value.trim(), pp:$("#pp").value.trim()});
-    else store.del("reimb.payee");
-    showDone(payload, res.reference);
-    pendingKey = null;
-    sendChatSummary(payload, res.reference);
-  }catch(e){
-    console.error(e);
-    if (e && e.code === "NOT_MEMBER"){ goJoin(); return; }
-    if (e && e.code === "FORBIDDEN"){ showGate("role", state.liff.name); return; }
-    toast(e && e.message ? e.message : t("sendFail"));
-  }finally{
-    state.submitting = false; $("#submitBtn").disabled = false; $("#submitBtn").textContent = t("submit");
-  }
-}
-function showDone(p, ref){
-  $("#formView").hidden = true; $("#tape").hidden = true; $("#doneView").hidden = false;
-  $("#refNo").textContent = ref;
-  const box = $("#doneSummary"); box.innerHTML = "";
-  [["sumEvent", p.event.name], ["sumItems", String(p.items.length)], ["sumTotal", money(p.total)]].forEach(([k,v]) => {
-    const row = document.createElement("div"); row.className = "kv";
-    const a = document.createElement("span"); a.dataset.i18n = k; a.textContent = t(k);
-    const b = document.createElement("span"); b.textContent = v;
-    row.append(a,b); box.appendChild(row);
-  });
-  window.scrollTo(0,0);
-}
-// Not an approved member: go to the join page (it shows sign-up, "waiting for review" or "access denied" as needed)
+class ApiError extends Error { constructor(m, c){ super(m); this.code = c; } }
 function goJoin(){
   if (CONFIG.JOIN_LIFF_URL){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
-  showGate("member", state.liff.name);
+  fatal(t("notMemberT"), t("notMemberD"));
 }
-function showGate(kind, lineName, message){
-  $("#formView").hidden = true; $("#tape").hidden = true; $("#doneView").hidden = true; $("#gateView").hidden = false;
-  setI18n($("#gateTitle"), kind === "role" ? "gateRoleT" : kind === "member" ? "gateMemberT" : "gateFailT");
-  if (kind === "role") setI18n($("#gateText"), "gateRoleD");
-  else if (kind === "member") setI18n($("#gateText"), "gateMemberD");
-  else { $("#gateText").removeAttribute("data-i18n"); $("#gateText").textContent = message || t("liffFail"); }
-  $("#gateWho").hidden = kind !== "role" || !lineName;
-  $("#gateName").textContent = lineName || "";
-  $("#gateNote").hidden = kind !== "role";
-  if (kind === "role") setI18n($("#gateNote"), "gateNote");
-  window.scrollTo(0,0);
-}
-async function sendChatSummary(p, ref){
-  if (!CONFIG.SEND_CHAT_SUMMARY || !window.liff || !state.liff.ok || !state.liff.inClient) return;
+async function post(action, data){
+  if (demo) return demoApi(action);
+  let res;
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 60000);
   try{
-    await liff.sendMessages([{type:"text", text:t("chatMsg", {ref, event:p.event.name, total:money(p.total)})}]);
-  }catch(e){ /* needs chat_message.write scope and a chat context; safe to ignore */ }
+    const r = await fetch(CONFIG.API_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify(Object.assign({}, data, {action, lineIdToken:state.token})), signal:ctl.signal});
+    res = await r.json();
+  }catch(e){ throw new ApiError(t("errNet"), "NET"); }
+  finally{ clearTimeout(to); }
+  if (res.ok) return res;
+  const map = {AUTH:"errAuth", RATE:"errRate", SERVER:"errNet"};
+  throw new ApiError(map[res.code] ? t(map[res.code]) : res.error, res.code);
 }
 
 /* =====================================================================
-   LIFF init
+   Render
    ===================================================================== */
-function showLiffBanner(msg){ const b = $("#liffBanner"); b.textContent = msg; b.hidden = false; }
-async function initLiff(){
-  if (!CONFIG.LIFF_ID || !window.liff){ state.demo = !CONFIG.API_URL; return true; }
-  try{
-    await liff.init({liffId:CONFIG.LIFF_ID});
-    if (!liff.isLoggedIn()){ liff.login({redirectUri:location.href}); return false; }
-    state.liff.ok = true; state.liff.inClient = liff.isInClient();
-    state.liff.idToken = liff.getIDToken();      // needs the openid scope
-    try{ const p = await liff.getProfile(); state.liff.userId = p.userId; state.liff.name = p.displayName; }catch(e){}
-    const l = (liff.getLanguage && liff.getLanguage() || "").toLowerCase();
-    if (l) lang = l.startsWith("th") ? "th" : "en";
-  }catch(e){
-    console.error(e); applyLang(); showLiffBanner(t("liffFail"));
-  }
-  state.demo = !CONFIG.API_URL;
-  return true;
+function setSeg(btns, active){ btns.forEach(([el, on]) => el.setAttribute("aria-selected", on ? "true" : "false")); }
+function renderHome(){
+  const d = state.data; if (!d) return;
+  const todo = d.upcoming.filter(e => !e.myReference);
+  const mine = d.myEvents.filter(e => e.status === "upcoming");
+  const openClaims = d.myClaims.filter(c => c.status === "Pending" || c.status === "Approved");
+  const showClaims = d.canClaim || d.myClaims.length > 0;
+
+  const stat = (n, label, hot, onclick) => h("button",{type:"button",class:"stat" + (hot ? " hot" : ""),onclick}, h("b",{text:String(n)}), h("span",{text:label}));
+  $("#stats").replaceChildren(...[
+    stat(todo.length, t("sTodo"), todo.length > 0, () => { state.upTab = "todo"; renderHome(); $("#secUpcoming").scrollIntoView({behavior:"smooth"}); }),
+    stat(mine.length, t("sMine"), false, () => { state.stTab = "events"; renderHome(); $("#secStatus").scrollIntoView({behavior:"smooth"}); }),
+    showClaims ? stat(openClaims.length, t("sClaims"), false, () => { state.stTab = "claims"; renderHome(); $("#secStatus").scrollIntoView({behavior:"smooth"}); }) : null
+  ].filter(Boolean));
+
+  // upcoming
+  $("#upAll").textContent = t("segAll", {n:d.upcoming.length}); $("#upTodo").textContent = t("segTodo", {n:todo.length});
+  setSeg([[$("#upAll"), state.upTab === "all"], [$("#upTodo"), state.upTab === "todo"]]);
+  const list = state.upTab === "todo" ? todo : d.upcoming;
+  $("#upList").replaceChildren(...(list.length ? list.map(evRow) :
+    [state.upTab === "todo" && d.upcoming.length ? empty("emptyTodoT","emptyTodoD") : empty("emptyUpT","emptyUpD")]));
+
+  // status
+  if (!showClaims) state.stTab = "events";
+  $("#stSeg").hidden = !showClaims;
+  $("#stEvents").textContent = t("segEvents"); $("#stClaims").textContent = t("segClaims");
+  setSeg([[$("#stEvents"), state.stTab === "events"], [$("#stClaims"), state.stTab === "claims"]]);
+  const rows = state.stTab === "claims" ? d.myClaims : d.myEvents;
+  $("#stList").replaceChildren(...(rows.length ? rows.map(state.stTab === "claims" ? claimRow : myEventRow) :
+    [state.stTab === "claims" ? empty("emptyClT","emptyClD") : empty("emptyEvT","emptyEvD")]));
+  $("#stMore").hidden = rows.length < 20; $("#stMore").textContent = t("moreN", {n:rows.length});
+  $("#newClaimBtn").hidden = !(d.canClaim && state.stTab === "claims");
+  $("#asOf").textContent = t("asOf", {d:fmtDT(d.now)});
+}
+function empty(tk, dk){ return h("div",{class:"empty"}, h("b",{text:t(tk)}), t(dk)); }
+function dateBox(date){
+  const x = new Date(date.slice(0,10) + "T00:00:00Z");
+  return h("div",{class:"datebox","aria-hidden":"true"},
+    h("b",{text:String(x.getUTCDate())}), h("span",{text:new Intl.DateTimeFormat(loc(), {month:"short",timeZone:"UTC"}).format(x)}));
+}
+function evTag(ev){
+  if (ev.myReference) return h("span",{class:"tag ok",text:t("registered")});
+  if (ev.regState === "open") return h("span",{class:"tag info",text:t("regOpen",{d:fmtDT(ev.regClose)})});
+  if (ev.regState === "upcoming") return h("span",{class:"tag warn",text:t("regUpcoming",{d:fmtDT(ev.regOpen)})});
+  return h("span",{class:"tag",text:t("regClosed")});
+}
+function evRow(ev){
+  const when = [fmtDate(ev.date, {year:undefined}), fmtTime(ev)].filter(Boolean).join(" · ");
+  return h("button",{type:"button",class:"ev","data-event":ev.id,onclick:() => go(eventUrl(ev.id))},
+    dateBox(ev.date),
+    h("div",{}, h("div",{class:"ename",text:ev.name}), h("span",{class:"meta",text:when}), ev.location ? h("span",{class:"meta",text:"📍 " + ev.location}) : null, evTag(ev)),
+    h("span",{class:"go","aria-hidden":"true",text:"›"}));
+}
+function myEventRow(r){
+  const tag = {upcoming:["tag info","stUpcoming"], ended:["tag","stEnded"], cancelled:["tag bad","stCancelled"]}[r.status] || ["tag",""];
+  const when = [fmtDate(r.date), fmtTime(r)].filter(Boolean).join(" · ");
+  const body = [h("div",{class:"item-top"}, h("b",{text:r.eventName}), h("span",{class:tag[0],text:t(tag[1])})),
+    when ? h("span",{class:"meta",text:when}) : null, r.location ? h("span",{class:"meta",text:"📍 " + r.location}) : null,
+    h("span",{class:"meta",text:t("refL",{ref:r.reference})})];
+  return r.status === "upcoming"
+    ? h("button",{type:"button",class:"item","data-ref":r.reference,onclick:() => go(eventUrl(r.eventId))}, ...body)
+    : h("div",{class:"item","data-ref":r.reference}, ...body);
+}
+function claimRow(c){
+  const cls = {Pending:"tag warn", Approved:"tag info", Rejected:"tag bad", Paid:"tag ok"}[c.status] || "tag";
+  const reached = {Pending:1, Approved:2, Paid:3, Rejected:1}[c.status] || 1;
+  const step = (i, key, bad) => h("div",{class:"s" + (bad ? " bad" : i <= reached ? " done" : "")}, h("span",{class:"dot"}), t(key));
+  const line = i => h("span",{class:"ln" + (c.status !== "Rejected" && i < reached ? " done" : "")});
+  const steps = c.status === "Rejected"
+    ? h("div",{class:"steps","aria-hidden":"true"}, step(1,"stepSent"), line(1), step(2,"stepRejected",true))
+    : h("div",{class:"steps","aria-hidden":"true"}, step(1,"stepSent"), line(1), step(2,"stepApproved"), line(2), step(3,"stepPaid"));
+  return h("div",{class:"item","data-ref":c.reference},
+    h("div",{class:"item-top"}, h("b",{text:c.eventName}), h("span",{class:cls,text:t("c" + c.status)})),
+    h("div",{class:"amount",text:money(c.total)}),
+    h("span",{class:"meta",text:t("itemsL",{n:c.items}) + " · " + t("sentL",{d:fmtDT(c.submittedAt)})}),
+    h("span",{class:"meta",text:t("refL",{ref:c.reference})}),
+    steps,
+    c.status === "Rejected" ? h("span",{class:"hint",text:t("rejectedHint")}) : null);
+}
+
+/* =====================================================================
+   Header (LINE picture + name)
+   ===================================================================== */
+function renderHeader(){
+  $("#lineName").textContent = state.name || " ";
+  const box = $("#avatarBox");
+  if (state.picture && /^https:\/\/[a-z0-9.-]+\.line-scdn\.net\//i.test(state.picture)){
+    const img = h("img",{class:"avatar",alt:"",src:state.picture + "/small",referrerpolicy:"no-referrer"});
+    img.onerror = () => { img.replaceWith(initials()); };
+    box.replaceWith(img); img.id = "avatarBox";
+  } else box.textContent = (state.name || "?").trim().charAt(0).toUpperCase();
+  function initials(){ const d = h("div",{class:"avatar",id:"avatarBox","aria-hidden":"true"}); d.textContent = (state.name || "?").trim().charAt(0).toUpperCase(); return d; }
+}
+
+/* =====================================================================
+   Demo data (no API_URL): ?demo=participant (default) | organizer | new
+   ===================================================================== */
+async function demoApi(action){
+  await new Promise(r => setTimeout(r, 350));
+  if (action !== "home.bootstrap") throw new ApiError("Unknown", "VALIDATION");
+  const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
+  const now = iso(0) + " 10:00";
+  const upcoming = [
+    {id:"EV-DEMO-01", name:"Community Meetup – November", date:iso(9), startTime:"18:30", endTime:"21:00", location:"Co-working space, Ari", regOpen:iso(-3)+" 09:00", regClose:iso(7)+" 23:59", regState:"open", hasPoster:false, myReference:""},
+    {id:"EV-DEMO-02", name:"Board Game Night", date:iso(16), startTime:"19:00", endTime:"22:00", location:"Cafe, Phrom Phong", regOpen:iso(-1)+" 09:00", regClose:iso(14)+" 23:59", regState:"open", hasPoster:false, myReference:"RG-DEMO-0012"},
+    {id:"EV-DEMO-03", name:"Year-end Gathering", date:iso(40), startTime:"17:00", endTime:"22:00", location:"Rooftop, Sukhumvit 24", regOpen:iso(10)+" 09:00", regClose:iso(37)+" 23:59", regState:"upcoming", hasPoster:false, myReference:""}
+  ];
+  const myEvents = [
+    {reference:"RG-DEMO-0012", eventId:"EV-DEMO-02", eventName:"Board Game Night", date:iso(16), startTime:"19:00", endTime:"22:00", location:"Cafe, Phrom Phong", registeredAt:iso(-1)+" 12:10", status:"upcoming"},
+    {reference:"RG-DEMO-0007", eventId:"EV-DEMO-00", eventName:"Community Meetup – October", date:iso(-20), startTime:"18:30", endTime:"21:00", location:"Co-working space, Ari", registeredAt:iso(-30)+" 20:15", status:"ended"},
+    {reference:"RG-DEMO-0003", eventId:"EV-DEMO-99", eventName:"Picnic in the Park", date:iso(-45), startTime:"09:00", endTime:"12:00", location:"Benjakitti Park", registeredAt:iso(-50)+" 08:00", status:"cancelled"}
+  ];
+  const myClaims = [
+    {reference:"RC-DEMO-0021", status:"Pending", eventName:"Community Meetup – November", total:1850, items:3, submittedAt:iso(-1)+" 21:40", decidedAt:""},
+    {reference:"RC-DEMO-0015", status:"Approved", eventName:"Community Meetup – October", total:4200.5, items:5, submittedAt:iso(-18)+" 09:12", decidedAt:iso(-15)+" 10:00"},
+    {reference:"RC-DEMO-0009", status:"Paid", eventName:"Picnic in the Park", total:960, items:2, submittedAt:iso(-44)+" 13:05", decidedAt:iso(-40)+" 16:30"},
+    {reference:"RC-DEMO-0004", status:"Rejected", eventName:"Picnic in the Park", total:320, items:1, submittedAt:iso(-44)+" 13:20", decidedAt:iso(-40)+" 16:31"}
+  ];
+  if (demoMode === "new") return {ok:true, now, role:"participant", firstName:"มานี", upcoming:upcoming.map(e => Object.assign({}, e, {myReference:""})), myEvents:[], canClaim:false, myClaims:[]};
+  const org = demoMode === "organizer";
+  return {ok:true, now, role:org ? "organizer" : "participant", firstName:"สมชาย", upcoming, myEvents, canClaim:org, myClaims:org ? myClaims : []};
 }
 
 /* =====================================================================
    Boot
    ===================================================================== */
-(async function boot(){
-  const saved = store.get("reimb.lang"); if (saved) lang = saved;
-  applyLang();
-  if (!(await initLiff())) return;
-  if (!store.get("reimb.lang")) applyLang();
-  $("#gateClose").addEventListener("click", () => { if (window.liff && state.liff.inClient) liff.closeWindow(); else window.close(); });
-  if (CONFIG.API_URL){
-    // Server decides: is this LINE user an organizer or approver? (role column in the Participants tab)
-    let r;
-    try{ r = await api({action:"claim.bootstrap"}); }
-    catch(e){ showGate("fail", null, e.message); return; }
-    if (!r.allowed){
-      if (r.memberStatus !== "approved"){ goJoin(); return; }   // not an approved member yet
-      showGate("role", r.lineName || state.liff.name); return;  // approved, but not an organizer or approver
-    }
-    fillEvents(r.events);
-  } else {
-    if (new URLSearchParams(location.search).get("demo") === "blocked"){ showGate("role", "Kim (demo)"); return; }
-    fillEvents(CONFIG.EVENTS);
+async function initLiff(){
+  if (demo || !CONFIG.LIFF_ID || !window.liff){ state.name = "Kim (demo)"; return true; }
+  await liff.init({liffId:CONFIG.LIFF_ID});
+  if (!liff.isLoggedIn()){ liff.login({redirectUri:location.href}); return false; }
+  state.inClient = liff.isInClient();
+  state.token = liff.getIDToken();        // LINE ID token (needs the openid scope); Code.gs checks it with LINE
+  try{ const p = await liff.getProfile(); state.name = p.displayName || ""; state.picture = p.pictureUrl || ""; }catch(e){}
+  if (!store.get("home.lang")){ const l = (liff.getLanguage && liff.getLanguage() || "").toLowerCase(); if (l) lang = l.startsWith("th") ? "th" : "en"; }
+  return true;
+}
+async function load(){
+  try{
+    state.data = await post("home.bootstrap");
+  }catch(e){
+    if (e.code === "NOT_MEMBER"){ goJoin(); return; }        // sign-up.html shows sign-up, "waiting for review" or "not approved"
+    if (state.data){ toast(e.message); return; }              // a refresh failed: keep what is on screen
+    fatal(t("errLoad"), e.code === "AUTH" ? t("errAuth") : e.code === "RATE" ? t("errRate") : t("errLoadD")); return;
   }
-  const payee = store.get("reimb.payee");
-  if (payee){ $("#name").value = payee.name || ""; $("#pp").value = payee.pp || ""; }
-  $("#demoBanner").hidden = !state.demo;
-  addItem(false);
+  show("home"); renderHome();
+}
+(async function boot(){
+  const saved = store.get("home.lang"); if (saved) lang = saved;
   applyLang();
-
-  $("#langBtn").addEventListener("click", () => { lang = lang === "th" ? "en" : "th"; store.set("reimb.lang", lang); applyLang(); });
-  $("#event").addEventListener("change", () => { setError($('[data-f="event"]'), null); updateEventLine(); updateTotals(); });
-  $("#name").addEventListener("input", () => setError($('[data-f="name"]'), null));
-  $("#pp").addEventListener("input", () => setError($('[data-f="pp"]'), null));
-  $("#addBtn").addEventListener("click", () => addItem(true));
-  $("#submitBtn").addEventListener("click", onSubmit);
-  $("#closeBtn").addEventListener("click", () => { if (window.liff && state.liff.inClient) liff.closeWindow(); else window.close(); });
-  $("#againBtn").addEventListener("click", () => {
-    state.items.slice().forEach(it => { if (it.previewUrl) URL.revokeObjectURL(it.previewUrl); it.el.remove(); });
-    state.items = []; $("#note").value = ""; addItem(false);
-    $("#doneView").hidden = true; $("#formView").hidden = false; $("#tape").hidden = false; window.scrollTo(0,0); applyLang();
-  });
+  $("#demoBanner").hidden = !demo;
+  try{ if (!(await initLiff())) return; }
+  catch(e){ console.error(e); applyLang(); fatal(t("liffFail"), t("errLoadD")); return; }
+  applyLang(); renderHeader();
+  await load();
 })();
+
+$("#langBtn").addEventListener("click", () => { lang = lang === "th" ? "en" : "th"; store.set("home.lang", lang); applyLang(); });
+$("#upAll").addEventListener("click", () => { state.upTab = "all"; renderHome(); });
+$("#upTodo").addEventListener("click", () => { state.upTab = "todo"; renderHome(); });
+$("#stEvents").addEventListener("click", () => { state.stTab = "events"; renderHome(); });
+$("#stClaims").addEventListener("click", () => { state.stTab = "claims"; renderHome(); });
+$("#newClaimBtn").addEventListener("click", () => go(CONFIG.REIMBURSE_LIFF_URL));
+$("#memberBtn").addEventListener("click", () => go(CONFIG.JOIN_LIFF_URL));
+$("#refreshBtn").addEventListener("click", load);
 </script>
 </body>
 </html>
