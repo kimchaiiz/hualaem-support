@@ -242,9 +242,14 @@ body:has(.screen:not([hidden]) .actionbar) .toast{bottom:calc(84px + var(--safe-
 .home-hint{display:block;font-size:14px;line-height:20px;color:var(--error);margin-top:8px}
 .home-wait{font-size:14px;line-height:20px;color:var(--muted)}
 /* events: Events tab, event page, create/edit. Every selector carries an "events-" class or id (check.js). DESIGN.md components. */
-.events-top{display:flex;justify-content:flex-end;margin-bottom:12px}
-.events-create{height:44px;padding:0 16px 0 12px;border-radius:var(--r-pill);border:0;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;font-weight:600;cursor:pointer}
-.events-create svg{width:20px;height:20px}
+.events-top{position:fixed;z-index:24;bottom:calc(var(--tabbar-h) + var(--safe-b) + 16px);right:max(16px, calc((100vw - 480px) / 2 + 16px));pointer-events:none}
+.events-create{pointer-events:auto;height:52px;padding:0 20px 0 16px;border-radius:var(--r-pill);border:0;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;gap:8px;font-size:16px;line-height:24px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(15,31,30,.24)}
+.events-create:active{background:var(--primary-press)}
+.events-create:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.events-create svg{width:22px;height:22px}
+/* S3b: room at the end of the list so the floating button never covers the last card; the toast moves above it */
+#events-screen.events-hasFab .events-list{padding-bottom:76px}
+body:has(#events-screen.events-hasFab:not([hidden])) .toast{bottom:calc(var(--tabbar-h) + var(--safe-b) + 84px)}
 #events-seg{margin-bottom:12px}
 .events-month{font-size:14px;line-height:20px;font-weight:600;color:var(--muted);margin:4px 0 -4px}
 
@@ -300,7 +305,13 @@ body:has(.screen:not([hidden]) .actionbar) .toast{bottom:calc(84px + var(--safe-
 .events-field input:focus,.events-field textarea:focus{outline:2px solid var(--primary);outline-offset:0;border-color:var(--primary)}
 .events-field input[aria-invalid="true"],.events-field textarea[aria-invalid="true"]{border-color:var(--error)}
 .events-field #events-fBudget{font-variant-numeric:tabular-nums}
-.events-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.events-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:end}
+.events-form .events-grid2>.field{min-width:0}
+.events-form .events-err{margin-top:-10px}
+.events-mapSearch.btn{width:auto;align-self:flex-start;min-height:44px;padding:0 14px;font-size:14px;line-height:20px;margin-top:2px}
+.events-mapSearch svg{width:18px;height:18px}
+.events-form #events-fBudget{font-variant-numeric:tabular-nums}
+.events-adv .field{gap:6px}
 .events-help{font-size:14px;line-height:20px;color:var(--muted);margin:0}
 .events-err{font-size:14px;line-height:20px;color:var(--error);margin:0;display:flex;gap:6px;align-items:flex-start}
 .events-err svg{width:16px;height:16px;flex:none;margin-top:2px}
@@ -370,6 +381,136 @@ body:has(.screen:not([hidden]) .actionbar) .toast{bottom:calc(84px + var(--safe-
 .event-team-center{text-align:center}
 .event-team-center h2{margin:8px 0 4px;font-size:20px;line-height:28px}
 .event-team-center p{margin:0;color:var(--muted)}
+/* registration: Join, invite preview, ticket. Every selector carries "registration-" (check.js). DESIGN.md "Form field", "Ticket". */
+.registration-body{display:flex;flex-direction:column;gap:20px;padding-bottom:8px}
+.registration-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:16px;display:flex;flex-direction:column;gap:12px}
+.registration-card h2{margin:0;font-size:16px;line-height:24px;font-weight:600}
+.registration-head{display:flex;align-items:center;gap:8px}
+.registration-head h2{flex:1}
+.registration-quiet{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 4px;border:0;background:none;color:var(--primary);font-size:14px;line-height:20px;font-weight:600;cursor:pointer}
+.registration-quiet svg{width:16px;height:16px}
+.registration-dl{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);row-gap:6px;font-size:14px;line-height:20px}
+.registration-dl dt{color:var(--muted)}
+.registration-dl dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.registration-note{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.registration-set{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.registration-set>legend{padding:0;margin:0 0 8px;font-size:16px;line-height:24px;font-weight:600;color:var(--ink)}
+.registration-set>legend .registration-req{color:var(--error)}
+.registration-set>legend small{display:block;font-size:14px;line-height:20px;font-weight:400;color:var(--muted)}
+.registration-group{display:flex;flex-direction:column;gap:14px}
+.registration-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.registration-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+/* choice cards (checkbox / radio): the whole row is the control, 48+ tall */
+.registration-choice{min-height:52px;padding:12px 14px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:12px;
+  text-align:left;font-size:16px;line-height:24px;font-weight:500;color:var(--ink);cursor:pointer;width:100%}
+.registration-choice[aria-checked="true"]{border:2px solid var(--primary);background:var(--primary-soft);color:var(--on-primary-soft);padding:11px 13px}
+.registration-box{width:22px;height:22px;flex:none;border-radius:6px;border:1.5px solid var(--field-border);background:var(--surface);color:var(--on-primary);display:flex;align-items:center;justify-content:center}
+.registration-box svg{width:16px;height:16px;stroke-width:2.5;visibility:hidden}
+.registration-choice[aria-checked="true"] .registration-box,.registration-tick[aria-checked="true"] .registration-box{border-color:var(--primary);background:var(--primary)}
+.registration-choice[aria-checked="true"] .registration-box svg,.registration-tick[aria-checked="true"] .registration-box svg{visibility:visible}
+.registration-radio{width:20px;height:20px;flex:none;border-radius:50%;border:1.5px solid var(--field-border);display:grid;place-items:center}
+.registration-radio::after{content:"";width:10px;height:10px;border-radius:50%;background:transparent}
+.registration-choice[aria-checked="true"] .registration-radio{border-color:var(--primary)}
+.registration-choice[aria-checked="true"] .registration-radio::after{background:var(--primary)}
+.registration-center{justify-content:center;font-weight:600}
+.registration-bad>.registration-choice,.registration-bad .registration-grid2>.registration-choice{border-color:var(--error)}
+.registration-err{margin:0;display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;color:var(--error);font-weight:500}
+.registration-err svg{width:16px;height:16px;flex:none}
+.registration-tick{margin-top:2px;padding:10px 0;border:0;background:transparent;display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:14px;line-height:20px;color:var(--ink);cursor:pointer;width:100%}
+.registration-tick .registration-box{margin-top:-1px}
+.registration-consent{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:14px;line-height:20px;color:var(--muted)}
+.registration-consent .registration-quiet{min-height:32px}
+/* invite preview */
+.registration-hero{height:150px;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--on-primary-soft);color:#FFFFFF;padding:16px;display:flex;align-items:flex-end;
+  font-size:26px;line-height:32px;font-weight:700;overflow:hidden;position:relative}
+:root[data-theme="dark"] .registration-hero{background:#0F5753}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .registration-hero{background:#0F5753} }
+.registration-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.registration-evcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.registration-evcard .registration-in{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.registration-evcard b{font-size:18px;line-height:26px;font-weight:600}
+.registration-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.registration-steps li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:24px}
+.registration-num{width:28px;height:28px;flex:none;border-radius:999px;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.registration-num.registration-soft{background:var(--primary-soft);color:var(--on-primary-soft)}
+.registration-ok{background:var(--success-soft);color:var(--success)}
+/* ticket */
+.registration-done{display:flex;align-items:center;gap:10px;color:var(--success)}
+.registration-done span{width:32px;height:32px;border-radius:999px;background:var(--success);color:var(--surface);display:flex;align-items:center;justify-content:center}
+.registration-done svg{width:18px;height:18px;stroke-width:2.5}
+.registration-done h1{margin:0;font-size:20px;line-height:28px;font-weight:700}
+.registration-ticketCard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card)}
+.registration-tTop{padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px}
+.registration-tLabel{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.registration-tName{font-size:24px;line-height:32px;font-weight:700;overflow-wrap:anywhere}
+.registration-tGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;font-size:14px;line-height:20px}
+.registration-tGrid div{display:flex;flex-direction:column;min-width:0}
+.registration-tGrid span{color:var(--muted)}
+.registration-tGrid b{font-weight:600;overflow-wrap:anywhere}
+.registration-tear{position:relative;height:0;border-top:2px dashed var(--line);margin:0 18px}
+.registration-notch{position:absolute;top:-13px;width:24px;height:24px;border-radius:999px;background:var(--bg)}
+.registration-notch.registration-l{left:-31px;border-right:1px solid var(--line)}
+.registration-notch.registration-r{right:-31px;border-left:1px solid var(--line)}
+.registration-tBottom{padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.registration-qr{width:200px;height:200px;padding:10px;background:#FFFFFF;border-radius:8px;box-sizing:content-box}
+.registration-qr svg{display:block;width:200px;height:200px}
+.registration-ref{font-size:16px;line-height:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.registration-qrHint{font-size:14px;line-height:20px;color:var(--muted);text-align:center}
+.registration-serr{height:10px;margin-bottom:-1px;background:radial-gradient(circle at 50% 100%,var(--bg) 5px,transparent 5.5px) 0 0/14px 10px repeat-x}
+.registration-actions{display:flex;flex-direction:column;gap:8px}
+/* Instagram story preview */
+.registration-story{display:block;width:180px;height:320px;margin:0 auto 12px;border-radius:12px;border:1px solid var(--line);object-fit:cover;background:var(--field)}
+.registration-sheetBtns{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+@media (prefers-reduced-motion: no-preference){ .registration-pop{animation:registration-pop .25s ease-out} }
+@keyframes registration-pop{from{transform:scale(1.2)}to{transform:scale(1)}}
+/* check-in (S6): Manage › Participants panel and the scan screen. DESIGN.md "Participant row", "Stamp", "Motion". */
+.registration-people{display:flex;flex-direction:column;gap:10px}
+.registration-search{height:48px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--surface);display:flex;align-items:center;gap:8px;cursor:text}
+.registration-search:focus-within{outline:2px solid var(--primary);outline-offset:1px}
+.registration-search svg{width:20px;height:20px;color:var(--muted);flex:none}
+.registration-searchIn{flex:1;min-width:0;height:44px;border:0;outline:none;background:transparent;font:inherit;font-size:16px;line-height:24px;color:var(--ink)}
+.registration-searchIn::placeholder{color:var(--muted)}
+.registration-searchIn::-webkit-search-cancel-button{-webkit-appearance:none}
+.registration-pCount{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.registration-pCount b{color:var(--ink);font-variant-numeric:tabular-nums}
+.registration-plist{display:flex;flex-direction:column;gap:8px}
+.registration-person{min-height:64px;padding:10px 12px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.registration-av{width:40px;height:40px;flex:none;border-radius:999px;background:var(--primary-soft);color:var(--on-primary-soft);display:flex;align-items:center;justify-content:center;font-weight:700}
+.registration-who{flex:1;min-width:0;display:flex;flex-direction:column}
+.registration-who b{font-size:16px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.registration-pnote{font-size:14px;line-height:20px;color:var(--muted)}
+.registration-pnote.registration-good{color:var(--success)}
+.registration-pnote.registration-warn{color:var(--warning)}
+.registration-person .switch[disabled]{background:var(--line);cursor:default}
+.registration-person .switch[disabled] span{box-shadow:none}
+.registration-center{text-align:center}
+/* scan screen */
+#registration-scan{min-height:calc(100vh - 140px);display:flex;flex-direction:column}
+.registration-scanBody{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 8px}
+.registration-result{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;width:100%;max-width:340px}
+.registration-result h1{margin:4px 0 0;font-size:26px;line-height:34px;font-weight:700}
+.registration-result .sk-stack{width:152px}
+.registration-rLine{margin:0;font-size:16px;line-height:24px;color:var(--muted)}
+.registration-rSmall{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.registration-rName{margin:0;font-size:20px;line-height:28px;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.registration-rOk h1{font-size:30px;line-height:38px;color:var(--success)}
+.registration-stamp{width:152px;height:152px;box-sizing:border-box;border-radius:999px;border:4px solid var(--success);color:var(--success);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transform:rotate(-6deg)}
+.registration-stamp svg{width:56px;height:56px;stroke-width:2.25}
+.registration-stamp span{font-size:14px;line-height:20px;font-weight:700;letter-spacing:.06em}
+.registration-thump{animation:registration-thump .25s ease-out}
+@keyframes registration-thump{from{transform:rotate(-6deg) scale(1.2)}to{transform:rotate(-6deg) scale(1)}}
+.registration-bigIcon{width:120px;height:120px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--field);color:var(--muted)}
+.registration-bigIcon svg{width:56px;height:56px}
+.registration-rAgain .registration-bigIcon{background:var(--warning-soft);color:var(--warning)}
+.registration-rAgain h1{color:var(--warning)}
+.registration-rWrong .registration-bigIcon{background:var(--error-soft);color:var(--error)}
+.registration-rWrong h1{color:var(--error)}
+.registration-rIdle .registration-bigIcon{background:var(--primary-soft);color:var(--on-primary-soft)}
+#registration-scan .actionbar .in{flex-direction:column;gap:4px}
+#registration-scan .actionbar .btn.quiet{width:100%}
+.registration-undo.btn.quiet{color:var(--error)}
+@media (prefers-reduced-motion: reduce){ .registration-thump{animation:none} }
+body:has(#registration-scan:not([hidden]) .actionbar) .toast{bottom:calc(132px + var(--safe-b))}
 /* members: Me tab and the sign-up v2 form. Every selector carries "members-" (check.js). DESIGN.md "Form field". */
 .members-su{padding-bottom:96px}
 .members-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 16px}
@@ -479,6 +620,7 @@ input[type="date"].members-input{padding-right:10px}
 
   <!-- EVENTS tab, event page, create/edit (app/features/events) -->
   <section class="screen" id="events-screen" hidden>
+    <!-- S3b: floating "+ สร้างกิจกรรม" pill, bottom-right above the tab bar (organizers and approvers) -->
     <div class="events-top" id="events-topRow" hidden>
       <button type="button" class="events-create" id="events-createBtn"></button>
     </div>
@@ -520,52 +662,56 @@ input[type="date"].members-input{padding-right:10px}
         <p class="events-err" id="events-eposter" hidden></p>
       </div>
 
-      <div class="events-field">
-        <label for="events-fName"><span data-t="fName"></span> <span class="events-req">*</span></label>
-        <input id="events-fName" maxlength="120" autocomplete="off">
-        <p class="events-err" id="events-ename" hidden></p>
-      </div>
-      <div class="events-field">
-        <label for="events-fDate"><span data-t="fDate"></span> <span class="events-req">*</span></label>
-        <input id="events-fDate" type="date">
-        <p class="events-err" id="events-edate" hidden></p>
+      <!-- S3b: fields use the shared .field / .input look (App.field, DEVELOPING.md 10.6): every control 48 px, 16 px text -->
+      <div class="field">
+        <label for="events-fName"><span data-t="fName"></span><span class="req" aria-hidden="true"> *</span></label>
+        <input class="input" id="events-fName" maxlength="120" autocomplete="off" aria-required="true">
+        <p class="err" id="events-ename" hidden></p>
       </div>
       <div class="events-grid2">
-        <div class="events-field">
-          <label for="events-fStart" data-t="fStart"></label>
-          <input id="events-fStart" type="time">
+        <div class="field">
+          <label for="events-fDate"><span data-t="fDate"></span><span class="req" aria-hidden="true"> *</span></label>
+          <input class="input" id="events-fDate" type="date" aria-required="true">
         </div>
-        <div class="events-field">
-          <label for="events-fEnd" data-t="fEnd"></label>
-          <input id="events-fEnd" type="time">
+        <div class="field">
+          <label for="events-fStart"><span data-t="fStart"></span><span class="req" aria-hidden="true"> *</span></label>
+          <select class="input" id="events-fStart" aria-required="true"></select>
         </div>
       </div>
-      <p class="events-err" id="events-etime" hidden></p>
-      <div class="events-field">
-        <label for="events-fPlace"><span data-t="fPlace"></span> <span class="events-req">*</span></label>
-        <input id="events-fPlace" maxlength="200" autocomplete="off">
-        <p class="events-err" id="events-eplace" hidden></p>
+      <p class="err events-err" id="events-edate" hidden></p>
+      <p class="err events-err" id="events-etime" hidden></p>
+      <div class="field">
+        <label for="events-fPlace"><span data-t="fPlace"></span><span class="req" aria-hidden="true"> *</span></label>
+        <input class="input" id="events-fPlace" maxlength="200" autocomplete="off" aria-required="true">
+        <p class="err" id="events-eplace" hidden></p>
+        <button type="button" class="btn secondary events-mapSearch" id="events-fMapSearch"></button>
       </div>
-      <div class="events-field">
+      <div class="field">
+        <label for="events-fMap"><span data-t="fMap"></span><span class="opt" data-t="optional"></span></label>
+        <input class="input" id="events-fMap" type="url" inputmode="url" maxlength="600" autocomplete="off" placeholder="https://maps.app.goo.gl/...">
+        <p class="hint" data-t="fMapHint"></p>
+        <p class="err" id="events-emap" hidden></p>
+      </div>
+      <div class="field">
         <label for="events-fDesc" data-t="fDesc"></label>
-        <textarea id="events-fDesc" rows="4" maxlength="2000"></textarea>
+        <textarea class="input" id="events-fDesc" rows="4" maxlength="2000"></textarea>
       </div>
-      <div class="events-field">
+      <div class="field">
         <label for="events-fBudget" data-t="fBudget"></label>
-        <input id="events-fBudget" inputmode="decimal" autocomplete="off" placeholder="0.00">
-        <p class="events-help" id="events-fBudgetHelp"></p>
-        <p class="events-err" id="events-ebudget" hidden></p>
+        <input class="input" id="events-fBudget" inputmode="decimal" autocomplete="off" placeholder="0.00">
+        <p class="hint" id="events-fBudgetHelp"></p>
+        <p class="err" id="events-ebudget" hidden></p>
       </div>
 
       <section class="events-secCard" aria-labelledby="events-secT">
         <h2 class="events-secT" id="events-secT" data-t="secT"></h2>
         <p class="events-help" data-t="secD"></p>
         <div id="events-secRows"></div>
-        <div class="events-field events-sessions" id="events-sessBox" hidden>
-          <label for="events-fSessions"><span data-t="fSessions"></span> <span class="events-req">*</span></label>
-          <textarea id="events-fSessions" rows="3"></textarea>
-          <p class="events-help" data-t="fSessionsHint"></p>
-          <p class="events-err" id="events-esessions" hidden></p>
+        <div class="field events-sessions" id="events-sessBox" hidden>
+          <label for="events-fSessions"><span data-t="fSessions"></span><span class="req" aria-hidden="true"> *</span></label>
+          <textarea class="input" id="events-fSessions" rows="3"></textarea>
+          <p class="hint" data-t="fSessionsHint"></p>
+          <p class="err" id="events-esessions" hidden></p>
         </div>
       </section>
 
@@ -574,11 +720,36 @@ input[type="date"].members-input{padding-right:10px}
       </button>
       <div class="events-adv" id="events-adv" hidden>
         <p class="events-help" data-t="advD"></p>
-        <div class="events-field"><label for="events-fRegOpen" data-t="fRegOpen"></label><input id="events-fRegOpen" type="datetime-local"></div>
-        <div class="events-field"><label for="events-fRegClose" data-t="fRegClose"></label><input id="events-fRegClose" type="datetime-local"></div>
-        <div class="events-field"><label for="events-fPubFrom" data-t="fPubFrom"></label><input id="events-fPubFrom" type="datetime-local"></div>
-        <div class="events-field"><label for="events-fPubUntil" data-t="fPubUntil"></label><input id="events-fPubUntil" type="datetime-local"></div>
-        <p class="events-err" id="events-ewindows" hidden></p>
+        <!-- S3b: date + a time list in 15-minute steps (phone pickers ignore "step", so a list is the reliable way) -->
+        <fieldset class="field">
+          <legend data-t="fRegOpen"></legend>
+          <div class="events-grid2">
+            <input class="input" id="events-fRegOpenD" type="date" data-dt="RegOpen">
+            <select class="input" id="events-fRegOpenT" data-dt="RegOpen"></select>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend data-t="fRegClose"></legend>
+          <div class="events-grid2">
+            <input class="input" id="events-fRegCloseD" type="date" data-dt="RegClose">
+            <select class="input" id="events-fRegCloseT" data-dt="RegClose"></select>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend data-t="fPubFrom"></legend>
+          <div class="events-grid2">
+            <input class="input" id="events-fPubFromD" type="date" data-dt="PubFrom">
+            <select class="input" id="events-fPubFromT" data-dt="PubFrom"></select>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend data-t="fPubUntil"></legend>
+          <div class="events-grid2">
+            <input class="input" id="events-fPubUntilD" type="date" data-dt="PubUntil">
+            <select class="input" id="events-fPubUntilT" data-dt="PubUntil"></select>
+          </div>
+        </fieldset>
+        <p class="err events-err" id="events-ewindows" hidden></p>
         <button type="button" class="btn quiet" id="events-advReset" data-t="advReset"></button>
       </div>
     </form>
@@ -611,6 +782,23 @@ input[type="date"].members-input{padding-right:10px}
   <!-- ACCEPT AN INVITE LINK: #team-join/<token> -->
   <section class="screen" id="event-team-join" hidden>
     <div class="stack" id="event-team-joinBody"></div>
+  </section>
+
+  <!-- REGISTRATION: Join, invite preview for friends, ticket with the check-in QR (app/features/registration, session S5) -->
+  <section class="screen" id="registration-join" hidden>
+    <div class="registration-body" id="registration-jBody"></div>
+    <div id="registration-jBar"></div>
+  </section>
+
+  <section class="screen" id="registration-ticket" hidden>
+    <div class="registration-body" id="registration-tBody"></div>
+  </section>
+
+  <!-- CHECK-IN (session S6): #scan/<eventId> = the scan result (checked in, already used, not this event) and the next scan.
+       The participant list is a panel inside Manage (event-team's #manage/<eventId>, App.addPanel "manage" order 10). -->
+  <section class="screen" id="registration-scan" hidden>
+    <div class="registration-scanBody" id="registration-sBody" aria-live="polite"></div>
+    <div id="registration-sBar"></div>
   </section>
 
   <!-- members (app/features/members): the Me tab and the sign-up v2 form (#signup) -->
@@ -1412,7 +1600,7 @@ App.demo["home.bootstrap"] = function (body, mode){
 });
 
 // ---- app/features/events ----
-App.module("events", {"th":{"title":"กิจกรรม","create":"สร้างกิจกรรม","segOpen":"เปิดรับสมัคร","segUpcoming":"กำลังจะมา","segPast":"ผ่านมาแล้ว","emptyOpenT":"ตอนนี้ยังไม่มีกิจกรรมที่เปิดรับสมัคร","emptyOpenD":"ดูกิจกรรมที่กำลังจะมาได้ที่แท็บ “กำลังจะมา”","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมา","emptyUpD":"เมื่อผู้จัดสร้างกิจกรรมใหม่ จะขึ้นที่นี่","emptyPastT":"ยังไม่มีกิจกรรมที่ผ่านมา","emptyPastD":"กิจกรรมย้อนหลัง 12 เดือนจะแสดงที่นี่","chipRegistered":"ลงทะเบียนแล้ว","chipOpen":"เปิดรับสมัคร","chipClosingDays":"ปิดรับใน {n} วัน","chipClosingToday":"ปิดรับวันนี้","chipOpensOn":"เปิดรับ {d}","chipClosed":"ปิดรับสมัครแล้ว","chipEnded":"จบแล้ว","chipDraft":"ร่าง · ยังไม่เผยแพร่","chipNotShown":"ยังไม่แสดงใน LINE","chipCancelled":"ยกเลิกแล้ว","chipPublished":"เผยแพร่แล้ว","detailT":"กิจกรรม","closesAt":"ปิดรับ {d}","opensAt":"เปิดรับ {d}","openMap":"เปิดแผนที่","byOrganizer":"จัดโดย {name}","byCommunity":"จัดโดยทีมชุมชน","teamMore":" + ผู้ร่วมจัด {n} คน","registeredN":"ลงทะเบียนแล้ว {n} คน","asksT":"งานนี้ถามเพิ่ม: {list} (ใช้เวลาไม่ถึง 1 นาที)","askStudy":"การศึกษา/การทำงานและที่อยู่","askSessions":"Session ที่จะเข้า และ Onsite/Online","askTeams":"อีเมล Teams (ถ้าเลือก Online)","askFood":"อาหารที่แพ้และข้อเสนอแนะ","join":"ลงทะเบียน","myTicket":"ดูตั๋วของฉัน","notOpenYet":"เปิดรับ {d}","regClosed":"ปิดรับสมัครแล้ว","editPublish":"แก้ไขและเผยแพร่","share":"แชร์","shareT":"แชร์กิจกรรมนี้","copyLink":"คัดลอกลิงก์","copyLinkSub":"ส่งให้เพื่อนในแชทไหนก็ได้","copied":"คัดลอกลิงก์แล้ว","phoneShare":"แชร์ผ่านเมนูของเครื่อง","phoneShareSub":"LINE, Instagram, Messenger และอื่น ๆ","shareNote":"เพื่อนที่ยังไม่เป็นสมาชิกจะได้สมัครสมาชิกก่อน","manageT":"สำหรับผู้จัด","edit":"แก้ไขงาน","cancelEvent":"ยกเลิกกิจกรรม","statusL":"สถานะ","budgetL":"งบที่ขอ","budgetNone":"ไม่ได้ขอใช้งบ","budgetApprovedL":"งบที่อนุมัติ","bRequested":"รออนุมัติ","bApproved":"อนุมัติแล้ว","bRejected":"ไม่อนุมัติ","bWaitHint":"เพิ่มค่าใช้จ่ายได้ระหว่างรอ แต่คำขอเบิกจะถูกทำเครื่องหมายไว้จนกว่างบจะได้รับอนุมัติ","bNoteL":"หมายเหตุจากผู้อนุมัติ: {note}","approverT":"อนุมัติงบ","approverD":"ผู้จัดขอใช้งบ {amount} สำหรับกิจกรรมนี้","approve":"อนุมัติ {amount}","reject":"ไม่อนุมัติ","rejectT":"ไม่อนุมัติงบนี้","rejectNoteL":"เหตุผล (ผู้จัดจะเห็น)","rejectGo":"ยืนยันไม่อนุมัติ","approvedToast":"อนุมัติงบแล้ว","rejectedToast":"บันทึกว่าไม่อนุมัติแล้ว","cancelT":"ยกเลิกกิจกรรมนี้?","cancelD":"กิจกรรมจะหายจาก LINE ทันที ผู้ที่ลงทะเบียนไว้จะไม่เห็นงานนี้อีก (ผู้ดูแลเปิดกลับได้ที่เว็บไซต์ผู้ดูแล)","cancelGo":"ยืนยันยกเลิกกิจกรรม","cancelledToast":"ยกเลิกกิจกรรมแล้ว","notFoundT":"ไม่พบกิจกรรมนี้","notFoundD":"กิจกรรมอาจถูกยกเลิก หรือยังไม่เผยแพร่","toEvents":"ดูกิจกรรมทั้งหมด","draftBanner":"งานนี้ยังเป็นร่าง สมาชิกยังไม่เห็น","hiddenBanner":"งานนี้ยังไม่แสดงใน LINE (ตามช่วงแสดงที่ตั้งไว้)","cancelledBanner":"กิจกรรมนี้ถูกยกเลิกแล้ว","newT":"สร้างกิจกรรม","editT":"แก้ไขกิจกรรม","fPoster":"เพิ่มโปสเตอร์","fPosterHint":"แนวตั้ง 4:5 · JPG/PNG/WebP ไม่เกิน 5 MB (ไม่บังคับ)","fPosterChange":"เปลี่ยนรูป","fPosterRemove":"ลบรูป","fName":"ชื่อกิจกรรม","fDate":"วันที่","fStart":"เวลาเริ่ม","fEnd":"เวลาจบ","fPlace":"สถานที่","fDesc":"รายละเอียด","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย","fBudget":"ขอใช้งบ (บาท)","fBudgetHelp":"กิจกรรมเผยแพร่ได้ทันที · งบจะรอผู้อนุมัติตรวจ","fBudgetHelpApproved":"อนุมัติแล้ว {amount} · ถ้าเปลี่ยนยอด จะต้องรออนุมัติใหม่","secT":"คำถามเพิ่มเติมตอนลงทะเบียน","secD":"เปิดเฉพาะที่งานนี้ต้องใช้ ยิ่งน้อยคนยิ่งสมัครง่าย","sec_study":"การศึกษา/การทำงาน + ที่อยู่","sec_studyD":"ยืนยันข้อมูลล่าสุด และที่อยู่ส่งเอกสาร","sec_sessions":"Session + Onsite/Online","sec_sessionsD":"ผู้จัดตั้งชื่อ Session เอง ผู้สมัครเลือกได้หลายอัน","sec_teams":"อีเมล Teams + ผลทดสอบเข้า","sec_teamsD":"ถามเฉพาะคนที่เลือก Online (ต้องเปิด Session ด้วย)","sec_food":"อาหารที่แพ้ + มากับเพื่อนไหม + ข้อเสนอแนะ","sec_foodD":"อาหารที่แพ้ขอความยินยอมแยก และลบหลังจบงาน","fSessions":"ชื่อ Session","fSessionsHint":"บรรทัดละหนึ่ง Session (สูงสุด 10)","advT":"ตั้งค่าขั้นสูง: ช่วงเปิดรับสมัคร, ช่วงแสดงใน LINE","advD":"ค่าเริ่มต้น: เปิดรับสมัครตอนนี้ถึงเวลาเริ่มงาน และแสดงใน LINE ถึงเวลาจบงาน เหมาะกับงานส่วนใหญ่","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนหลังจาก","advReset":"กลับไปใช้ค่าเริ่มต้น","saveDraft":"บันทึกร่าง","publish":"เผยแพร่กิจกรรม","saveChanges":"บันทึก","saving":"กำลังบันทึก…","publishedToast":"เผยแพร่กิจกรรมแล้ว","draftToast":"บันทึกร่างแล้ว","savedToast":"บันทึกแล้ว","eName":"ใส่ชื่อกิจกรรม","eDate":"เลือกวันที่","ePast":"วันที่ผ่านมาแล้ว","ePlace":"ใส่สถานที่","eTime":"เวลาจบต้องหลังเวลาเริ่ม","eBudget":"ใส่ตัวเลข เช่น 3500 หรือ 3,500.00","eSessions":"ใส่ชื่อ Session อย่างน้อย 1 อัน (สูงสุด 10)","eWindows":"เวลาปิดต้องหลังเวลาเปิด และช่วงแสดงต้องหลังเวลาเริ่มแสดง","ePosterType":"ใช้ไฟล์ JPG, PNG หรือ WebP","ePosterBig":"รูปใหญ่เกิน 5 MB","ePosterRead":"เปิดรูปนี้ไม่ได้ ลองรูปอื่น","eFix":"ตรวจช่องที่มีเครื่องหมายสีแดง","eNoRight":"คุณไม่มีสิทธิ์แก้ไขกิจกรรมนี้","teamsNeedsSessions":"เปิด Session + Onsite/Online ให้ด้วยแล้ว เพราะคำถาม Teams ใช้กับคนที่เลือก Online","manage":"จัดการงาน (ผู้ร่วมจัด)"},"en":{"title":"Events","create":"Create event","segOpen":"Open","segUpcoming":"Upcoming","segPast":"Past","emptyOpenT":"No events are open for registration right now","emptyOpenD":"See what's coming in the “Upcoming” tab.","emptyUpT":"Nothing coming up yet","emptyUpD":"New events show up here as soon as organizers create them.","emptyPastT":"No past events yet","emptyPastD":"Events from the last 12 months show up here.","chipRegistered":"Registered","chipOpen":"Open","chipClosingDays":"Closes in {n} days","chipClosingToday":"Closes today","chipOpensOn":"Opens {d}","chipClosed":"Registration closed","chipEnded":"Ended","chipDraft":"Draft · not published","chipNotShown":"Not shown in LINE yet","chipCancelled":"Cancelled","chipPublished":"Published","detailT":"Event","closesAt":"Closes {d}","opensAt":"Opens {d}","openMap":"Open map","byOrganizer":"Hosted by {name}","byCommunity":"Hosted by the community team","teamMore":" + {n} collaborators","registeredN":"{n} registered","asksT":"This event also asks: {list} (takes less than a minute)","askStudy":"study/work and address","askSessions":"sessions and onsite/online","askTeams":"Teams email (if online)","askFood":"food allergies and suggestions","join":"Register","myTicket":"Show my ticket","notOpenYet":"Opens {d}","regClosed":"Registration closed","editPublish":"Edit and publish","share":"Share","shareT":"Share this event","copyLink":"Copy link","copyLinkSub":"Paste it in any chat","copied":"Link copied","phoneShare":"Share with your phone's menu","phoneShareSub":"LINE, Instagram, Messenger and more","shareNote":"Friends who aren't members yet will join first.","manageT":"For organizers","edit":"Edit event","cancelEvent":"Cancel event","statusL":"Status","budgetL":"Budget requested","budgetNone":"No budget requested","budgetApprovedL":"Approved budget","bRequested":"Waiting for approval","bApproved":"Approved","bRejected":"Not approved","bWaitHint":"You can add expenses while you wait, but claims are flagged until the budget is approved.","bNoteL":"Note from the approver: {note}","approverT":"Approve budget","approverD":"The organizer asks for {amount} for this event.","approve":"Approve {amount}","reject":"Don't approve","rejectT":"Don't approve this budget","rejectNoteL":"Reason (the organizer sees it)","rejectGo":"Confirm: don't approve","approvedToast":"Budget approved","rejectedToast":"Marked as not approved","cancelT":"Cancel this event?","cancelD":"It disappears from LINE at once, also for people who registered. (An admin can reopen it in the admin website.)","cancelGo":"Yes, cancel the event","cancelledToast":"Event cancelled","notFoundT":"Event not found","notFoundD":"It may have been cancelled or isn't published yet.","toEvents":"See all events","draftBanner":"This event is a draft. Members can't see it yet.","hiddenBanner":"This event isn't shown in LINE yet (show window).","cancelledBanner":"This event was cancelled.","newT":"Create event","editT":"Edit event","fPoster":"Add a poster","fPosterHint":"Portrait 4:5 · JPG/PNG/WebP up to 5 MB (optional)","fPosterChange":"Change","fPosterRemove":"Remove","fName":"Event name","fDate":"Date","fStart":"Starts","fEnd":"Ends","fPlace":"Place","fDesc":"Details","fDescPh":"Agenda, what to bring, dress code","fBudget":"Budget request (THB)","fBudgetHelp":"The event is published at once · the budget waits for an approver","fBudgetHelpApproved":"Approved {amount} · changing the amount needs a new approval","secT":"Extra questions when people register","secD":"Switch on only what this event needs. Fewer questions, more sign-ups.","sec_study":"Study/work + address","sec_studyD":"Confirm latest details and a mailing address","sec_sessions":"Sessions + onsite/online","sec_sessionsD":"You name the sessions; people can pick several","sec_teams":"Teams email + entry test result","sec_teamsD":"Asked only to people who pick online (needs Sessions on)","sec_food":"Food allergies + coming with friends + suggestions","sec_foodD":"Allergies get a separate consent and are deleted after the event","fSessions":"Session names","fSessionsHint":"One session per line (up to 10)","advT":"Advanced: registration window, shown in LINE","advD":"Default: registration opens now and closes when the event starts; shown in LINE until it ends. Right for most events.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Shown in LINE from","fPubUntil":"Hidden after","advReset":"Back to the defaults","saveDraft":"Save draft","publish":"Publish event","saveChanges":"Save","saving":"Saving…","publishedToast":"Event published","draftToast":"Draft saved","savedToast":"Saved","eName":"Enter the event name","eDate":"Choose a date","ePast":"This date has passed","ePlace":"Enter the place","eTime":"The end must be after the start","eBudget":"Enter a number, e.g. 3500 or 3,500.00","eSessions":"Enter at least 1 session name (up to 10)","eWindows":"Closing must be after opening, and hiding after showing","ePosterType":"Use a JPG, PNG or WebP file","ePosterBig":"The image is larger than 5 MB","ePosterRead":"Couldn't open this image. Try another one.","eFix":"Check the fields marked in red","eNoRight":"You can't edit this event","teamsNeedsSessions":"Sessions + onsite/online switched on too: the Teams question is for people who pick online","manage":"Manage (collaborators)"}}, function (App, t) {
+App.module("events", {"th":{"title":"กิจกรรม","create":"สร้างกิจกรรม","segOpen":"เปิดรับสมัคร","segUpcoming":"กำลังจะมา","segPast":"ผ่านมาแล้ว","emptyOpenT":"ตอนนี้ยังไม่มีกิจกรรมที่เปิดรับสมัคร","emptyOpenD":"ดูกิจกรรมที่กำลังจะมาได้ที่แท็บ “กำลังจะมา”","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมา","emptyUpD":"เมื่อผู้จัดสร้างกิจกรรมใหม่ จะขึ้นที่นี่","emptyPastT":"ยังไม่มีกิจกรรมที่ผ่านมา","emptyPastD":"กิจกรรมย้อนหลัง 12 เดือนจะแสดงที่นี่","chipRegistered":"ลงทะเบียนแล้ว","chipOpen":"เปิดรับสมัคร","chipClosingDays":"ปิดรับใน {n} วัน","chipClosingToday":"ปิดรับวันนี้","chipOpensOn":"เปิดรับ {d}","chipClosed":"ปิดรับสมัครแล้ว","chipEnded":"จบแล้ว","chipDraft":"ร่าง · ยังไม่เผยแพร่","chipNotShown":"ยังไม่แสดงใน LINE","chipCancelled":"ยกเลิกแล้ว","chipPublished":"เผยแพร่แล้ว","detailT":"กิจกรรม","closesAt":"ปิดรับ {d}","opensAt":"เปิดรับ {d}","openMap":"เปิดแผนที่","byOrganizer":"จัดโดย {name}","byCommunity":"จัดโดยทีมชุมชน","teamMore":" + ผู้ร่วมจัด {n} คน","registeredN":"ลงทะเบียนแล้ว {n} คน","asksT":"งานนี้ถามเพิ่ม: {list} (ใช้เวลาไม่ถึง 1 นาที)","askStudy":"การศึกษา/การทำงานและที่อยู่","askSessions":"Session ที่จะเข้า และ Onsite/Online","askTeams":"อีเมล Teams (ถ้าเลือก Online)","askFood":"อาหารที่แพ้และข้อเสนอแนะ","join":"ลงทะเบียน","myTicket":"ดูตั๋วของฉัน","notOpenYet":"เปิดรับ {d}","regClosed":"ปิดรับสมัครแล้ว","editPublish":"แก้ไขและเผยแพร่","share":"แชร์","shareT":"แชร์กิจกรรมนี้","copyLink":"คัดลอกลิงก์","copyLinkSub":"ส่งให้เพื่อนในแชทไหนก็ได้","copied":"คัดลอกลิงก์แล้ว","phoneShare":"แชร์ผ่านเมนูของเครื่อง","phoneShareSub":"LINE, Instagram, Messenger และอื่น ๆ","shareNote":"เพื่อนที่ยังไม่เป็นสมาชิกจะได้สมัครสมาชิกก่อน","manageT":"สำหรับผู้จัด","edit":"แก้ไขงาน","cancelEvent":"ยกเลิกกิจกรรม","statusL":"สถานะ","budgetL":"งบที่ขอ","budgetNone":"ไม่ได้ขอใช้งบ","budgetApprovedL":"งบที่อนุมัติ","bRequested":"รออนุมัติ","bApproved":"อนุมัติแล้ว","bRejected":"ไม่อนุมัติ","bWaitHint":"เพิ่มค่าใช้จ่ายได้ระหว่างรอ แต่คำขอเบิกจะถูกทำเครื่องหมายไว้จนกว่างบจะได้รับอนุมัติ","bNoteL":"หมายเหตุจากผู้อนุมัติ: {note}","approverT":"อนุมัติงบ","approverD":"ผู้จัดขอใช้งบ {amount} สำหรับกิจกรรมนี้","approve":"อนุมัติ {amount}","reject":"ไม่อนุมัติ","rejectT":"ไม่อนุมัติงบนี้","rejectNoteL":"เหตุผล (ผู้จัดจะเห็น)","rejectGo":"ยืนยันไม่อนุมัติ","approvedToast":"อนุมัติงบแล้ว","rejectedToast":"บันทึกว่าไม่อนุมัติแล้ว","cancelT":"ยกเลิกกิจกรรมนี้?","cancelD":"กิจกรรมจะหายจาก LINE ทันที ผู้ที่ลงทะเบียนไว้จะไม่เห็นงานนี้อีก (ผู้ดูแลเปิดกลับได้ที่เว็บไซต์ผู้ดูแล)","cancelGo":"ยืนยันยกเลิกกิจกรรม","cancelledToast":"ยกเลิกกิจกรรมแล้ว","notFoundT":"ไม่พบกิจกรรมนี้","notFoundD":"กิจกรรมอาจถูกยกเลิก หรือยังไม่เผยแพร่","toEvents":"ดูกิจกรรมทั้งหมด","draftBanner":"งานนี้ยังเป็นร่าง สมาชิกยังไม่เห็น","hiddenBanner":"งานนี้ยังไม่แสดงใน LINE (ตามช่วงแสดงที่ตั้งไว้)","cancelledBanner":"กิจกรรมนี้ถูกยกเลิกแล้ว","newT":"สร้างกิจกรรม","editT":"แก้ไขกิจกรรม","fPoster":"เพิ่มโปสเตอร์","fPosterHint":"แนวตั้ง 4:5 · JPG/PNG/WebP ไม่เกิน 5 MB (ไม่บังคับ)","fPosterChange":"เปลี่ยนรูป","fPosterRemove":"ลบรูป","fName":"ชื่อกิจกรรม","fDate":"วันที่จัดงาน","fStart":"เวลาเริ่มงาน","fPlace":"สถานที่จัดงาน","fDesc":"รายละเอียด","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย","fBudget":"ขอใช้งบ (บาท)","fBudgetHelp":"กิจกรรมเผยแพร่ได้ทันที · งบจะรอผู้อนุมัติตรวจ","fBudgetHelpApproved":"อนุมัติแล้ว {amount} · ถ้าเปลี่ยนยอด จะต้องรออนุมัติใหม่","secT":"คำถามเพิ่มเติมตอนลงทะเบียน","secD":"เปิดเฉพาะที่งานนี้ต้องใช้ ยิ่งน้อยคนยิ่งสมัครง่าย","sec_study":"การศึกษา/การทำงาน + ที่อยู่","sec_studyD":"ยืนยันข้อมูลล่าสุด และที่อยู่ส่งเอกสาร","sec_sessions":"Session + Onsite/Online","sec_sessionsD":"ผู้จัดตั้งชื่อ Session เอง ผู้สมัครเลือกได้หลายอัน","sec_teams":"อีเมล Teams + ผลทดสอบเข้า","sec_teamsD":"ถามเฉพาะคนที่เลือก Online (ต้องเปิด Session ด้วย)","sec_food":"อาหารที่แพ้ + มากับเพื่อนไหม + ข้อเสนอแนะ","sec_foodD":"อาหารที่แพ้ขอความยินยอมแยก และลบหลังจบงาน","fSessions":"ชื่อ Session","fSessionsHint":"บรรทัดละหนึ่ง Session (สูงสุด 10)","advT":"ตั้งค่าขั้นสูง: ช่วงเปิดรับสมัคร, ช่วงแสดงใน LINE","advD":"ค่าเริ่มต้น: เปิดรับสมัครตอนนี้ถึงเวลาเริ่มงาน และแสดงใน LINE ถึงสิ้นวันจัดงาน เหมาะกับงานส่วนใหญ่ · เลือกเวลาได้ทีละ 15 นาที","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนหลังจาก","advReset":"กลับไปใช้ค่าเริ่มต้น","saveDraft":"บันทึกร่าง","publish":"เผยแพร่กิจกรรม","saveChanges":"บันทึก","saving":"กำลังบันทึก…","publishedToast":"เผยแพร่กิจกรรมแล้ว","draftToast":"บันทึกร่างแล้ว","savedToast":"บันทึกแล้ว","eName":"ใส่ชื่อกิจกรรม","eDate":"เลือกวันที่","ePast":"วันที่ผ่านมาแล้ว","ePlace":"ใส่สถานที่จัดงาน","eBudget":"ใส่ตัวเลข เช่น 3500 หรือ 3,500.00","eSessions":"ใส่ชื่อ Session อย่างน้อย 1 อัน (สูงสุด 10)","eWindows":"เวลาปิดต้องหลังเวลาเปิด และช่วงแสดงต้องหลังเวลาเริ่มแสดง","ePosterType":"ใช้ไฟล์ JPG, PNG หรือ WebP","ePosterBig":"รูปใหญ่เกิน 5 MB","ePosterRead":"เปิดรูปนี้ไม่ได้ ลองรูปอื่น","eFix":"ตรวจช่องที่มีเครื่องหมายสีแดง","eNoRight":"คุณไม่มีสิทธิ์แก้ไขกิจกรรมนี้","teamsNeedsSessions":"เปิด Session + Onsite/Online ให้ด้วยแล้ว เพราะคำถาม Teams ใช้กับคนที่เลือก Online","manage":"จัดการงาน (ผู้ร่วมจัด)","fStartPick":"เลือกเวลา","fMapSearch":"ค้นหาใน Google Maps","fMap":"ลิงก์ Google Maps","optional":" (ไม่บังคับ)","fMapHint":"ใน Google Maps กด แชร์ › คัดลอกลิงก์ แล้ววางที่นี่ ปุ่ม “เปิดแผนที่” ในหน้ากิจกรรมจะพาไปที่หมุดนี้","eStart":"เลือกเวลาเริ่มงาน","eMap":"ใช้ลิงก์จาก Google Maps เท่านั้น (https://maps.app.goo.gl/… หรือ https://www.google.com/maps/…)","dateWord":"วันที่","timeWord":"เวลา"},"en":{"title":"Events","create":"Create event","segOpen":"Open","segUpcoming":"Upcoming","segPast":"Past","emptyOpenT":"No events are open for registration right now","emptyOpenD":"See what's coming in the “Upcoming” tab.","emptyUpT":"Nothing coming up yet","emptyUpD":"New events show up here as soon as organizers create them.","emptyPastT":"No past events yet","emptyPastD":"Events from the last 12 months show up here.","chipRegistered":"Registered","chipOpen":"Open","chipClosingDays":"Closes in {n} days","chipClosingToday":"Closes today","chipOpensOn":"Opens {d}","chipClosed":"Registration closed","chipEnded":"Ended","chipDraft":"Draft · not published","chipNotShown":"Not shown in LINE yet","chipCancelled":"Cancelled","chipPublished":"Published","detailT":"Event","closesAt":"Closes {d}","opensAt":"Opens {d}","openMap":"Open map","byOrganizer":"Hosted by {name}","byCommunity":"Hosted by the community team","teamMore":" + {n} collaborators","registeredN":"{n} registered","asksT":"This event also asks: {list} (takes less than a minute)","askStudy":"study/work and address","askSessions":"sessions and onsite/online","askTeams":"Teams email (if online)","askFood":"food allergies and suggestions","join":"Register","myTicket":"Show my ticket","notOpenYet":"Opens {d}","regClosed":"Registration closed","editPublish":"Edit and publish","share":"Share","shareT":"Share this event","copyLink":"Copy link","copyLinkSub":"Paste it in any chat","copied":"Link copied","phoneShare":"Share with your phone's menu","phoneShareSub":"LINE, Instagram, Messenger and more","shareNote":"Friends who aren't members yet will join first.","manageT":"For organizers","edit":"Edit event","cancelEvent":"Cancel event","statusL":"Status","budgetL":"Budget requested","budgetNone":"No budget requested","budgetApprovedL":"Approved budget","bRequested":"Waiting for approval","bApproved":"Approved","bRejected":"Not approved","bWaitHint":"You can add expenses while you wait, but claims are flagged until the budget is approved.","bNoteL":"Note from the approver: {note}","approverT":"Approve budget","approverD":"The organizer asks for {amount} for this event.","approve":"Approve {amount}","reject":"Don't approve","rejectT":"Don't approve this budget","rejectNoteL":"Reason (the organizer sees it)","rejectGo":"Confirm: don't approve","approvedToast":"Budget approved","rejectedToast":"Marked as not approved","cancelT":"Cancel this event?","cancelD":"It disappears from LINE at once, also for people who registered. (An admin can reopen it in the admin website.)","cancelGo":"Yes, cancel the event","cancelledToast":"Event cancelled","notFoundT":"Event not found","notFoundD":"It may have been cancelled or isn't published yet.","toEvents":"See all events","draftBanner":"This event is a draft. Members can't see it yet.","hiddenBanner":"This event isn't shown in LINE yet (show window).","cancelledBanner":"This event was cancelled.","newT":"Create event","editT":"Edit event","fPoster":"Add a poster","fPosterHint":"Portrait 4:5 · JPG/PNG/WebP up to 5 MB (optional)","fPosterChange":"Change","fPosterRemove":"Remove","fName":"Event name","fDate":"Event date","fStart":"Start time","fPlace":"Location","fDesc":"Details","fDescPh":"Agenda, what to bring, dress code","fBudget":"Budget request (THB)","fBudgetHelp":"The event is published at once · the budget waits for an approver","fBudgetHelpApproved":"Approved {amount} · changing the amount needs a new approval","secT":"Extra questions when people register","secD":"Switch on only what this event needs. Fewer questions, more sign-ups.","sec_study":"Study/work + address","sec_studyD":"Confirm latest details and a mailing address","sec_sessions":"Sessions + onsite/online","sec_sessionsD":"You name the sessions; people can pick several","sec_teams":"Teams email + entry test result","sec_teamsD":"Asked only to people who pick online (needs Sessions on)","sec_food":"Food allergies + coming with friends + suggestions","sec_foodD":"Allergies get a separate consent and are deleted after the event","fSessions":"Session names","fSessionsHint":"One session per line (up to 10)","advT":"Advanced: registration window, shown in LINE","advD":"Default: registration opens now and closes when the event starts; shown in LINE until the end of the event day. Right for most events · times go in 15-minute steps.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Shown in LINE from","fPubUntil":"Hidden after","advReset":"Back to the defaults","saveDraft":"Save draft","publish":"Publish event","saveChanges":"Save","saving":"Saving…","publishedToast":"Event published","draftToast":"Draft saved","savedToast":"Saved","eName":"Enter the event name","eDate":"Choose a date","ePast":"This date has passed","ePlace":"Enter the location","eBudget":"Enter a number, e.g. 3500 or 3,500.00","eSessions":"Enter at least 1 session name (up to 10)","eWindows":"Closing must be after opening, and hiding after showing","ePosterType":"Use a JPG, PNG or WebP file","ePosterBig":"The image is larger than 5 MB","ePosterRead":"Couldn't open this image. Try another one.","eFix":"Check the fields marked in red","eNoRight":"You can't edit this event","teamsNeedsSessions":"Sessions + onsite/online switched on too: the Teams question is for people who pick online","manage":"Manage (collaborators)","fStartPick":"Choose a time","fMapSearch":"Search in Google Maps","fMap":"Google Maps link","optional":" (optional)","fMapHint":"In Google Maps tap Share › Copy link and paste it here. “Open map” on the event page then goes to this pin.","eStart":"Choose the start time","eMap":"Use a Google Maps link only (https://maps.app.goo.gl/… or https://www.google.com/maps/…)","dateWord":"date","timeWord":"time"}}, function (App, t) {
 // Events in the LINE app (LINE app v2, session S3): the Events tab, the event page (#event/<id>) and, for organizers and
 // approvers, create and edit (#event-new, #event-edit/<id>). Data: event.list, event.get, event.save, event.cancel,
 // event.decideBudget (backend/features/events/line-actions.gs). Who may do what is decided on the server every time;
@@ -1441,8 +1629,19 @@ function ic(name){
 }
 const chip = (cls, icn, text) => h("span", {class: "chip " + (cls || "")}, icn ? App.icon(icn) : null, text);
 function bkkNow(){ return new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 16).replace("T", " "); }
-const toInput = s => s ? String(s).replace(" ", "T").slice(0, 16) : "";
-const fromInput = s => s ? String(s).replace("T", " ").slice(0, 16) : "";
+// S3b: times are picked from a list in 15-minute steps (phone pickers ignore a "step" setting)
+const pad2 = n => ("0" + n).slice(-2);
+const STEPS = Array.from({length: 96}, (_, i) => pad2(Math.floor(i / 4)) + ":" + pad2(i % 4 * 15));
+const stepDown = s => { s = String(s || ""); const m = Number(s.slice(-2)); return s.slice(0, -2) + pad2(m - m % 15); };
+function nextDay(d){ const x = Date.parse(String(d) + "T00:00:00Z"); return isFinite(x) ? new Date(x + 864e5).toISOString().slice(0, 10) : ""; }
+// Google Maps links only (same rule as the server, events.gs EVENT_MAP_URL_RE); the first https:// link in pasted text
+const MAP_RE = /^https:\/\/(maps\.app\.goo\.gl\/|goo\.gl\/maps\/|(www\.)?google\.(com|co\.th)\/maps([\/?#]|$)|maps\.google\.(com|co\.th)([\/?#]|$))[^\s"'<>\\`]*$/;
+function mapLink(v){
+  const raw = String(v || "").trim(); if (!raw) return "";
+  const m = raw.match(/https:\/\/[^\s"'<>`]+/), url = m ? m[0] : raw;
+  return url.length <= 500 && MAP_RE.test(url) ? url : null;
+}
+const searchMapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
 function daysBetween(a, b){ return Math.round((Date.parse(String(b).slice(0, 10) + "T00:00:00Z") - Date.parse(String(a).slice(0, 10) + "T00:00:00Z")) / 864e5); }
 function monthLabel(d){ return new Intl.DateTimeFormat(App.lang === "th" ? "th-TH" : "en-GB", {month: "long", year: "numeric", timeZone: "UTC"}).format(new Date(String(d).slice(0, 7) + "-01T00:00:00Z")); }
 function longDate(d){ return F.date(d, {weekday: "long", month: "long"}); }
@@ -1496,6 +1695,7 @@ function groups(d){
 function renderList(d, meta){
   const g = groups(d);
   $("#events-topRow").hidden = !d.canCreate;
+  $("#events-screen").classList.toggle("events-hasFab", !!d.canCreate);
   $("#events-createBtn").replaceChildren(App.icon("plus"), t("create"));
   [["open", "segOpen"], ["upcoming", "segUpcoming"], ["past", "segPast"]].forEach(([k, label]) => {
     const b = $("#events-seg [data-seg=" + k + "]");
@@ -1587,7 +1787,7 @@ function renderDetail(ev, d, meta){
   }
 
   const time = F.time(ev);
-  const mapUrl = ev.location ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ev.location) : "";
+  const mapUrl = (ev.mapUrl && mapLink(ev.mapUrl)) || (ev.location ? searchMapUrl(ev.location) : "");   // S3b: the pasted pin, else a search
   const host = ev.organizer ? t("byOrganizer", {name: ev.organizer}) : t("byCommunity");
   const hostMore = (ev.teamCount ? t("teamMore", {n: ev.teamCount}) : "");
   const info = h("div", {class: "events-info"},
@@ -1716,6 +1916,9 @@ function fillFormText(){
   fx("fDesc").setAttribute("placeholder", t("fDescPh"));
   fx("fPosterBtn").replaceChildren(ic("image"), h("span", {class: "events-dropT", text: t("fPoster")}), h("span", {class: "events-dropD", text: t("fPosterHint")}));
   fx("advBtn").replaceChildren(h("span", {text: t("advT")}), App.icon("chevron"));
+  fx("fMapSearch").replaceChildren(App.icon("search"), h("span", {text: t("fMapSearch")}));
+  const first = fx("fStart").options[0]; if (first && first.value === "") first.textContent = t("fStartPick");
+  WIN.forEach(([k, , lab]) => { fx("f" + k + "D").setAttribute("aria-label", t(lab) + " · " + t("dateWord")); fx("f" + k + "T").setAttribute("aria-label", t(lab) + " · " + t("timeWord")); });
   fx("secRows").replaceChildren(...SECTIONS.map(k => h("div", {class: "events-sec"},
     h("span", {class: "events-secTx", id: "events-secL-" + k}, h("b", {text: t("sec_" + k)}), h("span", {text: t("sec_" + k + "D")})),
     h("button", {type: "button", role: "switch", class: "events-switch", id: "events-sw-" + k, "data-sec": k,
@@ -1732,18 +1935,31 @@ function budgetHelp(){
   const f = S.form; if (!f) return;
   fx("fBudgetHelp").textContent = f.budget && f.budget.status === "Approved" && f.budget.approved != null ? t("fBudgetHelpApproved", {amount: F.money(f.budget.approved)}) : t("fBudgetHelp");
 }
+// the four windows: [suffix of the element ids, field in the form data, label key]
+const WIN = [["RegOpen", "regOpen", "fRegOpen"], ["RegClose", "regClose", "fRegClose"], ["PubFrom", "publishFrom", "fPubFrom"], ["PubUntil", "publishUntil", "fPubUntil"]];
+// a <select> with the 15-minute steps; a time saved earlier with other minutes (set by an admin) is kept as an extra choice
+function fillTimes(sel, value, placeholder){
+  const vals = STEPS.slice();
+  if (value && vals.indexOf(value) < 0){ vals.push(value); vals.sort(); }
+  sel.replaceChildren(...(placeholder ? [h("option", {value: "", text: t("fStartPick")})] : []), ...vals.map(v => h("option", {value: v, text: v})));
+  sel.value = value || (placeholder ? "" : "00:00");
+}
+function setDT(k, v){
+  v = String(v || "");
+  fx("f" + k + "D").value = v.slice(0, 10);
+  fillTimes(fx("f" + k + "T"), v.slice(11, 16), false);
+}
+function getDT(k){ const d = fx("f" + k + "D").value, tm = fx("f" + k + "T").value; return d && tm ? d + " " + tm : ""; }
 function defaults(){
-  const f = S.form, date = fx("fDate").value, start = fx("fStart").value, end = fx("fEnd").value;
+  const f = S.form, date = fx("fDate").value, start = fx("fStart").value;
   return {
     regOpen: f.baseOpen, publishFrom: f.baseFrom,
-    regClose: date ? date + " " + (start || "23:59") : "", publishUntil: date ? date + " " + (end || "23:59") : ""
+    regClose: date ? date + " " + (start || "23:45") : "", publishUntil: date ? nextDay(date) + " 00:00" : ""
   };
 }
 function syncDefaults(all){
   const f = S.form, d = defaults();
-  [["fRegOpen", "regOpen"], ["fRegClose", "regClose"], ["fPubFrom", "publishFrom"], ["fPubUntil", "publishUntil"]].forEach(([el, k]) => {
-    if (all || !f.touched[k]) fx(el).value = toInput(d[k]);
-  });
+  WIN.forEach(([el, k]) => { if (all || !f.touched[k]) setDT(el, d[k]); });
   if (all) f.touched = {};
 }
 function setPosterPreview(url){
@@ -1757,11 +1973,11 @@ function startForm(ev){
     id: e.id || "", status: e.status || "", updatedAt: (e.edit || {}).updatedAt || "",
     sections: Object.assign({study: false, sessions: false, teams: false, food: false}, e.sections || {}),
     budget: e.budget || null, poster: null, removePoster: false, hadPoster: !!e.hasPoster, touched: {},
-    baseOpen: (e.edit || {}).regOpen || now, baseFrom: (e.edit || {}).publishFrom || now
+    baseOpen: (e.edit || {}).regOpen || stepDown(now), baseFrom: (e.edit || {}).publishFrom || stepDown(now)
   };
   clearErrors();
-  fx("fName").value = e.name || ""; fx("fDate").value = e.date || ""; fx("fStart").value = e.startTime || ""; fx("fEnd").value = e.endTime || "";
-  fx("fPlace").value = e.location || ""; fx("fDesc").value = e.description || "";
+  fx("fName").value = e.name || ""; fx("fDate").value = e.date || ""; fillTimes(fx("fStart"), e.startTime || "", true);
+  fx("fPlace").value = e.location || ""; fx("fMap").value = e.mapUrl || ""; fx("fDesc").value = e.description || "";
   fx("fBudget").value = e.budget && e.budget.requested != null ? Number(e.budget.requested).toFixed(2) : "";
   fx("fSessions").value = (S.form.sections.sessionNames || []).join("\n");
   fx("fPosterFile").value = "";
@@ -1771,10 +1987,12 @@ function startForm(ev){
   fx("sessBox").hidden = !S.form.sections.sessions;
   const ed = e.edit || {};
   if (e.id){
-    fx("fRegOpen").value = toInput(ed.regOpen); fx("fRegClose").value = toInput(ed.regClose);
-    fx("fPubFrom").value = toInput(ed.publishFrom); fx("fPubUntil").value = toInput(ed.publishUntil);
+    setDT("RegOpen", ed.regOpen); setDT("RegClose", ed.regClose); setDT("PubFrom", ed.publishFrom); setDT("PubUntil", ed.publishUntil);
     const d = defaults();   // fields that differ from the defaults were set by hand: they no longer follow the date
-    S.form.touched = {regClose: ed.regClose !== d.regClose, publishUntil: ed.publishUntil !== d.publishUntil};
+    // before S3b "shown until" defaulted to the end time (or 23:59) of the event day: that still counts as the default
+    const oldUntil = e.date ? e.date + " " + (e.endTime || "23:59") : "";
+    S.form.touched = {regClose: ed.regClose !== d.regClose, publishUntil: ed.publishUntil !== d.publishUntil && ed.publishUntil !== oldUntil};
+    if (!S.form.touched.publishUntil) setDT("PubUntil", d.publishUntil);
   } else syncDefaults(true);
   const custom = !!(S.form.touched.regClose || S.form.touched.publishUntil);
   fx("adv").hidden = !custom; fx("advBtn").setAttribute("aria-expanded", custom ? "true" : "false");
@@ -1784,10 +2002,10 @@ function startForm(ev){
 function err(key, msg){
   const p = fx("e" + key); if (!p) return;
   p.hidden = !msg; p.replaceChildren(...(msg ? [App.icon("alert"), h("span", {text: msg})] : []));
-  const input = {name: "fName", date: "fDate", place: "fPlace", budget: "fBudget", sessions: "fSessions", time: "fEnd"}[key];
+  const input = {name: "fName", date: "fDate", place: "fPlace", map: "fMap", budget: "fBudget", sessions: "fSessions", time: "fStart"}[key];
   if (input){ if (msg) fx(input).setAttribute("aria-invalid", "true"); else fx(input).removeAttribute("aria-invalid"); }
 }
-function clearErrors(){ ["poster", "name", "date", "time", "place", "budget", "sessions", "windows"].forEach(k => err(k, "")); fx("fErrBox").hidden = true; }
+function clearErrors(){ ["poster", "name", "date", "time", "place", "map", "budget", "sessions", "windows"].forEach(k => err(k, "")); fx("fErrBox").hidden = true; }
 function money(v){
   const s = String(v || "").replace(/[,\s฿]/g, "");
   if (s === "") return "";
@@ -1797,11 +2015,10 @@ function money(v){
 function collect(){
   const f = S.form, names = fx("fSessions").value.split("\n").map(x => x.trim()).filter(Boolean);
   return {
-    id: f.id, name: fx("fName").value.trim(), date: fx("fDate").value, startTime: fx("fStart").value, endTime: fx("fEnd").value,
-    location: fx("fPlace").value.trim(), description: fx("fDesc").value.trim(), budgetRequested: money(fx("fBudget").value),
+    id: f.id, name: fx("fName").value.trim(), date: fx("fDate").value, startTime: fx("fStart").value,
+    location: fx("fPlace").value.trim(), mapUrl: mapLink(fx("fMap").value), description: fx("fDesc").value.trim(), budgetRequested: money(fx("fBudget").value),
     sections: {study: f.sections.study, sessions: f.sections.sessions, teams: f.sections.teams, food: f.sections.food, sessionNames: f.sections.sessions ? names : []},
-    regOpen: fromInput(fx("fRegOpen").value), regClose: fromInput(fx("fRegClose").value),
-    publishFrom: fromInput(fx("fPubFrom").value), publishUntil: fromInput(fx("fPubUntil").value)
+    regOpen: getDT("RegOpen"), regClose: getDT("RegClose"), publishFrom: getDT("PubFrom"), publishUntil: getDT("PubUntil")
   };
 }
 function validate(v){
@@ -1811,12 +2028,13 @@ function validate(v){
   if (v.name.length < 2) mark("name", t("eName"), "fName");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(v.date)) mark("date", t("eDate"), "fDate");
   else if (!v.id && v.date < bkkNow().slice(0, 10)) mark("date", t("ePast"), "fDate");
-  if (v.startTime && v.endTime && v.endTime <= v.startTime) mark("time", t("eTime"), "fEnd");
+  if (!/^\d{2}:\d{2}$/.test(v.startTime)) mark("time", t("eStart"), "fStart");
   if (v.location.length < 2) mark("place", t("ePlace"), "fPlace");
+  if (v.mapUrl === null) mark("map", t("eMap"), "fMap");
   if (v.budgetRequested === null) mark("budget", t("eBudget"), "fBudget");
   if (v.sections.sessions && (!v.sections.sessionNames.length || v.sections.sessionNames.length > 10)) mark("sessions", t("eSessions"), "fSessions");
-  if (!v.regOpen || !v.regClose || v.regClose <= v.regOpen || !v.publishFrom || !v.publishUntil || v.publishUntil <= v.publishFrom){
-    err("windows", t("eWindows")); bad.push("fRegClose"); fx("adv").hidden = false; fx("advBtn").setAttribute("aria-expanded", "true");
+  if (/^\d{4}-\d{2}-\d{2}$/.test(v.date) && (!v.regOpen || !v.regClose || v.regClose <= v.regOpen || !v.publishFrom || !v.publishUntil || v.publishUntil <= v.publishFrom)){
+    err("windows", t("eWindows")); bad.push("fRegCloseD"); fx("adv").hidden = false; fx("advBtn").setAttribute("aria-expanded", "true");
   }
   if (bad.length){ fx("fErrBox").hidden = false; fx("fErrBox").replaceChildren(App.icon("alert"), h("span", {text: t("eFix")})); fx(bad[0]).focus(); }
   return !bad.length;
@@ -1878,17 +2096,22 @@ fx("secRows").addEventListener("click", e => {
   fx("sessBox").hidden = !sec.sessions;
   if (k === "sessions" && on) fx("fSessions").focus();
 });
-["fDate", "fStart", "fEnd"].forEach(id => fx(id).addEventListener("change", () => { if (S.form) syncDefaults(false); }));
-[["fRegOpen", "regOpen"], ["fRegClose", "regClose"], ["fPubFrom", "publishFrom"], ["fPubUntil", "publishUntil"]].forEach(([id, k]) =>
-  fx(id).addEventListener("input", () => { if (S.form) S.form.touched[k] = true; }));
+["fDate", "fStart"].forEach(id => fx(id).addEventListener("change", () => { if (S.form) syncDefaults(false); }));
+WIN.forEach(([el, k]) => ["D", "T"].forEach(x => fx("f" + el + x).addEventListener("change", () => { if (S.form) S.form.touched[k] = true; })));
+// "ค้นหาใน Google Maps": opens Maps searching what was typed; the organizer copies the pin's link back into the next field
+fx("fMapSearch").addEventListener("click", () => {
+  const q = fx("fPlace").value.trim();
+  if (q.length < 2){ err("place", t("ePlace")); fx("fPlace").focus(); return; }
+  App.openExternal(searchMapUrl(q));
+});
 fx("advBtn").addEventListener("click", () => { const open = fx("adv").hidden; fx("adv").hidden = !open; fx("advBtn").setAttribute("aria-expanded", open ? "true" : "false"); });
 fx("advReset").addEventListener("click", () => { if (S.form) syncDefaults(true); });
 fx("saveBtn").addEventListener("click", () => save(true));
 fx("draftBtn").addEventListener("click", () => save(false));
 fx("fForm").addEventListener("submit", e => { e.preventDefault(); save(true); });
 // a field's error goes away as soon as the person changes that field
-const ERR_OF = {"events-fName": "name", "events-fDate": "date", "events-fStart": "time", "events-fEnd": "time", "events-fPlace": "place", "events-fBudget": "budget", "events-fSessions": "sessions",
-  "events-fRegOpen": "windows", "events-fRegClose": "windows", "events-fPubFrom": "windows", "events-fPubUntil": "windows"};
+const ERR_OF = {"events-fName": "name", "events-fDate": "date", "events-fStart": "time", "events-fPlace": "place", "events-fMap": "map", "events-fBudget": "budget", "events-fSessions": "sessions"};
+WIN.forEach(([el]) => { ERR_OF["events-f" + el + "D"] = "windows"; ERR_OF["events-f" + el + "T"] = "windows"; });
 ["input", "change"].forEach(ev => fx("fForm").addEventListener(ev, e => { const k = ERR_OF[e.target.id]; if (k && !fx("e" + k).hidden) err(k, ""); }));
 
 async function openEdit(id){
@@ -1926,6 +2149,7 @@ App.register({
     },
     "event-new": {
       screen: "events-form",
+      once: true,                 // S3b: after Publish, Back from the new event page goes to the Events tab, not an empty form
       title: () => t("newT"),
       show(){ fx("fForm").hidden = false; startForm(null); fx("fName").focus(); }
     },
@@ -1944,7 +2168,7 @@ App.register({
 const DEMO = (() => {
   const day = n => { const x = new Date(Date.now() + 7 * 3600e3); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
   const now = bkkNow();
-  const base = {description: "", hasPoster: false, myReference: "", sections: {study: false, sessions: false, teams: false, food: false, sessionNames: []}, organizer: "", ownerMode: ""};
+  const base = {description: "", mapUrl: "", hasPoster: false, myReference: "", sections: {study: false, sessions: false, teams: false, food: false, sessionNames: []}, organizer: "", ownerMode: ""};
   const mk = o => Object.assign({}, base, o);
   return {
     seq: 3,
@@ -1978,7 +2202,7 @@ function demoEvent(e, mode, now, full){
     myReference: mode === "new" ? "" : e.myReference, canManage: !!manage, registered: e.registered || 0};
   if (manage) o.status = e.status;
   if (full){
-    Object.assign(o, {description: e.description, organizer: e.organizer, sections: e.sections, isOwner: !!manage, canCancel: !!manage && e.status !== "Closed"});
+    Object.assign(o, {description: e.description, mapUrl: e.mapUrl || "", organizer: e.organizer, sections: e.sections, isOwner: !!manage, canCancel: !!manage && e.status !== "Closed"});
     if ((manage || mode === "approver") && e.budget) o.budget = e.budget;
     else if (manage || mode === "approver") o.budget = {requested: null, approved: null, status: "", note: "", decidedAt: ""};
     o.canDecideBudget = mode === "approver" && !manage && !!e.budget && e.budget.status === "Requested";
@@ -2005,7 +2229,7 @@ App.demo["event.save"] = (body, mode) => {
   let e = DEMO.events.find(x => x.id === v.id);
   if (!e){ e = {id: "EV-DEMO-" + String(++DEMO.seq + 10), ownerMode: mode, organizer: "Kim", myReference: "", registered: 0, status: "Draft"}; DEMO.events.push(e); }
   const req = v.budgetRequested === "" ? null : Number(v.budgetRequested), old = e.budget || {requested: null, approved: null, status: ""};
-  Object.assign(e, {name: v.name, date: v.date, startTime: v.startTime, endTime: v.endTime, location: v.location, description: v.description, sections: v.sections,
+  Object.assign(e, {name: v.name, date: v.date, startTime: v.startTime, endTime: e.endTime && e.endTime > v.startTime ? e.endTime : "", location: v.location, mapUrl: v.mapUrl || "", description: v.description, sections: v.sections,
     regOpen: v.regOpen, regClose: v.regClose, publishFrom: v.publishFrom, publishUntil: v.publishUntil, hasPoster: false, updatedAt: new Date().toISOString(),
     status: body.publish ? "Approved" : e.status === "Approved" ? "Approved" : "Draft"});
   if (req !== old.requested) e.budget = {requested: req, approved: old.approved, status: req === null ? "" : "Requested", note: "", decidedAt: ""};
@@ -2440,6 +2664,981 @@ App.demo["team.invitePreview"] = b => {
     event: st === "open" ? DEMO.events["EV-DEMO-03"] : null, leadName: st === "open" ? "อรุณ ท." : ""};
 };
 App.demo["team.acceptInvite"] = () => ({ok: true, already: false, eventId: "EV-DEMO-03"});
+});
+
+// ---- app/features/registration ----
+App.module("registration", {"th":{"joinT":"ลงทะเบียน","editT":"แก้คำตอบ","inviteT":"เพื่อนชวนคุณมางานนี้","ticketT":"ตั๋วของฉัน","yourInfo":"ข้อมูลของคุณ","edit":"แก้ไข","kName":"ชื่อ","kPhone":"เบอร์โทร","kEmail":"อีเมล","kStatus":"สถานะ","st_highschool":"นักเรียน","st_university":"นักศึกษา","st_working":"ทำงานแล้ว","st_other":"อื่น ๆ","fromProfile":"ข้อมูลนี้มาจากโปรไฟล์สมาชิกของคุณ แก้ได้ที่แท็บ ฉัน","prefilled":"เติมคำตอบจากครั้งก่อนไว้ให้แล้ว ตรวจดูแล้วแก้ได้เลย","remember":"คำตอบจะจำไว้ให้ครั้งหน้า แก้ได้ทุกครั้งที่ลงทะเบียน","already":"คุณลงทะเบียนงานนี้แล้ว ({ref}) แก้คำตอบแล้วกดบันทึกได้","needAnswers":"งานนี้มีคำถามเพิ่ม ตอบให้ครบเพื่อให้ผู้จัดเตรียมงานได้","incompleteT":"กรอกข้อมูลสมาชิกให้ครบก่อน","incompleteD":"งานนี้ใช้ข้อมูลจากโปรไฟล์ของคุณ ขาดบางช่องอยู่ ใช้เวลาไม่ถึง 1 นาที","toMe":"ไปกรอกข้อมูลที่แท็บ ฉัน","secAddr":"ที่อยู่สำหรับส่งเอกสาร","snapshot":"สถานะเรียน/ทำงานที่จะส่งให้ผู้จัด: {s}","addrLine":"บ้านเลขที่ หมู่ อาคาร ซอย","addrStreet":"ถนน","addrSub":"ตำบล / แขวง","addrDistrict":"อำเภอ / เขต","addrProvince":"จังหวัด","addrZip":"รหัสไปรษณีย์","zipHint":"ตัวเลข 5 หลัก","secSessions":"Session ที่จะเข้าร่วม","pickMany":"เลือกได้มากกว่า 1","secMode":"เข้าร่วมแบบ","onsite":"Onsite","online":"Online","teamsEmail":"อีเมล Microsoft Teams","teamsHint":"จำไม่ได้ พิมพ์ว่า “จำไม่ได้” · เราจะส่งลิงก์ทดสอบเข้าห้องให้ก่อนวันงาน","teamsTest":"ทดลองเข้า Teams ผ่านหรือไม่","tt_passed":"ผ่าน เข้าร่วมได้ทันที","tt_failed":"ไม่ผ่าน ขอบัญชีใหม่","food":"อาหารที่แพ้หรือทานไม่ได้","foodPh":"เช่น แพ้กุ้ง, ไม่ทานเนื้อวัว (ไม่มีเว้นว่างได้)","foodConsent":"ยินยอมให้ผู้จัดใช้ข้อมูลอาหารที่แพ้ (ข้อมูลสุขภาพ) เพื่อเตรียมอาหารงานนี้เท่านั้น และลบหลังจบงาน","friends":"มีเพื่อนหรือชาวหัวแหลมที่สนิทมางานนี้ไหม","fr_alone":"มาคนเดียว ยังไม่สนิทกับใคร","fr_few":"มีเพื่อนมาด้วย 2–3 คน","fr_many":"สนิทกับเพื่อนหัวแหลมเยอะมาก","ig":"ติดตาม Instagram ของชุมชนแล้วหรือยัง","ig_yes":"ติดตามแล้ว","ig_no":"ยังไม่ได้ติดตาม","suggestion":"ข้อเสนอแนะสำหรับกิจกรรมหรือชุมชน","consentLine":"ลงทะเบียนโดยใช้ข้อมูลตามที่คุณยินยอมไว้ (ฉบับ {v})","readPrivacy":"อ่านนโยบาย","submit":"ยืนยันลงทะเบียน","save":"บันทึกคำตอบ","sending":"กำลังส่ง…","viewTicket":"ดูตั๋ว","eRequired":"กรุณากรอกช่องนี้","eZip":"รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก","eSessions":"เลือก Session อย่างน้อย 1 รายการ","eMode":"เลือก Onsite หรือ Online","eTeams":"กรอกอีเมล Teams หรือพิมพ์ว่า “จำไม่ได้”","eTeamsEmail":"อีเมลไม่ถูกต้อง","eFood":"ติ๊กยินยอมก่อน หรือลบข้อความอาหารที่แพ้ออก","ePick":"กรุณาเลือก 1 ข้อ","eCheck":"ยังกรอกไม่ครบ ดูช่องที่มีข้อความสีแดง","closedT":"ปิดรับลงทะเบียนแล้ว","upcomingT":"ยังไม่เปิดรับลงทะเบียน","opensAt":"เปิดรับ {d}","endedT":"งานนี้จบแล้ว","notFoundT":"ไม่พบกิจกรรมนี้","notFoundD":"อาจถูกยกเลิก หรือยังไม่เปิดให้เห็น","toEvents":"ดูกิจกรรมทั้งหมด","forMembers":"งานนี้สำหรับสมาชิก{org} · สมัครครั้งเดียวใช้ได้ทุกงาน","step1":"สมัครสมาชิก (ประมาณ 2 นาที)","step2":"เราจองที่งานนี้ให้คุณทันที","step3":"แอดมินอนุมัติแล้ว ตั๋วและ QR จะเปิดให้อัตโนมัติ","holdNote":"เราเก็บเฉพาะบัญชี LINE ของคุณไว้กับที่นั่งนี้ ถ้าไม่สมัครสมาชิกภายใน 30 วัน ที่นั่งจะถูกยกเลิกและลบข้อมูล","otherAccount":"เป็นสมาชิกอยู่แล้วแต่เห็นหน้านี้? อาจเปิดด้วย LINE บัญชีอื่น ติดต่อแอดมินได้ที่แท็บ ฉัน","signupHold":"สมัครสมาชิกและจองที่","hold":"จองที่ไว้ก่อน","heldT":"จองที่ไว้แล้ว รออนุมัติสมาชิก","heldD":"เลขที่ {ref} · เมื่อแอดมินอนุมัติ ตั๋วและ QR จะเปิดให้อัตโนมัติ","pendingD":"ใบสมัครสมาชิกของคุณรอแอดมินตรวจอยู่ จองที่งานนี้ไว้ก่อนได้เลย","rejectedD":"ใบสมัครสมาชิกของคุณยังไม่ผ่าน ติดต่อแอดมินได้ที่แท็บ ฉัน","toSignup":"ดูสถานะสมาชิก","doneT":"ลงทะเบียนสำเร็จ","savedT":"บันทึกคำตอบแล้ว","ticketLabel":"ตั๋วเข้างาน · {org}","kDate":"วันที่","kTime":"เวลา","kPlace":"สถานที่","kMode":"แบบ","nSessions":"{n} Session","allDay":"ทั้งวัน","qrAlt":"QR เช็กอินของคุณ","qrHint":"ให้ผู้จัดสแกนที่หน้างาน · เพิ่มความสว่างหน้าจอ","ticketNeeds":"งานนี้มีคำถามเพิ่มที่คุณยังไม่ได้ตอบ","answerNow":"ตอบคำถามของงานนี้","ended":"งานนี้จบแล้ว","invite":"ชวนเพื่อนมาด้วย","toHome":"กลับหน้าแรก","shareT":"ชวนเพื่อนมางานนี้","igT":"Instagram Story","igSub":"บันทึกรูปสตอรี่ (มี QR ลงทะเบียน) แล้วเปิด Instagram","igMaking":"กำลังทำรูป…","igSheetT":"รูปสำหรับ Instagram Story","igSave":"บันทึกรูป","igOpen":"เปิด Instagram","igHint":"ถ้าปุ่มบันทึกไม่ทำงาน กดค้างที่รูปแล้วเลือกบันทึกรูป จากนั้นเปิด Instagram แล้วเลือกรูปนี้ในสตอรี่","igSaved":"บันทึกรูปแล้ว","igFail":"ทำรูปไม่สำเร็จ ลองอีกครั้ง","igScan":"สแกนเพื่อลงทะเบียน","noLink":"ยังตั้งค่าลิงก์แอปไม่ครบ (config.js) จึงแชร์ไม่ได้","demoDone":"โหมดทดลอง: ยังไม่ได้ส่งข้อมูลจริง","pPanel":"ผู้เข้าร่วม","pPanelN":"ผู้เข้าร่วม {n}","pSearch":"ค้นหาชื่อหรือชื่อเล่น","pCount":"เช็กอินแล้ว","pHintSwitch":"แตะสวิตช์เพื่อเช็กอินเอง","pIn":"เช็กอินแล้ว {t}","pInBy":"เช็กอินแล้ว {t} · {by}","pNotIn":"ยังไม่เช็กอิน","pHeld":"จองที่ไว้ · รออนุมัติสมาชิก","pSwitch":"เช็กอิน {name}","pSwitchHeld":"เช็กอิน {name} (ยังไม่ได้รับอนุมัติสมาชิก)","pEmptyT":"ยังไม่มีคนลงทะเบียน","pEmptyD":"ชวนเพื่อนจากหน้ากิจกรรมได้ แล้วรายชื่อจะขึ้นที่นี่","pNoMatch":"ไม่พบชื่อที่ค้นหา","pClosed":"งานนี้ถูกยกเลิกแล้ว ดูรายชื่อได้แต่เช็กอินไม่ได้","pDoneToast":"เช็กอิน {name} แล้ว","pUndoToast":"ยกเลิกเช็กอิน {name} แล้ว","pRefresh":"โหลดใหม่","scanBtn":"สแกน QR เช็กอิน","scanT":"เช็กอิน","scanNext":"สแกนคนถัดไป","scanStart":"สแกน QR","scanIdleT":"พร้อมสแกน","scanIdleD":"สแกน QR บนบัตรของผู้เข้าร่วม (เปิดจากแท็บบัตรในแอป) ระบบจะเช็กอินให้ทันที","scanBusy":"กำลังตรวจ QR…","stampIn":"CHECKED IN","okT":"เช็กอินแล้ว","okNth":"คนที่ {c} จาก {n}","againT":"QR นี้ใช้ไปแล้ว","againD":"{name} เช็กอินไปแล้วเมื่อ {t}{by}","againBy":" โดย {by}","againD2":"ถ้าเป็นคนละคน ให้ตรวจชื่อกับบัตรของเขา","wrongT":"ไม่ใช่ QR ของงานนี้","wrongD":"QR นี้เป็นของงานอื่นหรือถูกยกเลิกแล้ว","wrongD2":"ค้นหาชื่อในรายชื่อเพื่อเช็กอินเองได้","undoneT":"ยกเลิกเช็กอินแล้ว","undoneD":"{name} กลับเป็น “ยังไม่เช็กอิน” แล้ว","undoBtn":"ยกเลิกเช็กอินนี้","toList":"ไปที่รายชื่อ","undoing":"กำลังยกเลิก…","failT":"ส่งไม่สำเร็จ","retry":"ลองอีกครั้ง","camT":"เปิดกล้องสแกนไม่ได้","camD":"เปิดแอปนี้ใน LINE บนมือถือแล้วลองอีกครั้ง หรือใช้สวิตช์ในรายชื่อเพื่อเช็กอินเอง","camAdmin":"ผู้ดูแลระบบ: ต้องเปิด “Scan QR” ในการตั้งค่า LIFF app","demoScanT":"โหมดตัวอย่าง: เลือก QR ที่จะสแกน","demoQrOk":"บัตรของคนที่ยังไม่เช็กอิน","demoQrAgain":"บัตรที่ใช้ไปแล้ว","demoQrWrong":"QR ของงานอื่น","errForbidden":"เฉพาะผู้จัดและผู้ร่วมจัดของงานนี้เท่านั้นที่เช็กอินได้","errClosed":"งานนี้ถูกยกเลิกแล้ว เช็กอินไม่ได้","errGone":"ไม่พบรายชื่อนี้ในงานแล้ว ลองโหลดรายชื่อใหม่","tkIn":"เช็กอินแล้ว {t}"},"en":{"joinT":"Register","editT":"Edit answers","inviteT":"A friend invited you","ticketT":"My ticket","yourInfo":"Your details","edit":"Edit","kName":"Name","kPhone":"Phone","kEmail":"Email","kStatus":"Status","st_highschool":"High school student","st_university":"University student","st_working":"Working","st_other":"Other","fromProfile":"These come from your member profile. Change them in the Me tab.","prefilled":"We filled in your answers from last time. Check them and change anything.","remember":"Your answers are remembered for next time. You can change them every time you register.","already":"You are registered for this event ({ref}). Change your answers and tap Save.","needAnswers":"This event asks a few more questions. Please answer them so the organizers can prepare.","incompleteT":"Complete your member details first","incompleteD":"This event uses your profile, and a few answers are missing. It takes less than a minute.","toMe":"Complete them in the Me tab","secAddr":"Mailing address","snapshot":"Study/work status sent to the organizers: {s}","addrLine":"House no., village, building, soi","addrStreet":"Road","addrSub":"Sub-district","addrDistrict":"District","addrProvince":"Province","addrZip":"Postcode","zipHint":"5 digits","secSessions":"Sessions you will join","pickMany":"You can pick more than one","secMode":"Join","onsite":"Onsite","online":"Online","teamsEmail":"Microsoft Teams email","teamsHint":"Don't remember it? Type “จำไม่ได้” · We send a test link before the event","teamsTest":"Did the Teams test work?","tt_passed":"Yes, I can join","tt_failed":"No, I need a new account","food":"Food allergies or food you can't eat","foodPh":"e.g. shrimp, no beef (leave empty if none)","foodConsent":"I agree that the organizers use my food allergy information (health data) only to prepare food for this event, and that it is deleted after the event","friends":"Are close friends from the community coming?","fr_alone":"Coming alone, don't know anyone yet","fr_few":"A few friends are coming","fr_many":"I know lots of people","ig":"Do you follow the community on Instagram?","ig_yes":"Yes","ig_no":"Not yet","suggestion":"Suggestions for events or the community","consentLine":"You register with the data you agreed to (version {v})","readPrivacy":"Read the policy","submit":"Confirm registration","save":"Save answers","sending":"Sending…","viewTicket":"View ticket","eRequired":"Please fill this in","eZip":"Postcode must be 5 digits","eSessions":"Pick at least one session","eMode":"Pick onsite or online","eTeams":"Type your Teams email or “จำไม่ได้”","eTeamsEmail":"This email is not valid","eFood":"Tick the consent, or remove the food allergy text","ePick":"Please pick one","eCheck":"Some answers are missing: see the fields in red","closedT":"Registration is closed","upcomingT":"Registration is not open yet","opensAt":"Opens {d}","endedT":"This event is over","notFoundT":"Event not found","notFoundD":"It may have been cancelled or is not shown yet.","toEvents":"See all events","forMembers":"This event is for {org} members · sign up once, join every event","step1":"Sign up as a member (about 2 minutes)","step2":"We hold a seat at this event for you right away","step3":"When an admin approves you, your ticket and QR open by themselves","holdNote":"We keep only your LINE account with this seat. If you don't sign up within 30 days, the seat is released and the data deleted.","otherAccount":"Already a member but seeing this? You may be using another LINE account. Contact the admin from the Me tab.","signupHold":"Sign up and hold my seat","hold":"Hold my seat","heldT":"Seat held, waiting for membership approval","heldD":"Reference {ref} · when an admin approves you, your ticket and QR open by themselves","pendingD":"Your membership application is waiting for review. You can hold a seat at this event now.","rejectedD":"Your membership application was not approved. Contact the admin from the Me tab.","toSignup":"See my membership status","doneT":"You're registered","savedT":"Answers saved","ticketLabel":"Event ticket · {org}","kDate":"Date","kTime":"Time","kPlace":"Place","kMode":"Join","nSessions":"{n} session(s)","allDay":"All day","qrAlt":"Your check-in QR","qrHint":"Show it to the organizers at the door · turn up the screen brightness","ticketNeeds":"This event has questions you haven't answered yet","answerNow":"Answer the event questions","ended":"This event is over","invite":"Invite a friend","toHome":"Back to Home","shareT":"Invite friends to this event","igT":"Instagram Story","igSub":"Save a story image (with a sign-up QR), then open Instagram","igMaking":"Making the image…","igSheetT":"Image for an Instagram Story","igSave":"Save image","igOpen":"Open Instagram","igHint":"If Save does nothing, press and hold the image and choose Save. Then open Instagram and pick this image for your story.","igSaved":"Image saved","igFail":"Could not make the image. Please try again.","igScan":"Scan to register","noLink":"The app link is not set up yet (config.js), so it can't be shared","demoDone":"Demo mode: nothing was sent","pPanel":"Participants","pPanelN":"Participants {n}","pSearch":"Search name or nickname","pCount":"Checked in","pHintSwitch":"tap a switch to check someone in","pIn":"Checked in {t}","pInBy":"Checked in {t} · {by}","pNotIn":"Not checked in","pHeld":"Seat held · waiting for membership approval","pSwitch":"Check in {name}","pSwitchHeld":"Check in {name} (membership not approved yet)","pEmptyT":"No one has registered yet","pEmptyD":"Invite friends from the event page; their names will show here.","pNoMatch":"No one matches this search","pClosed":"This event is cancelled: you can see the list but not check people in","pDoneToast":"{name} is checked in","pUndoToast":"Check-in of {name} undone","pRefresh":"Reload","scanBtn":"Scan QR to check in","scanT":"Check-in","scanNext":"Scan the next person","scanStart":"Scan QR","scanIdleT":"Ready to scan","scanIdleD":"Scan the QR on the participant's ticket (they open it from the ticket in the app). They are checked in at once.","scanBusy":"Checking the QR…","stampIn":"CHECKED IN","okT":"Checked in","okNth":"Person {c} of {n}","againT":"This QR was already used","againD":"{name} was checked in at {t}{by}","againBy":" by {by}","againD2":"If this is someone else, check the name on their ticket","wrongT":"Not a QR for this event","wrongD":"This QR belongs to another event or was cancelled","wrongD2":"Search the name in the list to check in by hand","undoneT":"Check-in undone","undoneD":"{name} is “not checked in” again","undoBtn":"Undo this check-in","toList":"Go to the list","undoing":"Undoing…","failT":"Could not send","retry":"Try again","camT":"The camera scanner can't open","camD":"Open this app in LINE on your phone and try again, or use the switch in the list to check someone in.","camAdmin":"For the admin: turn on “Scan QR” in the LIFF app settings","demoScanT":"Demo: choose a QR to scan","demoQrOk":"Ticket of someone not checked in","demoQrAgain":"A ticket already used","demoQrWrong":"QR of another event","errForbidden":"Only the organizers and collaborators of this event can check people in","errClosed":"This event is cancelled: no check-in","errGone":"This person is no longer on the list. Reload the list.","tkIn":"Checked in {t}"}}, function (App, t) {
+// registration in the LINE app (session S5): Join (#join/<eventId>), the invite preview and held seat for friends who
+// are not members yet (same route), my ticket with the check-in QR (#ticket/<eventId>), and the share sheet with the
+// Instagram story image. Session S6: check-in (Manage › Participants panel and #scan/<eventId>). Runs inside its own function: App (the shell) and t (this feature's text) are given.
+// Who may do what is decided by the server on every request (reg.event, reg.register, reg.hold, reg.ticket).
+const $ = App.$, h = App.h, F = App.fmt;
+const S = { eventId: "", join: null, form: null, sending: false, jTitle: null, ticketId: "", fresh: {} };
+const jBody = $("#registration-jBody"), jBar = $("#registration-jBar"), tBody = $("#registration-tBody");
+const org = () => App.config.ORG_NAME || App.t("orgFallback");
+const en = () => App.lang === "en";
+
+/* =====================================================================
+   QR code (byte mode, error correction M, versions 1-10): drawn as SVG, no outside library.
+   Follows the QR Code specification (ISO/IEC 18004): Reed-Solomon codewords, function patterns, the 8 masks.
+   ===================================================================== */
+const QR = (() => {
+  const ECC = [0, 10, 16, 26, 18, 24, 16, 18, 22, 22, 26];        // EC codewords per block, level M
+  const BLOCKS = [0, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5];               // number of blocks, level M
+  const rawModules = v => { let r = (16 * v + 128) * v + 64; if (v >= 2){ const n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if (v >= 7) r -= 36; } return r; };
+  const dataCodewords = v => Math.floor(rawModules(v) / 8) - ECC[v] * BLOCKS[v];
+  const mul = (x, y) => { let z = 0; for (let i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 0xFF; };
+  function divisor(deg){
+    const r = new Array(deg).fill(0); r[deg - 1] = 1; let root = 1;
+    for (let i = 0; i < deg; i++){
+      for (let j = 0; j < r.length; j++){ r[j] = mul(r[j], root); if (j + 1 < r.length) r[j] ^= r[j + 1]; }
+      root = mul(root, 0x02);
+    }
+    return r;
+  }
+  function remainder(data, div){
+    const res = div.map(() => 0);
+    data.forEach(b => { const f = b ^ res.shift(); res.push(0); div.forEach((c, i) => { res[i] ^= mul(c, f); }); });
+    return res;
+  }
+  const bit = (x, i) => ((x >>> i) & 1) !== 0;
+  function encode(text){
+    const bytes = Array.from(new TextEncoder().encode(String(text)));
+    let ver = 1;
+    for (; ver <= 10; ver++){ const cap = dataCodewords(ver) * 8; if (4 + (ver < 10 ? 8 : 16) + bytes.length * 8 <= cap) break; }
+    if (ver > 10) throw new Error("QR: text too long");
+    // data bits
+    const bits = [];
+    const put = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    put(4, 4); put(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+    const cap = dataCodewords(ver) * 8;
+    put(0, Math.min(4, cap - bits.length));
+    put(0, (8 - bits.length % 8) % 8);
+    for (let pad = 0xEC; bits.length < cap; pad ^= 0xEC ^ 0x11) put(pad, 8);
+    const data = [];
+    for (let i = 0; i < bits.length; i += 8){ let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; data.push(b); }
+    // error correction and interleaving
+    const nb = BLOCKS[ver], el = ECC[ver], raw = Math.floor(rawModules(ver) / 8);
+    const nShort = nb - raw % nb, shortLen = Math.floor(raw / nb), div = divisor(el), blocks = [];
+    for (let i = 0, k = 0; i < nb; i++){
+      const dat = data.slice(k, k + shortLen - el + (i < nShort ? 0 : 1)); k += dat.length;
+      const ecc = remainder(dat, div);
+      if (i < nShort) dat.push(0);
+      blocks.push(dat.concat(ecc));
+    }
+    const all = [];
+    for (let i = 0; i < blocks[0].length; i++) blocks.forEach((b, j) => { if (i !== shortLen - el || j >= nShort) all.push(b[i]); });
+    // matrix
+    const size = ver * 4 + 17;
+    const mod = Array.from({length: size}, () => new Array(size).fill(false));
+    const fn = Array.from({length: size}, () => new Array(size).fill(false));
+    const set = (x, y, d) => { mod[y][x] = d; fn[y][x] = true; };
+    for (let i = 0; i < size; i++){ set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+    const finder = (cx, cy) => { for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++){
+      const x = cx + dx, y = cy + dy, d = Math.max(Math.abs(dx), Math.abs(dy));
+      if (x >= 0 && x < size && y >= 0 && y < size) set(x, y, d !== 2 && d !== 4); } };
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+    if (ver > 1){
+      const n = Math.floor(ver / 7) + 2, step = Math.ceil((ver * 4 + 4) / (n * 2 - 2)) * 2, pos = [6];
+      for (let p = size - 7; pos.length < n; p -= step) pos.splice(1, 0, p);
+      pos.forEach((a, i) => pos.forEach((b, j) => {
+        if ((i === 0 && j === 0) || (i === 0 && j === n - 1) || (i === n - 1 && j === 0)) return;
+        for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) set(a + dx, b + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+      }));
+    }
+    const format = mask => {
+      const d = (0 << 3) | mask;                                  // level M = 00
+      let r = d; for (let i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+      const b = ((d << 10) | r) ^ 0x5412;
+      for (let i = 0; i <= 5; i++) set(8, i, bit(b, i));
+      set(8, 7, bit(b, 6)); set(8, 8, bit(b, 7)); set(7, 8, bit(b, 8));
+      for (let i = 9; i < 15; i++) set(14 - i, 8, bit(b, i));
+      for (let i = 0; i < 8; i++) set(size - 1 - i, 8, bit(b, i));
+      for (let i = 8; i < 15; i++) set(8, size - 15 + i, bit(b, i));
+      set(8, size - 8, true);
+    };
+    format(0);
+    if (ver >= 7){
+      let r = ver; for (let i = 0; i < 12; i++) r = (r << 1) ^ ((r >>> 11) * 0x1F25);
+      const b = (ver << 12) | r;
+      for (let i = 0; i < 18; i++){ const a = size - 11 + i % 3, c = Math.floor(i / 3); set(a, c, bit(b, i)); set(c, a, bit(b, i)); }
+    }
+    let i = 0;
+    for (let right = size - 1; right >= 1; right -= 2){
+      if (right === 6) right = 5;
+      for (let v = 0; v < size; v++) for (let j = 0; j < 2; j++){
+        const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - v : v;
+        if (!fn[y][x] && i < all.length * 8){ mod[y][x] = bit(all[i >>> 3], 7 - (i & 7)); i++; }
+      }
+    }
+    const MASKS = [(x, y) => (x + y) % 2 === 0, (x, y) => y % 2 === 0, x => x % 3 === 0, (x, y) => (x + y) % 3 === 0,
+      (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x, y) => x * y % 2 + x * y % 3 === 0,
+      (x, y) => (x * y % 2 + x * y % 3) % 2 === 0, (x, y) => ((x + y) % 2 + x * y % 3) % 2 === 0];
+    const applyMask = m => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!fn[y][x] && MASKS[m](x, y)) mod[y][x] = !mod[y][x]; };
+    const penalty = () => {
+      let p = 0, dark = 0;
+      for (let y = 0; y < size; y++){
+        for (let x = 0, runX = 1, runY = 1; x < size; x++){
+          if (mod[y][x]) dark++;
+          if (x > 0){
+            if (mod[y][x] === mod[y][x - 1]){ runX++; if (runX === 5) p += 3; else if (runX > 5) p++; } else runX = 1;
+            if (mod[x][y] === mod[x - 1][y]){ runY++; if (runY === 5) p += 3; else if (runY > 5) p++; } else runY = 1;
+          }
+          if (x > 0 && y > 0 && mod[y][x] === mod[y][x - 1] && mod[y][x] === mod[y - 1][x] && mod[y][x] === mod[y - 1][x - 1]) p += 3;
+        }
+      }
+      return p + Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+    };
+    let best = 0, bestP = Infinity;
+    for (let m = 0; m < 8; m++){ applyMask(m); format(m); const p = penalty(); if (p < bestP){ bestP = p; best = m; } applyMask(m); }
+    applyMask(best); format(best);
+    return mod;
+  }
+  // SVG element (one path for the dark modules, quiet zone of 4 modules, always dark on white for scanners)
+  function svg(text, label){
+    const m = encode(text), n = m.length, q = 4, NS = "http://www.w3.org/2000/svg";
+    const el = document.createElementNS(NS, "svg");
+    el.setAttribute("viewBox", "0 0 " + (n + q * 2) + " " + (n + q * 2));
+    el.setAttribute("role", "img"); el.setAttribute("aria-label", label || "QR");
+    el.setAttribute("shape-rendering", "crispEdges");
+    const bg = document.createElementNS(NS, "rect");
+    bg.setAttribute("width", n + q * 2); bg.setAttribute("height", n + q * 2); bg.setAttribute("fill", "#FFFFFF");
+    let d = "";
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (m[y][x]) d += "M" + (x + q) + " " + (y + q) + "h1v1h-1z";
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("d", d); path.setAttribute("fill", "#0F1F1E");
+    el.append(bg, path);
+    return el;
+  }
+  return { encode, svg };
+})();
+
+/* =====================================================================
+   shared bits
+   ===================================================================== */
+function joinLink(id){
+  const c = App.config;
+  if (c.LIFF_ID) return "https://liff.line.me/" + c.LIFF_ID + "?join=" + encodeURIComponent(id);
+  if (App.isDemo) return location.origin + location.pathname + "?demo=visitor&join=" + encodeURIComponent(id);
+  return "";
+}
+const posters = new Map();
+function posterData(id){
+  const api = App.config.API_URL;
+  if (App.isDemo || !api) return Promise.resolve(null);
+  if (!posters.has(id)) posters.set(id, fetch(api + "?action=poster&event=" + encodeURIComponent(id))
+    .then(r => r.json())
+    .then(d => d && d.ok && d.poster && /^image\/(jpeg|png|webp)$/.test(d.poster.type) && /^[A-Za-z0-9+/=]+$/.test(d.poster.data) ? "data:" + d.poster.type + ";base64," + d.poster.data : null)
+    .catch(() => null));
+  return posters.get(id);
+}
+const shortDate = ev => [F.date(ev.date, {year: undefined}), ev.startTime].filter(Boolean).join(" · ");
+const whenLine = ev => [F.date(ev.date), F.time(ev)].filter(Boolean).join(" · ");
+function statusText(p){
+  if (!p || !p.currentStatus) return "";
+  const parts = p.currentStatus === "working" ? [p.jobTitle, p.company] : p.currentStatus === "university" ? [p.uniFaculty, p.uniName]
+    : p.currentStatus === "highschool" ? [p.hsSchool, p.hsGrade] : [p.otherNow];
+  return [t("st_" + p.currentStatus)].concat(parts.filter(Boolean)).join(" · ");
+}
+function evCard(ev){
+  const hero = h("div", {class: "registration-hero", "aria-hidden": "true", text: String(ev.name || "").split(/\s+/)[0]});
+  if (ev.hasPoster) posterData(ev.id).then(url => { if (url && hero.isConnected) hero.append(h("img", {alt: "", src: url})); });
+  return h("div", {class: "registration-evcard"}, hero,
+    h("div", {class: "registration-in"}, h("b", {text: ev.name}),
+      h("span", {class: "registration-note", text: [whenLine(ev), ev.location].filter(Boolean).join(" · ")})));
+}
+function notFound(el){
+  el.replaceChildren(App.emptyState(t("notFoundT"), t("notFoundD"), {text: t("toEvents"), onclick: () => App.go("events")}));
+}
+function errorInto(el, e, retry){
+  el.replaceChildren(App.emptyState(App.t("errLoad"), e.message, {text: App.t("retry"), onclick: retry}));
+}
+
+/* =====================================================================
+   #join/<eventId>
+   ===================================================================== */
+async function showJoin(ctx){
+  const id = String(ctx.arg || "");
+  if (!id){ App.go("events", "", {replace: true}); return; }
+  if (S.eventId !== id || !S.join){ S.form = null; }
+  S.eventId = id; S.join = null; S.jTitle = {title: t("joinT")}; App.setTitle();
+  jBody.replaceChildren(App.skeleton([96, 180, 140])); jBar.replaceChildren();
+  try{
+    const d = await App.api("reg.event", {eventId: id});
+    if (S.eventId !== id) return;
+    S.join = d; renderJoin();
+  }catch(e){
+    if (S.eventId !== id) return;
+    if (e.code === "NOT_FOUND"){ S.jTitle = {title: t("joinT")}; App.setTitle(); notFound(jBody); return; }
+    errorInto(jBody, e, () => showJoin(ctx));
+  }
+}
+function renderJoin(){
+  const d = S.join;
+  if (!d) return;
+  if (d.member !== "Approved") renderInvite(d); else renderForm(d);
+}
+
+/* ---------- friends who are not members yet: the event preview and a held seat (brief 10.4, canvas "Invite") ---------- */
+function renderInvite(d){
+  const ev = d.event, held = d.registration && d.registration.status === "Held", st = d.member;
+  S.jTitle = {title: t("inviteT"), sub: org()}; App.setTitle();
+  const parts = [evCard(ev)];
+  if (held) parts.push(h("div", {class: "banner registration-ok", role: "status"}, App.icon("check"),
+    h("span", null, h("b", {text: t("heldT")}), h("br"), t("heldD", {ref: d.registration.reference}))));
+  if (st === "Rejected") parts.push(h("div", {class: "banner"}, App.icon("alert"), h("span", {text: t("rejectedD")})));
+  else if (st === "Pending" && !held) parts.push(h("div", {class: "banner info"}, App.icon("clock"), h("span", {text: t("pendingD")})));
+  if (st !== "Rejected") parts.push(h("section", {class: "registration-card"},
+    h("h2", {text: t("forMembers", {org: org()})}),
+    h("ol", {class: "registration-steps"},
+      h("li", null, h("span", {class: "registration-num" + (st === "Pending" ? " registration-soft" : "")}, st === "Pending" ? App.icon("check") : "1"), h("span", {text: t("step1")})),
+      h("li", null, h("span", {class: "registration-num" + (held ? " registration-soft" : "")}, held ? App.icon("check") : "2"), h("span", {text: t("step2")})),
+      h("li", null, h("span", {class: "registration-num registration-soft", text: "3"}), h("span", {text: t("step3")})))));
+  if (!held && st !== "Rejected") parts.push(h("p", {class: "registration-note", text: t("holdNote")}));
+  if (st === "") parts.push(h("p", {class: "registration-note", text: t("otherAccount")}));
+  jBody.replaceChildren(...parts);
+
+  let main = null, side = null;
+  if (st === "Rejected" || (st === "Pending" && held)) side = h("button", {type: "button", class: "btn secondary", id: "registration-toSignup", onclick: () => App.go("signup"), text: t("toSignup")});
+  else if (held) main = h("button", {type: "button", class: "btn", id: "registration-signup", onclick: () => App.go("signup"), text: t("signupHold")});
+  else if (ev.regState !== "open" || ev.ended) main = h("button", {type: "button", class: "btn", disabled: true, text: ev.ended ? t("endedT") : ev.regState === "upcoming" ? t("opensAt", {d: F.dateTime(ev.regOpen)}) : t("closedT")});
+  else main = h("button", {type: "button", class: "btn", id: "registration-hold", onclick: e => hold(e.currentTarget), text: st === "Pending" ? t("hold") : t("signupHold")});
+  jBar.replaceChildren(App.actionBar(main, side));
+}
+async function hold(btn){
+  if (S.sending) return;
+  const d = S.join, id = S.eventId;
+  S.sending = true; btn.disabled = true; btn.textContent = t("sending");
+  try{
+    const r = await App.api("reg.hold", {eventId: id});
+    if (S.eventId !== id) return;
+    d.registration = {reference: r.reference, status: r.status};
+    if (r.status === "Registered"){ showJoin({arg: id}); return; }
+    renderInvite(d);
+    if (d.member === "") App.go("signup");               // sign up now (members' in-app form); Back returns here
+  }catch(e){
+    if (e.code === "ALREADY_MEMBER"){ showJoin({arg: id}); return; }
+    App.toast(e.message);
+    if (btn.isConnected){ btn.disabled = false; btn.textContent = d.member === "Pending" ? t("hold") : t("signupHold"); }
+  }finally{ S.sending = false; }
+}
+
+/* ---------- members: Join with the event's extra sections (canvas "Join") ---------- */
+function newForm(d){
+  const reg = d.registration && d.registration.status === "Registered" ? d.registration : null;
+  const src = (reg && reg.answers) || d.lastAnswers || {};
+  const a = {};
+  ["addrLine", "addrStreet", "addrSubdistrict", "addrDistrict", "addrProvince", "addrZip", "attendMode", "teamsEmail", "teamsTest",
+   "friendsComing", "igFollowed", "suggestion"].forEach(k => { a[k] = src[k] || ""; });
+  a.sessions = reg && Array.isArray(src.sessions) ? src.sessions.slice() : [];
+  const food = reg && reg.food ? {text: reg.food.text || "", consent: !!reg.food.consent} : {text: "", consent: false};
+  return {eventId: S.eventId, a, food, key: Date.now().toString(36) + Math.random().toString(36).slice(2, 10), prefilled: !reg && !!d.lastAnswers, errors: {}};
+}
+function renderForm(d){
+  const ev = d.event, sec = ev.sections || {}, reg = d.registration && d.registration.status === "Registered" ? d.registration : null;
+  S.jTitle = {title: reg ? t("editT") : t("joinT"), sub: ev.name + (ev.date ? " · " + F.date(ev.date, {year: undefined}) : "")}; App.setTitle();
+  jBar.replaceChildren();
+  const stop = (title, detail, btn) => { jBody.replaceChildren(evCard(ev), App.emptyState(title, detail || "", btn)); };
+  if (ev.ended) return stop(t("endedT"), "", reg ? {text: t("viewTicket"), onclick: () => App.go("ticket", ev.id)} : {text: t("toEvents"), onclick: () => App.go("events")});
+  if (!reg && ev.regState !== "open") return stop(ev.regState === "upcoming" ? t("upcomingT") : t("closedT"), ev.regState === "upcoming" ? t("opensAt", {d: F.dateTime(ev.regOpen)}) : "");
+  if (!d.profileComplete) return stop(t("incompleteT"), t("incompleteD"), {text: t("toMe"), onclick: () => App.go("me")});
+
+  if (!S.form || S.form.eventId !== S.eventId) S.form = newForm(d);
+  const f = S.form, p = d.profile || {};
+  const parts = [];
+  if (reg) parts.push(h("div", {class: "banner info"}, App.icon("check"), h("span", {text: t("already", {ref: reg.reference})})));
+  if (reg && reg.needsAnswers) parts.push(h("div", {class: "banner"}, App.icon("alert"), h("span", {text: t("needAnswers")})));
+  const name = [p.title, p.firstName, p.lastName].filter(Boolean).join(" ") + (p.nickname ? " (" + p.nickname + ")" : "");
+  const dl = h("dl", {class: "registration-dl"},
+    h("dt", {text: t("kName")}), h("dd", {text: name}),
+    h("dt", {text: t("kPhone")}), h("dd", {text: p.phone || "–"}),
+    h("dt", {text: t("kEmail")}), h("dd", {text: p.email || "–"}),
+    statusText(p) ? [h("dt", {text: t("kStatus")}), h("dd", {text: statusText(p)})] : null);
+  parts.push(h("section", {class: "registration-card", id: "registration-profile"},
+    h("div", {class: "registration-head"}, h("h2", {text: t("yourInfo")}),
+      h("button", {type: "button", class: "registration-quiet", id: "registration-editMe", onclick: () => App.go("me")}, editIcon(), t("edit"))),
+    dl, h("p", {class: "registration-note", text: t("fromProfile")})));
+  if (f.prefilled && (sec.study || sec.sessions || sec.food)) parts.push(h("div", {class: "banner info"}, App.icon("refresh"), h("span", {text: t("prefilled")})));
+  if (sec.study) parts.push(addressSection(f, p));
+  if (sec.sessions) parts.push(sessionsSection(f, sec));
+  if (sec.food) parts.push(foodSection(f));
+  if (sec.study || sec.sessions || sec.food) parts.push(h("div", {class: "banner info"}, App.icon("shield"), h("span", {text: t("remember")})));
+  const c = App.consent();
+  parts.push(h("p", {class: "registration-consent"}, h("span", {text: t("consentLine", {v: c.version})}),
+    h("button", {type: "button", class: "registration-quiet", id: "registration-privacy", onclick: () => App.privacySheet(), text: t("readPrivacy")})));
+  jBody.replaceChildren(...parts);
+  const main = h("button", {type: "button", class: "btn", id: "registration-submit", onclick: submit, text: reg ? t("save") : t("submit")});
+  const side = reg ? h("button", {type: "button", class: "btn secondary", id: "registration-toTicket", onclick: () => App.go("ticket", ev.id), text: t("viewTicket")}) : null;
+  jBar.replaceChildren(App.actionBar(side, main));
+  showErrors();
+}
+function editIcon(){
+  const NS = "http://www.w3.org/2000/svg", s = App.icon("check");
+  s.replaceChildren();
+  [["path", {d: "M4 20h4L19 9l-4-4L4 16z"}], ["path", {d: "m13.5 6.5 4 4"}]].forEach(([tag, a]) => { const e = document.createElementNS(NS, tag); Object.entries(a).forEach(([k, v]) => e.setAttribute(k, v)); s.append(e); });
+  return s;
+}
+// text field bound to S.form.a[key]
+function tf(f, key, label, o){
+  o = o || {};
+  const fd = App.field({label, type: o.type, value: key === "food" ? f.food.text : f.a[key], required: !!o.required, optional: !!o.optional, hint: o.hint,
+    id: "registration-f-" + key, attrs: Object.assign({autocomplete: o.auto || "off"}, o.attrs || {})});
+  fd.input.addEventListener("input", () => {
+    if (key === "food"){ f.food.text = fd.input.value; const tick = $("#registration-foodTick"); if (tick) tick.hidden = !f.food.text.trim(); }
+    else f.a[key] = fd.input.value;
+    if (f.errors[key]){ delete f.errors[key]; fd.setError(""); }
+  });
+  fd.el.dataset.key = key;
+  return fd.el;
+}
+function addressSection(f, p){
+  const snap = statusText(p);
+  return h("fieldset", {class: "registration-set", id: "registration-addr"},
+    h("legend", {text: t("secAddr")}),
+    h("div", {class: "registration-group"},
+      snap ? h("p", {class: "registration-note", text: t("snapshot", {s: snap})}) : null,
+      tf(f, "addrLine", t("addrLine"), {required: true, auto: "address-line1"}),
+      tf(f, "addrStreet", t("addrStreet"), {optional: true, auto: "address-line2"}),
+      h("div", {class: "registration-two"}, tf(f, "addrSubdistrict", t("addrSub"), {required: true, auto: "address-level3"}), tf(f, "addrDistrict", t("addrDistrict"), {required: true, auto: "address-level2"})),
+      h("div", {class: "registration-two"}, tf(f, "addrProvince", t("addrProvince"), {required: true, auto: "address-level1"}),
+        tf(f, "addrZip", t("addrZip"), {required: true, hint: t("zipHint"), auto: "postal-code", attrs: {inputmode: "numeric", maxlength: "5", pattern: "[0-9]*"}}))));
+}
+function boxIcon(){ return h("span", {class: "registration-box", "aria-hidden": "true"}, App.icon("check")); }
+// a group of choice cards. multi: checkboxes (value = array), else radios (value = string)
+function choices(o){
+  const wrap = h("div", {class: o.grid ? "registration-grid2" : "registration-group", role: o.multi ? "group" : "radiogroup", "aria-labelledby": o.labelId, style: o.grid ? null : "gap:8px"});
+  const draw = () => wrap.querySelectorAll(".registration-choice").forEach(b => {
+    const v = b.dataset.val, cur = o.get();
+    b.setAttribute("aria-checked", (o.multi ? cur.indexOf(v) >= 0 : cur === v) ? "true" : "false");
+  });
+  o.options.forEach(([val, label, sub]) => {
+    const b = h("button", {type: "button", class: "registration-choice" + (o.grid ? " registration-center" : ""), role: o.multi ? "checkbox" : "radio", "data-val": val,
+      id: o.idBase + "-" + String(val).replace(/[^A-Za-z0-9]/g, "")},
+      o.grid ? null : (o.multi ? boxIcon() : h("span", {class: "registration-radio", "aria-hidden": "true"})),
+      sub ? h("span", {style: "display:flex;flex-direction:column"}, h("span", {text: label}), h("span", {class: "registration-note", text: sub})) : h("span", {text: label}));
+    b.addEventListener("click", () => {
+      if (o.multi){ const cur = o.get().slice(), i = cur.indexOf(val); if (i >= 0) cur.splice(i, 1); else cur.push(val); o.set(cur); }
+      else o.set(val);
+      draw(); if (o.onChange) o.onChange();
+    });
+    wrap.append(b);
+  });
+  draw();
+  return wrap;
+}
+function choiceSet(f, key, legend, opts, extra){
+  extra = extra || {};
+  const lid = "registration-lg-" + key;
+  return h("fieldset", {class: "registration-set", id: "registration-set-" + key, "data-key": key},
+    h("legend", {id: lid}, legend, extra.optional ? null : h("span", {class: "registration-req", "aria-hidden": "true", text: " *"}), extra.small ? h("small", {text: extra.small}) : null),
+    choices({labelId: lid, idBase: "registration-c-" + key, options: opts, multi: !!extra.multi, grid: !!extra.grid,
+      get: () => f.a[key], set: v => { f.a[key] = v; if (f.errors[key]){ delete f.errors[key]; showErrors(); } }, onChange: extra.onChange}));
+}
+function sessionsSection(f, sec){
+  const teams = h("div", {class: "registration-group", id: "registration-teams", hidden: !(sec.teams && f.a.attendMode === "online")},
+    tf(f, "teamsEmail", t("teamsEmail"), {required: true, hint: t("teamsHint"), type: "email", auto: "email"}),
+    choiceSet(f, "teamsTest", t("teamsTest"), [["passed", t("tt_passed")], ["failed", t("tt_failed")]], {optional: true}));
+  return h("div", {class: "registration-group", style: "gap:20px"},
+    choiceSet(f, "sessions", t("secSessions"), sec.sessionNames.map(n => [n, n]), {multi: true, small: sec.sessionNames.length > 1 ? t("pickMany") : ""}),
+    choiceSet(f, "attendMode", t("secMode"), [["onsite", t("onsite")], ["online", t("online")]], {grid: true,
+      onChange: () => { teams.hidden = !(sec.teams && f.a.attendMode === "online"); }}),
+    sec.teams ? teams : null);
+}
+function foodSection(f){
+  const tick = h("button", {type: "button", class: "registration-tick", role: "checkbox", id: "registration-foodTick", "aria-checked": f.food.consent ? "true" : "false", hidden: !f.food.text.trim()},
+    boxIcon(), h("span", {text: t("foodConsent")}));
+  tick.addEventListener("click", () => {
+    f.food.consent = !f.food.consent; tick.setAttribute("aria-checked", f.food.consent ? "true" : "false");
+    if (f.errors.food){ delete f.errors.food; showErrors(); }
+  });
+  const food = tf(f, "food", t("food"), {optional: true, attrs: {placeholder: t("foodPh"), maxlength: "200"}});
+  food.append(tick);
+  return h("div", {class: "registration-group", style: "gap:20px"},
+    food,
+    choiceSet(f, "friendsComing", t("friends"), [["alone", t("fr_alone")], ["few", t("fr_few")], ["many", t("fr_many")]]),
+    choiceSet(f, "igFollowed", t("ig"), [["yes", t("ig_yes")], ["no", t("ig_no")]], {grid: true}),
+    tf(f, "suggestion", t("suggestion"), {optional: true, type: "textarea", attrs: {maxlength: "1000", rows: "3"}}));
+}
+function validate(){
+  const f = S.form, sec = S.join.event.sections || {}, a = f.a, e = {};
+  const need = (k, test, msg) => { if (!test) e[k] = msg; };
+  if (sec.study){
+    ["addrLine", "addrSubdistrict", "addrDistrict", "addrProvince"].forEach(k => need(k, a[k].trim(), t("eRequired")));
+    need("addrZip", /^\d{5}$/.test(a.addrZip.trim()), t("eZip"));
+  }
+  if (sec.sessions){
+    need("sessions", a.sessions.some(n => sec.sessionNames.indexOf(n) >= 0), t("eSessions"));
+    need("attendMode", a.attendMode === "onsite" || a.attendMode === "online", t("eMode"));
+    if (sec.teams && a.attendMode === "online"){
+      const m = a.teamsEmail.trim();
+      if (!m) e.teamsEmail = t("eTeams");
+      else if (m.indexOf("@") >= 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)) e.teamsEmail = t("eTeamsEmail");
+    }
+  }
+  if (sec.food){
+    if (f.food.text.trim() && !f.food.consent) e.food = t("eFood");
+    need("friendsComing", !!a.friendsComing, t("ePick"));
+    need("igFollowed", !!a.igFollowed, t("ePick"));
+  }
+  f.errors = e;
+  showErrors();
+  return Object.keys(e);
+}
+function showErrors(){
+  const e = (S.form && S.form.errors) || {};
+  jBody.querySelectorAll("[data-key]").forEach(el => {
+    const k = el.dataset.key, msg = e[k] || "";
+    if (el.classList.contains("field")){
+      const input = el.querySelector(".input"), err = el.querySelector(".err");
+      el.classList.toggle("bad", !!msg); if (input) input.setAttribute("aria-invalid", msg ? "true" : "false");
+      if (err){ if (msg){ err.replaceChildren(App.icon("alert"), h("span", {text: msg})); err.hidden = false; } else err.hidden = true; }
+    } else {
+      el.classList.toggle("registration-bad", !!msg);
+      let p = el.querySelector(":scope > .registration-err");
+      if (msg){ if (!p){ p = h("p", {class: "registration-err", role: "alert"}); el.append(p); } p.replaceChildren(App.icon("alert"), h("span", {text: msg})); }
+      else if (p) p.remove();
+    }
+  });
+}
+async function submit(){
+  if (S.sending || !S.join || !S.form) return;
+  const bad = validate();
+  if (bad.length){
+    App.toast(t("eCheck"));
+    const first = jBody.querySelector("[data-key=\"" + bad[0] + "\"]");
+    if (first){ first.scrollIntoView({block: "center"}); const i = first.querySelector("input, textarea, button"); if (i) i.focus({preventScroll: true}); }
+    return;
+  }
+  const d = S.join, ev = d.event, sec = ev.sections || {}, f = S.form, id = S.eventId;
+  const wasReg = !!(d.registration && d.registration.status === "Registered");
+  const answers = Object.assign({}, f.a, {sessions: f.a.sessions.slice()});
+  Object.keys(answers).forEach(k => { if (typeof answers[k] === "string") answers[k] = answers[k].trim(); });
+  const body = {eventId: id, answers, consent: true, consentVersion: App.consent().version, idempotencyKey: f.key};
+  if (sec.food) body.food = {text: f.food.text.trim(), consent: !!f.food.text.trim() && f.food.consent};
+  const btn = $("#registration-submit");
+  S.sending = true; if (btn){ btn.disabled = true; btn.textContent = t("sending"); }
+  try{
+    await App.api("reg.register", body);
+    if (App.isDemo) App.toast(t("demoDone"));
+    S.fresh[id] = wasReg ? "saved" : "done";
+    S.form = null; S.join = null;
+    const v = tickets.get(id); if (v) v.reset();
+    App.go("ticket", id, {replace: true});              // Back from the ticket skips the form
+  }catch(e){
+    if (e.code === "PROFILE"){ d.profileComplete = false; renderForm(d); return; }
+    if (e.code === "FOOD_CONSENT"){ f.errors = Object.assign({}, f.errors, {food: t("eFood")}); showErrors(); }
+    App.toast(e.message);
+    if (e.code === "NOT_OPEN") showJoin({arg: id});
+  }finally{
+    S.sending = false;
+    const b = $("#registration-submit"); if (b){ b.disabled = false; b.textContent = wasReg ? t("save") : t("submit"); }
+  }
+}
+
+/* =====================================================================
+   #ticket/<eventId> (canvas "Ticket"): the saved copy lets the ticket open without signal at the venue.
+   It holds the event, the RG reference and the check-in code (no claims, PromptPay or receipts).
+   ===================================================================== */
+const tickets = new Map();
+function ticketView(id){
+  if (!tickets.has(id)) tickets.set(id, App.view({
+    key: "ticket:" + id, action: "reg.ticket", body: () => ({eventId: id}), cache: true, el: tBody,
+    skeleton(){ if (S.ticketId === id) tBody.replaceChildren(App.skeleton([140, 300, 96])); },
+    render: (d, meta) => renderTicket(id, d, meta),
+    onError(e){
+      if (e.code !== "NOT_FOUND" || S.ticketId !== id) return false;
+      tBody.replaceChildren(App.emptyState(t("notFoundT"), "", {text: t("joinT"), onclick: () => App.go("join", id)}));
+      return true;
+    }
+  }));
+  return tickets.get(id);
+}
+function showTicket(ctx){
+  const id = String(ctx.arg || "");
+  if (!id){ App.go("events", "", {replace: true}); return; }
+  S.ticketId = id;
+  const v = ticketView(id);
+  if (v.data) v.rerender(); else tBody.replaceChildren(App.skeleton([140, 300, 96]));
+  v.start();
+}
+function renderTicket(id, d, meta){
+  if (S.ticketId !== id) return;
+  const ev = d.event, tk = d.ticket, fresh = S.fresh[id];
+  const parts = [];
+  if (fresh) parts.push(h("div", {class: "registration-done", role: "status"}, h("span", {class: "registration-pop"}, App.icon("check")), h("h1", {text: fresh === "saved" ? t("savedT") : t("doneT")})));
+  const mode = [tk.attendMode ? t(tk.attendMode) : "", tk.sessions && tk.sessions.length ? t("nSessions", {n: tk.sessions.length}) : ""].filter(Boolean).join(" · ");
+  const kv = (k, v) => v ? h("div", null, h("span", {text: k}), h("b", {text: v})) : null;
+  let qr;
+  try{ qr = tk.qr ? QR.svg(tk.qr, t("qrAlt")) : null; }catch(e){ qr = null; }
+  parts.push(h("article", {class: "registration-ticketCard", id: "registration-ticketCard"},
+    h("div", {class: "registration-tTop"},
+      h("span", {class: "registration-tLabel", text: t("ticketLabel", {org: org()})}),
+      h("span", {class: "registration-tName", text: ev.name}),
+      h("div", {class: "registration-tGrid"},
+        kv(t("kDate"), F.date(ev.date)), kv(t("kTime"), F.time(ev) || t("allDay")), kv(t("kPlace"), ev.location), kv(t("kMode"), mode))),
+    h("div", {class: "registration-tear"}, h("span", {class: "registration-notch registration-l", "aria-hidden": "true"}), h("span", {class: "registration-notch registration-r", "aria-hidden": "true"})),
+    h("div", {class: "registration-tBottom"},
+      tk.checkedInAt ? h("span", {class: "chip ok", id: "registration-tkIn", style: "align-self:center"}, App.icon("check"), t("tkIn", {t: inTime(tk.checkedInAt)}))
+        : tk.ended ? h("span", {class: "chip", style: "align-self:center"}, App.icon("clock"), t("ended")) : null,
+      qr ? h("div", {class: "registration-qr", id: "registration-qr"}, qr) : null,
+      h("span", {class: "registration-ref", id: "registration-ref", text: tk.reference}),
+      h("span", {class: "registration-qrHint", text: t("qrHint")})),
+    h("div", {class: "registration-serr", "aria-hidden": "true"})));
+  if (tk.needsAnswers && !tk.ended) parts.push(h("div", {class: "registration-actions"},
+    h("div", {class: "banner"}, App.icon("alert"), h("span", {text: t("ticketNeeds")})),
+    h("button", {type: "button", class: "btn", id: "registration-answer", onclick: () => App.go("join", id), text: t("answerNow")})));
+  parts.push(h("div", {class: "registration-actions"},
+    !tk.ended && ev.visible !== false ? h("button", {type: "button", class: "btn secondary", id: "registration-invite", onclick: () => shareEvent(ev)}, App.icon("share"), t("invite")) : null,
+    h("button", {type: "button", class: "btn quiet", id: "registration-home", onclick: () => App.go("home"), text: t("toHome")})));
+  parts.push(h("p", {class: "asof", text: meta && meta.stale ? App.t("savedAt", {d: F.stamp(meta.at)}) : App.t("asOf", {d: F.dateTime(d.now)})}));
+  tBody.replaceChildren(...parts);
+}
+
+/* =====================================================================
+   Share (canvas "Share"): LINE, Instagram story image, copy link, phone menu (App.share).
+   The link opens #join in the app: members get Join, friends get the preview and can hold a seat.
+   ===================================================================== */
+function shareEvent(ev){
+  const url = joinLink(ev.id);
+  if (!url){ App.toast(t("noLink")); return; }
+  App.share({title: t("shareT"), text: ev.name + "\n" + [whenLine(ev), ev.location].filter(Boolean).join(" · "), url,
+    rows: [{icon: "camera", title: t("igT"), sub: t("igSub"), id: "registration-ig", onclick: () => storyImage(ev, url)}]});
+}
+// Other features' share sheets (events' event page) can offer the story image too: App.panelsFor("share") gives this
+// panel; call mount(null, {event, url}). It needs only public event fields (name, date, times, location, hasPoster, id).
+App.addPanel("share", {order: 10, label: () => t("igT"), mount: (el, ctx) => storyImage(ctx.event, ctx.url || joinLink(ctx.event.id))});
+
+function wrapText(g, text, maxW, maxLines){
+  let words;
+  try{ words = Array.from(new Intl.Segmenter(en() ? "en" : "th", {granularity: "word"}).segment(text), s => s.segment); }catch(e){ words = Array.from(text); }
+  const lines = []; let cur = "";
+  words.forEach(w => {
+    const next = cur + w;
+    if (g.measureText(next).width <= maxW || !cur) cur = next;
+    else { lines.push(cur.trim()); cur = w.trimStart(); }
+  });
+  if (cur.trim()) lines.push(cur.trim());
+  if (lines.length > maxLines){ lines.length = maxLines; lines[maxLines - 1] = lines[maxLines - 1].replace(/.{1}$/, "") + "…"; }
+  return lines;
+}
+function roundRect(g, x, y, w, hh, r){ g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + hh, r); g.arcTo(x + w, y + hh, x, y + hh, r); g.arcTo(x, y + hh, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+async function storyImage(ev, url){
+  App.toast(t("igMaking"));
+  try{
+    const FONT = "\"IBM Plex Sans Thai\", \"Noto Sans Thai\", sans-serif";
+    try{ await Promise.all([document.fonts.load("700 60px " + FONT), document.fonts.load("400 36px " + FONT)]); }catch(e){}
+    const W = 1080, H = 1920, c = h("canvas", {width: W, height: H}), g = c.getContext("2d");
+    g.fillStyle = "#0F5753"; g.fillRect(0, 0, W, H);
+    g.fillStyle = "#FFFFFF"; g.font = "600 40px " + FONT; g.textBaseline = "alphabetic";
+    g.fillText(org(), 120, 150);
+    // poster 4:5
+    const px = 120, py = 200, pw = 840, ph = 1050;
+    g.save(); roundRect(g, px, py, pw, ph, 32); g.clip();
+    const src = ev.hasPoster ? await posterData(ev.id) : null;
+    let drawn = false;
+    if (src){
+      const img = await new Promise(res => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+      if (img){ const s = Math.max(pw / img.width, ph / img.height), w = img.width * s, hh = img.height * s; g.drawImage(img, px + (pw - w) / 2, py + (ph - hh) / 2, w, hh); drawn = true; }
+    }
+    if (!drawn){
+      g.fillStyle = "#72B5B3"; g.fillRect(px, py, pw, ph);
+      g.fillStyle = "#FFFFFF"; g.font = "700 96px " + FONT;
+      wrapText(g, String(ev.name || "").split(/\s+/)[0] || "", pw - 120, 2).forEach((l, i) => g.fillText(l, px + 60, py + ph - 80 - (1 - i) * 110));
+    }
+    g.restore();
+    // white panel: name, date, place, QR
+    roundRect(g, 60, 1300, 960, 520, 40); g.fillStyle = "#FFFFFF"; g.fill();
+    g.fillStyle = "#0F1F1E"; g.font = "700 56px " + FONT;
+    let y = 1390;
+    wrapText(g, ev.name || "", 540, 3).forEach(l => { g.fillText(l, 110, y); y += 70; });
+    g.fillStyle = "#526361"; g.font = "400 36px " + FONT; y += 10;
+    [whenLine(ev), ev.location].filter(Boolean).forEach(line => wrapText(g, line, 540, 2).forEach(l => { g.fillText(l, 110, y); y += 50; }));
+    const m = QR.encode(url), n = m.length, size = 300, cell = size / (n + 2), qx = 680, qy = 1350;
+    g.fillStyle = "#FFFFFF"; g.fillRect(qx, qy, size, size);
+    g.fillStyle = "#0F1F1E";
+    for (let yy = 0; yy < n; yy++) for (let xx = 0; xx < n; xx++) if (m[yy][xx]) g.fillRect(qx + (xx + 1) * cell, qy + (yy + 1) * cell, Math.ceil(cell), Math.ceil(cell));
+    g.fillStyle = "#136B66"; g.font = "600 30px " + FONT; g.textAlign = "center";
+    g.fillText(t("igScan"), qx + size / 2, qy + size + 50);
+    g.textAlign = "left";
+    const dataUrl = c.toDataURL("image/png");
+    const blob = await new Promise(res => c.toBlob(res, "image/png"));
+    const name = "story-" + String(ev.id).replace(/[^A-Za-z0-9-]/g, "") + ".png";
+    App.sheet(t("igSheetT"),
+      h("img", {class: "registration-story", id: "registration-storyImg", alt: t("igSheetT"), src: dataUrl}),
+      h("div", {class: "registration-sheetBtns"},
+        h("button", {type: "button", class: "btn", id: "registration-igSave", onclick: () => saveImage(blob, name, dataUrl)}, App.icon("image"), t("igSave")),
+        h("button", {type: "button", class: "btn secondary", id: "registration-igOpen", onclick: () => App.link("instagram://story-camera")}, App.icon("camera"), t("igOpen"))),
+      h("p", {class: "t-small muted", text: t("igHint")}));
+  }catch(e){ App.toast(t("igFail")); }
+}
+async function saveImage(blob, name, dataUrl){
+  try{
+    const file = blob ? new File([blob], name, {type: "image/png"}) : null;
+    if (file && navigator.canShare && navigator.canShare({files: [file]})){ await navigator.share({files: [file]}); return; }
+  }catch(e){ if (e && e.name === "AbortError") return; }
+  const a = h("a", {href: blob ? URL.createObjectURL(blob) : dataUrl, download: name, style: "display:none"});
+  document.body.append(a); a.click(); a.remove();
+  App.toast(t("igSaved"));
+}
+
+/* =====================================================================
+   register
+   ===================================================================== */
+/* =====================================================================
+   Check-in (session S6, brief 10.5; canvas "Manage" › Participants and "Scan").
+   - Manage › Participants: a panel inside event-team's #manage/<eventId> (App.addPanel "manage", order 10): count,
+     search by name or nickname, a switch per person (check in by hand / undo), and the sticky "Scan QR" button.
+   - #scan/<eventId>: opens the LINE camera (liff.scanCodeV2; the LIFF app needs "Scan QR" ON) and shows the result:
+     checked in (stamp), already used (when and by whom), not this event. Undo from there too.
+   Who may do this is decided on the server on every request (the event's lead and collaborators, event-team).
+   The list holds other people's names: never saved on the phone (no App.view cache).
+   ===================================================================== */
+const P = { eventId: "", data: null, at: 0, busy: null, q: "", el: null, pending: {} };      // the participant list
+const C = { eventId: "", state: "", res: null, qr: "", err: null, scanning: false };        // the scan screen
+const sBody = $("#registration-sBody"), sBar = $("#registration-sBar");
+const NO_CAMERA = {noCamera: true};
+
+function scanIcon(cls){
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+  if (cls) svg.setAttribute("class", cls);
+  [["viewBox", "0 0 24 24"], ["fill", "none"], ["stroke", "currentColor"], ["stroke-width", "1.75"], ["stroke-linecap", "round"], ["stroke-linejoin", "round"], ["aria-hidden", "true"]]
+    .forEach(([k, v]) => svg.setAttribute(k, v));
+  const p = document.createElementNS(NS, "path");
+  p.setAttribute("d", "M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3M7 12h10");
+  svg.append(p);
+  return svg;
+}
+const today = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+const inTime = s => !s ? "" : String(s).slice(0, 10) === today() ? String(s).slice(11, 16) : F.dateTime(s);
+const personLabel = p => p.name + (p.nickname ? " (" + p.nickname + ")" : "");
+const personInitial = p => (String(p.nickname || p.name || "?").replace(/^(พี่|น้อง)\s*/, "").trim().charAt(0) || "?").toUpperCase();
+function chkErr(e){
+  const k = {FORBIDDEN: "errForbidden", CLOSED: "errClosed", NOT_FOUND: "errGone"}[e && e.code];
+  return k ? t(k) : (e && e.message) || App.t("errNet");
+}
+// one person's new state from the server: update the list we hold (if it is the same event)
+function applyPerson(eventId, person, count){
+  if (!P.data || P.eventId !== eventId) return;
+  if (person){ const i = P.data.people.findIndex(x => x.reference === person.reference); if (i >= 0) P.data.people[i] = person; }
+  if (count) P.data.count = count;
+  if (P.el && P.el.isConnected) drawList();                 // the list behind the scan screen stays current
+}
+
+/* ---------- Manage › Participants ---------- */
+function loadPeople(eventId, force){
+  if (P.busy && P.eventId === eventId) return P.busy;
+  if (!force && P.data && P.eventId === eventId && Date.now() - P.at < 3000) return Promise.resolve(P.data);
+  P.busy = App.api("reg.participants", {eventId}).then(d => {
+    if (P.eventId !== eventId) return null;
+    P.data = d; P.at = Date.now(); P.pending = {};
+    drawPeople();
+    return d;
+  }).catch(e => {
+    if (P.eventId !== eventId) return null;
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return null; }
+    if (P.data){ App.toast(chkErr(e)); return null; }
+    if (P.el && P.el.isConnected) P.el.replaceChildren(App.emptyState(App.t("errLoad"), chkErr(e), {text: App.t("retry"), onclick: () => loadPeople(eventId, true)}));
+    return null;
+  }).finally(() => { P.busy = null; });
+  return P.busy;
+}
+function mountPeople(el, ctx){
+  const id = String(ctx.eventId || "");
+  if (P.eventId !== id){ P.eventId = id; P.data = null; P.q = ""; P.pending = {}; }
+  P.el = h("div", {class: "registration-people", id: "registration-people"});
+  el.replaceChildren(P.el);
+  if (P.data) drawPeople(); else P.el.replaceChildren(App.skeleton([48, 64, 64, 64]));
+  loadPeople(id, false);
+}
+function drawPeople(){
+  const el = P.el; if (!el || !el.isConnected || !P.data) return;
+  const d = P.data, can = d.canCheckIn;
+  const input = h("input", {type: "search", class: "registration-searchIn", id: "registration-pSearch", placeholder: t("pSearch"), "aria-label": t("pSearch"), autocomplete: "off", enterkeyhint: "search"});
+  input.value = P.q;
+  input.addEventListener("input", () => { P.q = input.value; drawList(); });
+  const parts = [];
+  if (!can) parts.push(h("div", {class: "banner"}, App.icon("alert"), h("span", {text: t("pClosed")})));
+  if (d.people.length) parts.push(h("label", {class: "registration-search", for: "registration-pSearch"}, App.icon("search"), input));
+  parts.push(h("p", {class: "registration-pCount", id: "registration-pCount"}));
+  parts.push(h("div", {class: "registration-plist", id: "registration-plist"}));
+  if (can && d.people.some(p => p.status === "Registered")){
+    const scan = h("button", {type: "button", class: "btn", id: "registration-scanBtn", onclick: () => scanAndCheck(P.eventId)}, scanIcon(), t("scanBtn"));
+    parts.push(App.actionBar(scan));
+  }
+  el.replaceChildren(...parts);
+  drawList();
+}
+function drawCount(){
+  const el = $("#registration-pCount"); if (!el || !P.data) return;
+  const c = P.data.count || {checkedIn: 0, total: 0};
+  el.replaceChildren(t("pCount") + " ", h("b", {text: c.checkedIn + " / " + c.total}), P.data.canCheckIn && c.total ? " · " + t("pHintSwitch") : "");
+}
+function drawList(){
+  const box = $("#registration-plist"); if (!box || !P.data) return;
+  drawCount();
+  const all = P.data.people.slice().sort((a, b) => (a.status === "Held") - (b.status === "Held") || personLabel(a).localeCompare(personLabel(b), "th"));
+  if (!all.length){ box.replaceChildren(App.emptyState(t("pEmptyT"), t("pEmptyD"))); return; }
+  const q = P.q.trim().toLowerCase();
+  const list = q ? all.filter(p => (p.name + " " + p.nickname).toLowerCase().indexOf(q) >= 0) : all;
+  if (!list.length){ box.replaceChildren(h("p", {class: "registration-note registration-center", text: t("pNoMatch")})); return; }
+  box.replaceChildren(...list.map(personRow));
+}
+function personRow(p){
+  const held = p.status === "Held", on = !!p.checkedInAt, busy = !!P.pending[p.reference];
+  const note = held ? t("pHeld") : on ? (p.byName ? t("pInBy", {t: inTime(p.checkedInAt), by: p.byName}) : t("pIn", {t: inTime(p.checkedInAt)})) : t("pNotIn");
+  const sw = P.data.canCheckIn ? App.switch({checked: on, label: held ? t("pSwitchHeld", {name: personLabel(p)}) : t("pSwitch", {name: personLabel(p)}),
+    id: "registration-sw-" + p.reference.replace(/[^A-Za-z0-9-]/g, ""), onChange: v => toggle(p, v, sw)}) : null;
+  if (sw && (held || busy)) sw.disabled = true;
+  return h("div", {class: "registration-person" + (held ? " registration-isHeld" : ""), "data-ref": p.reference},
+    h("span", {class: "registration-av", "aria-hidden": "true", text: personInitial(p)}),
+    h("span", {class: "registration-who"}, h("b", {text: personLabel(p)}),
+      h("span", {class: "registration-pnote" + (held ? " registration-warn" : on ? " registration-good" : ""), text: note})),
+    sw);
+}
+async function toggle(p, on, sw){
+  const id = P.eventId;
+  P.pending[p.reference] = true; sw.disabled = true;
+  try{
+    const r = await App.api(on ? "reg.checkin" : "reg.uncheck", {eventId: id, reference: p.reference});
+    applyPerson(id, r.person, r.count);
+    App.toast(t(on ? "pDoneToast" : "pUndoToast", {name: (r.person && (r.person.nickname || r.person.name)) || p.name}));
+  }catch(e){
+    sw.set(!on);
+    App.toast(chkErr(e));
+    if (e.code === "NOT_FOUND" || e.code === "CLOSED") loadPeople(id, true);
+  }finally{
+    delete P.pending[p.reference];
+    if (P.eventId === id) drawList();
+  }
+}
+
+/* ---------- the camera ---------- */
+// Resolves to the QR text, null when the person closed the camera, or NO_CAMERA when it can't open here.
+function scanCode(){
+  if (App.isDemo) return demoScan();
+  const L = window.liff;
+  try{
+    if (!L || typeof L.scanCodeV2 !== "function") return Promise.resolve(NO_CAMERA);
+    if (typeof L.isApiAvailable === "function" && !L.isApiAvailable("scanCodeV2")) return Promise.resolve(NO_CAMERA);
+    return L.scanCodeV2().then(r => (r && typeof r.value === "string" && r.value) ? r.value : null).catch(() => NO_CAMERA);
+  }catch(e){ return Promise.resolve(NO_CAMERA); }
+}
+async function scanAndCheck(eventId){
+  if (C.scanning) return;
+  C.scanning = true;
+  let code;
+  try{ code = await scanCode(); }finally{ C.scanning = false; }
+  if (code == null) return;                                  // closed the camera: stay where we are
+  C.eventId = eventId;
+  if (code === NO_CAMERA){ C.state = "camera"; C.res = null; showScanScreen(eventId); return; }
+  await sendCode(eventId, code);
+}
+async function sendCode(eventId, code){
+  C.eventId = eventId; C.qr = code; C.state = "busy"; C.res = null; C.err = null;
+  showScanScreen(eventId);
+  try{
+    const r = await App.api("reg.checkin", {eventId, qr: code});
+    if (C.eventId !== eventId || C.qr !== code) return;
+    C.res = r; C.state = r.result;                           // checked | already | wrong
+    applyPerson(eventId, r.person, r.count);
+  }catch(e){
+    if (C.eventId !== eventId) return;
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    C.state = "fail"; C.err = e;
+  }
+  if (S.scanShown === eventId) drawScan();
+}
+function showScanScreen(eventId){
+  if (S.scanShown === eventId && location.hash.indexOf("#scan/") === 0) drawScan();
+  else App.go("scan", eventId);
+}
+async function undoScan(btn){
+  const r0 = C.res, id = C.eventId; if (!r0 || !r0.person) return;
+  btn.disabled = true; btn.textContent = t("undoing");
+  try{
+    const r = await App.api("reg.uncheck", {eventId: id, reference: r0.person.reference});
+    applyPerson(id, r.person, r.count);
+    C.res = Object.assign({}, r0, {person: r.person, count: r.count}); C.state = "undone";
+  }catch(e){ App.toast(chkErr(e)); }
+  drawScan();
+}
+
+/* ---------- #scan/<eventId> ---------- */
+function showScan(ctx){
+  const id = String(ctx.arg || "");
+  if (!id){ App.go("manage", "", {replace: true}); return; }
+  S.scanShown = id;
+  if (C.eventId !== id){ C.eventId = id; C.state = ""; C.res = null; }
+  if (!P.data || P.eventId !== id){ P.eventId = id; P.data = null; loadPeople(id, true).then(() => { if (S.scanShown === id) App.setTitle(); }); }
+  drawScan();
+  App.setTitle();
+}
+function scanTitle(){
+  const ev = P.data && P.data.event && P.data.event.id === S.scanShown ? P.data.event : null;
+  return ev ? {title: t("scanT"), sub: ev.name} : t("scanT");
+}
+function drawScan(){
+  const st = C.state, r = C.res || {}, p = r.person, c = r.count || (P.data && P.data.count) || null;
+  const big = (cls, ic, title, ...lines) => h("div", {class: "registration-result " + cls, role: "status"},
+    h("span", {class: "registration-bigIcon", "aria-hidden": "true"}, ic), h("h1", {text: title}), ...lines.filter(Boolean));
+  const line = (text, cls) => text ? h("p", {class: cls || "registration-rLine", text}) : null;
+  let body;
+  if (st === "busy") body = h("div", {class: "registration-result"}, App.skeleton([152]), h("p", {class: "registration-rLine", text: t("scanBusy")}));
+  else if (st === "checked") body = h("div", {class: "registration-result registration-rOk", role: "status"},
+    h("div", {class: "registration-stamp", "aria-hidden": "true"}, App.icon("check"), h("span", {text: t("stampIn")})),
+    h("h1", {text: t("okT")}), h("p", {class: "registration-rName", id: "registration-rName", text: personLabel(p)}),
+    line([p.reference, inTime(p.checkedInAt), c ? t("okNth", {c: c.checkedIn, n: c.total}) : ""].filter(Boolean).join(" · ")));
+  else if (st === "already") body = big("registration-rAgain", App.icon("alert"), t("againT"),
+    h("p", {class: "registration-rName", id: "registration-rName", text: personLabel(p)}),
+    line(t("againD", {name: p.nickname || p.name, t: inTime(p.checkedInAt), by: p.byName ? t("againBy", {by: p.byName}) : ""})), line(t("againD2")));
+  else if (st === "wrong") body = big("registration-rWrong", App.icon("x"), t("wrongT"), line(t("wrongD")), line(t("wrongD2")));
+  else if (st === "undone") body = big("registration-rUndone", App.icon("refresh"), t("undoneT"), line(t("undoneD", {name: personLabel(p)})));
+  else if (st === "fail") body = big("registration-rWrong", App.icon("alert"), t("failT"), line(chkErr(C.err)));
+  else if (st === "camera") body = big("registration-rAgain", App.icon("camera"), t("camT"), line(t("camD")), line(t("camAdmin"), "registration-rSmall"));
+  else body = big("registration-rIdle", scanIcon(), t("scanIdleT"), line(t("scanIdleD")));
+  sBody.replaceChildren(body);
+  if (st === "checked" && !matchMedia("(prefers-reduced-motion: reduce)").matches){ const s = $(".registration-stamp", sBody); if (s) s.classList.add("registration-thump"); }
+
+  const id = C.eventId || S.scanShown;
+  const primary = st === "fail"
+    ? h("button", {type: "button", class: "btn", id: "registration-retry", onclick: () => sendCode(id, C.qr), text: t("retry")})
+    : h("button", {type: "button", class: "btn registration-scanNext", id: "registration-scanNext", disabled: st === "busy", onclick: () => scanAndCheck(id)},
+        scanIcon(), st ? t("scanNext") : t("scanStart"));
+  const second = st === "checked"
+    ? h("button", {type: "button", class: "btn quiet registration-undo", id: "registration-undo", onclick: e => undoScan(e.currentTarget), text: t("undoBtn")})
+    : h("button", {type: "button", class: "btn quiet", id: "registration-toList", onclick: () => App.go("manage", id), text: t("toList")});
+  sBar.replaceChildren(App.actionBar(primary, second));
+}
+
+// Manage › Participants (event-team hosts it, order 10: before Collaborators 20 and Expenses 30)
+App.addPanel("manage", {
+  order: 10,
+  label: ctx => P.data && P.eventId === ctx.eventId && P.data.count ? t("pPanelN", {n: P.data.count.total}) : t("pPanel"),
+  mount: mountPeople
+});
+
+App.register({
+  name: "registration",
+  routes: {
+    join: { screen: "registration-join", title: () => S.jTitle || {title: t("joinT")}, show(ctx){ showJoin(ctx); } },
+    ticket: { screen: "registration-ticket", title: () => t("ticketT"), show(ctx){ showTicket(ctx); } },
+    scan: { screen: "registration-scan", title: scanTitle, show(ctx){ showScan(ctx); } }
+  },
+  onLang(){ if (S.join) renderJoin(); tickets.forEach(v => v.rerender()); if (P.data) drawPeople(); if (S.scanShown) drawScan(); }
+});
+
+/* =====================================================================
+   Demo answers (no API_URL in config.js): ?demo=visitor | pending | rejected | new | participant | organizer | approver
+   Sample names, places and answers are made up. Event IDs match the events feature's demo.
+   ===================================================================== */
+const DEMO = (() => {
+  const day = n => { const x = new Date(Date.now() + 7 * 3600e3); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const none = {study: false, sessions: false, teams: false, food: false, sessionNames: []};
+  const ev = o => Object.assign({description: "", hasPoster: false, regState: "open", ended: false, visible: true, sections: none}, o);
+  return {
+    held: {}, regs: {"EV-DEMO-01": {reference: "RG-DEMO-0012", answers: null, food: {text: "", consent: false}}}, seq: 40,
+    events: {
+      "EV-DEMO-01": ev({id: "EV-DEMO-01", name: "Board Game Night", date: day(13), startTime: "13:00", endTime: "17:00", location: "บ้านหัวแหลม อโศก", regOpen: day(-5) + " 09:00", regClose: day(13) + " 13:00"}),
+      "EV-DEMO-02": ev({id: "EV-DEMO-02", name: "Hualaem-X Session: เส้นทางอาชีพสาย Data", date: day(27), startTime: "13:00", endTime: "16:30", location: "บ้านหัวแหลม อโศก + ออนไลน์ (Teams)",
+        regOpen: day(-2) + " 09:00", regClose: day(2) + " 23:59", sections: {study: true, sessions: true, teams: true, food: true, sessionNames: ["Data Analyst", "Data Engineer"]}}),
+      "EV-DEMO-03": ev({id: "EV-DEMO-03", name: "ค่ายพี่สอนน้อง รุ่น 20", date: day(69), startTime: "09:00", endTime: "17:00", location: "[สถานที่]", regState: "upcoming", regOpen: day(23) + " 09:00", regClose: day(66) + " 23:59"})
+    },
+    profile: {title: "นาย", firstName: "ต้นกล้า", lastName: "ใจดี", nickname: "ต้นกล้า", phone: "0800000001", email: "tonkla@example.com", instagram: "tonkla.demo",
+      currentStatus: "working", jobTitle: "Data Analyst", company: "Example Co"},
+    last: {addrLine: "99/1 ซอยตัวอย่าง", addrStreet: "", addrSubdistrict: "คลองเตยเหนือ", addrDistrict: "วัฒนา", addrProvince: "กรุงเทพมหานคร", addrZip: "10110",
+      attendMode: "onsite", teamsEmail: "", friendsComing: "few", igFollowed: "yes"}
+  };
+})();
+const demoMember = mode => mode === "visitor" ? "" : mode === "pending" ? "Pending" : mode === "rejected" ? "Rejected" : "Approved";
+const demoNow = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 16).replace("T", " ");
+function demoEvent(id){ const e = DEMO.events[id]; if (!e) throw new App.ApiError(t("notFoundT"), "NOT_FOUND"); return e; }
+const demoReg = (id, mode) => mode === "new" ? null : DEMO.regs[id] || null;
+App.demo["reg.event"] = (body, mode) => {
+  const e = demoEvent(body.eventId), st = demoMember(mode), out = {ok: true, now: demoNow(), member: st, consentVersion: App.consent().version, event: e, registration: null};
+  if (st !== "Approved"){ if (DEMO.held[e.id]) out.registration = {reference: DEMO.held[e.id], status: "Held", needsAnswers: false}; return out; }
+  out.profile = DEMO.profile; out.profileComplete = mode !== "new";
+  const r = demoReg(e.id, mode);
+  if (r){
+    const s = e.sections, needs = (s.study || s.sessions || s.food) && !r.answers;
+    out.registration = {reference: r.reference, status: "Registered", needsAnswers: needs, answers: r.answers || {sessions: []}, food: r.food};
+  } else out.lastAnswers = DEMO.last;
+  return out;
+};
+App.demo["reg.hold"] = (body, mode) => {
+  const st = demoMember(mode);
+  if (st === "Approved") throw new App.ApiError("You are already a member: please register.", "ALREADY_MEMBER");
+  if (st === "Rejected") throw new App.ApiError(t("rejectedD"), "NOT_MEMBER");
+  demoEvent(body.eventId);
+  if (!DEMO.held[body.eventId]) DEMO.held[body.eventId] = "RG-DEMO-00" + (++DEMO.seq);
+  return {ok: true, reference: DEMO.held[body.eventId], status: "Held", duplicate: false};
+};
+App.demo["reg.register"] = (body, mode) => {
+  if (demoMember(mode) !== "Approved") throw new App.ApiError(App.t("notMemberT"), "NOT_MEMBER");
+  if (mode === "new") throw new App.ApiError(t("incompleteT"), "PROFILE");
+  const e = demoEvent(body.eventId);
+  const r = DEMO.regs[e.id] || (DEMO.regs[e.id] = {reference: "RG-DEMO-00" + (++DEMO.seq)});
+  r.answers = body.answers; r.food = body.food || {text: "", consent: false};
+  return {ok: true, reference: r.reference, duplicate: false};
+};
+App.demo["reg.ticket"] = (body, mode) => {
+  const e = demoEvent(body.eventId), r = demoReg(e.id, mode);
+  if (!r || demoMember(mode) !== "Approved") throw new App.ApiError(t("notFoundT"), "NOT_FOUND");
+  const s = e.sections, a = r.answers || {};
+  return {ok: true, now: demoNow(), event: e, ticket: {reference: r.reference, qr: "HLCI1:demo" + r.reference.replace(/[^0-9]/g, "") + "x7Qm2Lp9Vt4Kc8Rz",
+    registeredAt: demoNow(), sessions: a.sessions || [], attendMode: a.attendMode || "", needsAnswers: (s.study || s.sessions || s.food) && !r.answers, ended: false}};
+};
+
+/* Demo for check-in (S6): Manage › Participants and the scan screen with made-up people.
+   The camera is replaced by a sheet: choose a ticket that is not checked in yet, one already used, or another event's QR. */
+const DEMO_CHK = {};
+const demoCode = ref => "HLCI1:demo" + ref.replace(/[^0-9]/g, "") + "x7Qm2Lp9Vt4Kc8Rz";
+function demoPeople(id){
+  if (!DEMO_CHK[id]){
+    const at = n => demoNow().slice(0, 11) + n;
+    const P0 = (n, name, nickname, inAt, by) => ({reference: "RG-DEMO-" + String(n).padStart(4, "0"), status: "Registered", name, nickname,
+      checkedInAt: inAt ? at(inAt) : "", method: inAt ? "scan" : "", byName: inAt ? by : ""});
+    DEMO_CHK[id] = {
+      event: {id, name: {"EV-DEMO-01": "Board Game Night", "EV-DEMO-02": "Board Game Night", "EV-DEMO-03": "Hualaem-X Session"}[id] || id,
+        date: demoNow().slice(0, 10), startTime: "13:00", endTime: "17:00", location: "บ้านหัวแหลม อโศก", status: "Approved"},
+      people: [P0(17, "ปภาวี ส.", "มิ้นท์", "13:42", "ฝน"), P0(18, "อรรถพล ก.", "โอ๊ต", "13:45", "พี่เมฆ"), P0(19, "ณัฐชา ร.", "แนท"),
+        P0(20, "ภูมิ ท.", "ภูมิ"), P0(21, "ข้าวหอม พ.", "หอม"), P0(22, "วิภา บ.", "วิว"), P0(12, "ต้นกล้า ใ.", "ต้นกล้า"),
+        {reference: "RG-DEMO-0023", status: "Held", name: "ต้นน้ำ", nickname: "", checkedInAt: "", method: "", byName: ""}]
+    };
+  }
+  return DEMO_CHK[id];
+}
+const demoCount = d => ({total: d.people.filter(p => p.status === "Registered").length, checkedIn: d.people.filter(p => p.status === "Registered" && p.checkedInAt).length});
+function demoScan(){
+  const d = demoPeople(C.eventId || P.eventId);
+  const open = d.people.find(p => p.status === "Registered" && !p.checkedInAt) || d.people[0], used = d.people.find(p => p.checkedInAt) || d.people[0];
+  return new Promise(resolve => {
+    let done = false;
+    const pick = v => { if (done) return; done = true; App.closeSheet(); resolve(v); };
+    const row = (id, text, v) => h("button", {type: "button", class: "row", id, onclick: () => pick(v)}, scanIcon("lead"), h("span", {class: "grow", text}));
+    const sh = App.sheet(t("demoScanT"), h("div", {class: "rows registration-sheetBtns"},
+      row("registration-demoOk", t("demoQrOk"), demoCode(open.reference)), row("registration-demoAgain", t("demoQrAgain"), demoCode(used.reference)),
+      row("registration-demoWrong", t("demoQrWrong"), "HLCI1:demoOtherEventQr00000000000")));
+    new MutationObserver((m, obs) => { if (!sh.isConnected){ obs.disconnect(); pick(null); } }).observe(document.body, {childList: true});
+  });
+}
+App.demo["reg.participants"] = body => { const d = demoPeople(body.eventId); return {ok: true, now: demoNow(), event: d.event, canCheckIn: true, people: d.people, count: demoCount(d)}; };
+App.demo["reg.checkin"] = (body, mode) => {
+  const d = demoPeople(body.eventId);
+  const p = body.qr != null ? d.people.find(x => x.status === "Registered" && demoCode(x.reference) === String(body.qr).trim()) : d.people.find(x => x.reference === body.reference);
+  if (!p && body.qr == null) throw new App.ApiError(t("errGone"), "NOT_FOUND");
+  if (!p) return {ok: true, result: "wrong", count: demoCount(d)};
+  if (p.status !== "Registered") throw new App.ApiError(t("errGone"), "NOT_FOUND");
+  if (p.checkedInAt) return {ok: true, result: "already", person: p, count: demoCount(d)};
+  Object.assign(p, {checkedInAt: demoNow(), method: body.qr != null ? "scan" : "manual", byName: mode === "organizer" ? "พี่เมฆ" : "ฝน"});
+  return {ok: true, result: "checked", person: p, count: demoCount(d)};
+};
+App.demo["reg.uncheck"] = body => {
+  const d = demoPeople(body.eventId), p = d.people.find(x => x.reference === body.reference && x.status === "Registered");
+  if (!p) throw new App.ApiError(t("errGone"), "NOT_FOUND");
+  const was = !!p.checkedInAt;
+  Object.assign(p, {checkedInAt: "", method: "", byName: ""});
+  return {ok: true, undone: was, person: p, count: demoCount(d)};
+};
 });
 
 // ---- app/features/members ----
