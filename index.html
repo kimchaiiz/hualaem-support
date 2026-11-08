@@ -193,6 +193,192 @@ body.no-tabbar .toast{bottom:calc(16px + var(--safe-b))}
 .home-steps .home-ln.home-done{background:var(--success)}
 .home-hint{display:block;font-size:14px;line-height:20px;color:var(--error);margin-top:8px}
 .home-wait{font-size:14px;line-height:20px;color:var(--muted)}
+/* events: Events tab, event page, create/edit. Every selector carries an "events-" class or id (check.js). DESIGN.md components. */
+.events-top{display:flex;justify-content:flex-end;margin-bottom:12px}
+.events-create{height:44px;padding:0 16px 0 12px;border-radius:var(--r-pill);border:0;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;font-weight:600;cursor:pointer}
+.events-create svg{width:20px;height:20px}
+#events-seg{margin-bottom:12px}
+.events-month{font-size:14px;line-height:20px;font-weight:600;color:var(--muted);margin:4px 0 -4px}
+
+/* event card (list) */
+.card.events-card{display:flex;gap:14px;align-items:flex-start;padding:12px}
+.events-thumb{width:72px;height:90px;flex:none;border-radius:var(--r-sm);background:var(--brand-teal);color:#FFFFFF;display:flex;align-items:flex-end;padding:8px;font-weight:700;font-size:15px;line-height:18px;overflow:hidden;word-break:break-word;position:relative}
+.events-thumb img,.events-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.events-cbody{min-width:0;display:flex;flex-direction:column;gap:4px;flex:1}
+.events-when{font-size:14px;line-height:20px;font-weight:600;color:var(--primary)}
+.events-name{font-size:18px;line-height:26px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.events-meta{font-size:14px;line-height:20px;color:var(--muted);display:flex;gap:4px;align-items:flex-start}
+.events-meta svg{width:16px;height:16px;flex:none;margin-top:2px}
+.events-chips{display:flex;gap:6px;flex-wrap:wrap}
+
+/* event page */
+.events-hero{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--brand-teal);color:#FFFFFF;aspect-ratio:4/5;max-height:62vh;width:100%;display:flex;align-items:flex-end;padding:20px;font-size:30px;line-height:38px;font-weight:700;word-break:break-word}
+.events-hero.events-hasImg{background:var(--field)}
+.events-hero.events-hasImg img{object-fit:contain}
+.events-hero.events-short{aspect-ratio:auto;min-height:160px}
+.events-dTitle{font-size:24px;line-height:32px;font-weight:700;margin:16px 0 0;word-break:break-word}
+.events-dChips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.events-info{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.events-irow{display:flex;gap:12px;align-items:flex-start}
+.events-irow>svg{width:22px;height:22px;flex:none;color:var(--primary)}
+.events-irow b{display:block;font-size:16px;line-height:24px;font-weight:600}
+.events-irow span{display:block;font-size:14px;line-height:20px;color:var(--muted)}
+.events-irow a{font-size:14px;line-height:20px;font-weight:600;color:var(--primary);text-decoration:none;display:inline-block;padding:10px 0;margin:-10px 0}
+.events-desc{margin:16px 0 0;white-space:pre-wrap;word-break:break-word}
+.events-asks{display:flex;gap:10px;padding:12px 14px;border-radius:var(--r-md);background:var(--field);color:var(--muted);font-size:14px;line-height:20px;margin-top:16px}
+.events-asks svg{width:20px;height:20px;flex:none}
+.events-box{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.events-box h2{margin:0;font-size:20px;line-height:28px;font-weight:600}
+.events-kv{display:flex;align-items:center;gap:10px;justify-content:space-between;font-size:14px;line-height:20px}
+.events-kv b{font-size:20px;line-height:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.events-row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.events-danger{color:var(--error)!important}
+.events-hint{font-size:14px;line-height:20px;color:var(--muted);margin:0}
+
+/* sticky action bar (DESIGN.md: detail screens hide the tab bar and show one bar) */
+.events-bar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-raised);padding:12px 16px calc(12px + var(--safe-b))}
+.events-barIn{max-width:448px;margin:0 auto;display:flex;gap:12px}
+.events-barIn .btn{flex:1}
+.events-barIn .events-barSide{flex:none;width:auto}
+.events-barSpace{height:88px}
+
+/* form */
+.events-form{display:flex;flex-direction:column;gap:18px}
+.events-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.events-field label{font-size:14px;line-height:20px;font-weight:600}
+.events-req{color:var(--error)}
+.events-field input,.events-field textarea{min-height:48px;padding:0 14px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--surface);font-size:16px;line-height:24px;color:var(--ink);width:100%;min-width:0}
+.events-field textarea{padding:12px 14px;resize:vertical}
+.events-field input:focus,.events-field textarea:focus{outline:2px solid var(--primary);outline-offset:0;border-color:var(--primary)}
+.events-field input[aria-invalid="true"],.events-field textarea[aria-invalid="true"]{border-color:var(--error)}
+.events-field #events-fBudget{font-variant-numeric:tabular-nums}
+.events-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.events-help{font-size:14px;line-height:20px;color:var(--muted);margin:0}
+.events-err{font-size:14px;line-height:20px;color:var(--error);margin:0;display:flex;gap:6px;align-items:flex-start}
+.events-err svg{width:16px;height:16px;flex:none;margin-top:2px}
+.events-errBox{background:var(--error-soft);color:var(--error)}
+.events-posterPick{display:flex;flex-direction:column;gap:8px}
+.events-drop{min-height:132px;border-radius:var(--r-lg);border:1.5px dashed var(--field-border);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--primary);cursor:pointer;padding:16px}
+.events-drop svg{width:28px;height:28px}
+.events-dropT{font-size:16px;line-height:24px;font-weight:600}
+.events-dropD{font-size:14px;line-height:20px;color:var(--muted);text-align:center}
+.events-fPosterImg{width:100%;max-height:360px;object-fit:contain;border-radius:var(--r-lg);background:var(--field)}
+.events-posterActs{display:flex;gap:8px;justify-content:center}
+.events-secCard{display:flex;flex-direction:column;gap:4px;padding:6px 16px 10px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line)}
+.events-secT{margin:10px 0 0;font-size:16px;line-height:24px;font-weight:600}
+.events-sec{min-height:64px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:8px 0;margin-top:6px}
+.events-sec .events-secTx{flex:1;min-width:0;display:flex;flex-direction:column}
+.events-sec .events-secTx b{font-size:16px;line-height:24px;font-weight:500}
+.events-sec .events-secTx span{font-size:14px;line-height:20px;color:var(--muted)}
+.events-switch{width:52px;height:32px;flex:none;padding:3px;border-radius:var(--r-pill);border:0;background:var(--field-border);display:flex;justify-content:flex-start;cursor:pointer}
+.events-switch span{width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 2px rgba(15,31,30,.3);transition:transform .15s ease-out}
+.events-switch[aria-checked="true"]{background:var(--primary)}
+.events-switch[aria-checked="true"] span{transform:translateX(20px)}
+.events-sessions{padding-bottom:6px}
+.events-advBtn{min-height:48px;padding:0 4px;border:0;background:transparent;display:flex;align-items:center;gap:8px;font-size:16px;line-height:24px;font-weight:600;color:var(--primary);text-align:left;cursor:pointer}
+.events-advBtn span{flex:1}
+.events-advBtn svg{width:20px;height:20px;transition:transform .15s}
+.events-advBtn[aria-expanded="true"] svg{transform:rotate(90deg)}
+.events-adv{display:flex;flex-direction:column;gap:14px;padding:14px;border-radius:var(--r-md);background:var(--field)}
+.events-sheetBtns{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.events-sheetBtns .events-field textarea{min-height:88px}
+@media (prefers-reduced-motion: reduce){ .events-switch span,.events-advBtn svg{transition:none} }
+/* event-team: Manage › Collaborators and the invite screen (DESIGN.md "Participant row", "Bottom sheet", "Form field") */
+.event-team-intro{margin:0 0 12px}
+.card.event-team-ev{display:flex;flex-direction:column;gap:4px}
+.event-team-when{font-size:14px;line-height:20px;font-weight:600;color:var(--primary)}
+.event-team-name{font-size:18px;line-height:26px;font-weight:600}
+.event-team-meta{font-size:14px;line-height:20px;color:var(--muted);display:flex;gap:4px;align-items:flex-start}
+.event-team-meta svg{width:16px;height:16px;flex:none;margin-top:2px}
+.event-team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.card.event-team-headcard{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.event-team-headrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#event-team-seg{margin-bottom:12px}
+.event-team-person{display:flex;align-items:center;gap:12px;padding:12px;min-height:64px}
+.event-team-av{width:40px;height:40px;flex:none;border-radius:50%;background:var(--primary-soft);color:var(--on-primary-soft);display:grid;place-items:center;font-weight:700}
+.event-team-av.event-team-lead{background:var(--primary);color:var(--on-primary)}
+.event-team-who{flex:1;min-width:0;display:flex;flex-direction:column}
+.event-team-who b{font-weight:600;overflow-wrap:anywhere}
+.event-team-who span{font-size:14px;line-height:20px;color:var(--muted)}
+.icon-btn.event-team-x{color:var(--muted)}
+.event-team-h2{font-size:16px;line-height:24px;font-weight:600;margin:20px 0 10px}
+.rows .row.event-team-addrow{min-height:56px}
+.event-team-note{font-size:14px;line-height:20px;color:var(--muted);margin:12px 0 0}
+.event-team-sheetlist{display:flex;flex-direction:column;margin:8px 0 16px}
+.event-team-result{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid var(--line);padding:6px 0}
+.event-team-result:first-child{border-top:0}
+.event-team-result .btn.secondary{width:auto;min-height:44px;padding:0 16px}
+.event-team-lbl{display:block;font-size:14px;line-height:20px;font-weight:600;margin:0 0 6px}
+.event-team-input{width:100%;height:48px;padding:0 12px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--field);color:var(--ink);font-size:16px;line-height:24px}
+.event-team-input:focus{outline:2px solid var(--primary);outline-offset:0;border-color:var(--primary)}
+.event-team-hint{font-size:12px;line-height:16px;color:var(--muted);margin:6px 0 0}
+.event-team-btns{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}
+.event-team-link{font-size:14px}
+.event-team-steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.event-team-steps li{display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:24px}
+.event-team-steps svg{width:20px;height:20px;flex:none;color:var(--success);margin-top:2px}
+.event-team-done{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--success-soft);color:var(--success);margin:8px auto 0}
+.event-team-done svg{width:28px;height:28px}
+.event-team-center{text-align:center}
+.event-team-center h2{margin:8px 0 4px;font-size:20px;line-height:28px}
+.event-team-center p{margin:0;color:var(--muted)}
+/* members: Me tab and the sign-up v2 form. Every selector carries "members-" (check.js). DESIGN.md "Form field". */
+.members-su{padding-bottom:96px}
+.members-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 16px}
+.members-step{display:flex;flex-direction:column;gap:4px;font-size:12px;line-height:16px;font-weight:600;color:var(--muted)}
+.members-step i{display:block;height:4px;border-radius:var(--r-pill);background:var(--line)}
+.members-step.members-on{color:var(--primary)}
+.members-step.members-on i{background:var(--primary)}
+.members-lineas{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);font-size:14px;line-height:20px;color:var(--muted);margin-bottom:16px}
+.members-lineas .avatar{width:40px;height:40px;cursor:default}
+.members-form{display:flex;flex-direction:column;gap:16px}
+.members-sec{margin:8px 0 0;font-size:20px;line-height:28px;font-weight:600}
+.members-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:14px}
+.members-card h3{margin:0;font-size:16px;line-height:24px;font-weight:600}
+.members-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.members-field{display:flex;flex-direction:column;gap:6px;min-width:0;border:0;margin:0;padding:0}
+.members-field>label,.members-field>legend{font-size:14px;line-height:20px;font-weight:600;color:var(--ink);padding:0;margin:0 0 0}
+.members-field>legend{margin-bottom:6px}
+.members-req{color:var(--error)}
+.members-opt{color:var(--muted);font-weight:400}
+.members-input{height:48px;width:100%;min-width:0;padding:0 14px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--surface);color:var(--ink);font-size:16px;line-height:24px;-webkit-appearance:none;appearance:none}
+select.members-input{padding-right:40px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 15px) 21px;background-size:5px 5px;background-repeat:no-repeat}
+input[type="date"].members-input{padding-right:10px}
+.members-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+.members-input::placeholder{color:var(--muted)}
+.members-prefix{display:flex;align-items:center;height:48px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--surface);padding:0 0 0 14px}
+.members-prefix span{color:var(--muted)}
+.members-prefix .members-input{border:0;height:46px;padding-left:2px;box-shadow:none}
+.members-prefix:focus-within{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+.members-bad .members-input,.members-bad .members-prefix{border:2px solid var(--error)}
+.members-bad .members-prefix .members-input{border:0}
+.members-err{display:flex;gap:6px;align-items:flex-start;font-size:14px;line-height:20px;color:var(--error);margin:0}
+.members-err svg{width:16px;height:16px;flex:none;margin-top:2px}
+.members-choices{display:grid;gap:8px}
+.members-choices.members-c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.members-choice{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;padding:0 14px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface);font-size:16px;line-height:24px;font-weight:500;cursor:pointer}
+.members-c3 .members-choice{justify-content:center;min-height:48px;border-radius:var(--r-sm);font-weight:600;padding:0 6px;text-align:center}
+.members-choice input{position:absolute;opacity:0;width:1px;height:1px}
+.members-dot{width:20px;height:20px;flex:none;border-radius:50%;border:1.5px solid var(--field-border);display:grid;place-items:center}
+.members-dot::after{content:"";width:10px;height:10px;border-radius:50%;background:transparent}
+.members-choice.members-sel{border:2px solid var(--primary);background:var(--primary-soft);color:var(--on-primary-soft)}
+.members-choice.members-sel .members-dot{border-color:var(--primary)}
+.members-choice.members-sel .members-dot::after{background:var(--primary)}
+.members-choice:focus-within{outline:2px solid var(--primary);outline-offset:2px}
+.members-consent{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:var(--r-md);background:var(--field);font-size:14px;line-height:20px;cursor:pointer}
+.members-consent input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--primary)}
+.members-consent .members-link{display:inline;border:0;background:none;padding:0;color:var(--primary);font-weight:600;font-size:14px;line-height:20px;cursor:pointer;text-decoration:underline}
+.members-bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-raised);padding:12px 16px calc(12px + var(--safe-b))}
+.members-bar .btn{max-width:448px;margin:0 auto}
+.members-chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.members-row-v{font-size:16px;line-height:24px;font-weight:500;overflow-wrap:anywhere}
+.members-row-k{font-size:14px;line-height:20px;color:var(--muted)}
+.members-row-v.members-missing{color:var(--warning);font-weight:500}
+.members-note{color:var(--muted);font-size:14px;line-height:20px;margin:8px 0 0}
+.members-sheet-form{display:flex;flex-direction:column;gap:14px;margin-bottom:12px}
+.members-sheet-form .btn{margin-top:4px}
+.members-status{display:flex;flex-direction:column;gap:12px}
+.members-status b{font-size:18px;line-height:26px}
 </style>
 </head>
 <body>
@@ -241,6 +427,150 @@ body.no-tabbar .toast{bottom:calc(16px + var(--safe-b))}
       <button type="button" class="btn quiet" id="home-refresh"></button>
     </div>
     <p class="asof" id="home-asOf"></p>
+  </section>
+
+  <!-- EVENTS tab, event page, create/edit (app/features/events) -->
+  <section class="screen" id="events-screen" hidden>
+    <div class="events-top" id="events-topRow" hidden>
+      <button type="button" class="events-create" id="events-createBtn"></button>
+    </div>
+    <div class="seg" role="tablist" id="events-seg">
+      <button type="button" role="tab" id="events-segOpen" data-seg="open" aria-selected="true"></button>
+      <button type="button" role="tab" id="events-segUpcoming" data-seg="upcoming" aria-selected="false"></button>
+      <button type="button" role="tab" id="events-segPast" data-seg="past" aria-selected="false"></button>
+    </div>
+    <div class="stack events-list" id="events-list"></div>
+    <p class="asof" id="events-asOf"></p>
+  </section>
+
+  <section class="screen" id="events-detail" hidden>
+    <div id="events-dBody"></div>
+    <div class="events-barSpace" aria-hidden="true"></div>
+    <div class="events-bar" id="events-dBar">
+      <div class="events-barIn">
+        <button type="button" class="btn secondary events-barSide" id="events-shareBtn"></button>
+        <button type="button" class="btn" id="events-mainBtn"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="events-form" hidden>
+    <form id="events-fForm" class="events-form" novalidate>
+      <div class="banner events-errBox" id="events-fErrBox" role="alert" hidden></div>
+
+      <div class="events-posterPick">
+        <button type="button" class="events-drop" id="events-fPosterBtn">
+          <span class="events-dropT" data-t="fPoster"></span>
+          <span class="events-dropD" data-t="fPosterHint"></span>
+        </button>
+        <img class="events-fPosterImg" id="events-fPosterImg" alt="" hidden>
+        <div class="events-posterActs" id="events-fPosterActs" hidden>
+          <button type="button" class="btn quiet" id="events-fPosterChange" data-t="fPosterChange"></button>
+          <button type="button" class="btn quiet" id="events-fPosterRemove" data-t="fPosterRemove"></button>
+        </div>
+        <input type="file" id="events-fPosterFile" accept="image/jpeg,image/png,image/webp" hidden>
+        <p class="events-err" id="events-eposter" hidden></p>
+      </div>
+
+      <div class="events-field">
+        <label for="events-fName"><span data-t="fName"></span> <span class="events-req">*</span></label>
+        <input id="events-fName" maxlength="120" autocomplete="off">
+        <p class="events-err" id="events-ename" hidden></p>
+      </div>
+      <div class="events-field">
+        <label for="events-fDate"><span data-t="fDate"></span> <span class="events-req">*</span></label>
+        <input id="events-fDate" type="date">
+        <p class="events-err" id="events-edate" hidden></p>
+      </div>
+      <div class="events-grid2">
+        <div class="events-field">
+          <label for="events-fStart" data-t="fStart"></label>
+          <input id="events-fStart" type="time">
+        </div>
+        <div class="events-field">
+          <label for="events-fEnd" data-t="fEnd"></label>
+          <input id="events-fEnd" type="time">
+        </div>
+      </div>
+      <p class="events-err" id="events-etime" hidden></p>
+      <div class="events-field">
+        <label for="events-fPlace"><span data-t="fPlace"></span> <span class="events-req">*</span></label>
+        <input id="events-fPlace" maxlength="200" autocomplete="off">
+        <p class="events-err" id="events-eplace" hidden></p>
+      </div>
+      <div class="events-field">
+        <label for="events-fDesc" data-t="fDesc"></label>
+        <textarea id="events-fDesc" rows="4" maxlength="2000"></textarea>
+      </div>
+      <div class="events-field">
+        <label for="events-fBudget" data-t="fBudget"></label>
+        <input id="events-fBudget" inputmode="decimal" autocomplete="off" placeholder="0.00">
+        <p class="events-help" id="events-fBudgetHelp"></p>
+        <p class="events-err" id="events-ebudget" hidden></p>
+      </div>
+
+      <section class="events-secCard" aria-labelledby="events-secT">
+        <h2 class="events-secT" id="events-secT" data-t="secT"></h2>
+        <p class="events-help" data-t="secD"></p>
+        <div id="events-secRows"></div>
+        <div class="events-field events-sessions" id="events-sessBox" hidden>
+          <label for="events-fSessions"><span data-t="fSessions"></span> <span class="events-req">*</span></label>
+          <textarea id="events-fSessions" rows="3"></textarea>
+          <p class="events-help" data-t="fSessionsHint"></p>
+          <p class="events-err" id="events-esessions" hidden></p>
+        </div>
+      </section>
+
+      <button type="button" class="events-advBtn" id="events-advBtn" aria-expanded="false" aria-controls="events-adv">
+        <span data-t="advT"></span>
+      </button>
+      <div class="events-adv" id="events-adv" hidden>
+        <p class="events-help" data-t="advD"></p>
+        <div class="events-field"><label for="events-fRegOpen" data-t="fRegOpen"></label><input id="events-fRegOpen" type="datetime-local"></div>
+        <div class="events-field"><label for="events-fRegClose" data-t="fRegClose"></label><input id="events-fRegClose" type="datetime-local"></div>
+        <div class="events-field"><label for="events-fPubFrom" data-t="fPubFrom"></label><input id="events-fPubFrom" type="datetime-local"></div>
+        <div class="events-field"><label for="events-fPubUntil" data-t="fPubUntil"></label><input id="events-fPubUntil" type="datetime-local"></div>
+        <p class="events-err" id="events-ewindows" hidden></p>
+        <button type="button" class="btn quiet" id="events-advReset" data-t="advReset"></button>
+      </div>
+    </form>
+    <div class="events-barSpace" aria-hidden="true"></div>
+    <div class="events-bar">
+      <div class="events-barIn">
+        <button type="button" class="btn secondary events-barSide" id="events-draftBtn" data-t="saveDraft"></button>
+        <button type="button" class="btn" id="events-saveBtn"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANAGE (app/features/event-team): #manage = events I manage, #manage/<eventId> = Manage › Collaborators -->
+  <section class="screen" id="event-team-manage" hidden>
+    <div id="event-team-listView" hidden>
+      <p class="t-small muted event-team-intro" id="event-team-listIntro"></p>
+      <div class="stack" id="event-team-events"></div>
+    </div>
+    <div id="event-team-detailView" hidden>
+      <div id="event-team-head"></div>
+      <div class="seg" role="tablist" id="event-team-seg" hidden></div>
+      <div id="event-team-otherPanel" hidden></div>
+      <div id="event-team-teamPanel">
+        <div class="stack" id="event-team-people"></div>
+        <div id="event-team-add"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCEPT AN INVITE LINK: #team-join/<token> -->
+  <section class="screen" id="event-team-join" hidden>
+    <div class="stack" id="event-team-joinBody"></div>
+  </section>
+
+  <!-- members (app/features/members): the Me tab and the sign-up v2 form (#signup) -->
+  <section class="screen" id="members-screen" hidden>
+    <div class="stack" id="members-me"></div>
+  </section>
+  <section class="screen members-su" id="members-signup" hidden>
+    <div id="members-suBody"></div>
   </section>
 
   <!-- a tab no feature has claimed yet (see DEVELOPING.md, "Adding a screen to the LINE app") -->
@@ -868,6 +1198,1445 @@ App.demo["home.bootstrap"] = function (body, mode){
   if (mode === "new") return {ok: true, now, role: "participant", firstName: "มานี", needsConsent: true, upcoming: upcoming.map(e => Object.assign({}, e, {myReference: ""})), myEvents: [], canClaim: false, myClaims: []};
   const org = mode === "organizer";
   return {ok: true, now, role: org ? "organizer" : "participant", firstName: "สมชาย", needsConsent: false, upcoming, myEvents, canClaim: org, myClaims: org ? myClaims : []};
+};
+});
+
+// ---- app/features/events ----
+App.module("events", {"th":{"title":"กิจกรรม","create":"สร้างกิจกรรม","segOpen":"เปิดรับสมัคร","segUpcoming":"กำลังจะมา","segPast":"ผ่านมาแล้ว","emptyOpenT":"ตอนนี้ยังไม่มีกิจกรรมที่เปิดรับสมัคร","emptyOpenD":"ดูกิจกรรมที่กำลังจะมาได้ที่แท็บ “กำลังจะมา”","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมา","emptyUpD":"เมื่อผู้จัดสร้างกิจกรรมใหม่ จะขึ้นที่นี่","emptyPastT":"ยังไม่มีกิจกรรมที่ผ่านมา","emptyPastD":"กิจกรรมย้อนหลัง 12 เดือนจะแสดงที่นี่","chipRegistered":"ลงทะเบียนแล้ว","chipOpen":"เปิดรับสมัคร","chipClosingDays":"ปิดรับใน {n} วัน","chipClosingToday":"ปิดรับวันนี้","chipOpensOn":"เปิดรับ {d}","chipClosed":"ปิดรับสมัครแล้ว","chipEnded":"จบแล้ว","chipDraft":"ร่าง · ยังไม่เผยแพร่","chipNotShown":"ยังไม่แสดงใน LINE","chipCancelled":"ยกเลิกแล้ว","chipPublished":"เผยแพร่แล้ว","detailT":"กิจกรรม","closesAt":"ปิดรับ {d}","opensAt":"เปิดรับ {d}","openMap":"เปิดแผนที่","byOrganizer":"จัดโดย {name}","byCommunity":"จัดโดยทีมชุมชน","teamMore":" + ผู้ร่วมจัด {n} คน","registeredN":"ลงทะเบียนแล้ว {n} คน","asksT":"งานนี้ถามเพิ่ม: {list} (ใช้เวลาไม่ถึง 1 นาที)","askStudy":"การศึกษา/การทำงานและที่อยู่","askSessions":"Session ที่จะเข้า และ Onsite/Online","askTeams":"อีเมล Teams (ถ้าเลือก Online)","askFood":"อาหารที่แพ้และข้อเสนอแนะ","join":"ลงทะเบียน","myTicket":"ดูตั๋วของฉัน","notOpenYet":"เปิดรับ {d}","regClosed":"ปิดรับสมัครแล้ว","editPublish":"แก้ไขและเผยแพร่","share":"แชร์","shareT":"แชร์กิจกรรมนี้","copyLink":"คัดลอกลิงก์","copyLinkSub":"ส่งให้เพื่อนในแชทไหนก็ได้","copied":"คัดลอกลิงก์แล้ว","phoneShare":"แชร์ผ่านเมนูของเครื่อง","phoneShareSub":"LINE, Instagram, Messenger และอื่น ๆ","shareNote":"เพื่อนที่ยังไม่เป็นสมาชิกจะได้สมัครสมาชิกก่อน","manageT":"สำหรับผู้จัด","edit":"แก้ไขงาน","cancelEvent":"ยกเลิกกิจกรรม","statusL":"สถานะ","budgetL":"งบที่ขอ","budgetNone":"ไม่ได้ขอใช้งบ","budgetApprovedL":"งบที่อนุมัติ","bRequested":"รออนุมัติ","bApproved":"อนุมัติแล้ว","bRejected":"ไม่อนุมัติ","bWaitHint":"เพิ่มค่าใช้จ่ายได้ระหว่างรอ แต่คำขอเบิกจะถูกทำเครื่องหมายไว้จนกว่างบจะได้รับอนุมัติ","bNoteL":"หมายเหตุจากผู้อนุมัติ: {note}","approverT":"อนุมัติงบ","approverD":"ผู้จัดขอใช้งบ {amount} สำหรับกิจกรรมนี้","approve":"อนุมัติ {amount}","reject":"ไม่อนุมัติ","rejectT":"ไม่อนุมัติงบนี้","rejectNoteL":"เหตุผล (ผู้จัดจะเห็น)","rejectGo":"ยืนยันไม่อนุมัติ","approvedToast":"อนุมัติงบแล้ว","rejectedToast":"บันทึกว่าไม่อนุมัติแล้ว","cancelT":"ยกเลิกกิจกรรมนี้?","cancelD":"กิจกรรมจะหายจาก LINE ทันที ผู้ที่ลงทะเบียนไว้จะไม่เห็นงานนี้อีก (ผู้ดูแลเปิดกลับได้ที่เว็บไซต์ผู้ดูแล)","cancelGo":"ยืนยันยกเลิกกิจกรรม","cancelledToast":"ยกเลิกกิจกรรมแล้ว","notFoundT":"ไม่พบกิจกรรมนี้","notFoundD":"กิจกรรมอาจถูกยกเลิก หรือยังไม่เผยแพร่","toEvents":"ดูกิจกรรมทั้งหมด","draftBanner":"งานนี้ยังเป็นร่าง สมาชิกยังไม่เห็น","hiddenBanner":"งานนี้ยังไม่แสดงใน LINE (ตามช่วงแสดงที่ตั้งไว้)","cancelledBanner":"กิจกรรมนี้ถูกยกเลิกแล้ว","newT":"สร้างกิจกรรม","editT":"แก้ไขกิจกรรม","fPoster":"เพิ่มโปสเตอร์","fPosterHint":"แนวตั้ง 4:5 · JPG/PNG/WebP ไม่เกิน 5 MB (ไม่บังคับ)","fPosterChange":"เปลี่ยนรูป","fPosterRemove":"ลบรูป","fName":"ชื่อกิจกรรม","fDate":"วันที่","fStart":"เวลาเริ่ม","fEnd":"เวลาจบ","fPlace":"สถานที่","fDesc":"รายละเอียด","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย","fBudget":"ขอใช้งบ (บาท)","fBudgetHelp":"กิจกรรมเผยแพร่ได้ทันที · งบจะรอผู้อนุมัติตรวจ","fBudgetHelpApproved":"อนุมัติแล้ว {amount} · ถ้าเปลี่ยนยอด จะต้องรออนุมัติใหม่","secT":"คำถามเพิ่มเติมตอนลงทะเบียน","secD":"เปิดเฉพาะที่งานนี้ต้องใช้ ยิ่งน้อยคนยิ่งสมัครง่าย","sec_study":"การศึกษา/การทำงาน + ที่อยู่","sec_studyD":"ยืนยันข้อมูลล่าสุด และที่อยู่ส่งเอกสาร","sec_sessions":"Session + Onsite/Online","sec_sessionsD":"ผู้จัดตั้งชื่อ Session เอง ผู้สมัครเลือกได้หลายอัน","sec_teams":"อีเมล Teams + ผลทดสอบเข้า","sec_teamsD":"ถามเฉพาะคนที่เลือก Online (ต้องเปิด Session ด้วย)","sec_food":"อาหารที่แพ้ + มากับเพื่อนไหม + ข้อเสนอแนะ","sec_foodD":"อาหารที่แพ้ขอความยินยอมแยก และลบหลังจบงาน","fSessions":"ชื่อ Session","fSessionsHint":"บรรทัดละหนึ่ง Session (สูงสุด 10)","advT":"ตั้งค่าขั้นสูง: ช่วงเปิดรับสมัคร, ช่วงแสดงใน LINE","advD":"ค่าเริ่มต้น: เปิดรับสมัครตอนนี้ถึงเวลาเริ่มงาน และแสดงใน LINE ถึงเวลาจบงาน เหมาะกับงานส่วนใหญ่","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนหลังจาก","advReset":"กลับไปใช้ค่าเริ่มต้น","saveDraft":"บันทึกร่าง","publish":"เผยแพร่กิจกรรม","saveChanges":"บันทึก","saving":"กำลังบันทึก…","publishedToast":"เผยแพร่กิจกรรมแล้ว","draftToast":"บันทึกร่างแล้ว","savedToast":"บันทึกแล้ว","eName":"ใส่ชื่อกิจกรรม","eDate":"เลือกวันที่","ePast":"วันที่ผ่านมาแล้ว","ePlace":"ใส่สถานที่","eTime":"เวลาจบต้องหลังเวลาเริ่ม","eBudget":"ใส่ตัวเลข เช่น 3500 หรือ 3,500.00","eSessions":"ใส่ชื่อ Session อย่างน้อย 1 อัน (สูงสุด 10)","eWindows":"เวลาปิดต้องหลังเวลาเปิด และช่วงแสดงต้องหลังเวลาเริ่มแสดง","ePosterType":"ใช้ไฟล์ JPG, PNG หรือ WebP","ePosterBig":"รูปใหญ่เกิน 5 MB","ePosterRead":"เปิดรูปนี้ไม่ได้ ลองรูปอื่น","eFix":"ตรวจช่องที่มีเครื่องหมายสีแดง","eNoRight":"คุณไม่มีสิทธิ์แก้ไขกิจกรรมนี้","teamsNeedsSessions":"เปิด Session + Onsite/Online ให้ด้วยแล้ว เพราะคำถาม Teams ใช้กับคนที่เลือก Online","manage":"จัดการงาน (ผู้ร่วมจัด)"},"en":{"title":"Events","create":"Create event","segOpen":"Open","segUpcoming":"Upcoming","segPast":"Past","emptyOpenT":"No events are open for registration right now","emptyOpenD":"See what's coming in the “Upcoming” tab.","emptyUpT":"Nothing coming up yet","emptyUpD":"New events show up here as soon as organizers create them.","emptyPastT":"No past events yet","emptyPastD":"Events from the last 12 months show up here.","chipRegistered":"Registered","chipOpen":"Open","chipClosingDays":"Closes in {n} days","chipClosingToday":"Closes today","chipOpensOn":"Opens {d}","chipClosed":"Registration closed","chipEnded":"Ended","chipDraft":"Draft · not published","chipNotShown":"Not shown in LINE yet","chipCancelled":"Cancelled","chipPublished":"Published","detailT":"Event","closesAt":"Closes {d}","opensAt":"Opens {d}","openMap":"Open map","byOrganizer":"Hosted by {name}","byCommunity":"Hosted by the community team","teamMore":" + {n} collaborators","registeredN":"{n} registered","asksT":"This event also asks: {list} (takes less than a minute)","askStudy":"study/work and address","askSessions":"sessions and onsite/online","askTeams":"Teams email (if online)","askFood":"food allergies and suggestions","join":"Register","myTicket":"Show my ticket","notOpenYet":"Opens {d}","regClosed":"Registration closed","editPublish":"Edit and publish","share":"Share","shareT":"Share this event","copyLink":"Copy link","copyLinkSub":"Paste it in any chat","copied":"Link copied","phoneShare":"Share with your phone's menu","phoneShareSub":"LINE, Instagram, Messenger and more","shareNote":"Friends who aren't members yet will join first.","manageT":"For organizers","edit":"Edit event","cancelEvent":"Cancel event","statusL":"Status","budgetL":"Budget requested","budgetNone":"No budget requested","budgetApprovedL":"Approved budget","bRequested":"Waiting for approval","bApproved":"Approved","bRejected":"Not approved","bWaitHint":"You can add expenses while you wait, but claims are flagged until the budget is approved.","bNoteL":"Note from the approver: {note}","approverT":"Approve budget","approverD":"The organizer asks for {amount} for this event.","approve":"Approve {amount}","reject":"Don't approve","rejectT":"Don't approve this budget","rejectNoteL":"Reason (the organizer sees it)","rejectGo":"Confirm: don't approve","approvedToast":"Budget approved","rejectedToast":"Marked as not approved","cancelT":"Cancel this event?","cancelD":"It disappears from LINE at once, also for people who registered. (An admin can reopen it in the admin website.)","cancelGo":"Yes, cancel the event","cancelledToast":"Event cancelled","notFoundT":"Event not found","notFoundD":"It may have been cancelled or isn't published yet.","toEvents":"See all events","draftBanner":"This event is a draft. Members can't see it yet.","hiddenBanner":"This event isn't shown in LINE yet (show window).","cancelledBanner":"This event was cancelled.","newT":"Create event","editT":"Edit event","fPoster":"Add a poster","fPosterHint":"Portrait 4:5 · JPG/PNG/WebP up to 5 MB (optional)","fPosterChange":"Change","fPosterRemove":"Remove","fName":"Event name","fDate":"Date","fStart":"Starts","fEnd":"Ends","fPlace":"Place","fDesc":"Details","fDescPh":"Agenda, what to bring, dress code","fBudget":"Budget request (THB)","fBudgetHelp":"The event is published at once · the budget waits for an approver","fBudgetHelpApproved":"Approved {amount} · changing the amount needs a new approval","secT":"Extra questions when people register","secD":"Switch on only what this event needs. Fewer questions, more sign-ups.","sec_study":"Study/work + address","sec_studyD":"Confirm latest details and a mailing address","sec_sessions":"Sessions + onsite/online","sec_sessionsD":"You name the sessions; people can pick several","sec_teams":"Teams email + entry test result","sec_teamsD":"Asked only to people who pick online (needs Sessions on)","sec_food":"Food allergies + coming with friends + suggestions","sec_foodD":"Allergies get a separate consent and are deleted after the event","fSessions":"Session names","fSessionsHint":"One session per line (up to 10)","advT":"Advanced: registration window, shown in LINE","advD":"Default: registration opens now and closes when the event starts; shown in LINE until it ends. Right for most events.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Shown in LINE from","fPubUntil":"Hidden after","advReset":"Back to the defaults","saveDraft":"Save draft","publish":"Publish event","saveChanges":"Save","saving":"Saving…","publishedToast":"Event published","draftToast":"Draft saved","savedToast":"Saved","eName":"Enter the event name","eDate":"Choose a date","ePast":"This date has passed","ePlace":"Enter the place","eTime":"The end must be after the start","eBudget":"Enter a number, e.g. 3500 or 3,500.00","eSessions":"Enter at least 1 session name (up to 10)","eWindows":"Closing must be after opening, and hiding after showing","ePosterType":"Use a JPG, PNG or WebP file","ePosterBig":"The image is larger than 5 MB","ePosterRead":"Couldn't open this image. Try another one.","eFix":"Check the fields marked in red","eNoRight":"You can't edit this event","teamsNeedsSessions":"Sessions + onsite/online switched on too: the Teams question is for people who pick online","manage":"Manage (collaborators)"}}, function (App, t) {
+// Events in the LINE app (LINE app v2, session S3): the Events tab, the event page (#event/<id>) and, for organizers and
+// approvers, create and edit (#event-new, #event-edit/<id>). Data: event.list, event.get, event.save, event.cancel,
+// event.decideBudget (backend/features/events/line-actions.gs). Who may do what is decided on the server every time;
+// the buttons here only follow what the server says (canCreate, canManage, canCancel, canDecideBudget).
+// The saved copy on the phone (App.view) holds the event list and event pages only: no claims, PromptPay or receipts.
+const $ = App.$, h = App.h, F = App.fmt, cfg = App.config;
+const S = { seg: "open", detailId: "", detail: null, title: "", form: null, saving: false };
+
+/* ---------- small helpers ---------- */
+const NS = "http://www.w3.org/2000/svg";
+const OWN_ICONS = {
+  share: [["circle", {cx: 18, cy: 5, r: 2.5}], ["circle", {cx: 6, cy: 12, r: 2.5}], ["circle", {cx: 18, cy: 19, r: 2.5}], ["path", {d: "m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"}]],
+  people: [["circle", {cx: 9, cy: 8, r: 3.5}], ["path", {d: "M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5"}], ["path", {d: "M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.5 3.5 5.2"}]],
+  image: [["rect", {x: 3, y: 4, width: 18, height: 16, rx: 2.5}], ["circle", {cx: 9, cy: 10, r: 2}], ["path", {d: "m21 16-5-5-9 9"}]],
+  doc: [["rect", {x: 5, y: 3.5, width: 14, height: 18, rx: 2}], ["path", {d: "M9 3.5h6v3H9zM9 11h6M9 15h4"}]],
+  link: [["path", {d: "M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"}], ["path", {d: "M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"}]],
+  edit: [["path", {d: "M4 20h4L19 9l-4-4L4 16z"}], ["path", {d: "m13.5 6.5 4 4"}]],
+  coins: [["ellipse", {cx: 12, cy: 6, rx: 7, ry: 3}], ["path", {d: "M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"}]]
+};
+function ic(name){
+  if (!OWN_ICONS[name]) return App.icon(name);
+  const svg = document.createElementNS(NS, "svg");
+  [["viewBox", "0 0 24 24"], ["fill", "none"], ["stroke", "currentColor"], ["stroke-width", "1.75"], ["stroke-linecap", "round"], ["stroke-linejoin", "round"], ["aria-hidden", "true"]].forEach(([k, v]) => svg.setAttribute(k, v));
+  OWN_ICONS[name].forEach(([tag, a]) => { const el = document.createElementNS(NS, tag); Object.entries(a).forEach(([k, v]) => el.setAttribute(k, v)); svg.append(el); });
+  return svg;
+}
+const chip = (cls, icn, text) => h("span", {class: "chip " + (cls || "")}, icn ? App.icon(icn) : null, text);
+function bkkNow(){ return new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 16).replace("T", " "); }
+const toInput = s => s ? String(s).replace(" ", "T").slice(0, 16) : "";
+const fromInput = s => s ? String(s).replace("T", " ").slice(0, 16) : "";
+function daysBetween(a, b){ return Math.round((Date.parse(String(b).slice(0, 10) + "T00:00:00Z") - Date.parse(String(a).slice(0, 10) + "T00:00:00Z")) / 864e5); }
+function monthLabel(d){ return new Intl.DateTimeFormat(App.lang === "th" ? "th-TH" : "en-GB", {month: "long", year: "numeric", timeZone: "UTC"}).format(new Date(String(d).slice(0, 7) + "-01T00:00:00Z")); }
+function longDate(d){ return F.date(d, {weekday: "long", month: "long"}); }
+function eventLink(id){
+  const base = cfg.LIFF_ID ? "https://liff.line.me/" + cfg.LIFF_ID : location.origin + location.pathname;
+  return base + "?event=" + encodeURIComponent(id);
+}
+function joinUrl(id){ return cfg.EVENT_JOIN_LIFF_URL ? cfg.EVENT_JOIN_LIFF_URL + "?event=" + encodeURIComponent(id) : ""; }
+function firstWord(s){ return String(s || "").trim().split(/\s+/)[0] || ""; }
+
+/* ---------- posters: private in Drive; the web app serves one only while the event is visible (GET ?action=poster) ----------
+   Loaded one at a time and kept in memory for this visit only (never saved on the phone). */
+const posters = new Map();
+let posterQueue = Promise.resolve();
+function posterData(id){
+  if (App.isDemo || !cfg.API_URL) return Promise.resolve(null);
+  if (!posters.has(id)){
+    const p = posterQueue.then(() => fetch(cfg.API_URL + "?action=poster&event=" + encodeURIComponent(id))
+      .then(r => r.json())
+      .then(d => d && d.ok && d.poster && /^image\/(jpeg|png|webp)$/.test(d.poster.type) && /^[A-Za-z0-9+/=]+$/.test(d.poster.data) ? "data:" + d.poster.type + ";base64," + d.poster.data : null)
+      .catch(() => null));
+    posterQueue = p.then(() => null, () => null);
+    posters.set(id, p);
+  }
+  return posters.get(id);
+}
+function posterInto(box, ev){
+  if (!ev.hasPoster) return;
+  posterData(ev.id).then(url => {
+    if (!url || !box.isConnected) return;
+    const img = h("img", {alt: "", src: url});
+    box.replaceChildren(img); box.classList.add("events-hasImg"); box.classList.remove("events-short");
+  });
+}
+
+/* =====================================================================
+   Events tab
+   ===================================================================== */
+const list = App.view({
+  key: "events", action: "event.list", cache: true, el: $("#events-list"),
+  skeleton(){ $("#events-list").replaceChildren(App.skeleton([114, 114, 114])); },
+  render: renderList
+});
+function groups(d){
+  const g = {open: [], upcoming: [], past: []};
+  (d.events || []).forEach(e => { (e.phase === "open" ? g.open : e.phase === "past" ? g.past : g.upcoming).push(e); });
+  g.upcoming.sort((a, b) => (a.phase === "hidden") === (b.phase === "hidden") ? 0 : a.phase === "hidden" ? -1 : 1);   // my drafts first
+  g.past.reverse();                                                   // newest past event first
+  return g;
+}
+function renderList(d, meta){
+  const g = groups(d);
+  $("#events-topRow").hidden = !d.canCreate;
+  $("#events-createBtn").replaceChildren(App.icon("plus"), t("create"));
+  [["open", "segOpen"], ["upcoming", "segUpcoming"], ["past", "segPast"]].forEach(([k, label]) => {
+    const b = $("#events-seg [data-seg=" + k + "]");
+    b.textContent = t(label) + (g[k].length && k !== "past" ? " " + g[k].length : "");
+    b.setAttribute("aria-selected", S.seg === k ? "true" : "false");
+  });
+  const items = g[S.seg];
+  const out = [];
+  let month = "";
+  items.forEach(ev => {
+    const m = monthLabel(ev.date);
+    if (m !== month){ month = m; out.push(h("h2", {class: "events-month", text: m})); }
+    out.push(card(ev, d.now));
+  });
+  const empty = {open: ["emptyOpenT", "emptyOpenD"], upcoming: ["emptyUpT", "emptyUpD"], past: ["emptyPastT", "emptyPastD"]}[S.seg];
+  $("#events-list").replaceChildren(...(out.length ? out : [App.emptyState(t(empty[0]), t(empty[1]),
+    S.seg === "open" && g.upcoming.length ? {text: t("segUpcoming"), onclick: () => { S.seg = "upcoming"; list.rerender(); }} : null)]));
+  $("#events-asOf").textContent = meta && meta.stale ? App.t("savedAt", {d: F.stamp(meta.at)}) : App.t("asOf", {d: F.dateTime(d.now)});
+}
+function evChip(ev, now){
+  if (ev.status === "Draft") return chip("warn", "alert", t("chipDraft"));
+  if (ev.phase === "hidden") return chip("warn", "clock", t("chipNotShown"));
+  if (ev.myReference) return chip("ok", "check", t("chipRegistered"));
+  if (ev.phase === "past") return chip("", "check", t("chipEnded"));
+  if (ev.regState === "open"){
+    const n = daysBetween(now, ev.regClose);
+    if (n <= 0) return chip("warn", "clock", t("chipClosingToday"));
+    if (n <= 3) return chip("warn", "clock", t("chipClosingDays", {n}));
+    return chip("info", "clock", t("chipOpen"));
+  }
+  if (ev.regState === "upcoming") return chip("", "clock", t("chipOpensOn", {d: F.date(ev.regOpen, {year: undefined})}));
+  return chip("", "x", t("chipClosed"));
+}
+function card(ev, now){
+  const when = [F.date(ev.date, {year: undefined}), ev.startTime].filter(Boolean).join(" · ");
+  const thumb = h("span", {class: "events-thumb", "aria-hidden": "true", text: firstWord(ev.name)});
+  posterInto(thumb, ev);
+  return h("button", {type: "button", class: "card events-card", "data-event": ev.id, onclick: () => App.go("event", ev.id)},
+    thumb,
+    h("span", {class: "events-cbody"},
+      h("span", {class: "events-when", text: when}),
+      h("span", {class: "events-name", text: ev.name}),
+      ev.location ? h("span", {class: "events-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null,
+      h("span", {class: "events-chips"}, evChip(ev, now))));
+}
+$("#events-seg").addEventListener("click", e => {
+  const b = e.target.closest("[data-seg]"); if (!b) return;
+  S.seg = b.dataset.seg; list.rerender();
+});
+$("#events-createBtn").addEventListener("click", () => App.go("event-new"));
+
+/* =====================================================================
+   Event page (#event/<id>)
+   ===================================================================== */
+const details = new Map();
+function detailView(id){
+  if (!details.has(id)) details.set(id, App.view({
+    key: "event:" + id, action: "event.get", body: () => ({eventId: id}), cache: true, el: $("#events-dBody"),
+    skeleton(){ if (S.detailId === id){ $("#events-dBody").replaceChildren(App.skeleton([240, 40, 120])); $("#events-dBar").hidden = true; } },
+    render(d, meta){ if (S.detailId === id) renderDetail(d.event, d, meta); },
+    onError(e){
+      if (S.detailId !== id) return true;
+      if (e.code === "NOT_FOUND"){ notFound(); return true; }
+      return false;
+    }
+  }));
+  return details.get(id);
+}
+function notFound(){
+  S.title = ""; App.setTitle();
+  $("#events-dBar").hidden = true;
+  $("#events-dBody").replaceChildren(App.emptyState(t("notFoundT"), t("notFoundD"), {text: t("toEvents"), onclick: () => App.go("events")}));
+}
+function infoRow(icn, main, sub, extra){
+  return h("div", {class: "events-irow"}, ic(icn), h("div", null, h("b", {text: main}), sub ? h("span", {text: sub}) : null, extra || null));
+}
+function renderDetail(ev, d, meta){
+  S.detail = ev; S.title = ev.name; App.setTitle();
+  const hero = h("div", {class: "events-hero" + (ev.hasPoster ? "" : " events-short"), "aria-hidden": "true", text: ev.name});
+  posterInto(hero, ev);
+
+  const chips = [];
+  if (ev.status === "Draft") chips.push(chip("warn", "alert", t("chipDraft")));
+  else if (ev.status === "Closed") chips.push(chip("bad", "x", t("chipCancelled")));
+  else if (ev.phase === "hidden") chips.push(chip("warn", "clock", t("chipNotShown")));
+  if (ev.status !== "Draft" && ev.status !== "Closed" && ev.phase !== "hidden"){
+    chips.push(evChip(ev, d.now));
+    if (ev.phase === "open" && !ev.myReference) chips.push(chip("", "clock", t("closesAt", {d: F.dateTime(ev.regClose)})));
+  }
+
+  const time = F.time(ev);
+  const mapUrl = ev.location ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ev.location) : "";
+  const host = ev.organizer ? t("byOrganizer", {name: ev.organizer}) : t("byCommunity");
+  const hostMore = (ev.teamCount ? t("teamMore", {n: ev.teamCount}) : "");
+  const info = h("div", {class: "events-info"},
+    infoRow("events", longDate(ev.date), time),
+    ev.location ? infoRow("pin", ev.location, "", h("a", {href: mapUrl, id: "events-mapLink", onclick: e => { e.preventDefault(); App.openExternal(mapUrl); }, text: t("openMap")})) : null,
+    infoRow("people", host + hostMore, typeof ev.registered === "number" ? t("registeredN", {n: ev.registered}) : ""));
+
+  const s = ev.sections || {};
+  const asks = [s.study && t("askStudy"), s.sessions && t("askSessions"), s.teams && t("askTeams"), s.food && t("askFood")].filter(Boolean);
+
+  const parts = [hero, h("div", {class: "events-dChips"}, chips), h("h1", {class: "events-dTitle", text: ev.name}), info,
+    ev.description ? h("p", {class: "events-desc", text: ev.description}) : null,
+    asks.length && ev.phase !== "past" ? h("div", {class: "events-asks"}, ic("doc"), h("span", {text: t("asksT", {list: asks.join(", ")})})) : null];
+  if (ev.status === "Draft") parts.unshift(h("div", {class: "banner", style: "margin-bottom:12px"}, App.icon("alert"), h("span", {text: t("draftBanner")})));
+  else if (ev.status === "Closed") parts.unshift(h("div", {class: "banner events-errBox", style: "margin-bottom:12px"}, App.icon("x"), h("span", {text: t("cancelledBanner")})));
+  else if (ev.phase === "hidden") parts.unshift(h("div", {class: "banner", style: "margin-bottom:12px"}, App.icon("clock"), h("span", {text: t("hiddenBanner")})));
+  if (ev.canDecideBudget) parts.push(approverBox(ev));
+  if (ev.canManage) parts.push(manageBox(ev));
+  parts.push(h("p", {class: "asof", text: meta && meta.stale ? App.t("savedAt", {d: F.stamp(meta.at)}) : App.t("asOf", {d: F.dateTime(d.now)})}));
+  $("#events-dBody").replaceChildren(...parts.filter(Boolean));
+  renderBar(ev);
+}
+function budgetChip(st){
+  if (st === "Approved") return chip("ok", "check", t("bApproved"));
+  if (st === "Rejected") return chip("bad", "x", t("bRejected"));
+  if (st === "Requested") return chip("warn", "clock", t("bRequested"));
+  return null;
+}
+function manageBox(ev){
+  const b = ev.budget || {};
+  const statusChip = ev.status === "Draft" ? chip("warn", "alert", t("chipDraft")) : ev.status === "Closed" ? chip("bad", "x", t("chipCancelled")) : chip("ok", "check", t("chipPublished"));
+  const budgetRows = [];
+  if (b.requested == null && b.approved == null) budgetRows.push(h("div", {class: "events-kv"}, h("span", {class: "muted", text: t("budgetL")}), h("span", {text: t("budgetNone")})));
+  if (b.requested != null) budgetRows.push(h("div", {class: "events-kv"}, h("span", {class: "muted", text: t("budgetL")}), h("span", {style: "display:flex;gap:8px;align-items:center"}, h("b", {text: F.money(b.requested)}), budgetChip(b.status))));
+  if (b.approved != null && !(b.status === "Approved" && b.approved === b.requested)) budgetRows.push(h("div", {class: "events-kv"}, h("span", {class: "muted", text: t("budgetApprovedL")}), h("b", {text: F.money(b.approved)})));
+  if (b.status === "Requested") budgetRows.push(h("p", {class: "events-hint", text: t("bWaitHint")}));
+  if (b.note && b.status !== "Requested") budgetRows.push(h("p", {class: "events-hint", text: t("bNoteL", {note: b.note})}));
+  return h("section", {class: "card events-box", id: "events-manage"},
+    h("h2", {text: t("manageT")}),
+    h("div", {class: "events-kv"}, h("span", {class: "muted", text: t("statusL")}), statusChip),
+    ...budgetRows,
+    ev.status !== "Closed" ? h("button", {type: "button", class: "btn secondary", id: "events-manageBtn", onclick: () => App.open("manage", ev.id, "")}, ic("people"), t("manage")) : null,
+    ev.status !== "Closed" ? h("button", {type: "button", class: "btn secondary", id: "events-editBtn", onclick: () => App.go("event-edit", ev.id)}, ic("edit"), t("edit")) : null,
+    ev.canCancel ? h("button", {type: "button", class: "btn quiet events-danger", id: "events-cancelBtn", style: "align-self:center", onclick: () => confirmCancel(ev), text: t("cancelEvent")}) : null);
+}
+function approverBox(ev){
+  const amount = F.money(ev.budget.requested);
+  return h("section", {class: "card events-box", id: "events-approve"},
+    h("h2", {text: t("approverT")}),
+    h("p", {class: "events-hint", text: t("approverD", {amount})}),
+    h("button", {type: "button", class: "btn secondary", id: "events-approveBtn", onclick: e => decide(ev, "approve", "", e.currentTarget)}, App.icon("check"), t("approve", {amount})),
+    h("button", {type: "button", class: "btn quiet events-danger", id: "events-rejectBtn", style: "align-self:center", onclick: () => rejectSheet(ev), text: t("reject")}));
+}
+function renderBar(ev){
+  const main = $("#events-mainBtn"), share = $("#events-shareBtn");
+  share.replaceChildren(ic("share"), t("share"));
+  const canShare = ev.status !== "Draft" && ev.status !== "Closed" && ev.phase !== "hidden" && ev.phase !== "past";
+  share.hidden = !canShare;
+  main.disabled = false; main.hidden = false; main.onclick = null;
+  if (ev.status === "Closed"){ main.hidden = true; }
+  else if (ev.phase === "hidden" && ev.canManage){ main.textContent = t("editPublish"); main.onclick = () => App.go("event-edit", ev.id); }
+  else if (ev.phase === "past"){ main.hidden = true; }
+  else if (ev.myReference){ main.textContent = t("myTicket"); main.onclick = () => App.open("ticket", ev.id, joinUrl(ev.id)); }
+  else if (ev.regState === "open"){ main.textContent = t("join"); main.onclick = () => App.open("join", ev.id, joinUrl(ev.id)); }
+  else if (ev.regState === "upcoming"){ main.textContent = t("notOpenYet", {d: F.dateTime(ev.regOpen)}); main.disabled = true; }
+  else { main.textContent = t("regClosed"); main.disabled = true; }
+  $("#events-dBar").hidden = main.hidden && share.hidden;
+}
+$("#events-shareBtn").addEventListener("click", () => { if (S.detail) shareSheet(S.detail); });
+
+function shareSheet(ev){
+  const link = eventLink(ev.id);
+  const row = (icn, title, sub, onclick, id) => h("button", {type: "button", class: "row", id, onclick}, ic(icn), h("span", {class: "grow"}, h("span", {text: title}), h("span", {class: "sub", text: sub})), App.icon("chevron", "chev"));
+  const rows = [row("link", t("copyLink"), t("copyLinkSub"), () => copy(link), "events-copyLink")];
+  if (navigator.share) rows.push(row("share", t("phoneShare"), t("phoneShareSub"), () => { navigator.share({title: ev.name, text: ev.name + " · " + longDate(ev.date), url: link}).catch(() => {}); }, "events-phoneShare"));
+  App.sheet(t("shareT"), h("div", {class: "rows", style: "margin-bottom:12px"}, rows), h("p", {class: "t-small muted", text: t("shareNote")}));
+}
+async function copy(text){
+  let ok = false;
+  try{ await navigator.clipboard.writeText(text); ok = true; }catch(e){
+    const ta = h("textarea", {style: "position:fixed;opacity:0", readonly: true}); ta.value = text; document.body.append(ta); ta.select();
+    try{ ok = document.execCommand("copy"); }catch(x){} ta.remove();
+  }
+  App.closeSheet(); App.toast(ok ? t("copied") : text);
+}
+function confirmCancel(ev){
+  const go = h("button", {type: "button", class: "btn", id: "events-cancelGo", style: "background:var(--error);border-color:var(--error);color:#fff", text: t("cancelGo")});
+  go.addEventListener("click", async () => {
+    go.disabled = true; go.textContent = t("saving");
+    try{
+      await App.api("event.cancel", {eventId: ev.id, expectedUpdatedAt: (ev.edit || {}).updatedAt || ""});
+      App.closeSheet(); App.toast(t("cancelledToast")); afterChange(ev.id);
+      App.go("events");
+    }catch(e){ App.closeSheet(); App.toast(e.message); detailView(ev.id).refresh(); }
+  });
+  App.sheet(t("cancelT"), h("p", {text: t("cancelD")}), h("div", {class: "events-sheetBtns"}, go));
+}
+function rejectSheet(ev){
+  const note = h("textarea", {id: "events-rejectNote", rows: "3", maxlength: "300"});
+  const go = h("button", {type: "button", class: "btn", id: "events-rejectGo", text: t("rejectGo")});
+  go.addEventListener("click", () => decide(ev, "reject", note.value, go));
+  App.sheet(t("rejectT"), h("div", {class: "events-sheetBtns"},
+    h("div", {class: "events-field"}, h("label", {for: "events-rejectNote", text: t("rejectNoteL")}), note), go));
+}
+async function decide(ev, decision, note, btn){
+  if (btn){ btn.disabled = true; btn.textContent = t("saving"); }
+  try{
+    await App.api("event.decideBudget", {eventId: ev.id, decision, note: note || "", amount: ev.budget.requested});
+    App.closeSheet(); App.toast(t(decision === "approve" ? "approvedToast" : "rejectedToast"));
+  }catch(e){ App.closeSheet(); App.toast(e.message); }
+  afterChange(ev.id); detailView(ev.id).refresh();
+}
+// something changed on the server: the list and this event's page load fresh next time
+function afterChange(id){
+  if (list.data) list.refresh();
+  if (id && details.has(id)) details.get(id).data = null;
+}
+
+/* =====================================================================
+   Create / edit (#event-new, #event-edit/<id>): organizers and approvers; edit = people who may manage the event
+   ===================================================================== */
+const SECTIONS = ["study", "sessions", "teams", "food"];
+const fx = id => $("#events-" + id);
+function fillFormText(){
+  App.$$("#events-form [data-t]").forEach(el => { el.textContent = t(el.dataset.t); });
+  fx("fDesc").setAttribute("placeholder", t("fDescPh"));
+  fx("fPosterBtn").replaceChildren(ic("image"), h("span", {class: "events-dropT", text: t("fPoster")}), h("span", {class: "events-dropD", text: t("fPosterHint")}));
+  fx("advBtn").replaceChildren(h("span", {text: t("advT")}), App.icon("chevron"));
+  fx("secRows").replaceChildren(...SECTIONS.map(k => h("div", {class: "events-sec"},
+    h("span", {class: "events-secTx", id: "events-secL-" + k}, h("b", {text: t("sec_" + k)}), h("span", {text: t("sec_" + k + "D")})),
+    h("button", {type: "button", role: "switch", class: "events-switch", id: "events-sw-" + k, "data-sec": k,
+      "aria-checked": S.form && S.form.sections[k] ? "true" : "false", "aria-labelledby": "events-secL-" + k}, h("span")))));
+  setSaveLabel();
+  budgetHelp();
+}
+function setSaveLabel(){
+  const f = S.form; if (!f) return;
+  fx("saveBtn").textContent = S.saving ? t("saving") : f.id && f.status === "Approved" ? t("saveChanges") : t("publish");
+  fx("draftBtn").hidden = !!(f.id && f.status === "Approved");
+}
+function budgetHelp(){
+  const f = S.form; if (!f) return;
+  fx("fBudgetHelp").textContent = f.budget && f.budget.status === "Approved" && f.budget.approved != null ? t("fBudgetHelpApproved", {amount: F.money(f.budget.approved)}) : t("fBudgetHelp");
+}
+function defaults(){
+  const f = S.form, date = fx("fDate").value, start = fx("fStart").value, end = fx("fEnd").value;
+  return {
+    regOpen: f.baseOpen, publishFrom: f.baseFrom,
+    regClose: date ? date + " " + (start || "23:59") : "", publishUntil: date ? date + " " + (end || "23:59") : ""
+  };
+}
+function syncDefaults(all){
+  const f = S.form, d = defaults();
+  [["fRegOpen", "regOpen"], ["fRegClose", "regClose"], ["fPubFrom", "publishFrom"], ["fPubUntil", "publishUntil"]].forEach(([el, k]) => {
+    if (all || !f.touched[k]) fx(el).value = toInput(d[k]);
+  });
+  if (all) f.touched = {};
+}
+function setPosterPreview(url){
+  fx("fPosterImg").hidden = !url; if (url) fx("fPosterImg").src = url; else fx("fPosterImg").removeAttribute("src");
+  fx("fPosterBtn").hidden = !!url; fx("fPosterActs").hidden = !url;
+}
+function startForm(ev){
+  const now = bkkNow();
+  const e = ev || {};
+  S.form = {
+    id: e.id || "", status: e.status || "", updatedAt: (e.edit || {}).updatedAt || "",
+    sections: Object.assign({study: false, sessions: false, teams: false, food: false}, e.sections || {}),
+    budget: e.budget || null, poster: null, removePoster: false, hadPoster: !!e.hasPoster, touched: {},
+    baseOpen: (e.edit || {}).regOpen || now, baseFrom: (e.edit || {}).publishFrom || now
+  };
+  clearErrors();
+  fx("fName").value = e.name || ""; fx("fDate").value = e.date || ""; fx("fStart").value = e.startTime || ""; fx("fEnd").value = e.endTime || "";
+  fx("fPlace").value = e.location || ""; fx("fDesc").value = e.description || "";
+  fx("fBudget").value = e.budget && e.budget.requested != null ? Number(e.budget.requested).toFixed(2) : "";
+  fx("fSessions").value = (S.form.sections.sessionNames || []).join("\n");
+  fx("fPosterFile").value = "";
+  setPosterPreview(null);
+  if (e.hasPoster) posterData(e.id).then(url => { if (S.form && S.form.id === e.id && !S.form.poster && !S.form.removePoster && url) setPosterPreview(url); });
+  fillFormText();
+  fx("sessBox").hidden = !S.form.sections.sessions;
+  const ed = e.edit || {};
+  if (e.id){
+    fx("fRegOpen").value = toInput(ed.regOpen); fx("fRegClose").value = toInput(ed.regClose);
+    fx("fPubFrom").value = toInput(ed.publishFrom); fx("fPubUntil").value = toInput(ed.publishUntil);
+    const d = defaults();   // fields that differ from the defaults were set by hand: they no longer follow the date
+    S.form.touched = {regClose: ed.regClose !== d.regClose, publishUntil: ed.publishUntil !== d.publishUntil};
+  } else syncDefaults(true);
+  const custom = !!(S.form.touched.regClose || S.form.touched.publishUntil);
+  fx("adv").hidden = !custom; fx("advBtn").setAttribute("aria-expanded", custom ? "true" : "false");
+  S.saving = false; setSaveLabel();
+  window.scrollTo(0, 0);
+}
+function err(key, msg){
+  const p = fx("e" + key); if (!p) return;
+  p.hidden = !msg; p.replaceChildren(...(msg ? [App.icon("alert"), h("span", {text: msg})] : []));
+  const input = {name: "fName", date: "fDate", place: "fPlace", budget: "fBudget", sessions: "fSessions", time: "fEnd"}[key];
+  if (input){ if (msg) fx(input).setAttribute("aria-invalid", "true"); else fx(input).removeAttribute("aria-invalid"); }
+}
+function clearErrors(){ ["poster", "name", "date", "time", "place", "budget", "sessions", "windows"].forEach(k => err(k, "")); fx("fErrBox").hidden = true; }
+function money(v){
+  const s = String(v || "").replace(/[,\s฿]/g, "");
+  if (s === "") return "";
+  if (!/^\d+(\.\d{0,2})?$/.test(s) || Number(s) > 1e9) return null;
+  return s;
+}
+function collect(){
+  const f = S.form, names = fx("fSessions").value.split("\n").map(x => x.trim()).filter(Boolean);
+  return {
+    id: f.id, name: fx("fName").value.trim(), date: fx("fDate").value, startTime: fx("fStart").value, endTime: fx("fEnd").value,
+    location: fx("fPlace").value.trim(), description: fx("fDesc").value.trim(), budgetRequested: money(fx("fBudget").value),
+    sections: {study: f.sections.study, sessions: f.sections.sessions, teams: f.sections.teams, food: f.sections.food, sessionNames: f.sections.sessions ? names : []},
+    regOpen: fromInput(fx("fRegOpen").value), regClose: fromInput(fx("fRegClose").value),
+    publishFrom: fromInput(fx("fPubFrom").value), publishUntil: fromInput(fx("fPubUntil").value)
+  };
+}
+function validate(v){
+  clearErrors();
+  const bad = [];
+  const mark = (k, msg, focus) => { err(k, msg); bad.push(focus); };
+  if (v.name.length < 2) mark("name", t("eName"), "fName");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v.date)) mark("date", t("eDate"), "fDate");
+  else if (!v.id && v.date < bkkNow().slice(0, 10)) mark("date", t("ePast"), "fDate");
+  if (v.startTime && v.endTime && v.endTime <= v.startTime) mark("time", t("eTime"), "fEnd");
+  if (v.location.length < 2) mark("place", t("ePlace"), "fPlace");
+  if (v.budgetRequested === null) mark("budget", t("eBudget"), "fBudget");
+  if (v.sections.sessions && (!v.sections.sessionNames.length || v.sections.sessionNames.length > 10)) mark("sessions", t("eSessions"), "fSessions");
+  if (!v.regOpen || !v.regClose || v.regClose <= v.regOpen || !v.publishFrom || !v.publishUntil || v.publishUntil <= v.publishFrom){
+    err("windows", t("eWindows")); bad.push("fRegClose"); fx("adv").hidden = false; fx("advBtn").setAttribute("aria-expanded", "true");
+  }
+  if (bad.length){ fx("fErrBox").hidden = false; fx("fErrBox").replaceChildren(App.icon("alert"), h("span", {text: t("eFix")})); fx(bad[0]).focus(); }
+  return !bad.length;
+}
+async function save(publish){
+  if (S.saving || !S.form) return;
+  const v = collect();
+  if (!validate(v)) return;
+  const f = S.form;
+  S.saving = true; fx("saveBtn").disabled = true; fx("draftBtn").disabled = true;
+  if (publish) fx("saveBtn").textContent = t("saving"); else fx("draftBtn").textContent = t("saving");
+  try{
+    const r = await App.api("event.save", {event: v, publish, poster: f.poster, removePoster: f.removePoster && !f.poster, expectedUpdatedAt: f.updatedAt});
+    App.toast(t(f.id && f.status === "Approved" ? "savedToast" : publish ? "publishedToast" : "draftToast"));
+    posters.delete(r.id);
+    afterChange(r.id);
+    S.form = null;
+    App.go("event", r.id);
+  }catch(e){
+    fx("fErrBox").hidden = false; fx("fErrBox").replaceChildren(App.icon("alert"), h("span", {text: e.message}));
+    fx("fErrBox").scrollIntoView({block: "center"});
+  }finally{
+    S.saving = false; fx("saveBtn").disabled = false; fx("draftBtn").disabled = false;
+    fx("draftBtn").textContent = t("saveDraft"); setSaveLabel();
+  }
+}
+// Poster: checked and resized on the phone (longest side 1600 px, JPEG), then checked again on the server (real image, 5 MB).
+function readPoster(file){
+  err("poster", "");
+  if (!file) return;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)){ err("poster", t("ePosterType")); return; }
+  if (file.size > 20 * 1048576){ err("poster", t("ePosterBig")); return; }
+  const url = URL.createObjectURL(file), img = new Image();
+  img.onload = () => {
+    const k = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+    const g = c.getContext("2d"); g.fillStyle = "#FFFFFF"; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url);
+    const dataUrl = c.toDataURL("image/jpeg", 0.85), b64 = dataUrl.split(",")[1] || "";
+    if (b64.length * 0.75 > 5 * 1048576){ err("poster", t("ePosterBig")); return; }
+    S.form.poster = {type: "image/jpeg", data: b64}; S.form.removePoster = false;
+    setPosterPreview(dataUrl);
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); err("poster", t("ePosterRead")); };
+  img.src = url;
+}
+fx("fPosterBtn").addEventListener("click", () => fx("fPosterFile").click());
+fx("fPosterChange").addEventListener("click", () => fx("fPosterFile").click());
+fx("fPosterRemove").addEventListener("click", () => { S.form.poster = null; S.form.removePoster = S.form.hadPoster; fx("fPosterFile").value = ""; setPosterPreview(null); });
+fx("fPosterFile").addEventListener("change", e => readPoster(e.target.files && e.target.files[0]));
+fx("secRows").addEventListener("click", e => {
+  const b = e.target.closest("[data-sec]"); if (!b || !S.form) return;
+  const k = b.dataset.sec, sec = S.form.sections, on = !sec[k];
+  sec[k] = on;
+  if (k === "teams" && on && !sec.sessions){ sec.sessions = true; App.toast(t("teamsNeedsSessions")); }
+  if (k === "sessions" && !on) sec.teams = false;
+  SECTIONS.forEach(x => fx("sw-" + x).setAttribute("aria-checked", sec[x] ? "true" : "false"));
+  fx("sessBox").hidden = !sec.sessions;
+  if (k === "sessions" && on) fx("fSessions").focus();
+});
+["fDate", "fStart", "fEnd"].forEach(id => fx(id).addEventListener("change", () => { if (S.form) syncDefaults(false); }));
+[["fRegOpen", "regOpen"], ["fRegClose", "regClose"], ["fPubFrom", "publishFrom"], ["fPubUntil", "publishUntil"]].forEach(([id, k]) =>
+  fx(id).addEventListener("input", () => { if (S.form) S.form.touched[k] = true; }));
+fx("advBtn").addEventListener("click", () => { const open = fx("adv").hidden; fx("adv").hidden = !open; fx("advBtn").setAttribute("aria-expanded", open ? "true" : "false"); });
+fx("advReset").addEventListener("click", () => { if (S.form) syncDefaults(true); });
+fx("saveBtn").addEventListener("click", () => save(true));
+fx("draftBtn").addEventListener("click", () => save(false));
+fx("fForm").addEventListener("submit", e => { e.preventDefault(); save(true); });
+// a field's error goes away as soon as the person changes that field
+const ERR_OF = {"events-fName": "name", "events-fDate": "date", "events-fStart": "time", "events-fEnd": "time", "events-fPlace": "place", "events-fBudget": "budget", "events-fSessions": "sessions",
+  "events-fRegOpen": "windows", "events-fRegClose": "windows", "events-fPubFrom": "windows", "events-fPubUntil": "windows"};
+["input", "change"].forEach(ev => fx("fForm").addEventListener(ev, e => { const k = ERR_OF[e.target.id]; if (k && !fx("e" + k).hidden) err(k, ""); }));
+
+async function openEdit(id){
+  S.form = null; S.title = "";
+  fx("fForm").hidden = true;
+  try{
+    const d = await App.api("event.get", {eventId: id});
+    if (!d.event.canManage || d.event.status === "Closed"){ App.toast(t("eNoRight")); App.go("event", id); return; }
+    fx("fForm").hidden = false;
+    startForm(d.event);
+  }catch(e){
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    App.toast(e.message); App.go("events");
+  }
+}
+
+/* ---------- register ---------- */
+App.register({
+  name: "events",
+  tab: "events",
+  screen: "events-screen",
+  title: () => t("title"),
+  show(ctx){ if (ctx.first) list.start(); else list.refresh(); },
+  onLang(){ list.rerender(); details.forEach(v => v.rerender()); if (S.form) fillFormText(); },
+  routes: {
+    "event": {
+      screen: "events-detail",
+      title: () => S.title || t("detailT"),
+      show(ctx){
+        S.detailId = ctx.arg; S.detail = null; S.title = "";
+        const v = detailView(ctx.arg);
+        if (v.data) v.rerender(); else $("#events-dBar").hidden = true;
+        v.start();
+      }
+    },
+    "event-new": {
+      screen: "events-form",
+      title: () => t("newT"),
+      show(){ fx("fForm").hidden = false; startForm(null); fx("fName").focus(); }
+    },
+    "event-edit": {
+      screen: "events-form",
+      title: () => t("editT"),
+      show(ctx){ openEdit(ctx.arg); }
+    }
+  }
+});
+
+/* =====================================================================
+   Demo answers (no API_URL in config.js): ?demo=participant (default) | organizer | approver | new
+   Sample names, places and amounts are made up.
+   ===================================================================== */
+const DEMO = (() => {
+  const day = n => { const x = new Date(Date.now() + 7 * 3600e3); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const now = bkkNow();
+  const base = {description: "", hasPoster: false, myReference: "", sections: {study: false, sessions: false, teams: false, food: false, sessionNames: []}, organizer: "", ownerMode: ""};
+  const mk = o => Object.assign({}, base, o);
+  return {
+    seq: 3,
+    events: [
+      mk({id: "EV-DEMO-01", name: "Board Game Night", date: day(13), startTime: "13:00", endTime: "17:00", location: "บ้านหัวแหลม อโศก", status: "Approved",
+          regOpen: day(-5) + " 09:00", regClose: day(13) + " 13:00", publishFrom: day(-5) + " 09:00", publishUntil: day(13) + " 17:00",
+          description: "เล่นบอร์ดเกมกันชิล ๆ มีขนมและน้ำ\nมาคนเดียวก็ได้ เดี๋ยวจับกลุ่มให้", myReference: "RG-DEMO-0012", registered: 32, organizer: "เมฆ", ownerMode: "organizer",
+          budget: {requested: 3500, approved: null, status: "Requested", note: "", decidedAt: ""}, updatedAt: "2026-11-01T10:00:00.000"}),
+      mk({id: "EV-DEMO-02", name: "Hualaem-X Session: เส้นทางอาชีพสาย Data", date: day(27), startTime: "13:00", endTime: "16:30", location: "บ้านหัวแหลม อโศก + ออนไลน์ (Teams)", status: "Approved",
+          regOpen: day(-2) + " 09:00", regClose: day(2) + " 23:59", publishFrom: day(-2) + " 09:00", publishUntil: day(27) + " 16:30",
+          description: "ชวนรุ่นพี่สาย Data มาเล่าเส้นทางจริง ตั้งแต่เรียนจนได้งานแรก ตามด้วย networking และบอร์ดเกม", registered: 41, organizer: "ฝน",
+          sections: {study: false, sessions: true, teams: true, food: true, sessionNames: ["Data Analyst", "Data Engineer"]}, budget: {requested: 6000, approved: 6000, status: "Approved", note: "", decidedAt: day(-1) + " 10:00"}}),
+      mk({id: "EV-DEMO-03", name: "ค่ายพี่สอนน้อง รุ่น 20", date: day(69), startTime: "09:00", endTime: "17:00", location: "[สถานที่]", status: "Approved",
+          regOpen: day(23) + " 09:00", regClose: day(66) + " 23:59", publishFrom: day(-1) + " 09:00", publishUntil: day(69) + " 17:00", organizer: "เมฆ"}),
+      mk({id: "EV-DEMO-04", name: "Hualaem Talk: ทุนเรียนต่อ", date: day(-15), startTime: "13:00", endTime: "15:00", location: "ออนไลน์", status: "Approved",
+          regOpen: day(-30) + " 09:00", regClose: day(-15) + " 13:00", publishFrom: day(-30) + " 09:00", publishUntil: day(-15) + " 15:00", myReference: "RG-DEMO-0007"}),
+      mk({id: "EV-DEMO-05", name: "ไอเดีย: ปิกนิกสวนเบญจกิติ", date: day(40), startTime: "", endTime: "", location: "สวนเบญจกิติ", status: "Draft",
+          regOpen: now, regClose: day(40) + " 23:59", publishFrom: now, publishUntil: day(40) + " 23:59", ownerMode: "organizer", organizer: "เมฆ"})
+    ]
+  };
+})();
+function demoPhase(e, now){
+  if (e.status === "Approved" && now >= e.date + " " + (e.endTime || "23:59")) return "past";
+  if (e.status !== "Approved" || now < e.publishFrom || now >= e.publishUntil) return "hidden";
+  return now >= e.regOpen && now < e.regClose ? "open" : "upcoming";
+}
+function demoEvent(e, mode, now, full){
+  const manage = e.ownerMode && e.ownerMode === mode;
+  const o = {id: e.id, name: e.name, date: e.date, startTime: e.startTime, endTime: e.endTime, location: e.location, regOpen: e.regOpen, regClose: e.regClose,
+    regState: now < e.regOpen ? "upcoming" : now >= e.regClose ? "closed" : "open", hasPoster: false, phase: demoPhase(e, now),
+    myReference: mode === "new" ? "" : e.myReference, canManage: !!manage, registered: e.registered || 0};
+  if (manage) o.status = e.status;
+  if (full){
+    Object.assign(o, {description: e.description, organizer: e.organizer, sections: e.sections, isOwner: !!manage, canCancel: !!manage && e.status !== "Closed"});
+    if ((manage || mode === "approver") && e.budget) o.budget = e.budget;
+    else if (manage || mode === "approver") o.budget = {requested: null, approved: null, status: "", note: "", decidedAt: ""};
+    o.canDecideBudget = mode === "approver" && !manage && !!e.budget && e.budget.status === "Requested";
+    if (manage) o.edit = {regOpen: e.regOpen, regClose: e.regClose, publishFrom: e.publishFrom, publishUntil: e.publishUntil, updatedAt: e.updatedAt || "2026-11-01T10:00:00.000"};
+  }
+  return o;
+}
+App.demo["event.list"] = (body, mode) => {
+  const now = bkkNow(), staff = mode === "organizer" || mode === "approver";
+  const events = DEMO.events.filter(e => e.status !== "Closed").map(e => demoEvent(e, mode, now, false)).filter(e => e.phase !== "hidden" || e.canManage)
+    .sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime));
+  return {ok: true, now, role: staff ? mode : "participant", canCreate: staff, events};
+};
+App.demo["event.get"] = (body, mode) => {
+  const now = bkkNow(), e = DEMO.events.find(x => x.id === body.eventId);
+  if (!e) throw new App.ApiError(t("notFoundT"), "NOT_FOUND");
+  const o = demoEvent(e, mode, now, true);
+  if (o.phase === "hidden" && !o.canManage) throw new App.ApiError(t("notFoundT"), "NOT_FOUND");
+  return {ok: true, now, role: mode, event: o};
+};
+App.demo["event.save"] = (body, mode) => {
+  if (mode !== "organizer" && mode !== "approver") throw new App.ApiError(t("eNoRight"), "FORBIDDEN");
+  const v = body.event, now = bkkNow();
+  let e = DEMO.events.find(x => x.id === v.id);
+  if (!e){ e = {id: "EV-DEMO-" + String(++DEMO.seq + 10), ownerMode: mode, organizer: "Kim", myReference: "", registered: 0, status: "Draft"}; DEMO.events.push(e); }
+  const req = v.budgetRequested === "" ? null : Number(v.budgetRequested), old = e.budget || {requested: null, approved: null, status: ""};
+  Object.assign(e, {name: v.name, date: v.date, startTime: v.startTime, endTime: v.endTime, location: v.location, description: v.description, sections: v.sections,
+    regOpen: v.regOpen, regClose: v.regClose, publishFrom: v.publishFrom, publishUntil: v.publishUntil, hasPoster: false, updatedAt: new Date().toISOString(),
+    status: body.publish ? "Approved" : e.status === "Approved" ? "Approved" : "Draft"});
+  if (req !== old.requested) e.budget = {requested: req, approved: old.approved, status: req === null ? "" : "Requested", note: "", decidedAt: ""};
+  void now;
+  return {ok: true, id: e.id, status: e.status, updatedAt: e.updatedAt};
+};
+App.demo["event.cancel"] = (body) => { const e = DEMO.events.find(x => x.id === body.eventId); if (e) e.status = "Closed"; return {ok: true, id: body.eventId, status: "Closed"}; };
+App.demo["event.decideBudget"] = (body, mode) => {
+  const e = DEMO.events.find(x => x.id === body.eventId);
+  if (mode !== "approver" || !e || !e.budget) throw new App.ApiError(t("eNoRight"), "FORBIDDEN");
+  e.budget = Object.assign({}, e.budget, body.decision === "approve" ? {approved: e.budget.requested, status: "Approved"} : {status: "Rejected", note: body.note || ""});
+  return {ok: true, id: e.id, budgetStatus: e.budget.status};
+};
+});
+
+// ---- app/features/event-team ----
+App.module("event-team", {"th":{"listT":"งานที่ฉันดูแล","listIntro":"งานที่คุณเป็นผู้จัดหรือผู้ร่วมจัด แตะเพื่อจัดการทีม","listEmptyT":"ยังไม่มีงานที่คุณดูแล","listEmptyD":"เมื่อแอดมินตั้งคุณเป็นผู้จัด หรือมีคนเชิญคุณเป็นผู้ร่วมจัด งานจะขึ้นที่นี่","roleLead":"คุณเป็นผู้จัด","roleCollab":"คุณเป็นผู้ร่วมจัด","teamN":"ทีม {n} คน","ended":"จบแล้ว","stDraft":"ฉบับร่าง","stClosed":"ปิดแล้ว","manageT":"จัดการงาน","segTeam":"ผู้ร่วมจัด {n}","eventPage":"ดูหน้ากิจกรรม","you":"(คุณ)","leadLine":"ผู้จัด · เพิ่ม/ลบผู้ร่วมจัดได้","collabLine":"ผู้ร่วมจัด · แก้ไขงาน เช็กอิน เพิ่มค่าใช้จ่าย","noLead":"ยังไม่มีผู้จัดหลัก แอดมินตั้งได้ในเว็บแอดมิน","removeAria":"ลบ {name} ออกจากผู้ร่วมจัด","addT":"เพิ่มผู้ร่วมจัด","addInvite":"ส่งลิงก์เชิญใน LINE (ใช้ได้ครั้งเดียว)","addSearch":"ค้นหาสมาชิกจากชื่อ","addPeople":"เลือกจากผู้ลงทะเบียน","openInvites":"ยกเลิกลิงก์เชิญที่ยังไม่ได้ใช้ ({n})","collabNote":"เฉพาะผู้จัดของงานนี้ที่เพิ่มหรือลบผู้ร่วมจัดได้","closedNote":"งานนี้ปิดแล้ว เพิ่มคนในทีมไม่ได้ (ยังลบผู้ร่วมจัดได้)","fullNote":"ทีมนี้มีผู้ร่วมจัดครบ {n} คนแล้ว","notTeamT":"คุณไม่ได้อยู่ในทีมของงานนี้","notTeamD":"ขอให้ผู้จัดงานส่งลิงก์เชิญให้คุณ","notFoundT":"ไม่พบงานนี้","notFoundD":"งานอาจถูกลบไปแล้ว","toList":"ดูงานที่ฉันดูแล","inviteT":"ลิงก์เชิญผู้ร่วมจัด","inviteD":"ลิงก์นี้ใช้ได้ 1 คน หมดอายุ {d} คนที่รับต้องเป็นสมาชิกที่อนุมัติแล้ว","inviteMsg":"ชวนมาเป็นผู้ร่วมจัดงาน \"{event}\" ด้วยกัน แตะลิงก์นี้ใน LINE (ใช้ได้ครั้งเดียว)","inviteSend":"ส่งใน LINE","inviteCopy":"คัดลอกลิงก์","linkLabel":"ลิงก์เชิญ","copied":"คัดลอกลิงก์แล้ว","copyFail":"คัดลอกไม่ได้ กดค้างที่ลิงก์เพื่อคัดลอกเอง","making":"กำลังสร้างลิงก์…","cancelInvT":"ยกเลิกลิงก์เชิญ?","cancelInvD":"ลิงก์ที่ส่งไปแล้วแต่ยังไม่มีใครใช้ {n} ลิงก์จะใช้ไม่ได้อีก","cancelInvBtn":"ยกเลิกลิงก์","cancelledN":"ยกเลิก {n} ลิงก์แล้ว","searchT":"ค้นหาสมาชิก","searchLabel":"ชื่อหรือชื่อเล่น","searchPh":"พิมพ์อย่างน้อย 2 ตัวอักษร","searchHint":"แสดงเฉพาะชื่อและชื่อเล่นของสมาชิกที่อนุมัติแล้ว","searching":"กำลังค้นหา…","searchNone":"ไม่พบสมาชิกชื่อนี้","searchMore":"พบมากกว่า {n} คน พิมพ์ชื่อให้ละเอียดขึ้น","peopleT":"เลือกจากผู้ลงทะเบียน","peopleEmpty":"ยังไม่มีสมาชิกลงทะเบียนงานนี้","loading":"กำลังโหลด…","addBtn":"เพิ่ม","addAria":"เพิ่ม {name} เป็นผู้ร่วมจัด","onTeam":"อยู่ในทีมแล้ว","addedToast":"เพิ่ม {name} เป็นผู้ร่วมจัดแล้ว","removeT":"ลบ {name} ออกจากทีม?","removeD":"{name} จะจัดการงานนี้ไม่ได้อีก (แก้ไขงาน เช็กอิน เพิ่มค่าใช้จ่าย) เพิ่มกลับได้ภายหลัง","removeBtn":"ลบออกจากทีม","removedToast":"ลบ {name} ออกจากทีมแล้ว","busy":"กำลังส่ง…","joinT":"คำเชิญร่วมจัดงาน","joinLead":"{name} ชวนคุณมาเป็นผู้ร่วมจัดงานนี้","joinLeadNone":"คุณได้รับเชิญเป็นผู้ร่วมจัดงานนี้","joinCan":"ผู้ร่วมจัดทำอะไรได้บ้าง","joinCan1":"แก้ไขรายละเอียดงาน","joinCan2":"ดูรายชื่อผู้เข้าร่วมและเช็กอิน","joinCan3":"เพิ่มค่าใช้จ่ายของงาน","joinPdpa":"ผู้ร่วมจัดจะเห็นชื่อผู้เข้าร่วม ใช้ข้อมูลนี้เพื่องานนี้เท่านั้น","joinExpires":"ลิงก์หมดอายุ {d}","joinBtn":"รับคำเชิญ","joining":"กำลังเข้าร่วม…","joinedT":"คุณเป็นผู้ร่วมจัดแล้ว","joinedD":"เปิดหน้าจัดการงานได้จากที่นี่ หรือจาก งานที่ฉันดูแล","alreadyT":"คุณอยู่ในทีมของงานนี้แล้ว","goManage":"ไปหน้าจัดการงาน","usedT":"ลิงก์นี้ถูกใช้ไปแล้ว","expiredT":"ลิงก์นี้หมดอายุแล้ว","cancelledT":"ลิงก์นี้ถูกยกเลิกแล้ว","closedT":"งานนี้ปิดแล้ว","askNew":"ขอลิงก์ใหม่จากผู้จัดงาน (ลิงก์เชิญแต่ละลิงก์ใช้ได้ครั้งเดียว)","invalidT":"ลิงก์เชิญไม่ถูกต้อง","invalidD":"ตรวจว่าเปิดลิงก์มาครบ หรือขอลิงก์ใหม่จากผู้จัดงาน","goHome":"กลับหน้าแรก","errForbidden":"คุณไม่มีสิทธิ์ทำรายการนี้ในงานนี้","errClosed":"งานนี้ปิดแล้ว ทีมเปลี่ยนไม่ได้","errLimit":"ถึงจำนวนสูงสุดแล้ว ยกเลิกลิงก์เก่าหรือลบผู้ร่วมจัดก่อน","errGone":"ไม่พบข้อมูลนี้แล้ว ลองโหลดใหม่"},"en":{"listT":"Events I manage","listIntro":"Events you organize or help with. Tap one to manage its team.","listEmptyT":"No events to manage yet","listEmptyD":"When an admin makes you an event's organizer, or someone invites you to help, the event shows up here.","roleLead":"You organize","roleCollab":"You help organize","teamN":"Team of {n}","ended":"Ended","stDraft":"Draft","stClosed":"Closed","manageT":"Manage event","segTeam":"Collaborators {n}","eventPage":"View event page","you":"(you)","leadLine":"Organizer · adds and removes collaborators","collabLine":"Collaborator · edits the event, checks in, adds expenses","noLead":"No organizer yet. An admin can choose one in the admin website.","removeAria":"Remove {name} from collaborators","addT":"Add a collaborator","addInvite":"Send an invite link in LINE (works once)","addSearch":"Search members by name","addPeople":"Choose from registered participants","openInvites":"Cancel unused invite links ({n})","collabNote":"Only this event's organizer can add or remove collaborators.","closedNote":"This event is closed: nobody new can join the team (you can still remove collaborators).","fullNote":"This team already has {n} collaborators.","notTeamT":"You're not on this event's team","notTeamD":"Ask the event's organizer to send you an invite link.","notFoundT":"Event not found","notFoundD":"It may have been deleted.","toList":"See events I manage","inviteT":"Collaborator invite link","inviteD":"This link works for one person and expires {d}. They must be an approved member.","inviteMsg":"Help me organize \"{event}\". Tap this link in LINE (it works once).","inviteSend":"Send in LINE","inviteCopy":"Copy link","linkLabel":"Invite link","copied":"Link copied","copyFail":"Couldn't copy. Press and hold the link to copy it yourself.","making":"Creating the link…","cancelInvT":"Cancel invite links?","cancelInvD":"The {n} link(s) sent but not used yet will stop working.","cancelInvBtn":"Cancel links","cancelledN":"Cancelled {n} link(s)","searchT":"Search members","searchLabel":"Name or nickname","searchPh":"Type at least 2 letters","searchHint":"Shows only the name and nickname of approved members.","searching":"Searching…","searchNone":"No member with this name","searchMore":"More than {n} found: type more of the name.","peopleT":"Choose from registered participants","peopleEmpty":"No members have registered for this event yet.","loading":"Loading…","addBtn":"Add","addAria":"Add {name} as a collaborator","onTeam":"On the team","addedToast":"{name} is now a collaborator","removeT":"Remove {name} from the team?","removeD":"{name} will no longer be able to manage this event (edit, check in, add expenses). You can add them back later.","removeBtn":"Remove from team","removedToast":"{name} was removed from the team","busy":"Sending…","joinT":"Invitation","joinLead":"{name} invited you to help organize this event","joinLeadNone":"You're invited to help organize this event","joinCan":"What collaborators can do","joinCan1":"Edit the event details","joinCan2":"See participants and check people in","joinCan3":"Add the event's expenses","joinPdpa":"Collaborators see participants' names. Use them for this event only.","joinExpires":"Link expires {d}","joinBtn":"Accept invitation","joining":"Joining…","joinedT":"You're on the team","joinedD":"Open Manage from here, or later from Events I manage.","alreadyT":"You're already on this event's team","goManage":"Open Manage","usedT":"This link has already been used","expiredT":"This link has expired","cancelledT":"This link was cancelled","closedT":"This event is closed","askNew":"Ask the organizer for a new link (each invite link works once).","invalidT":"This invite link isn't valid","invalidD":"Check that the whole link was opened, or ask the organizer for a new one.","goHome":"Back to Home","errForbidden":"You can't do this for this event.","errClosed":"This event is closed: its team can't change.","errLimit":"The limit is reached. Cancel old links or remove a collaborator first.","errGone":"This is no longer there. Try reloading."}}, function (App, t) {
+// Manage › Collaborators in the LINE app (event-team). Runs inside its own function: App (the shell) and t (this feature's text).
+// Routes:  #manage                 events I organize or help with (team.mine; saved copy on the phone = event names and my role)
+//          #manage/<eventId>       the team of one event (team.manage; never saved on the phone: it holds other people's names)
+//          #team-join/<token>      accept a one-time invite link (team.invitePreview, team.acceptInvite)
+// Links from outside the app: ?teamjoin=<token> (the invite link) and ?manage=1 or ?manage=<eventId> (rich menu, Home, Events)
+// open these routes. Who may do what is decided on the server on every request; the page only hides buttons.
+const $ = App.$, h = App.h, F = App.fmt;
+const cfg = App.config;
+const S = { eventId: "", data: null, panel: "", joinToken: "", join: null, joinState: "", joinErr: "" };
+
+/* ---------- small icons this screen needs (24 px stroke, DESIGN.md); the shell has the others ---------- */
+const PATHS = {
+  link: ["M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1", "M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"],
+  search: ["M11 17.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13z", "m20 20-4.2-4.2"],
+  userPlus: ["M9 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z", "M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5", "M19 8v6M16 11h6"],
+  copy: ["M9 9h11v11H9z", "M5 15H4V4h11v1"],
+  users: ["M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z", "M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5", "M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.8c1.8.7 3 2.5 3.5 5.2"]
+};
+function ico(name, cls){
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+  [["viewBox", "0 0 24 24"], ["fill", "none"], ["stroke", "currentColor"], ["stroke-width", "1.75"], ["stroke-linecap", "round"], ["stroke-linejoin", "round"], ["aria-hidden", "true"]]
+    .forEach(([k, v]) => svg.setAttribute(k, v));
+  if (cls) svg.setAttribute("class", cls);
+  (PATHS[name] || []).forEach(d => { const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); svg.append(p); });
+  return svg;
+}
+
+/* ---------- helpers ---------- */
+const chip = (cls, ic, text) => h("span", {class: "chip " + cls}, ic ? App.icon(ic) : null, text);
+const when = ev => [F.date(ev.date), F.time(ev)].filter(Boolean).join(" · ");
+const initial = p => (String(p.nickname || p.name || "?").replace(/^(พี่|น้อง)\s*/, "").trim().charAt(0) || "?").toUpperCase();   // "พี่เมฆ" -> "ม"
+const label = p => p.name + (p.nickname ? " (" + p.nickname + ")" : "") + (p.isMe ? " " + t("you") : "");
+function errText(e){
+  const k = {FORBIDDEN: "errForbidden", CLOSED: "errClosed", LIMIT: "errLimit", NOT_FOUND: "errGone"}[e && e.code];
+  return k ? t(k) : (e && e.message) || App.t("errNet");
+}
+function busyBtn(btn, on, text){ if (!btn) return; btn.disabled = on; if (text != null) btn.textContent = text; }
+function eventPageUrl(id){ return cfg.EVENT_JOIN_LIFF_URL ? cfg.EVENT_JOIN_LIFF_URL + "?event=" + encodeURIComponent(id) : ""; }
+function inviteUrl(token){
+  const base = cfg.LIFF_ID ? "https://liff.line.me/" + cfg.LIFF_ID : location.origin + location.pathname;
+  return base + "?teamjoin=" + encodeURIComponent(token);
+}
+function statusChip(ev){
+  if (ev.status === "Draft") return chip("warn", "clock", t("stDraft"));
+  if (ev.status === "Closed") return chip("", "x", t("stClosed"));
+  return null;
+}
+
+/* ---------- #manage: events I manage ---------- */
+const listView = App.view({
+  key: "event-team.mine", action: "team.mine", cache: true, el: $("#event-team-events"),
+  skeleton(){ $("#event-team-events").replaceChildren(App.skeleton([104, 104])); },
+  render(d){
+    const evs = d.events || [];
+    $("#event-team-listIntro").textContent = t("listIntro");
+    $("#event-team-events").replaceChildren(...(evs.length ? evs.map(evCard) : [App.emptyState(t("listEmptyT"), t("listEmptyD"))]));
+  }
+});
+function evCard(ev){
+  return h("button", {type: "button", class: "card event-team-ev", "data-event": ev.id, onclick: () => App.go("manage", ev.id)},
+    h("span", {class: "event-team-when", text: when(ev)}),
+    h("span", {class: "event-team-name", text: ev.name}),
+    ev.location ? h("span", {class: "event-team-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null,
+    h("span", {class: "event-team-chips"},
+      ev.myRole === "lead" ? chip("info", "check", t("roleLead")) : chip("", null, t("roleCollab")),
+      chip("", null, t("teamN", {n: ev.teamCount})),
+      ev.past ? chip("", "check", t("ended")) : statusChip(ev)));
+}
+
+/* ---------- #manage/<eventId>: Manage › Collaborators ---------- */
+const manageView = App.view({
+  key: "event-team.manage", action: "team.manage", cache: false, el: $("#event-team-people"),
+  body: () => ({eventId: S.eventId}),
+  skeleton(){
+    $("#event-team-head").replaceChildren(App.skeleton([104]));
+    $("#event-team-seg").hidden = true; $("#event-team-otherPanel").hidden = true; $("#event-team-teamPanel").hidden = false;
+    $("#event-team-people").replaceChildren(App.skeleton([64, 64])); $("#event-team-add").replaceChildren();
+  },
+  render(d){
+    if (d.event && d.event.id !== S.eventId){ setTimeout(() => manageView.refresh(), 0); return; }   // an answer for the event before
+    S.data = d; renderManage();
+  },
+  onError(e){
+    if (e.code !== "FORBIDDEN" && e.code !== "NOT_FOUND") return false;
+    S.data = null; App.setTitle();
+    $("#event-team-head").replaceChildren(); $("#event-team-seg").hidden = true; $("#event-team-add").replaceChildren();
+    $("#event-team-people").replaceChildren(App.emptyState(t(e.code === "FORBIDDEN" ? "notTeamT" : "notFoundT"), t(e.code === "FORBIDDEN" ? "notTeamD" : "notFoundD"),
+      {text: t("toList"), onclick: () => App.go("manage")}));
+    return true;
+  }
+});
+// Other features (registration: Participants, reimbursement: Expenses) can add a segment here once the shell offers
+// App.addPanel / App.panelsFor (core request in FEATURE.md). Until then the screen shows the team only.
+function panels(){
+  const ctx = {eventId: S.eventId, event: S.data.event, myRole: S.data.myRole};
+  const others = typeof App.panelsFor === "function" ? (App.panelsFor("manage") || []) : [];
+  return others.map(p => ({key: p.name, order: p.order || 50, label: () => (p.label ? p.label(ctx) : p.name), mount: el => p.mount(el, ctx)}))
+    .concat([{key: "team", order: 20, label: () => t("segTeam", {n: S.data.team.length})}])
+    .sort((a, b) => a.order - b.order);
+}
+function renderManage(){
+  const d = S.data; if (!d) return;
+  App.setTitle();
+  const ev = d.event;
+  $("#event-team-head").replaceChildren(h("div", {class: "card event-team-headcard"},
+    h("span", {class: "event-team-when", text: when(ev)}),
+    ev.location ? h("span", {class: "event-team-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null,
+    h("span", {class: "event-team-headrow"},
+      d.myRole === "lead" ? chip("info", "check", t("roleLead")) : chip("", null, t("roleCollab")), statusChip(ev),
+      h("button", {type: "button", class: "btn quiet event-team-link", id: "event-team-eventPage", onclick: () => App.open("event", ev.id, eventPageUrl(ev.id)), text: t("eventPage")}))));
+
+  const tabs = panels();
+  if (!tabs.some(x => x.key === S.panel)) S.panel = tabs[0].key;
+  const seg = $("#event-team-seg");
+  seg.hidden = tabs.length < 2;
+  seg.setAttribute("aria-label", t("manageT"));
+  seg.replaceChildren(...tabs.map(x => h("button", {type: "button", role: "tab", "aria-selected": x.key === S.panel ? "true" : "false", "data-panel": x.key,
+    onclick: () => { S.panel = x.key; renderManage(); }, text: x.label()})));
+  const mine = S.panel === "team";
+  $("#event-team-teamPanel").hidden = !mine; $("#event-team-otherPanel").hidden = mine;
+  if (!mine){ const other = tabs.find(x => x.key === S.panel); other.mount($("#event-team-otherPanel")); return; }
+  renderTeam(d);
+}
+function renderTeam(d){
+  const people = d.team.map(p => h("div", {class: "card event-team-person", "data-ref": p.ref, "data-role": p.role},
+    h("span", {class: "event-team-av" + (p.role === "lead" ? " event-team-lead" : ""), "aria-hidden": "true", text: initial(p)}),
+    h("span", {class: "event-team-who"}, h("b", {text: label(p)}), h("span", {text: p.role === "lead" ? t("leadLine") : t("collabLine")})),
+    d.canRemove && p.role === "collaborator"
+      ? h("button", {type: "button", class: "icon-btn event-team-x", "aria-label": t("removeAria", {name: p.name}), onclick: () => askRemove(p)}, App.icon("x"))
+      : null));
+  if (!d.team.some(p => p.role === "lead")) people.unshift(h("div", {class: "banner"}, App.icon("alert"), h("span", {text: t("noLead")})));
+  $("#event-team-people").replaceChildren(...people);
+
+  const add = [];
+  const collaborators = d.team.filter(p => p.role === "collaborator").length;
+  if (d.canEdit && collaborators < d.max){
+    const row = (icn, text, id, onclick) => h("button", {type: "button", class: "row event-team-addrow", id, onclick},
+      ico(icn, "lead"), h("span", {class: "grow", text}), App.icon("chevron", "chev"));
+    add.push(h("h2", {class: "event-team-h2", text: t("addT")}),
+      h("div", {class: "rows"},
+        row("link", t("addInvite"), "event-team-addInvite", e => makeInvite(e.currentTarget)),
+        d.canSearch ? row("search", t("addSearch"), "event-team-addSearch", openSearch) : null,
+        row("userPlus", t("addPeople"), "event-team-addPeople", openPeople)));
+  } else if (d.canEdit) add.push(h("p", {class: "event-team-note", text: t("fullNote", {n: d.max})}));
+  if (d.myRole === "lead" && d.openInvites > 0) {
+    add.push(h("button", {type: "button", class: "btn quiet", id: "event-team-cancelInv", style: "margin-top:8px", onclick: askCancelInvites, text: t("openInvites", {n: d.openInvites})}));
+  }
+  if (d.myRole === "lead" && !d.editable) add.push(h("p", {class: "event-team-note", text: t("closedNote")}));
+  if (d.myRole !== "lead") add.push(h("p", {class: "event-team-note", text: t("collabNote")}));
+  $("#event-team-add").replaceChildren(...add);
+}
+function afterChange(r){ S.data = r; renderManage(); }
+
+/* invite link: made on the server (one time, expires), shared through LINE's share screen or copied */
+let making = false;
+async function makeInvite(btn){
+  if (making) return;
+  making = true; const old = btn.lastChild ? btn.querySelector(".grow").textContent : "";
+  btn.disabled = true; btn.querySelector(".grow").textContent = t("making");
+  try{
+    const r = await App.api("team.invite", {eventId: S.eventId});
+    showInvite(r);
+    if (S.data){ S.data.openInvites = (S.data.openInvites || 0) + 1; renderTeam(S.data); }
+  }catch(e){ App.toast(errText(e)); if (e.code === "FORBIDDEN" || e.code === "CLOSED") manageView.refresh(); }
+  finally{ making = false; btn.disabled = false; if (btn.isConnected) btn.querySelector(".grow").textContent = old; }
+}
+function showInvite(r){
+  const url = inviteUrl(r.token);
+  const text = t("inviteMsg", {event: S.data ? S.data.event.name : ""}) + "\n" + url;
+  const input = h("input", {class: "event-team-input", id: "event-team-linkInput", type: "text", readonly: true, value: url, onfocus: e => e.target.select()});
+  App.sheet(t("inviteT"),
+    h("p", {text: t("inviteD", {d: F.dateTime(r.expiresAt)})}),
+    h("label", {class: "event-team-lbl", for: "event-team-linkInput", text: t("linkLabel")}), input,
+    h("div", {class: "event-team-btns", style: "margin-top:16px"},
+      h("button", {type: "button", class: "btn", id: "event-team-sendLine", onclick: () => App.openExternal("https://line.me/R/share?text=" + encodeURIComponent(text))}, App.icon("chat"), t("inviteSend")),
+      h("button", {type: "button", class: "btn secondary", id: "event-team-copy", onclick: () => copyLink(url, input)}, ico("copy"), t("inviteCopy"))));
+}
+async function copyLink(url, input){
+  try{ await navigator.clipboard.writeText(url); App.toast(t("copied")); return; }catch(e){}
+  try{ input.focus(); input.select(); if (document.execCommand && document.execCommand("copy")){ App.toast(t("copied")); return; } }catch(e){}
+  App.toast(t("copyFail"));
+}
+function askCancelInvites(){
+  const n = S.data ? S.data.openInvites : 0;
+  App.sheet(t("cancelInvT"), h("p", {text: t("cancelInvD", {n})}),
+    h("div", {class: "event-team-btns"}, h("button", {type: "button", class: "btn", id: "event-team-cancelInvOk", onclick: async e => {
+      const b = e.currentTarget; busyBtn(b, true, t("busy"));
+      try{ const r = await App.api("team.cancelInvites", {eventId: S.eventId}); App.closeSheet(); App.toast(t("cancelledN", {n: r.cancelled})); manageView.refresh(); }
+      catch(x){ busyBtn(b, false, t("cancelInvBtn")); App.toast(errText(x)); }
+    }, text: t("cancelInvBtn")})));
+}
+
+/* search by name (lead who is an organizer or approver) and promote from participants */
+function resultRow(x, via){
+  const name = x.name + (x.nickname ? " (" + x.nickname + ")" : "");
+  const done = () => chip("ok", "check", t("onTeam"));
+  const btn = x.onTeam ? done() : h("button", {type: "button", class: "btn secondary", "aria-label": t("addAria", {name}), text: t("addBtn"), onclick: async e => {
+    const b = e.currentTarget; busyBtn(b, true, t("busy"));
+    try{
+      const r = await App.api("team.add", {eventId: S.eventId, ref: x.ref, via});
+      x.onTeam = true; b.replaceWith(done()); afterChange(r);
+      App.toast(t("addedToast", {name: r.added || x.name}));
+    }catch(err){ busyBtn(b, false, t("addBtn")); App.toast(errText(err)); }
+  }});
+  return h("div", {class: "event-team-result", "data-ref": x.ref},
+    h("span", {class: "event-team-av", "aria-hidden": "true", text: initial(x)}),
+    h("span", {class: "event-team-who"}, h("b", {text: name})), btn);
+}
+const note = text => h("p", {class: "event-team-note", text});
+function openSearch(){
+  const input = h("input", {class: "event-team-input", id: "event-team-q", type: "search", autocomplete: "off", enterkeyhint: "search", placeholder: t("searchPh")});
+  const out = h("div", {class: "event-team-sheetlist", id: "event-team-results", "aria-live": "polite"});
+  let timer = 0, seq = 0;
+  async function run(){
+    const q = input.value.trim(), my = ++seq;
+    if (q.length < 2){ out.replaceChildren(); return; }
+    out.replaceChildren(note(t("searching")));
+    try{
+      const r = await App.api("team.search", {eventId: S.eventId, q});
+      if (my !== seq) return;
+      const rows = r.results.length ? r.results.map(x => resultRow(x, "search")) : [note(t("searchNone"))];
+      if (r.more) rows.push(note(t("searchMore", {n: r.results.length})));
+      out.replaceChildren(...rows);
+    }catch(e){ if (my === seq) out.replaceChildren(note(errText(e))); }
+  }
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(run, 350); });
+  input.addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); clearTimeout(timer); run(); } });
+  App.sheet(t("searchT"), h("label", {class: "event-team-lbl", for: "event-team-q", text: t("searchLabel")}), input,
+    h("p", {class: "event-team-hint", text: t("searchHint")}), out);
+  input.focus();
+}
+async function openPeople(){
+  const out = h("div", {class: "event-team-sheetlist", id: "event-team-peopleList", "aria-live": "polite"}, note(t("loading")));
+  App.sheet(t("peopleT"), out);
+  try{
+    const r = await App.api("team.participants", {eventId: S.eventId});
+    out.replaceChildren(...(r.results.length ? r.results.map(x => resultRow(x, "participant")) : [note(t("peopleEmpty"))]));
+  }catch(e){ out.replaceChildren(note(errText(e))); }
+}
+function askRemove(p){
+  App.sheet(t("removeT", {name: p.name}), h("p", {text: t("removeD", {name: p.name})}),
+    h("div", {class: "event-team-btns"}, h("button", {type: "button", class: "btn", id: "event-team-removeOk", text: t("removeBtn"), onclick: async e => {
+      const b = e.currentTarget; busyBtn(b, true, t("busy"));
+      try{ const r = await App.api("team.remove", {eventId: S.eventId, ref: p.ref}); App.closeSheet(); afterChange(r); App.toast(t("removedToast", {name: r.removed || p.name})); }
+      catch(x){ busyBtn(b, false, t("removeBtn")); App.toast(errText(x)); if (x.code === "NOT_FOUND"){ App.closeSheet(); manageView.refresh(); } }
+    }})));
+}
+
+/* ---------- #team-join/<token>: accept an invite link ---------- */
+async function loadJoin(){
+  S.join = null; S.joinErr = "";
+  if (!/^[a-f0-9]{40}$/i.test(S.joinToken)){ S.joinState = "invalid"; renderJoin(); return; }
+  S.joinState = "loading"; renderJoin();
+  try{ S.join = await App.api("team.invitePreview", {token: S.joinToken}); S.joinState = S.join.state; }
+  catch(e){
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    S.joinState = e.code === "NOT_FOUND" ? "invalid" : "error"; S.joinErr = e.message;
+  }
+  renderJoin();
+}
+function renderJoin(){
+  const body = $("#event-team-joinBody"), st = S.joinState, d = S.join || {};
+  const center = (iconEl, title, text, ...btns) => h("div", {class: "card stack event-team-center"}, iconEl, h("h2", {text: title}), text ? h("p", {text}) : null, ...btns);
+  const home = h("button", {type: "button", class: "btn secondary", id: "event-team-goHome", onclick: () => App.go("home"), text: t("goHome")});
+  if (st === "loading") return body.replaceChildren(App.skeleton([120, 180]));
+  if (st === "error") return body.replaceChildren(App.emptyState(App.t("errLoad"), S.joinErr, {text: App.t("retry"), onclick: loadJoin}));
+  if (st === "invalid") return body.replaceChildren(center(h("span", {class: "event-team-done", style: "background:var(--error-soft);color:var(--error)"}, App.icon("alert")), t("invalidT"), t("invalidD"), home));
+  if (["used", "expired", "cancelled", "closed"].indexOf(st) >= 0) {
+    return body.replaceChildren(center(h("span", {class: "event-team-done", style: "background:var(--warning-soft);color:var(--warning)"}, App.icon("clock")), t(st + "T"), t("askNew"), home));
+  }
+  if (st === "joined" || st === "already") {
+    return body.replaceChildren(center(h("span", {class: "event-team-done"}, App.icon("check")), t(st === "joined" ? "joinedT" : "alreadyT"), st === "joined" ? t("joinedD") : "",
+      h("button", {type: "button", class: "btn", id: "event-team-goManage", onclick: () => App.go("manage", d.eventId), text: t("goManage")})));
+  }
+  const ev = d.event || {};
+  body.replaceChildren(
+    h("p", {class: "t-lead", style: "margin:0", text: d.leadName ? t("joinLead", {name: d.leadName}) : t("joinLeadNone")}),
+    h("div", {class: "card event-team-headcard", style: "margin:0"},
+      h("span", {class: "event-team-when", text: when(ev)}),
+      h("span", {class: "event-team-name", text: ev.name || ""}),
+      ev.location ? h("span", {class: "event-team-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null),
+    h("div", {class: "card stack"},
+      h("b", {text: t("joinCan")}),
+      h("ul", {class: "event-team-steps"}, ["joinCan1", "joinCan2", "joinCan3"].map(k => h("li", {}, App.icon("check"), h("span", {text: t(k)})))),
+      h("p", {class: "event-team-note", style: "margin:0", text: t("joinPdpa")})),
+    d.expiresAt ? h("p", {class: "event-team-note", style: "margin:0", text: t("joinExpires", {d: F.dateTime(d.expiresAt)})}) : null,
+    h("button", {type: "button", class: "btn", id: "event-team-accept", onclick: e => accept(e.currentTarget), text: t("joinBtn")}));
+}
+async function accept(btn){
+  busyBtn(btn, true, t("joining"));
+  try{
+    const r = await App.api("team.acceptInvite", {token: S.joinToken});
+    S.join = Object.assign({}, S.join, {eventId: r.eventId}); S.joinState = r.already ? "already" : "joined";
+    renderJoin();
+  }catch(e){
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    const st = {USED: "used", EXPIRED: "expired", CANCELLED: "cancelled", CLOSED: "closed"}[e.code];
+    if (st){ S.joinState = st; renderJoin(); return; }
+    busyBtn(btn, false, t("joinBtn")); App.toast(errText(e));
+  }
+}
+
+/* ---------- links from outside the app: ?teamjoin=<token>, ?manage=1, ?manage=<eventId> ----------
+   The shell opens ?event=ID and ?tab=x by itself; these two are read here once LINE login is done (core request: a general
+   ?<route>=<arg> in the shell). The parameter is removed from the address so a reload or Back doesn't open it again. */
+function dropParam(name){
+  try{
+    const p = new URLSearchParams(location.search); if (!p.has(name)) return;
+    p.delete(name); const q = p.toString();
+    history.replaceState(history.state, "", location.pathname + (q ? "?" + q : "") + location.hash);
+  }catch(e){}
+}
+App.ready.then(() => {
+  const p = new URLSearchParams(location.search), tok = p.get("teamjoin"), man = p.get("manage");
+  if (tok != null){ dropParam("teamjoin"); if (!/^#team-join\//.test(location.hash)) App.go("team-join", tok); return; }
+  if (man != null){ dropParam("manage"); if (!/^#manage/.test(location.hash)) App.go("manage", /^[A-Za-z0-9_-]{1,40}$/.test(man) && man !== "1" ? man : ""); }
+});
+
+App.register({
+  name: "event-team",
+  routes: {
+    manage: {
+      screen: "event-team-manage",
+      title(){
+        if (!S.eventId) return t("listT");
+        const ev = S.data && S.data.event;
+        return ev ? {title: ev.name, sub: t("manageT")} : t("manageT");
+      },
+      show(ctx){
+        const id = String(ctx.arg || "");
+        $("#event-team-listView").hidden = !!id; $("#event-team-detailView").hidden = !id;
+        if (!id){ S.eventId = ""; App.setTitle(); return ctx.first ? listView.start() : listView.refresh(); }
+        if (id !== S.eventId){ S.eventId = id; S.data = null; S.panel = ""; manageView.reset(); App.setTitle(); }
+        return manageView.refresh();
+      }
+    },
+    "team-join": {
+      screen: "event-team-join",
+      title: () => t("joinT"),
+      show(ctx){
+        const tok = String(ctx.arg || "");
+        if (tok !== S.joinToken || !S.joinState){ S.joinToken = tok; loadJoin(); } else renderJoin();
+      }
+    }
+  },
+  onLang(){
+    if (!$("#event-team-listView").hidden) listView.rerender();
+    if (S.data) renderManage();
+    if (S.joinState) renderJoin();
+  }
+});
+
+/* ---------- demo answers (no API_URL in config.js): ?demo=organizer = the lead, ?demo=participant = a collaborator ----------
+   Every name below is made up. */
+const DEMO = (() => {
+  const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+  const P = (ref, name, nickname) => ({ref, name, nickname});
+  return {
+    iso,
+    events: {
+      "EV-DEMO-02": {id: "EV-DEMO-02", name: "Board Game Night", date: iso(0), startTime: "13:00", endTime: "17:00", location: "บ้านหัวแหลม อโศก", status: "Approved"},
+      "EV-DEMO-03": {id: "EV-DEMO-03", name: "Hualaem-X Session", date: iso(27), startTime: "13:00", endTime: "16:00", location: "บ้านหัวแหลม อโศก + ออนไลน์", status: "Approved"}
+    },
+    lead: P("r-lead", "เมฆา ส.", "พี่เมฆ"),
+    team: {"EV-DEMO-02": [P("r-fon", "ฝนทิพย์ ก.", "ฝน")], "EV-DEMO-03": []},
+    people: [P("r-mint", "ปภาวี ส.", "มิ้นท์"), P("r-oat", "อรรถพล ก.", "โอ๊ต"), P("r-nat", "ณัฐชา ร.", "แนท"), P("r-poom", "ภูมิ ท.", "ภูมิ")],
+    others: [P("r-hom", "ข้าวหอม พ.", "หอม"), P("r-wipa", "วิภา บ.", "วิว")],
+    invites: 0
+  };
+})();
+function demoRole(id, mode){ return mode === "organizer" ? (id === "EV-DEMO-02" ? "lead" : "collaborator") : (id === "EV-DEMO-02" ? "collaborator" : ""); }
+function demoManage(id, mode){
+  const ev = DEMO.events[id], role = ev ? demoRole(id, mode) : "";
+  if (!ev) throw new App.ApiError("Event not found.", "NOT_FOUND");
+  if (!role) throw new App.ApiError("You are not on the team of this event.", "FORBIDDEN");
+  const meLead = role === "lead";
+  const lead = Object.assign({role: "lead", isMe: meLead}, id === "EV-DEMO-02" ? DEMO.lead : {ref: "r-other", name: "อรุณ ท.", nickname: "พี่อรุณ"});
+  const team = [lead].concat(DEMO.team[id].map(p => Object.assign({role: "collaborator", isMe: !meLead && p.ref === "r-fon"}, p)));
+  if (!meLead && id === "EV-DEMO-03") team.push({ref: "r-me", name: "สมชาย ใ.", nickname: "ชาย", role: "collaborator", isMe: true});
+  return {ok: true, now: DEMO.iso(0) + " 10:00", event: ev, myRole: role, editable: true, canEdit: meLead, canRemove: meLead, canSearch: meLead,
+    team, max: 20, openInvites: meLead ? DEMO.invites : 0, inviteHours: 72};
+}
+const onTeam = (id, ref) => ref === "r-lead" || DEMO.team[id].some(p => p.ref === ref);
+App.demo["team.mine"] = (b, mode) => ({ok: true, now: DEMO.iso(0) + " 10:00", events: Object.keys(DEMO.events).filter(id => demoRole(id, mode))
+  .map(id => Object.assign({}, DEMO.events[id], {myRole: demoRole(id, mode), teamCount: 1 + DEMO.team[id].length + (mode !== "organizer" && id === "EV-DEMO-03" ? 1 : 0), past: false}))});
+App.demo["team.manage"] = (b, mode) => demoManage(b.eventId, mode);
+App.demo["team.invite"] = () => { DEMO.invites++; return {ok: true, token: "a".repeat(40), expiresAt: DEMO.iso(3) + " 10:00", inviteHours: 72}; };
+App.demo["team.cancelInvites"] = () => { const n = DEMO.invites; DEMO.invites = 0; return {ok: true, cancelled: n}; };
+App.demo["team.search"] = b => {
+  const q = String(b.q || "").trim().toLowerCase();
+  if (q.length < 2) return {ok: true, results: [], tooShort: true};
+  const all = DEMO.people.concat(DEMO.others, DEMO.team[b.eventId] || []);
+  return {ok: true, results: all.filter(p => (p.name + " " + p.nickname).toLowerCase().indexOf(q) >= 0).map(p => Object.assign({onTeam: onTeam(b.eventId, p.ref)}, p)), more: false};
+};
+App.demo["team.participants"] = b => ({ok: true, results: DEMO.people.map(p => Object.assign({onTeam: onTeam(b.eventId, p.ref)}, p))});
+App.demo["team.add"] = (b, mode) => {
+  const p = DEMO.people.concat(DEMO.others).find(x => x.ref === b.ref);
+  if (!p) throw new App.ApiError("This member was not found. Search again.", "NOT_FOUND");
+  const already = onTeam(b.eventId, p.ref);
+  if (!already) DEMO.team[b.eventId].push(p);
+  return Object.assign(demoManage(b.eventId, mode), {added: already ? "" : p.name, already});
+};
+App.demo["team.remove"] = (b, mode) => {
+  const list = DEMO.team[b.eventId], i = list.findIndex(x => x.ref === b.ref);
+  if (i < 0) throw new App.ApiError("This person is not a collaborator of this event (any more).", "NOT_FOUND");
+  const p = list.splice(i, 1)[0];
+  return Object.assign(demoManage(b.eventId, mode), {removed: p.name});
+};
+// demo tokens: "a" x 40 = a fresh link, "b" x 40 = used, "c" x 40 = expired
+App.demo["team.invitePreview"] = b => {
+  const tok = String(b.token || "");
+  const st = tok === "a".repeat(40) ? "open" : tok === "b".repeat(40) ? "used" : tok === "c".repeat(40) ? "expired" : "";
+  if (!st) throw new App.ApiError("This invite link is not valid.", "NOT_FOUND");
+  return {ok: true, now: DEMO.iso(0) + " 10:00", state: st, eventId: "", expiresAt: st === "open" ? DEMO.iso(3) + " 10:00" : "",
+    event: st === "open" ? DEMO.events["EV-DEMO-03"] : null, leadName: st === "open" ? "อรุณ ท." : ""};
+};
+App.demo["team.acceptInvite"] = () => ({ok: true, already: false, eventId: "EV-DEMO-03"});
+});
+
+// ---- app/features/members ----
+App.module("members", {"th":{"title":"ฉัน","suTitleApply":"สมัครสมาชิก","suTitleEdit":"แก้ไขใบสมัคร","suTitleComplete":"ข้อมูลสมาชิก","suSubApply":"กรอก 2 ส่วน ใช้เวลาประมาณ 2 นาที","suSubComplete":"ตรวจและกรอกข้อมูลให้ครบ","step1":"1 ข้อมูลพื้นฐาน","step2":"2 การศึกษา/การทำงาน","lineAs":"สมัครด้วย LINE: {name} · ไม่ต้องกรอก LINE ID","secBasics":"ข้อมูลพื้นฐาน","secWork":"การศึกษาและการทำงาน","f_title":"คำนำหน้า","f_firstName":"ชื่อ","f_lastName":"นามสกุล","f_fullName":"ชื่อ-สกุล","f_nickname":"ชื่อเล่น","f_birthDate":"วันเกิด","f_homeProvince":"จังหวัดภูมิลำเนา","f_phone":"เบอร์โทร","f_email":"อีเมล","f_instagram":"Instagram","f_currentStatus":"สถานะปัจจุบัน","f_hsSchool":"โรงเรียนที่กำลังศึกษา","f_hsGrade":"ระดับชั้น","f_hsProgram":"โปรแกรมที่เรียน","f_uniName":"มหาวิทยาลัย","f_uniFaculty":"คณะ","f_uniMajor":"สาขาวิชา","f_uniYear":"ชั้นปี","f_jobTitle":"ตำแหน่ง","f_company":"บริษัท","f_industry":"อุตสาหกรรม","f_otherNow":"ตอนนี้ทำอะไรอยู่","f_work":"การเรียน/การทำงาน","optional":"ไม่บังคับ","ph_hsProgram":"เช่น วิทย์-คณิต","ph_otherNow":"เช่น พักเรียน 1 ปี","ph_email":"name@gmail.com","ph_phone":"08x-xxx-xxxx","ph_select":"เลือก…","st_highschool":"กำลังเรียนอยู่ (มัธยม)","st_university":"กำลังเรียนอยู่ (มหาวิทยาลัย)","st_working":"ทำงานแล้ว","st_other":"อื่น ๆ","br_highschool":"นักเรียนมัธยม","br_university":"นักศึกษามหาวิทยาลัย","br_working":"การทำงาน","br_other":"ตอนนี้ทำอะไรอยู่","grade":"มัธยมศึกษาปีที่ {n}","gradeShort":"ม.{n}","year":"ชั้นปีที่ {n}","abroad":"ต่างประเทศ","errReq":"กรุณากรอกข้อมูลนี้","errPick":"กรุณาเลือก 1 ข้อ","errPhone":"เบอร์โทรไม่ถูกต้อง เช่น 081-234-5678","errEmail":"อีเมลยังไม่ครบ เช่น name@gmail.com","errIg":"ชื่อ Instagram ใช้ได้เฉพาะ a-z, 0-9, จุด และ _","errDate":"วันเกิดไม่ถูกต้อง","errConsent":"กรุณาติ๊กยินยอมก่อนส่ง","errFix":"ตรวจช่องที่มีข้อความสีแดงอีกครั้ง","consentRead":"อ่านรายละเอียด ({v})","submitApply":"ส่งใบสมัคร","submitSave":"บันทึก","sending":"กำลังส่ง…","sentApply":"ส่งใบสมัครแล้ว รอผู้ดูแลอนุมัติ","sentSave":"บันทึกแล้ว","rejectedT":"ใบสมัครนี้ยังไม่ผ่านการอนุมัติ","rejectedD":"หากคิดว่ามีข้อผิดพลาด แชทหาผู้ดูแลพร้อมแจ้ง Service ID {sid}","noneT":"ยังไม่ได้เป็นสมาชิก","noneD":"สมัครด้วยบัญชี LINE นี้ แล้วรอผู้ดูแลอนุมัติ จากนั้นลงทะเบียนกิจกรรมได้เลย","noneBtn":"สมัครสมาชิก","chipMember":"สมาชิก · {sid}","chipPending":"รอตรวจสอบ · {sid}","chipRejected":"ไม่ผ่านการอนุมัติ · {sid}","chipOrganizer":"ผู้จัดกิจกรรม","chipApprover":"ผู้อนุมัติ","pendingBanner":"ใบสมัครของคุณรอผู้ดูแลตรวจสอบ แก้ไขข้อมูลได้ระหว่างรอ","consentBanner":"ยอมรับข้อตกลงความเป็นส่วนตัวฉบับใหม่ ({v}) และตรวจข้อมูลของคุณ","missingBanner":"กรอกข้อมูลสมาชิกให้ครบ (ขาดอีก {n} ช่อง)","secProfile":"ข้อมูลส่วนตัว","profileNote":"แก้ไขได้ทุกช่อง ทุกการแก้ไขถูกบันทึกไว้ (ใคร อะไร เมื่อไร)","notFilled":"ยังไม่ได้กรอก","copySid":"คัดลอก Service ID","copied":"คัดลอกแล้ว","editT":"แก้ไข{what}","saveBtn":"บันทึก","saving":"กำลังบันทึก…","nothingChanged":"ไม่มีอะไรเปลี่ยน","needConsentFirst":"ยอมรับข้อตกลงฉบับใหม่ก่อน แล้วแก้ไขได้ทุกช่อง","demoSaved":"โหมดทดลอง: ไม่ได้บันทึกจริง"},"en":{"title":"Me","suTitleApply":"Join the community","suTitleEdit":"Edit your application","suTitleComplete":"Your member details","suSubApply":"2 parts, about 2 minutes","suSubComplete":"Check and complete your details","step1":"1 Basics","step2":"2 Study / work","lineAs":"Joining with LINE: {name} · no LINE ID needed","secBasics":"Basics","secWork":"Study and work","f_title":"Title","f_firstName":"First name","f_lastName":"Last name","f_fullName":"Name","f_nickname":"Nickname","f_birthDate":"Date of birth","f_homeProvince":"Home province","f_phone":"Phone","f_email":"Email","f_instagram":"Instagram","f_currentStatus":"Current status","f_hsSchool":"School","f_hsGrade":"Grade","f_hsProgram":"Program","f_uniName":"University","f_uniFaculty":"Faculty","f_uniMajor":"Major","f_uniYear":"Year","f_jobTitle":"Job title","f_company":"Company","f_industry":"Industry","f_otherNow":"What are you doing now?","f_work":"Study / work","optional":"optional","ph_hsProgram":"e.g. Science-Math","ph_otherNow":"e.g. taking a gap year","ph_email":"name@gmail.com","ph_phone":"08x-xxx-xxxx","ph_select":"Choose…","st_highschool":"In high school","st_university":"At university","st_working":"Working","st_other":"Other","br_highschool":"High school","br_university":"University","br_working":"Work","br_other":"What you're doing now","grade":"Mathayom {n} (M.{n})","gradeShort":"M.{n}","year":"Year {n}","abroad":"Abroad","errReq":"Please fill this in","errPick":"Please choose one","errPhone":"Phone number is not valid, e.g. 081-234-5678","errEmail":"Email looks incomplete, e.g. name@gmail.com","errIg":"Instagram names use only a-z, 0-9, dot and _","errDate":"Date of birth is not valid","errConsent":"Please tick the consent first","errFix":"Check the fields marked in red","consentRead":"Read the details ({v})","submitApply":"Send application","submitSave":"Save","sending":"Sending…","sentApply":"Application sent. An admin will review it.","sentSave":"Saved","rejectedT":"This application was not approved","rejectedD":"If you think this is a mistake, message the admin with your Service ID {sid}","noneT":"Not a member yet","noneD":"Join with this LINE account and wait for an admin to approve you. Then you can register for events.","noneBtn":"Join now","chipMember":"Member · {sid}","chipPending":"Waiting for review · {sid}","chipRejected":"Not approved · {sid}","chipOrganizer":"Organizer","chipApprover":"Approver","pendingBanner":"Your application is waiting for an admin. You can still edit your details.","consentBanner":"Accept the updated privacy notice ({v}) and check your details","missingBanner":"Complete your member details ({n} missing)","secProfile":"Personal details","profileNote":"You can edit everything. Every change is recorded (who, what, when).","notFilled":"Not filled in","copySid":"Copy Service ID","copied":"Copied","editT":"Edit {what}","saveBtn":"Save","saving":"Saving…","nothingChanged":"Nothing changed","needConsentFirst":"Accept the updated privacy notice first, then you can edit everything","demoSaved":"Demo mode: nothing was saved"}}, function (App, t) {
+// members in the LINE app: the Me tab and the sign-up v2 form (#signup). Brief 10.1 (Me) and 10.2 (sign-up v2).
+// Data: member.bootstrap (own data only), member.apply (the whole form), member.update (one part, from Me).
+// Me is NOT kept in the saved copy on the phone (it holds phone, email and birth date): it loads fresh each time.
+const $ = App.$, h = App.h;
+
+/* ---------- the questions (same lists as backend/features/members) ---------- */
+const TITLES = [["นาย", "Mr"], ["นาง", "Mrs"], ["นางสาว", "Ms"]];
+const STATUSES = ["highschool", "university", "working", "other"];
+const STATUS_FIELDS = { highschool: ["hsSchool", "hsGrade", "hsProgram"], university: ["uniName", "uniFaculty", "uniMajor", "uniYear"],
+  working: ["jobTitle", "company", "industry"], other: ["otherNow"] };
+const OPTIONAL = { birthDate: 1, hsProgram: 1, otherNow: 1 };
+const INDUSTRIES = ["Agriculture, Food, and Natural Resources", "Architecture and Construction", "Arts, Audio/Video Technology, and Communications",
+  "Business Management and Administration", "Education and Training", "Finance", "Government and Public Administration", "Health Science",
+  "Hospitality and Tourism", "Human Services", "Information Technology", "Law, Public Safety, Corrections, and Security", "Manufacturing",
+  "Marketing, Sales, and Service", "Science, Technology, Engineering, and Mathematics (STEM)", "Transportation, Distribution, and Logistics",
+  "Energy and Utilities", "Real Estate", "Retail and Consumer Goods", "Media and Entertainment", "Non-Profit and Social Services",
+  "Telecommunications", "Aerospace and Defense", "Pharmaceuticals and Biotechnology", "Consulting Services"];
+const PROVINCES = [["กรุงเทพมหานคร", "Bangkok"], ["กระบี่", "Krabi"], ["กาญจนบุรี", "Kanchanaburi"], ["กาฬสินธุ์", "Kalasin"], ["กำแพงเพชร", "Kamphaeng Phet"],
+  ["ขอนแก่น", "Khon Kaen"], ["จันทบุรี", "Chanthaburi"], ["ฉะเชิงเทรา", "Chachoengsao"], ["ชลบุรี", "Chon Buri"], ["ชัยนาท", "Chai Nat"], ["ชัยภูมิ", "Chaiyaphum"],
+  ["ชุมพร", "Chumphon"], ["เชียงราย", "Chiang Rai"], ["เชียงใหม่", "Chiang Mai"], ["ตรัง", "Trang"], ["ตราด", "Trat"], ["ตาก", "Tak"], ["นครนายก", "Nakhon Nayok"],
+  ["นครปฐม", "Nakhon Pathom"], ["นครพนม", "Nakhon Phanom"], ["นครราชสีมา", "Nakhon Ratchasima"], ["นครศรีธรรมราช", "Nakhon Si Thammarat"],
+  ["นครสวรรค์", "Nakhon Sawan"], ["นนทบุรี", "Nonthaburi"], ["นราธิวาส", "Narathiwat"], ["น่าน", "Nan"], ["บึงกาฬ", "Bueng Kan"], ["บุรีรัมย์", "Buri Ram"],
+  ["ปทุมธานี", "Pathum Thani"], ["ประจวบคีรีขันธ์", "Prachuap Khiri Khan"], ["ปราจีนบุรี", "Prachin Buri"], ["ปัตตานี", "Pattani"],
+  ["พระนครศรีอยุธยา", "Phra Nakhon Si Ayutthaya"], ["พะเยา", "Phayao"], ["พังงา", "Phang Nga"], ["พัทลุง", "Phatthalung"], ["พิจิตร", "Phichit"],
+  ["พิษณุโลก", "Phitsanulok"], ["เพชรบุรี", "Phetchaburi"], ["เพชรบูรณ์", "Phetchabun"], ["แพร่", "Phrae"], ["ภูเก็ต", "Phuket"], ["มหาสารคาม", "Maha Sarakham"],
+  ["มุกดาหาร", "Mukdahan"], ["แม่ฮ่องสอน", "Mae Hong Son"], ["ยโสธร", "Yasothon"], ["ยะลา", "Yala"], ["ร้อยเอ็ด", "Roi Et"], ["ระนอง", "Ranong"], ["ระยอง", "Rayong"],
+  ["ราชบุรี", "Ratchaburi"], ["ลพบุรี", "Lop Buri"], ["ลำปาง", "Lampang"], ["ลำพูน", "Lamphun"], ["เลย", "Loei"], ["ศรีสะเกษ", "Si Sa Ket"], ["สกลนคร", "Sakon Nakhon"],
+  ["สงขลา", "Songkhla"], ["สตูล", "Satun"], ["สมุทรปราการ", "Samut Prakan"], ["สมุทรสงคราม", "Samut Songkhram"], ["สมุทรสาคร", "Samut Sakhon"],
+  ["สระแก้ว", "Sa Kaeo"], ["สระบุรี", "Saraburi"], ["สิงห์บุรี", "Sing Buri"], ["สุโขทัย", "Sukhothai"], ["สุพรรณบุรี", "Suphan Buri"], ["สุราษฎร์ธานี", "Surat Thani"],
+  ["สุรินทร์", "Surin"], ["หนองคาย", "Nong Khai"], ["หนองบัวลำภู", "Nong Bua Lam Phu"], ["อ่างทอง", "Ang Thong"], ["อำนาจเจริญ", "Amnat Charoen"],
+  ["อุดรธานี", "Udon Thani"], ["อุตรดิตถ์", "Uttaradit"], ["อุทัยธานี", "Uthai Thani"], ["อุบลราชธานี", "Ubon Ratchathani"]];   // 77 provinces
+// Parts of the profile the Me tab edits one at a time (same groups as the backend, member.update)
+const GROUPS = { name: ["title", "firstName", "lastName", "nickname"], birth: ["birthDate"], province: ["homeProvince"],
+  phone: ["phone"], email: ["email"], instagram: ["instagram"], work: ["currentStatus"] };
+
+const st = { member: null, loadedAt: 0, sending: false };   // what the server said last (memory only)
+const en = () => App.lang === "en";
+const label = k => t("f_" + k);
+const titleText = v => { const x = TITLES.find(r => r[0] === v); return x ? (en() ? x[1] : x[0]) : v; };
+const provinceText = v => { if (v === "ต่างประเทศ") return t("abroad"); const x = PROVINCES.find(r => r[0] === v); return x ? (en() ? x[1] : x[0]) : v; };
+const today = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);   // Thailand date
+
+/* ---------- form pieces (DESIGN.md "Form field": label above, red *, 48 tall, error under with an icon) ---------- */
+let uid = 0;
+function field(key, control, o){
+  o = o || {};
+  const id = control.id || ("members-f-" + key + "-" + (++uid));
+  control.id = id;
+  const lab = h("label", {for: id}, label(key), OPTIONAL[key] ? h("span", {class: "members-opt", text: " (" + t("optional") + ")"}) : h("span", {class: "members-req", "aria-hidden": "true", text: " *"}));
+  const err = h("p", {class: "members-err", id: id + "-err", hidden: true});
+  control.setAttribute("aria-describedby", id + "-err");
+  return h("div", {class: "members-field", "data-key": key}, lab, o.wrap ? o.wrap(control) : control, err);
+}
+function input(key, value, attrs){
+  const el = h("input", Object.assign({class: "members-input", name: key, type: "text", autocomplete: "off"}, attrs || {}));
+  el.value = value || "";
+  return el;
+}
+function select(key, options, value){
+  const el = h("select", {class: "members-input", name: key},
+    h("option", {value: "", text: t("ph_select")}), options.map(([v, text]) => h("option", {value: v, text})));
+  el.value = value || "";
+  return el;
+}
+function choices(key, options, value, cols3, onPick){
+  const name = "members-c-" + key + "-" + (++uid);
+  const box = h("div", {class: "members-choices" + (cols3 ? " members-c3" : ""), role: "radiogroup"});
+  options.forEach(([v, text]) => {
+    const radio = h("input", {type: "radio", name, value: v, "data-key": key});
+    radio.checked = v === value;
+    const lab = h("label", {class: "members-choice" + (v === value ? " members-sel" : "")}, radio, cols3 ? null : h("span", {class: "members-dot", "aria-hidden": "true"}), h("span", {text}));
+    radio.addEventListener("change", () => {
+      App.$$("label", box).forEach(l => l.classList.toggle("members-sel", l.contains(radio)));
+      if (onPick) onPick(v);
+    });
+    box.append(lab);
+  });
+  return box;
+}
+function choiceField(key, box){
+  const err = h("p", {class: "members-err", hidden: true});
+  return h("fieldset", {class: "members-field", "data-key": key},
+    h("legend", {}, label(key), h("span", {class: "members-req", "aria-hidden": "true", text: " *"})), box, err);
+}
+// One question, by name
+function question(key, v){
+  v = v || {};
+  if (key === "title") return choiceField(key, choices(key, TITLES.map(([th, e]) => [th, en() ? e : th]), v.title, true));
+  if (key === "firstName") return field(key, input(key, v.firstName, {autocomplete: "given-name", maxlength: 60}));
+  if (key === "lastName") return field(key, input(key, v.lastName, {autocomplete: "family-name", maxlength: 60}));
+  if (key === "nickname") return field(key, input(key, v.nickname, {autocomplete: "nickname", maxlength: 40}));
+  if (key === "birthDate") return field(key, input(key, v.birthDate, {type: "date", min: "1930-01-01", max: today()}));
+  if (key === "homeProvince") {
+    const opts = PROVINCES.map(([th, e]) => [th, en() ? e : th]).sort((a, b) => a[1].localeCompare(b[1], en() ? "en" : "th")).concat([["ต่างประเทศ", t("abroad")]]);
+    return field(key, select(key, opts, v.homeProvince));
+  }
+  if (key === "phone") return field(key, input(key, v.phone, {type: "tel", inputmode: "tel", autocomplete: "tel", maxlength: 20, placeholder: t("ph_phone")}));
+  if (key === "email") return field(key, input(key, v.email, {type: "email", inputmode: "email", autocomplete: "email", maxlength: 120, placeholder: t("ph_email"), autocapitalize: "off"}));
+  if (key === "instagram") return field(key, input(key, v.instagram, {maxlength: 31, autocapitalize: "off", autocorrect: "off", spellcheck: "false"}),
+    {wrap: c => h("div", {class: "members-prefix"}, h("span", {"aria-hidden": "true", text: "@"}), c)});
+  if (key === "hsGrade") return field(key, select(key, [1, 2, 3, 4, 5, 6].map(n => [String(n), t("grade", {n})]), v.hsGrade));
+  if (key === "uniYear") return field(key, select(key, [1, 2, 3, 4, 5, 6].map(n => [String(n), t("year", {n})]), v.uniYear));
+  if (key === "industry") return field(key, select(key, INDUSTRIES.map(x => [x, x]), v.industry));
+  const ph = {hsProgram: t("ph_hsProgram"), otherNow: t("ph_otherNow")}[key];
+  return field(key, input(key, v[key], {maxlength: key === "otherNow" ? 200 : 120, placeholder: ph || null}));
+}
+// Current status + the one matching study/work section (changing status clears the other answers, brief 10.2)
+function workPart(v, onStatus){
+  const branch = h("div", {});
+  const draw = s => {
+    if (!STATUS_FIELDS[s]) { branch.replaceChildren(); return; }
+    branch.replaceChildren(h("section", {class: "members-card"}, h("h3", {text: t("br_" + s)}), STATUS_FIELDS[s].map(k => question(k, v))));
+  };
+  const box = choices("currentStatus", STATUSES.map(s => [s, t("st_" + s)]), v.currentStatus, false, s => { draw(s); if (onStatus) onStatus(s); });
+  draw(v.currentStatus);
+  return [choiceField("currentStatus", box), branch];
+}
+
+/* ---------- reading and checking a form (same rules as the server; the server checks again) ---------- */
+function read(root){
+  const out = {};
+  App.$$("input[type=text],input[type=tel],input[type=email],input[type=date],select", root).forEach(el => { out[el.name] = el.value.trim(); });
+  App.$$("input[type=radio]:checked", root).forEach(el => { out[el.dataset.key] = el.value; });
+  App.$$("fieldset[data-key]", root).forEach(fs => { if (!(fs.dataset.key in out)) out[fs.dataset.key] = ""; });
+  if ("instagram" in out) out.instagram = out.instagram.replace(/^@+/, "");
+  return out;
+}
+function problem(k, v){
+  if (!v) return OPTIONAL[k] ? null : (k === "title" || k === "currentStatus" ? "errPick" : "errReq");
+  if (k === "phone"){ let d = v.replace(/\D/g, ""); if (/^66\d{9}$/.test(d)) d = "0" + d.slice(2); return /^0\d{8,9}$/.test(d) ? null : "errPhone"; }
+  if (k === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? null : "errEmail";
+  if (k === "instagram") return /^[A-Za-z0-9._]{1,30}$/.test(v) ? null : "errIg";
+  if (k === "birthDate") return /^\d{4}-\d{2}-\d{2}$/.test(v) && v >= "1930-01-01" && v <= today() ? null : "errDate";
+  if ((k === "hsSchool" || k === "uniName" || k === "company") && v.length < 2) return "errReq";
+  return null;
+}
+function check(root){
+  const vals = read(root);
+  let first = null;
+  App.$$("[data-key].members-field", root).forEach(f => {
+    const k = f.dataset.key, msg = problem(k, vals[k]);
+    const err = $(".members-err", f);
+    f.classList.toggle("members-bad", !!msg);
+    if (msg){ err.replaceChildren(App.icon("alert"), t(msg)); err.hidden = false; if (!first) first = f; }
+    else err.hidden = true;
+    const c = $(".members-input", f); if (c) c.setAttribute("aria-invalid", msg ? "true" : "false");
+  });
+  return {vals, first};
+}
+function clearErr(e){
+  const f = e.target.closest && e.target.closest(".members-field");
+  if (f && f.classList.contains("members-bad")){ f.classList.remove("members-bad"); const err = $(".members-err", f); if (err) err.hidden = true; }
+}
+function focusFirst(f){
+  f.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center"});
+  const c = $("input,select", f); if (c) setTimeout(() => c.focus({preventScroll: true}), 250);
+}
+
+/* ---------- Me tab ---------- */
+const me = $("#members-me");
+let meCardEl = null, meBody = null;
+const view = App.view({
+  key: "members-me", action: "member.bootstrap", cache: false,
+  el: null,
+  skeleton(){ if (meBody) meBody.replaceChildren(App.skeleton([56, 400])); },
+  render(d){ st.member = d; st.loadedAt = Date.now(); drawMe(d); },
+  onError(e){ if (meBody) meBody.replaceChildren(App.emptyState(App.t("errLoad"), e.message, {text: App.t("retry"), onclick: () => view.refresh()})); return true; }
+});
+// The frame is drawn at once (LINE name, settings), the member part when the server answers.
+function frame(){
+  meCardEl = App.meCard();
+  meBody = h("div", {class: "stack", id: "members-body"});
+  me.replaceChildren(meCardEl, meBody, App.settingsPanel());
+  if (st.member) drawMe(st.member); else meBody.replaceChildren(App.skeleton([56, 400]));
+}
+function statusChip(d){
+  const sid = d.serviceId || "";
+  if (d.status === "approved") return h("span", {class: "chip ok", id: "members-chip"}, App.icon("check"), t("chipMember", {sid}));
+  if (d.status === "pending") return h("span", {class: "chip warn", id: "members-chip"}, App.icon("clock"), t("chipPending", {sid}));
+  if (d.status === "rejected") return h("span", {class: "chip bad", id: "members-chip"}, App.icon("alert"), t("chipRejected", {sid}));
+  return null;
+}
+function drawMe(d){
+  if (!meBody) return;
+  // decorate the shell's LINE card with the membership chip (and the role, if any)
+  const info = meCardEl && meCardEl.lastChild;
+  if (info){
+    const old = $("#members-chips"); if (old) old.remove();
+    const roleChip = d.status === "approved" && (d.role === "organizer" || d.role === "approver") ? h("span", {class: "chip info", text: t(d.role === "organizer" ? "chipOrganizer" : "chipApprover")}) : null;
+    const chip = statusChip(d);
+    if (chip || roleChip) info.append(h("div", {class: "members-chip-row", id: "members-chips"}, chip, roleChip));
+  }
+  App.setBadge("me", (d.status === "approved" || d.status === "pending") && !!d.needsProfile);
+
+  if (d.status === "none"){
+    meBody.replaceChildren(h("div", {class: "card members-status"}, h("b", {text: t("noneT")}), h("span", {class: "t-small muted", text: t("noneD")}),
+      h("button", {type: "button", class: "btn", id: "members-join", onclick: () => App.go("signup"), text: t("noneBtn")})));
+    return;
+  }
+  if (d.status === "rejected"){
+    meBody.replaceChildren(h("div", {class: "card members-status"}, h("b", {text: t("rejectedT")}), h("span", {class: "t-small muted", text: t("rejectedD", {sid: d.serviceId})}),
+      h("button", {type: "button", class: "btn secondary", onclick: () => copy(d.serviceId), text: t("copySid")})));
+    return;
+  }
+  const kids = [];
+  if (d.status === "pending") kids.push(h("div", {class: "banner info"}, App.icon("clock"), h("span", {text: t("pendingBanner")})));
+  if (!d.consentCurrent) kids.push(h("button", {type: "button", class: "banner", id: "members-todo", onclick: () => App.go("signup")}, App.icon("alert"), h("span", {text: t("consentBanner", {v: App.consent().version})}), App.icon("chevron")));
+  else if (d.needsProfile) kids.push(h("button", {type: "button", class: "banner", id: "members-todo", onclick: () => App.go("signup")}, App.icon("alert"), h("span", {text: t("missingBanner", {n: (d.missing || []).length})}), App.icon("chevron")));
+  const p = d.profile || {};
+  const miss = k => !p[k];
+  const row = (key, group, value, missing) => h("button", {type: "button", class: "row", "data-group": group, id: "members-row-" + key, onclick: () => editGroup(group)},
+    h("span", {class: "grow"}, h("span", {class: "members-row-k", text: label(key)}),
+      h("span", {class: "members-row-v" + (missing ? " members-missing" : ""), text: missing ? t("notFilled") : value})), App.icon("chevron", "chev"));
+  const fullName = [titleText(p.title || ""), en() && p.title ? " " : "", p.firstName || "", " ", p.lastName || ""].join("").trim();
+  kids.push(h("section", {class: "section", style: "margin-top:8px"},
+    h("div", {class: "section-head"}, h("h2", {text: t("secProfile")})),
+    h("div", {class: "rows", id: "members-rows"},
+      row("fullName", "name", fullName, !p.firstName),
+      row("nickname", "name", p.nickname, miss("nickname")),
+      row("birthDate", "birth", p.birthDate ? App.fmt.date(p.birthDate, {weekday: undefined}) : "–", false),   // optional
+      row("homeProvince", "province", provinceText(p.homeProvince), miss("homeProvince")),
+      row("phone", "phone", p.phone, miss("phone")),
+      row("email", "email", p.email, miss("email")),
+      row("instagram", "instagram", p.instagram ? "@" + p.instagram : "", miss("instagram")),
+      row("currentStatus", "work", p.currentStatus ? t("st_" + p.currentStatus) : "", miss("currentStatus")),
+      p.currentStatus ? row("work", "work", workSummary(p), workMissing(p)) : null),
+    h("p", {class: "members-note", text: t("profileNote")})));
+  meBody.replaceChildren(...kids);
+}
+function workSummary(p){
+  if (p.currentStatus === "highschool") return [p.hsSchool, p.hsGrade ? t("gradeShort", {n: p.hsGrade}) : "", p.hsProgram].filter(Boolean).join(" · ");
+  if (p.currentStatus === "university") return [p.uniName, p.uniFaculty, p.uniMajor, p.uniYear ? t("year", {n: p.uniYear}) : ""].filter(Boolean).join(" · ");
+  if (p.currentStatus === "working") return [p.jobTitle, p.company, p.industry].filter(Boolean).join(" · ");
+  return p.otherNow || "–";
+}
+function workMissing(p){ return (STATUS_FIELDS[p.currentStatus] || []).some(k => !OPTIONAL[k] && !p[k]); }
+function copy(text){
+  try{ navigator.clipboard.writeText(text).then(() => App.toast(t("copied")), () => App.toast(text)); }catch(e){ App.toast(text); }
+}
+
+// Me: edit one part in a bottom sheet (member.update). Needs the current consent; otherwise the full form asks for it first.
+function editGroup(group){
+  const d = st.member;
+  if (!d) return;
+  if (!d.consentCurrent || !d.profile){ App.toast(t("needConsentFirst")); App.go("signup"); return; }
+  const p = d.profile;
+  const form = h("form", {class: "members-sheet-form", novalidate: true});
+  if (group === "work") form.append(...workPart(p));
+  else GROUPS[group].forEach(k => form.append(question(k, p)));
+  const save = h("button", {type: "submit", class: "btn", id: "members-save", text: t("saveBtn")});
+  form.append(save);
+  form.addEventListener("input", clearErr); form.addEventListener("change", clearErr);
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (st.sending) return;
+    const {vals, first} = check(form);
+    if (first){ focusFirst(first); return; }
+    const body = {};
+    (group === "work" ? ["currentStatus"].concat(STATUS_FIELDS[vals.currentStatus] || []) : GROUPS[group]).forEach(k => { body[k] = vals[k] || ""; });
+    st.sending = true; save.disabled = true; save.textContent = t("saving");
+    try{
+      const r = await App.api("member.update", {group, profile: body});
+      st.member = r; App.closeSheet();
+      App.toast(App.isDemo ? t("demoSaved") : (r.changed && r.changed.length ? t("sentSave") : t("nothingChanged")));
+      drawMe(r);
+    }catch(err){
+      if (err.code === "CONSENT"){ App.closeSheet(); App.go("signup"); }
+      App.toast(err.message);
+    }finally{ st.sending = false; save.disabled = false; save.textContent = t("saveBtn"); }
+  });
+  const what = group === "name" ? t("f_fullName") : group === "work" ? t("f_work") : label(GROUPS[group][0]);
+  App.sheet(t("editT", {what: en() ? what.toLowerCase() : what}), form);
+}
+
+/* ---------- sign-up v2 (#signup): new application, edit while pending, or complete / re-accept consent ---------- */
+const suBody = $("#members-suBody");
+function suMode(d){ return !d || d.status === "none" ? "apply" : d.status === "pending" ? "edit" : "complete"; }
+async function showSignup(){
+  const fresh = st.member && Date.now() - st.loadedAt < 60e3;
+  if (!fresh){
+    suBody.replaceChildren(App.skeleton([48, 120, 300]));
+    try{ const d = await App.api("member.bootstrap"); st.member = d; st.loadedAt = Date.now(); }
+    catch(e){ suBody.replaceChildren(App.emptyState(App.t("errLoad"), e.message, {text: App.t("retry"), onclick: showSignup})); return; }
+  }
+  drawSignup();
+}
+function drawSignup(draft){
+  const d = st.member;
+  App.setTitle();
+  if (d.status === "rejected"){
+    suBody.replaceChildren(h("div", {class: "card members-status"}, h("b", {text: t("rejectedT")}), h("span", {class: "t-small muted", text: t("rejectedD", {sid: d.serviceId})})));
+    return;
+  }
+  const mode = suMode(d), p = Object.assign({}, d.profile || {}, (draft && draft.vals) || {});
+  const consent = App.consent();
+  const steps = h("div", {class: "members-steps", "aria-hidden": "true"},
+    h("div", {class: "members-step members-on"}, h("i"), t("step1")),
+    h("div", {class: "members-step" + (p.currentStatus ? " members-on" : ""), id: "members-step2"}, h("i"), t("step2")));
+  const av = h("span", {class: "avatar", "aria-hidden": "true", text: (App.user.name || "?").trim().charAt(0).toUpperCase()});
+  const lineAs = h("div", {class: "members-lineas"}, av, h("span", {text: t("lineAs", {name: App.user.name || "LINE"})}));
+  const form = h("form", {class: "members-form", id: "members-form", novalidate: true},
+    h("h2", {class: "members-sec", text: t("secBasics")}),
+    question("title", p),
+    h("div", {class: "members-two"}, question("firstName", p), question("lastName", p)),
+    h("div", {class: "members-two"}, question("nickname", p), question("birthDate", p)),
+    question("homeProvince", p), question("phone", p), question("email", p), question("instagram", p),
+    h("h2", {class: "members-sec", text: t("secWork")}),
+    ...workPart(p, () => { $("#members-step2").classList.add("members-on"); }));
+  const tick = h("input", {type: "checkbox", id: "members-consent"});
+  tick.checked = !!(draft && draft.ticked);
+  const consentErr = h("p", {class: "members-err", id: "members-consent-err", hidden: true});
+  tick.addEventListener("change", () => { consentErr.hidden = true; });
+  form.append(h("div", {class: "members-field"},
+    h("label", {class: "members-consent", for: "members-consent"}, tick,
+      h("span", {}, consent.consent + " ", h("button", {type: "button", class: "members-link", onclick: e => { e.preventDefault(); App.privacySheet(); }, text: t("consentRead", {v: consent.version})}))),
+    consentErr));
+  form.addEventListener("input", clearErr); form.addEventListener("change", clearErr);
+  form.addEventListener("submit", e => { e.preventDefault(); submit(mode); });
+  // the sticky action bar lives inside this screen, so it disappears with it when another screen is shown
+  const btn = h("button", {type: "button", class: "btn", id: "members-submit", onclick: () => submit(mode), text: t(mode === "apply" ? "submitApply" : "submitSave")});
+  suBody.replaceChildren(steps, lineAs, form, h("div", {class: "members-bar", id: "members-bar"}, btn));
+}
+async function submit(mode){
+  if (st.sending) return;
+  const form = $("#members-form");
+  const {vals, first} = check(form);
+  const tick = $("#members-consent");
+  if (!tick.checked){ const e = $("#members-consent-err"); e.replaceChildren(App.icon("alert"), t("errConsent")); e.hidden = false; }
+  if (first || !tick.checked){ App.toast(t("errFix")); focusFirst(first || tick.closest(".members-field")); return; }
+  const profile = {};
+  ["title", "firstName", "lastName", "nickname", "birthDate", "homeProvince", "phone", "email", "instagram", "currentStatus"].concat(STATUS_FIELDS[vals.currentStatus] || [])
+    .forEach(k => { profile[k] = vals[k] || ""; });
+  const btn = $("#members-submit");
+  st.sending = true; btn.disabled = true; btn.textContent = t("sending");
+  try{
+    const r = await App.api("member.apply", {profile, consent: true, consentVersion: App.consent().version});
+    st.member = r; st.loadedAt = Date.now();
+    App.toast(App.isDemo ? t("demoSaved") : t(mode === "apply" ? "sentApply" : "sentSave"));
+    App.go("me");
+  }catch(e){ App.toast(e.message); }
+  finally{ st.sending = false; if (btn.isConnected){ btn.disabled = false; btn.textContent = t(mode === "apply" ? "submitApply" : "submitSave"); } }
+}
+
+App.register({
+  name: "members",
+  tab: "me",
+  screen: "members-screen",
+  title: () => t("title"),
+  show(ctx){
+    frame();
+    if (ctx.first) view.start().then(() => {      // ?tab=me&signup=1 (from an invite or the old sign-up page): open the form for newcomers
+      if (ctx.params && ctx.params.get("signup") === "1" && st.member && st.member.status === "none") App.go("signup");
+    });
+    else if (Date.now() - st.loadedAt > 60e3) view.refresh();   // at most once a minute when switching tabs
+  },
+  onLang(){
+    if (!$("#members-screen").hidden) frame();
+    else if (!$("#members-signup").hidden && st.member){          // keep what was typed when the language changes
+      const f = $("#members-form"), tick = $("#members-consent");
+      drawSignup(f ? {vals: read(f), ticked: !!(tick && tick.checked)} : null);
+    }
+  },
+  routes: {
+    signup: {
+      screen: "members-signup",
+      title: () => { const m = suMode(st.member); return {title: t(m === "apply" ? "suTitleApply" : m === "edit" ? "suTitleEdit" : "suTitleComplete"), sub: t(m === "apply" ? "suSubApply" : "suSubComplete")}; },
+      show(){ showSignup(); }
+    }
+  }
+});
+
+/* ---------- demo mode (no API_URL): ?demo=participant | organizer | new | visitor | pending | rejected ---------- */
+const DEMO_P = { title: "นาย", firstName: "ต้นกล้า", lastName: "ใจดี", nickname: "ต้นกล้า", birthDate: "1998-03-12", homeProvince: "ขอนแก่น",
+  phone: "0861112222", email: "tonkla@example.com", instagram: "tonkla.example", currentStatus: "working",
+  hsSchool: "", hsGrade: "", hsProgram: "", uniName: "", uniFaculty: "", uniMajor: "", uniYear: "", jobTitle: "Data Analyst", company: "บริษัท ตัวอย่าง จำกัด",
+  industry: "Information Technology", otherNow: "", occupation: "working", organization: "บริษัท ตัวอย่าง จำกัด" };
+let demoState = null;
+function demoMember(mode){
+  if (demoState) return demoState;
+  const base = {ok: true, serviceId: "SV-2611-0007", lineName: "Kim (demo)", role: "participant", profile: Object.assign({}, DEMO_P),
+    profileComplete: true, needsProfile: false, missing: [], consentCurrent: true, consentVersion: App.consent().version, appliedAt: "2026-11-01 10:00"};
+  if (mode === "visitor") return (demoState = Object.assign(base, {status: "none", serviceId: "", profile: null, profileComplete: false, needsProfile: true, missing: ["title"], consentCurrent: false}));
+  if (mode === "pending") return (demoState = Object.assign(base, {status: "pending"}));
+  if (mode === "rejected") return (demoState = Object.assign(base, {status: "rejected", profile: null}));
+  if (mode === "new"){                                 // approved before sign-up v2: older consent, v2 answers missing
+    const p = Object.assign({}, DEMO_P, {title: "", nickname: "", birthDate: "", homeProvince: "", instagram: "", currentStatus: "", jobTitle: "", company: "", industry: "", firstName: "มานี", lastName: "ทดสอบ"});
+    return (demoState = Object.assign(base, {status: "approved", serviceId: "SV-2611-0003", profile: p, needsProfile: true, consentCurrent: false,
+      missing: ["title", "nickname", "homeProvince", "instagram", "currentStatus"]}));
+  }
+  return (demoState = Object.assign(base, {status: "approved", role: mode === "organizer" ? "organizer" : "participant"}));
+}
+App.demo["member.bootstrap"] = (body, mode) => demoMember(mode);
+App.demo["member.apply"] = (body, mode) => {
+  const d = demoMember(mode);
+  d.profile = Object.assign({}, d.profile || {}, body.profile); d.consentCurrent = true; d.needsProfile = false; d.missing = []; d.changed = Object.keys(body.profile);
+  if (d.status === "none"){ d.status = "pending"; d.serviceId = "SV-DEMO-0001"; }
+  return d;
+};
+App.demo["member.update"] = (body, mode) => {
+  const d = demoMember(mode);
+  if (body.group === "work") STATUSES.forEach(s => STATUS_FIELDS[s].forEach(k => { d.profile[k] = ""; }));
+  Object.assign(d.profile, body.profile); d.changed = Object.keys(body.profile);
+  return d;
 };
 });
 /* ---------- start: draw at once (saved copy or skeleton), then sign in with LINE, then refresh ---------- */

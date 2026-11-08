@@ -219,6 +219,7 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     <div class="in">
       <button class="tab" type="button" id="tabEvents" aria-pressed="true"><span data-i18n="events"></span></button>
       <button class="tab" type="button" id="tabMembers" aria-pressed="false"><span data-i18n="members"></span><span class="badge" id="memBadge" hidden></span></button>
+      <button class="tab" type="button" id="tabEventTeam" aria-pressed="false"><span data-i18n="teamTab"></span><span class="badge" id="teamBadge" hidden></span></button>
     </div>
   </nav>
 </header>
@@ -281,7 +282,7 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
           <label class="field" data-f="desc"><span class="lbl"><span data-i18n="fDesc"></span> <span class="opt" data-i18n="optional"></span></span>
             <textarea id="fDesc" maxlength="2000" data-i18n-ph="fDescPh"></textarea></label>
           <label class="field" data-f="budget" style="max-width:260px"><span class="lbl"><span data-i18n="fBudget"></span> <span class="opt" data-i18n="optional"></span></span>
-            <input type="text" id="fBudget" inputmode="decimal" placeholder="0.00"><p class="hint" data-i18n="fBudgetHint"></p><p class="err" hidden></p></label>
+            <input type="text" id="fBudget" inputmode="decimal" placeholder="0.00"><p class="hint" data-i18n="fBudgetHint"></p><p class="hint" id="events-budgetReq" hidden></p><p class="err" hidden></p></label>
         </div>
 
         <div class="card">
@@ -403,6 +404,19 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     <p class="pdpa" data-i18n="memPdpa"></p>
     <div class="rows" id="memRows"><div class="loading" data-i18n="loading"></div></div>
   </section>
+
+  <!-- EVENT TEAMS (admin/features/event-team) -->
+  <section id="vEventTeam" hidden>
+    <div class="phead">
+      <div><h1 data-i18n="teamTitle"></h1><p class="sub" id="teamSub"></p></div>
+    </div>
+    <div class="tools">
+      <label class="sr" for="teamSearch" data-i18n="search"></label>
+      <input type="search" id="teamSearch" data-i18n-ph="teamSearchPh">
+    </div>
+    <p class="pdpa" data-i18n="teamPdpa"></p>
+    <div class="rows" id="teamRows"><div class="loading" data-i18n="loading"></div></div>
+  </section>
 </main>
 
 <div class="modal" id="reauth" hidden>
@@ -422,6 +436,36 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     <div class="dm-actions">
       <button class="btn ghost" type="button" id="dmCancel" data-i18n="cancel"></button>
       <button class="btn" type="button" id="dmOk" data-i18n="confirm"></button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="memberRoleModal" hidden>
+  <div class="signin" role="dialog" aria-modal="true" aria-labelledby="memberRoleTitle">
+    <h1 id="memberRoleTitle" data-i18n="roleTitle"></h1>
+    <p id="memberRoleWho" style="margin-bottom:8px"></p>
+    <p data-i18n="roleHelp"></p>
+    <label class="field"><span class="lbl" data-i18n="roleL"></span>
+      <select id="memberRoleSel">
+        <option value="participant" data-i18n="role_participant"></option>
+        <option value="organizer" data-i18n="role_organizer"></option>
+        <option value="approver" data-i18n="role_approver"></option>
+      </select><p class="hint" data-i18n="roleHint"></p></label>
+    <div class="dm-actions">
+      <button class="btn ghost" type="button" id="memberRoleCancel" data-i18n="cancel"></button>
+      <button class="btn" type="button" id="memberRoleOk" data-i18n="roleSave"></button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="teamLeadModal" hidden>
+  <div class="signin" role="dialog" aria-modal="true" aria-labelledby="teamLeadT">
+    <h1 id="teamLeadT" data-i18n="teamLeadT"></h1>
+    <p id="teamLeadEv" style="margin-bottom:8px"></p>
+    <p data-i18n="teamLeadD"></p>
+    <label class="field"><span class="lbl" data-i18n="teamLeadL"></span>
+      <select id="teamLeadSel"></select><p class="hint" data-i18n="teamLeadHint"></p></label>
+    <div class="dm-actions">
+      <button class="btn ghost" type="button" id="teamLeadCancel" data-i18n="cancel"></button>
+      <button class="btn" type="button" id="teamLeadOk" data-i18n="teamSave"></button>
     </div>
   </div>
 </div>
@@ -599,7 +643,7 @@ async function demoApi(action, data){
 }
 Admin.addText({"th":{"appName":"จัดการกิจกรรม","signOut":"ออกจากระบบ","langBtn":"EN","demo":"โหมดทดลอง: ข้อมูลอยู่ในหน้านี้เท่านั้น ยังไม่ได้เชื่อมต่อ Google Sheet","signinTitle":"เข้าสู่ระบบผู้ดูแล","signinSub":"ใช้บัญชี Google ที่ได้รับสิทธิ์ผู้ดูแลกิจกรรม","notAdmin":"บัญชีนี้ไม่มีสิทธิ์ผู้ดูแล ติดต่อเจ้าของระบบเพื่อขอสิทธิ์","setupMissing":"ยังไม่ได้ตั้งค่า GOOGLE_CLIENT_ID ในหน้านี้","reauthTitle":"กรุณาเข้าสู่ระบบอีกครั้ง","reauthSub":"เซสชันหมดอายุ ข้อมูลที่กรอกไว้ยังอยู่","loading":"กำลังโหลด…","cancel":"ยกเลิก","search":"ค้นหา","st_Registered":"ลงทะเบียนแล้ว","st_Cancelled":"ยกเลิก","st_Pending":"รอตรวจสอบ","st_Approved":"อนุมัติแล้ว","st_Rejected":"ไม่อนุมัติ","errNet":"เชื่อมต่อไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วลองอีกครั้ง","errConflict":"มีผู้ดูแลคนอื่นแก้ไขกิจกรรมนี้ระหว่างที่คุณเปิดอยู่ กรุณาโหลดใหม่","errRate":"ส่งคำขอบ่อยเกินไป รอสักครู่แล้วลองใหม่"},"en":{"appName":"Event admin","signOut":"Sign out","langBtn":"ไทย","demo":"Demo mode: data lives in this page only. Not connected to the Google Sheet yet.","signinTitle":"Admin sign-in","signinSub":"Use the Google account that has event admin access.","notAdmin":"This account is not an admin. Ask the owner for access.","setupMissing":"GOOGLE_CLIENT_ID is not set in this page yet.","reauthTitle":"Please sign in again","reauthSub":"Your session expired. What you typed is still here.","loading":"Loading…","cancel":"Cancel","search":"Search","st_Registered":"Registered","st_Cancelled":"Cancelled","st_Pending":"Waiting for review","st_Approved":"Approved","st_Rejected":"Not approved","errNet":"Couldn't connect. Check your internet and try again.","errConflict":"Another admin changed this event while you had it open. Please reload.","errRate":"Too many requests. Wait a moment and try again."}});
 // ---- admin/features/events ----
-Admin.addText({"th":{"events":"กิจกรรม","listSub":"{n} กิจกรรม · {r} คนลงทะเบียนทั้งหมด","newEvent":"+ สร้างกิจกรรม","fAll":"ทั้งหมด","fLive":"แสดงใน LINE","fScheduled":"ตั้งเวลาไว้","fDraft":"ฉบับร่าง","fPast":"จบแล้ว/ปิด","emptyT":"ยังไม่มีกิจกรรม","emptyD":"กด “สร้างกิจกรรม” เพื่อเริ่ม","emptyFilter":"ไม่มีกิจกรรมในหมวดนี้","registered":"ลงทะเบียน","edit":"แก้ไข","registrants":"รายชื่อ","backToList":"← กลับไปหน้ากิจกรรม","newTitle":"สร้างกิจกรรมใหม่","editTitle":"แก้ไขกิจกรรม","lastEdit":"แก้ไขล่าสุด {at} โดย {by}","secDetails":"รายละเอียดกิจกรรม","secDetailsD":"ข้อมูลนี้แสดงให้ผู้เข้าร่วมเห็นใน LINE","fName":"ชื่อกิจกรรม","fDate":"วันที่จัด","fStart":"เวลาเริ่ม","fEnd":"เวลาจบ","optional":"(ไม่บังคับ)","fLocation":"สถานที่","fLocationPh":"เช่น ห้องประชุม ชั้น 5 อาคาร A","fDesc":"รายละเอียดเพิ่มเติม","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย ฯลฯ","fBudget":"งบประมาณที่อนุมัติ (บาท)","fBudgetHint":"ใช้ในฟอร์มเบิกค่าใช้จ่าย ผู้เข้าร่วมไม่เห็น","secPoster":"โปสเตอร์","secPosterD":"แนะนำแนวตั้ง 4:5 ระบบย่อขนาดให้อัตโนมัติ (JPG, PNG, WebP)","noPoster":"ยังไม่มีโปสเตอร์","choosePoster":"เลือกรูป","replacePoster":"เปลี่ยนรูป","removePoster":"ลบโปสเตอร์","posterHint":"ลากรูปมาวางตรงนี้ได้","posterBig":"ไฟล์ใหญ่เกิน {mb} MB หลังย่อขนาด","posterType":"รองรับเฉพาะ JPG, PNG หรือ WebP","posterBusy":"กำลังย่อขนาดรูป…","posterLoading":"กำลังโหลดโปสเตอร์…","secSchedule":"กำหนดเวลา (เวลาประเทศไทย)","secScheduleD":"ผู้เข้าร่วมเห็นกิจกรรมเฉพาะช่วง “แสดงใน LINE” และสมัครได้เฉพาะช่วง “รับสมัคร”","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนจาก LINE หลัง","tlPub":"แสดงใน LINE","tlReg":"รับสมัคร","tlEvent":"วันกิจกรรม","tlNow":"ตอนนี้","wRegOutside":"ช่วงรับสมัครบางส่วนอยู่นอกช่วงที่แสดงใน LINE ผู้เข้าร่วมจะสมัครได้เฉพาะช่วงที่ทับกัน","wRegAfterEvent":"ปิดรับสมัครหลังเวลาเริ่มกิจกรรม","wHideBeforeEvent":"กิจกรรมจะถูกซ่อนก่อนถึงวันจัด","wPast":"วันจัดกิจกรรมผ่านไปแล้ว","secStatus":"สถานะ","secStatusD":"เลือกว่าจะให้กิจกรรมนี้แสดงหรือไม่","stDraft":"ฉบับร่าง","stDraftD":"ยังไม่แสดงใน LINE","stPub":"เผยแพร่","stPubD":"แสดงตามเวลาที่ตั้งไว้ และเปิดให้เบิกค่าใช้จ่าย","stClosed":"ปิดกิจกรรม","stClosedD":"ซ่อนจาก LINE และปิดการเบิก","preview":"ตัวอย่างใน LINE","shareLink":"ลิงก์สำหรับแชร์ใน LINE","copy":"คัดลอก","copied":"คัดลอกลิงก์แล้ว","ctaOpen":"ลงทะเบียน","ctaUpcoming":"เปิดรับสมัคร {d}","ctaClosed":"ปิดรับสมัครแล้ว","save":"บันทึก","saving":"กำลังบันทึก…","saved":"บันทึกแล้ว","unsaved":"มีการแก้ไขที่ยังไม่ได้บันทึก","discard":"ทิ้งการแก้ไขที่ยังไม่ได้บันทึก?","req":"กรอกข้อมูลนี้","fixN":"ตรวจสอบ {n} จุดที่ยังไม่ถูกต้อง","timeOrder":"เวลาจบต้องหลังเวลาเริ่ม","closeAfterOpen":"ต้องหลังเวลาเปิดรับสมัคร","untilAfterFrom":"ต้องหลังเวลาเริ่มแสดง","budgetBad":"ใส่ตัวเลข 0 ขึ้นไป","sDraft":"ฉบับร่าง","sClosed":"ปิดแล้ว","sScheduled":"ตั้งเวลาแสดง {d}","sHidden":"หมดเวลาแสดง","sNoWindow":"ยังไม่ได้ตั้งเวลาแสดง","sRegOpen":"เปิดรับสมัคร","sRegUpcoming":"แสดงอยู่ · รอเปิดรับสมัคร","sRegClosed":"แสดงอยู่ · ปิดรับสมัครแล้ว","pvState_draft":"ผู้เข้าร่วมยังไม่เห็นกิจกรรมนี้ (ฉบับร่าง)","pvState_closed":"ผู้เข้าร่วมไม่เห็นกิจกรรมนี้ (ปิดแล้ว)","pvState_scheduled":"ผู้เข้าร่วมจะเห็นตั้งแต่ {d}","pvState_hidden":"เลยเวลาแสดงแล้ว ผู้เข้าร่วมไม่เห็น","pvState_live":"ผู้เข้าร่วมเห็นกิจกรรมนี้อยู่ตอนนี้","searchPh":"ค้นหาชื่อ อีเมล IG หรือเบอร์โทร","csv":"ดาวน์โหลด CSV","regSub":"{n} คนลงทะเบียน · {d}","pdpaNote":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อจัดกิจกรรมนี้เท่านั้น อย่าส่งต่อหรืออัปโหลดไปที่อื่น และลบไฟล์ CSV เมื่อใช้เสร็จ","cFirst":"ชื่อ","cLast":"นามสกุล","cEmail":"อีเมล","cPhone":"โทร","cLine":"ชื่อ LINE","cAt":"เวลาที่สมัคร","cRef":"เลขอ้างอิง","cStatus":"สถานะ","noRegs":"ยังไม่มีคนลงทะเบียน"},"en":{"events":"Events","listSub":"{n} events · {r} registrations in total","newEvent":"+ New event","fAll":"All","fLive":"Showing in LINE","fScheduled":"Scheduled","fDraft":"Drafts","fPast":"Ended/closed","emptyT":"No events yet","emptyD":"Select “New event” to start.","emptyFilter":"No events in this view.","registered":"registered","edit":"Edit","registrants":"Registrants","backToList":"← Back to events","newTitle":"New event","editTitle":"Edit event","lastEdit":"Last edited {at} by {by}","secDetails":"Event details","secDetailsD":"Participants see this in LINE.","fName":"Event name","fDate":"Event date","fStart":"Start time","fEnd":"End time","optional":"(optional)","fLocation":"Location","fLocationPh":"e.g. Meeting room, 5th floor, Building A","fDesc":"More details","fDescPh":"Agenda, what to bring, dress code…","fBudget":"Approved budget (THB)","fBudgetHint":"Used by the reimbursement form. Participants don't see it.","secPoster":"Poster","secPosterD":"Portrait 4:5 works best. We resize it for you (JPG, PNG, WebP).","noPoster":"No poster yet","choosePoster":"Choose image","replacePoster":"Replace image","removePoster":"Remove poster","posterHint":"You can also drag an image here.","posterBig":"File is over {mb} MB after resizing","posterType":"Only JPG, PNG or WebP","posterBusy":"Resizing image…","posterLoading":"Loading poster…","secSchedule":"Schedule (Thailand time)","secScheduleD":"Participants see the event only while it is “Showing in LINE” and can register only during “Registration”.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Show in LINE from","fPubUntil":"Hide from LINE after","tlPub":"Showing in LINE","tlReg":"Registration","tlEvent":"Event day","tlNow":"Now","wRegOutside":"Part of the registration period is outside the time the event shows in LINE. People can register only when both overlap.","wRegAfterEvent":"Registration closes after the event starts.","wHideBeforeEvent":"The event will be hidden before it takes place.","wPast":"The event date has already passed.","secStatus":"Status","secStatusD":"Choose whether this event is shown.","stDraft":"Draft","stDraftD":"Not shown in LINE yet","stPub":"Published","stPubD":"Shown on schedule and open for expense claims","stClosed":"Closed","stClosedD":"Hidden in LINE, claims closed","preview":"Preview in LINE","shareLink":"Link to share in LINE","copy":"Copy","copied":"Link copied","ctaOpen":"Register","ctaUpcoming":"Opens {d}","ctaClosed":"Registration closed","save":"Save","saving":"Saving…","saved":"Saved","unsaved":"You have unsaved changes","discard":"Discard unsaved changes?","req":"Required","fixN":"Fix {n} fields to continue","timeOrder":"End time must be after start time","closeAfterOpen":"Must be after registration opens","untilAfterFrom":"Must be after “Show from”","budgetBad":"Enter 0 or more","sDraft":"Draft","sClosed":"Closed","sScheduled":"Shows from {d}","sHidden":"No longer shown","sNoWindow":"No schedule set","sRegOpen":"Registration open","sRegUpcoming":"Showing · registration not open yet","sRegClosed":"Showing · registration closed","pvState_draft":"Participants can't see this event yet (draft).","pvState_closed":"Participants can't see this event (closed).","pvState_scheduled":"Participants will see it from {d}.","pvState_hidden":"The showing period has ended. Participants can't see it.","pvState_live":"Participants can see this event now.","searchPh":"Search name, email, IG or phone","csv":"Download CSV","regSub":"{n} registered · {d}","pdpaNote":"This list is personal data (PDPA). Use it only to run this event, don't forward or upload it elsewhere, and delete the CSV when you're done.","cFirst":"First name","cLast":"Last name","cEmail":"Email","cPhone":"Phone","cLine":"LINE name","cAt":"Registered at","cRef":"Reference","cStatus":"Status","noRegs":"No registrations yet"}});
+Admin.addText({"th":{"events":"กิจกรรม","listSub":"{n} กิจกรรม · {r} คนลงทะเบียนทั้งหมด","newEvent":"+ สร้างกิจกรรม","fAll":"ทั้งหมด","fLive":"แสดงใน LINE","fScheduled":"ตั้งเวลาไว้","fDraft":"ฉบับร่าง","fPast":"จบแล้ว/ปิด","emptyT":"ยังไม่มีกิจกรรม","emptyD":"กด “สร้างกิจกรรม” เพื่อเริ่ม","emptyFilter":"ไม่มีกิจกรรมในหมวดนี้","registered":"ลงทะเบียน","edit":"แก้ไข","registrants":"รายชื่อ","backToList":"← กลับไปหน้ากิจกรรม","newTitle":"สร้างกิจกรรมใหม่","editTitle":"แก้ไขกิจกรรม","lastEdit":"แก้ไขล่าสุด {at} โดย {by}","secDetails":"รายละเอียดกิจกรรม","secDetailsD":"ข้อมูลนี้แสดงให้ผู้เข้าร่วมเห็นใน LINE","fName":"ชื่อกิจกรรม","fDate":"วันที่จัด","fStart":"เวลาเริ่ม","fEnd":"เวลาจบ","optional":"(ไม่บังคับ)","fLocation":"สถานที่","fLocationPh":"เช่น ห้องประชุม ชั้น 5 อาคาร A","fDesc":"รายละเอียดเพิ่มเติม","fDescPh":"กำหนดการ สิ่งที่ต้องเตรียม การแต่งกาย ฯลฯ","fBudget":"งบประมาณที่อนุมัติ (บาท)","fBudgetHint":"ใช้ในฟอร์มเบิกค่าใช้จ่าย ผู้เข้าร่วมไม่เห็น","secPoster":"โปสเตอร์","secPosterD":"แนะนำแนวตั้ง 4:5 ระบบย่อขนาดให้อัตโนมัติ (JPG, PNG, WebP)","noPoster":"ยังไม่มีโปสเตอร์","choosePoster":"เลือกรูป","replacePoster":"เปลี่ยนรูป","removePoster":"ลบโปสเตอร์","posterHint":"ลากรูปมาวางตรงนี้ได้","posterBig":"ไฟล์ใหญ่เกิน {mb} MB หลังย่อขนาด","posterType":"รองรับเฉพาะ JPG, PNG หรือ WebP","posterBusy":"กำลังย่อขนาดรูป…","posterLoading":"กำลังโหลดโปสเตอร์…","secSchedule":"กำหนดเวลา (เวลาประเทศไทย)","secScheduleD":"ผู้เข้าร่วมเห็นกิจกรรมเฉพาะช่วง “แสดงใน LINE” และสมัครได้เฉพาะช่วง “รับสมัคร”","fRegOpen":"เปิดรับสมัคร","fRegClose":"ปิดรับสมัคร","fPubFrom":"แสดงใน LINE ตั้งแต่","fPubUntil":"ซ่อนจาก LINE หลัง","tlPub":"แสดงใน LINE","tlReg":"รับสมัคร","tlEvent":"วันกิจกรรม","tlNow":"ตอนนี้","wRegOutside":"ช่วงรับสมัครบางส่วนอยู่นอกช่วงที่แสดงใน LINE ผู้เข้าร่วมจะสมัครได้เฉพาะช่วงที่ทับกัน","wRegAfterEvent":"ปิดรับสมัครหลังเวลาเริ่มกิจกรรม","wHideBeforeEvent":"กิจกรรมจะถูกซ่อนก่อนถึงวันจัด","wPast":"วันจัดกิจกรรมผ่านไปแล้ว","secStatus":"สถานะ","secStatusD":"เลือกว่าจะให้กิจกรรมนี้แสดงหรือไม่","stDraft":"ฉบับร่าง","stDraftD":"ยังไม่แสดงใน LINE","stPub":"เผยแพร่","stPubD":"แสดงตามเวลาที่ตั้งไว้ และเปิดให้เบิกค่าใช้จ่าย","stClosed":"ปิดกิจกรรม","stClosedD":"ซ่อนจาก LINE และปิดการเบิก","preview":"ตัวอย่างใน LINE","shareLink":"ลิงก์สำหรับแชร์ใน LINE","copy":"คัดลอก","copied":"คัดลอกลิงก์แล้ว","ctaOpen":"ลงทะเบียน","ctaUpcoming":"เปิดรับสมัคร {d}","ctaClosed":"ปิดรับสมัครแล้ว","save":"บันทึก","saving":"กำลังบันทึก…","saved":"บันทึกแล้ว","unsaved":"มีการแก้ไขที่ยังไม่ได้บันทึก","discard":"ทิ้งการแก้ไขที่ยังไม่ได้บันทึก?","req":"กรอกข้อมูลนี้","fixN":"ตรวจสอบ {n} จุดที่ยังไม่ถูกต้อง","timeOrder":"เวลาจบต้องหลังเวลาเริ่ม","closeAfterOpen":"ต้องหลังเวลาเปิดรับสมัคร","untilAfterFrom":"ต้องหลังเวลาเริ่มแสดง","budgetBad":"ใส่ตัวเลข 0 ขึ้นไป","sDraft":"ฉบับร่าง","sClosed":"ปิดแล้ว","sScheduled":"ตั้งเวลาแสดง {d}","sHidden":"หมดเวลาแสดง","sNoWindow":"ยังไม่ได้ตั้งเวลาแสดง","sRegOpen":"เปิดรับสมัคร","sRegUpcoming":"แสดงอยู่ · รอเปิดรับสมัคร","sRegClosed":"แสดงอยู่ · ปิดรับสมัครแล้ว","pvState_draft":"ผู้เข้าร่วมยังไม่เห็นกิจกรรมนี้ (ฉบับร่าง)","pvState_closed":"ผู้เข้าร่วมไม่เห็นกิจกรรมนี้ (ปิดแล้ว)","pvState_scheduled":"ผู้เข้าร่วมจะเห็นตั้งแต่ {d}","pvState_hidden":"เลยเวลาแสดงแล้ว ผู้เข้าร่วมไม่เห็น","pvState_live":"ผู้เข้าร่วมเห็นกิจกรรมนี้อยู่ตอนนี้","searchPh":"ค้นหาชื่อ อีเมล IG หรือเบอร์โทร","csv":"ดาวน์โหลด CSV","regSub":"{n} คนลงทะเบียน · {d}","pdpaNote":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อจัดกิจกรรมนี้เท่านั้น อย่าส่งต่อหรืออัปโหลดไปที่อื่น และลบไฟล์ CSV เมื่อใช้เสร็จ","cFirst":"ชื่อ","cLast":"นามสกุล","cEmail":"อีเมล","cPhone":"โทร","cLine":"ชื่อ LINE","cAt":"เวลาที่สมัคร","cRef":"เลขอ้างอิง","cStatus":"สถานะ","noRegs":"ยังไม่มีคนลงทะเบียน","fBudgetReq":"สร้างใน LINE · ขอใช้งบ ฿{amount} · {status}.","fBudgetReqHow":"ใส่ยอดในช่องนี้แล้วบันทึก = อนุมัติคำขอ","bstRequested":"รออนุมัติ","bstApproved":"อนุมัติแล้ว","bstRejected":"ไม่อนุมัติ","bstNone":"ยังไม่ได้ขอ"},"en":{"events":"Events","listSub":"{n} events · {r} registrations in total","newEvent":"+ New event","fAll":"All","fLive":"Showing in LINE","fScheduled":"Scheduled","fDraft":"Drafts","fPast":"Ended/closed","emptyT":"No events yet","emptyD":"Select “New event” to start.","emptyFilter":"No events in this view.","registered":"registered","edit":"Edit","registrants":"Registrants","backToList":"← Back to events","newTitle":"New event","editTitle":"Edit event","lastEdit":"Last edited {at} by {by}","secDetails":"Event details","secDetailsD":"Participants see this in LINE.","fName":"Event name","fDate":"Event date","fStart":"Start time","fEnd":"End time","optional":"(optional)","fLocation":"Location","fLocationPh":"e.g. Meeting room, 5th floor, Building A","fDesc":"More details","fDescPh":"Agenda, what to bring, dress code…","fBudget":"Approved budget (THB)","fBudgetHint":"Used by the reimbursement form. Participants don't see it.","secPoster":"Poster","secPosterD":"Portrait 4:5 works best. We resize it for you (JPG, PNG, WebP).","noPoster":"No poster yet","choosePoster":"Choose image","replacePoster":"Replace image","removePoster":"Remove poster","posterHint":"You can also drag an image here.","posterBig":"File is over {mb} MB after resizing","posterType":"Only JPG, PNG or WebP","posterBusy":"Resizing image…","posterLoading":"Loading poster…","secSchedule":"Schedule (Thailand time)","secScheduleD":"Participants see the event only while it is “Showing in LINE” and can register only during “Registration”.","fRegOpen":"Registration opens","fRegClose":"Registration closes","fPubFrom":"Show in LINE from","fPubUntil":"Hide from LINE after","tlPub":"Showing in LINE","tlReg":"Registration","tlEvent":"Event day","tlNow":"Now","wRegOutside":"Part of the registration period is outside the time the event shows in LINE. People can register only when both overlap.","wRegAfterEvent":"Registration closes after the event starts.","wHideBeforeEvent":"The event will be hidden before it takes place.","wPast":"The event date has already passed.","secStatus":"Status","secStatusD":"Choose whether this event is shown.","stDraft":"Draft","stDraftD":"Not shown in LINE yet","stPub":"Published","stPubD":"Shown on schedule and open for expense claims","stClosed":"Closed","stClosedD":"Hidden in LINE, claims closed","preview":"Preview in LINE","shareLink":"Link to share in LINE","copy":"Copy","copied":"Link copied","ctaOpen":"Register","ctaUpcoming":"Opens {d}","ctaClosed":"Registration closed","save":"Save","saving":"Saving…","saved":"Saved","unsaved":"You have unsaved changes","discard":"Discard unsaved changes?","req":"Required","fixN":"Fix {n} fields to continue","timeOrder":"End time must be after start time","closeAfterOpen":"Must be after registration opens","untilAfterFrom":"Must be after “Show from”","budgetBad":"Enter 0 or more","sDraft":"Draft","sClosed":"Closed","sScheduled":"Shows from {d}","sHidden":"No longer shown","sNoWindow":"No schedule set","sRegOpen":"Registration open","sRegUpcoming":"Showing · registration not open yet","sRegClosed":"Showing · registration closed","pvState_draft":"Participants can't see this event yet (draft).","pvState_closed":"Participants can't see this event (closed).","pvState_scheduled":"Participants will see it from {d}.","pvState_hidden":"The showing period has ended. Participants can't see it.","pvState_live":"Participants can see this event now.","searchPh":"Search name, email, IG or phone","csv":"Download CSV","regSub":"{n} registered · {d}","pdpaNote":"This list is personal data (PDPA). Use it only to run this event, don't forward or upload it elsewhere, and delete the CSV when you're done.","cFirst":"First name","cLast":"Last name","cEmail":"Email","cPhone":"Phone","cLine":"LINE name","cAt":"Registered at","cRef":"Reference","cStatus":"Status","noRegs":"No registrations yet","fBudgetReq":"Made in LINE · asked for ฿{amount} · {status}.","fBudgetReqHow":"Enter the amount here and save to approve the request.","bstRequested":"waiting for approval","bstApproved":"approved","bstRejected":"not approved","bstNone":"none"}});
 /* =====================================================================
    Status rules (same as the server)
    ===================================================================== */
@@ -687,6 +731,11 @@ function openEditor(ev){
     $$("input[name=status]").forEach(r => r.checked = r.value === "Draft");
     fillDefaults(true);
   }
+  // events made by organizers in LINE: show the budget they asked for (saving an approved budget approves a waiting request)
+  const req = $("#events-budgetReq"), br = ev && ev.budgetRequested !== "" && ev.budgetRequested != null;
+  req.hidden = !br;
+  req.textContent = br ? t("fBudgetReq", {amount: Number(ev.budgetRequested).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2}),
+    status: t("bst" + (ev.budgetStatus || "None"))}) + (ev.budgetStatus === "Requested" ? " " + t("fBudgetReqHow") : "") : "";
   show("vEdit"); renderEditorHead(); renderPoster(); refreshPreview(); updateSaveMsg();
   if (ev && ev.hasPoster) loadPoster(ev);
   F("fName").focus();
@@ -963,7 +1012,7 @@ Admin.register({
 });
 
 // ---- admin/features/members ----
-Admin.addText({"th":{"members":"สมาชิก","membersTitle":"สมาชิกและใบสมัคร","memSub":"{p} รอตรวจสอบ · {a} อนุมัติแล้ว · {r} ไม่อนุมัติ","mfPending":"รอตรวจสอบ ({n})","mfApproved":"อนุมัติแล้ว ({n})","mfRejected":"ไม่อนุมัติ ({n})","mfAll":"ทั้งหมด ({n})","memSearchPh":"ค้นหาชื่อ สถานศึกษา/ที่ทำงาน หรือ Service ID","memPdpa":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อพิจารณาการเป็นสมาชิกเท่านั้น หมายเหตุภายในผู้สมัครไม่เห็น ผู้ที่ไม่อนุมัติจะเห็นข้อความทั่วไปและปุ่มแชทหาผู้ดูแลเท่านั้น","approve":"อนุมัติ","reject":"ไม่อนุมัติ","revoke":"ยกเลิกสิทธิ์","reopen":"เปิดใบสมัครใหม่","confirm":"ยืนยัน","occ_studying":"กำลังศึกษา","occ_working":"ทำงานแล้ว","role_organizer":"ผู้จัดกิจกรรม","role_approver":"ผู้อนุมัติ","incompleteTag":"ข้อมูลยังไม่ครบ","appliedAt":"สมัครเมื่อ {d}","decidedLine":"ตัดสินโดย {who} · {d}","noteLine":"หมายเหตุ: {n}","dmReject":"ไม่อนุมัติใบสมัครนี้?","dmRejectD":"ผู้สมัครจะเห็นหน้า “เข้าใช้งานไม่ได้” พร้อม Service ID และปุ่มแชทหาผู้ดูแล ระบบไม่แสดงเหตุผลให้ผู้สมัคร","dmRevoke":"ยกเลิกสิทธิ์สมาชิกคนนี้?","dmRevokeD":"เขาจะลงทะเบียนกิจกรรมและเบิกค่าใช้จ่ายไม่ได้ทันที และสิทธิ์ผู้จัดกิจกรรม/ผู้อนุมัติ (ถ้ามี) จะถูกถอดด้วย","dmReopen":"เปิดใบสมัครนี้อีกครั้ง?","dmReopenD":"สถานะจะกลับเป็น “รอตรวจสอบ” ผู้สมัครแก้ไขข้อมูลได้ แล้วคุณค่อยอนุมัติ","noteL":"หมายเหตุภายใน (ไม่บังคับ)","noteHint":"เฉพาะผู้ดูแลเห็น ผู้สมัครไม่เห็น อย่าใส่ข้อมูลส่วนตัวเกินจำเป็น","tApproved":"อนุมัติแล้ว","tRejected":"บันทึกว่าไม่อนุมัติ","tRevoked":"ยกเลิกสิทธิ์แล้ว","tReopened":"เปิดใบสมัครอีกครั้งแล้ว","noMembers":"ยังไม่มีใบสมัคร","emptyMem":"ไม่มีรายการในหมวดนี้","errMemChanged":"มีผู้ดูแลคนอื่นเปลี่ยนสถานะไปแล้ว โหลดรายการใหม่ให้แล้ว"},"en":{"members":"Members","membersTitle":"Members and applications","memSub":"{p} waiting · {a} approved · {r} not approved","mfPending":"Waiting ({n})","mfApproved":"Approved ({n})","mfRejected":"Not approved ({n})","mfAll":"All ({n})","memSearchPh":"Search name, school/employer or Service ID","memPdpa":"This list is personal data (PDPA). Use it only to review membership. Internal notes are never shown to applicants; people who are not approved see a general message and a button to chat with an admin.","approve":"Approve","reject":"Don't approve","revoke":"Revoke access","reopen":"Reopen","confirm":"Confirm","occ_studying":"Studying","occ_working":"Working","role_organizer":"Organizer","role_approver":"Approver","incompleteTag":"Details incomplete","appliedAt":"Applied {d}","decidedLine":"Decided by {who} · {d}","noteLine":"Note: {n}","dmReject":"Don't approve this application?","dmRejectD":"The applicant will see the “Access not available” page with their Service ID and a button to chat with an admin. No reason is shown to them.","dmRevoke":"Revoke this member's access?","dmRevokeD":"They can't register for events or claim expenses right away, and any organizer/approver role is removed.","dmReopen":"Reopen this application?","dmReopenD":"It goes back to “Waiting for review”. The applicant can edit their details, then you can approve.","noteL":"Internal note (optional)","noteHint":"Only admins see this. Applicants never do. Don't add more personal details than needed.","tApproved":"Approved","tRejected":"Marked as not approved","tRevoked":"Access revoked","tReopened":"Application reopened","noMembers":"No applications yet","emptyMem":"Nothing in this view.","errMemChanged":"Another admin already changed this. The list was reloaded."}});
+Admin.addText({"th":{"members":"สมาชิก","membersTitle":"สมาชิกและใบสมัคร","memSub":"{p} รอตรวจสอบ · {a} อนุมัติแล้ว · {r} ไม่อนุมัติ","mfPending":"รอตรวจสอบ ({n})","mfApproved":"อนุมัติแล้ว ({n})","mfRejected":"ไม่อนุมัติ ({n})","mfAll":"ทั้งหมด ({n})","memSearchPh":"ค้นหาชื่อ สถานศึกษา/ที่ทำงาน หรือ Service ID","memPdpa":"รายชื่อนี้เป็นข้อมูลส่วนบุคคล (PDPA) ใช้เพื่อพิจารณาการเป็นสมาชิกเท่านั้น หมายเหตุภายในผู้สมัครไม่เห็น ผู้ที่ไม่อนุมัติจะเห็นข้อความทั่วไปและปุ่มแชทหาผู้ดูแลเท่านั้น","approve":"อนุมัติ","reject":"ไม่อนุมัติ","revoke":"ยกเลิกสิทธิ์","reopen":"เปิดใบสมัครใหม่","confirm":"ยืนยัน","occ_studying":"กำลังศึกษา","occ_working":"ทำงานแล้ว","role_organizer":"ผู้จัดกิจกรรม","role_approver":"ผู้อนุมัติ","incompleteTag":"ข้อมูลยังไม่ครบ","appliedAt":"สมัครเมื่อ {d}","decidedLine":"ตัดสินโดย {who} · {d}","noteLine":"หมายเหตุ: {n}","dmReject":"ไม่อนุมัติใบสมัครนี้?","dmRejectD":"ผู้สมัครจะเห็นหน้า “เข้าใช้งานไม่ได้” พร้อม Service ID และปุ่มแชทหาผู้ดูแล ระบบไม่แสดงเหตุผลให้ผู้สมัคร","dmRevoke":"ยกเลิกสิทธิ์สมาชิกคนนี้?","dmRevokeD":"เขาจะลงทะเบียนกิจกรรมและเบิกค่าใช้จ่ายไม่ได้ทันที และสิทธิ์ผู้จัดกิจกรรม/ผู้อนุมัติ (ถ้ามี) จะถูกถอดด้วย","dmReopen":"เปิดใบสมัครนี้อีกครั้ง?","dmReopenD":"สถานะจะกลับเป็น “รอตรวจสอบ” ผู้สมัครแก้ไขข้อมูลได้ แล้วคุณค่อยอนุมัติ","noteL":"หมายเหตุภายใน (ไม่บังคับ)","noteHint":"เฉพาะผู้ดูแลเห็น ผู้สมัครไม่เห็น อย่าใส่ข้อมูลส่วนตัวเกินจำเป็น","tApproved":"อนุมัติแล้ว","tRejected":"บันทึกว่าไม่อนุมัติ","tRevoked":"ยกเลิกสิทธิ์แล้ว","tReopened":"เปิดใบสมัครอีกครั้งแล้ว","noMembers":"ยังไม่มีใบสมัคร","emptyMem":"ไม่มีรายการในหมวดนี้","errMemChanged":"มีผู้ดูแลคนอื่นเปลี่ยนสถานะไปแล้ว โหลดรายการใหม่ให้แล้ว","roleBtn":"เปลี่ยนบทบาท","roleTitle":"เปลี่ยนบทบาทสมาชิก","roleHelp":"ผู้จัดกิจกรรมสร้างกิจกรรมและเบิกค่าใช้จ่ายได้ ผู้อนุมัติอนุมัติงบและคำขอเบิกได้ การเปลี่ยนแปลงทุกครั้งถูกบันทึกในบันทึกการใช้งาน (ใคร เปลี่ยนจากอะไรเป็นอะไร เมื่อไร)","roleL":"บทบาท","roleHint":"มีผลทันทีในการใช้งานครั้งถัดไปของสมาชิก","roleSave":"บันทึกบทบาท","roleNow":"ตอนนี้: {r}","role_participant":"ผู้เข้าร่วม","tRole":"เปลี่ยนบทบาทเป็น {r} แล้ว","occ_other":"อื่น ๆ"},"en":{"members":"Members","membersTitle":"Members and applications","memSub":"{p} waiting · {a} approved · {r} not approved","mfPending":"Waiting ({n})","mfApproved":"Approved ({n})","mfRejected":"Not approved ({n})","mfAll":"All ({n})","memSearchPh":"Search name, school/employer or Service ID","memPdpa":"This list is personal data (PDPA). Use it only to review membership. Internal notes are never shown to applicants; people who are not approved see a general message and a button to chat with an admin.","approve":"Approve","reject":"Don't approve","revoke":"Revoke access","reopen":"Reopen","confirm":"Confirm","occ_studying":"Studying","occ_working":"Working","role_organizer":"Organizer","role_approver":"Approver","incompleteTag":"Details incomplete","appliedAt":"Applied {d}","decidedLine":"Decided by {who} · {d}","noteLine":"Note: {n}","dmReject":"Don't approve this application?","dmRejectD":"The applicant will see the “Access not available” page with their Service ID and a button to chat with an admin. No reason is shown to them.","dmRevoke":"Revoke this member's access?","dmRevokeD":"They can't register for events or claim expenses right away, and any organizer/approver role is removed.","dmReopen":"Reopen this application?","dmReopenD":"It goes back to “Waiting for review”. The applicant can edit their details, then you can approve.","noteL":"Internal note (optional)","noteHint":"Only admins see this. Applicants never do. Don't add more personal details than needed.","tApproved":"Approved","tRejected":"Marked as not approved","tRevoked":"Access revoked","tReopened":"Application reopened","noMembers":"No applications yet","emptyMem":"Nothing in this view.","errMemChanged":"Another admin already changed this. The list was reloaded.","roleBtn":"Change role","roleTitle":"Change member role","roleHelp":"Organizers create events and claim expenses. Approvers approve budgets and claims. Every change is recorded in the activity log (who, from what to what, when).","roleL":"Role","roleHint":"Takes effect the next time the member uses the app.","roleSave":"Save role","roleNow":"now: {r}","role_participant":"Participant","tRole":"Role changed to {r}","occ_other":"Other"}});
 /* =====================================================================
    Members: review applications (approve / not approve / revoke / reopen)
    ===================================================================== */
@@ -991,11 +1040,11 @@ function renderMembers(){
   $("#memRows").replaceChildren(...list.map(m => {
     const cls = m.status === "Approved" ? "ok" : m.status === "Pending" ? "warn" : "";
     const acts = m.status === "Pending" ? [memberBtn(t("approve"), "btn sm", () => decideNow(m, "Approved")), memberBtn(t("reject"), "btn ghost sm warnbtn", () => askDecision(m, "Rejected"))]
-      : m.status === "Approved" ? [memberBtn(t("revoke"), "btn ghost sm warnbtn", () => askDecision(m, "Rejected"))]
+      : m.status === "Approved" ? [memberBtn(t("roleBtn"), "btn sec sm", () => membersAskRole(m)), memberBtn(t("revoke"), "btn ghost sm warnbtn", () => askDecision(m, "Rejected"))]
       : [memberBtn(t("reopen"), "btn sec sm", () => askDecision(m, "Pending"))];
     return h("article",{class:"mrow"},
       h("div",{},
-        h("h2",{class:"mname",text:((m.firstName||"") + " " + (m.lastName||"")).trim() || m.lineName}),
+        h("h2",{class:"mname",text:(((m.firstName||"") + " " + (m.lastName||"")).trim() || m.lineName) + (m.nickname ? " (" + m.nickname + ")" : "")}),
         h("p",{class:"emeta",text:[t("occ_"+m.occupation) !== "occ_"+m.occupation ? t("occ_"+m.occupation) : "", m.organization].filter(Boolean).join(" · ")}),
         h("p",{class:"emeta",text:[m.lineName ? "LINE: " + m.lineName : "", t("appliedAt",{d:fmtDT(m.appliedAt)})].filter(Boolean).join(" · ")}),
         m.decidedAt && h("p",{class:"emeta",text:t("decidedLine",{who:m.decidedBy, d:fmtDT(m.decidedAt)})}),
@@ -1042,6 +1091,29 @@ async function confirmDecision(){
 }
 
 
+/* ---- role editor (participant / organizer / approver), approved members only; every change is in AdminLog ---- */
+let membersRoleCtx = null;
+function membersAskRole(m){
+  membersRoleCtx = {m, opener:document.activeElement};
+  $("#memberRoleWho").textContent = (((m.firstName||"") + " " + (m.lastName||"")).trim() || m.lineName) + " · " + m.serviceId + " · " + t("roleNow", {r:t("role_" + m.role)});
+  $("#memberRoleSel").value = m.role;
+  $("#memberRoleModal").hidden = false; $("#memberRoleSel").focus();
+}
+function membersCloseRole(){ $("#memberRoleModal").hidden = true; const o = membersRoleCtx && membersRoleCtx.opener; membersRoleCtx = null; if (o && o.focus) try{ o.focus(); }catch(e){} }
+async function membersSaveRole(){
+  if (!membersRoleCtx) return;
+  const m = membersRoleCtx.m, to = $("#memberRoleSel").value;
+  if (to === m.role){ membersCloseRole(); return; }
+  $("#memberRoleOk").disabled = true;
+  try{
+    const r = await api("admin.setRole", {serviceId:m.serviceId, role:to, expectedRole:m.role});
+    m.role = r.role; toast(t("tRole", {r:t("role_" + r.role)}), "good"); membersCloseRole(); renderMembers();
+  }catch(e){
+    toast(e.code === "CONFLICT" || e.code === "NOT_FOUND" ? t("errMemChanged") : e.message);
+    if (e.code === "CONFLICT" || e.code === "NOT_FOUND"){ membersCloseRole(); loadMembers(); }
+  }finally{ $("#memberRoleOk").disabled = false; }
+}
+
 /* ---- demo mode: sample members (only used when API_URL is empty) ---- */
 const DEMO_MEMBERS = (() => {
   const d0 = bkkNow().slice(0,10);
@@ -1068,6 +1140,14 @@ Admin.demo["admin.decideMember"] = function(data){
   if (data.decision === "Rejected") m.role = "participant";
   return {ok:true, serviceId:m.serviceId, status:m.status, decidedAt:m.decidedAt, decidedBy:m.decidedBy};
 };
+Admin.demo["admin.setRole"] = function(data){
+  const m = DEMO_MEMBERS.members.find(x => x.serviceId === data.serviceId);
+  if (!m) throw new ApiError("Member not found", "NOT_FOUND");
+  if (m.status !== "Approved") throw new ApiError("Only approved members can have a role.", "VALIDATION");
+  if (m.role !== data.expectedRole) throw new ApiError("changed", "CONFLICT");
+  m.role = data.role;
+  return {ok:true, serviceId:m.serviceId, role:m.role, unchanged:false};
+};
 // the events list also carries the "pending members" number for the badge (same as the server hook)
 Admin.on("demo:admin.listEvents", function(res){ res.pendingMembers = DEMO_MEMBERS.members.filter(m => m.status === "Pending").length; });
 
@@ -1079,6 +1159,10 @@ $("#mFilters").addEventListener("click", e => { const b = e.target.closest("[dat
 $("#memSearch").addEventListener("input", renderMembers);
 $("#dmOk").addEventListener("click", confirmDecision);
 $("#dmCancel").addEventListener("click", closeDecision);
+$("#memberRoleOk").addEventListener("click", membersSaveRole);
+$("#memberRoleCancel").addEventListener("click", membersCloseRole);
+$("#memberRoleModal").addEventListener("click", e => { if (e.target.id === "memberRoleModal") membersCloseRole(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#memberRoleModal").hidden) membersCloseRole(); });
 $("#decideModal").addEventListener("click", e => { if (e.target.id === "decideModal") closeDecision(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#decideModal").hidden) closeDecision(); });
 
@@ -1086,6 +1170,127 @@ Admin.register({
   name: "members",
   tab: { button: "tabMembers", view: "vMembers" },
   onLang: function(){ if (!$("#vMembers").hidden) renderMembers(); updateBadge(); }
+});
+
+// ---- admin/features/event-team ----
+Admin.addText({"th":{"teamTab":"ทีมงานกิจกรรม","teamTitle":"ทีมงานของแต่ละกิจกรรม","teamSub":"{n} งาน · {none} งานยังไม่มีผู้จัดหลัก","teamSearchPh":"ค้นหาชื่องาน รหัสงาน หรือชื่อคน","teamPdpa":"ผู้จัดหลักเพิ่ม/ลบผู้ร่วมจัดได้ใน LINE ผู้ร่วมจัดแก้ไขงาน เช็กอิน และเพิ่มค่าใช้จ่ายของงานนั้นได้ ทุกการเปลี่ยนแปลงถูกบันทึกใน AdminLog","teamNoEvents":"ยังไม่มีกิจกรรม","teamEmpty":"ไม่พบงานที่ตรงกับคำค้น","teamLeadLine":"ผู้จัดหลัก: {name}","teamLeadByAdmin":"แอดมินเลือก","teamLeadByCreator":"สร้างงานใน LINE","teamNoLead":"ยังไม่มีผู้จัดหลัก: ใน LINE ยังไม่มีใครจัดการงานนี้ได้","teamCollabs":"ผู้ร่วมจัด: {list}","teamNoCollabs":"ยังไม่มีผู้ร่วมจัด","teamInvites":"ลิงก์เชิญที่ยังไม่ใช้ {n}","teamNotMember":"ไม่ใช่สมาชิกที่อนุมัติแล้ว","teamClosed":"งานปิดแล้ว","teamSetLead":"ตั้งผู้จัดหลัก","teamChangeLead":"เปลี่ยนผู้จัดหลัก","teamRemoveBtn":"ลบ {name}","teamRemoveQ":"ลบ {name} ออกจากผู้ร่วมจัดของงาน {event}?","teamLeadT":"ผู้จัดหลักของงาน","teamLeadD":"ผู้จัดหลักเพิ่มและลบผู้ร่วมจัดได้ใน LINE เลือกได้เฉพาะสมาชิกที่อนุมัติแล้วซึ่งมีบทบาทผู้จัดหรือผู้อนุมัติ","teamLeadL":"ผู้จัดหลัก","teamLeadHint":"ไม่พบชื่อ? ตั้งบทบาท organizer หรือ approver ให้คนนั้นในแท็บ Participants ก่อน","teamLeadNone":"ไม่เลือก (ใช้คนที่สร้างงานใน LINE ถ้ามี)","teamSave":"บันทึก","teamSaved":"บันทึกผู้จัดหลักแล้ว","teamRemoved":"ลบผู้ร่วมจัดแล้ว","teamNoLeaders":"ยังไม่มีสมาชิกที่เป็นผู้จัดหรือผู้อนุมัติ","teamRole_organizer":"ผู้จัด","teamRole_approver":"ผู้อนุมัติ"},"en":{"teamTab":"Event teams","teamTitle":"Each event's team","teamSub":"{n} events · {none} without a lead organizer","teamSearchPh":"Search event name, ID or person","teamPdpa":"The lead organizer adds and removes collaborators in LINE. Collaborators edit the event, check people in and add its expenses. Every change is written to AdminLog.","teamNoEvents":"No events yet","teamEmpty":"No event matches the search","teamLeadLine":"Lead: {name}","teamLeadByAdmin":"chosen by an admin","teamLeadByCreator":"created the event in LINE","teamNoLead":"No lead organizer: nobody can manage this event in LINE yet","teamCollabs":"Collaborators: {list}","teamNoCollabs":"No collaborators yet","teamInvites":"Unused invite links {n}","teamNotMember":"not an approved member","teamClosed":"Closed","teamSetLead":"Choose lead","teamChangeLead":"Change lead","teamRemoveBtn":"Remove {name}","teamRemoveQ":"Remove {name} from the collaborators of {event}?","teamLeadT":"Lead organizer","teamLeadD":"The lead organizer adds and removes collaborators in LINE. Only approved members with the role organizer or approver can be chosen.","teamLeadL":"Lead organizer","teamLeadHint":"Name missing? Give that person the role organizer or approver in the Participants tab first.","teamLeadNone":"Nobody (the member who created the event in LINE, if any)","teamSave":"Save","teamSaved":"Lead organizer saved","teamRemoved":"Collaborator removed","teamNoLeaders":"No approved organizers or approvers yet","teamRole_organizer":"organizer","teamRole_approver":"approver"}});
+/* =====================================================================
+   Event teams (event-team): who leads and who helps with each event. Admins choose the lead organizer
+   (needed for events made here in the admin website) and may remove a collaborator.
+   Shared helpers come from the shell: $, $$, h, t, api, show, toast, fmtDate, fmtWhen. Every name is prefixed "team".
+   ===================================================================== */
+let teamData = null, teamCtx = null;
+async function teamLoad(){
+  show("vEventTeam");
+  $("#teamRows").replaceChildren(h("div",{class:"loading",text:t("loading")}));
+  try{ teamData = await api("admin.teamList"); teamRender(); }
+  catch(e){ $("#teamRows").replaceChildren(h("div",{class:"empty"}, h("h2",{text:e.message}))); }
+}
+function teamUpdateBadge(){
+  const n = teamData ? teamData.events.filter(e => !e.lead && e.editable).length : 0;
+  const b = $("#teamBadge"); b.hidden = !n; b.textContent = String(n);
+}
+function teamRender(){
+  if (!teamData) return;
+  const evs = teamData.events;
+  $("#teamSub").textContent = t("teamSub", {n: evs.length, none: evs.filter(e => !e.lead).length});
+  teamUpdateBadge();
+  if (!evs.length){ $("#teamRows").replaceChildren(h("div",{class:"empty"}, h("h2",{text:t("teamNoEvents")}))); return; }
+  const q = $("#teamSearch").value.trim().toLowerCase();
+  const list = evs.filter(e => !q || [e.id, e.name, e.lead ? e.lead.name : "", e.collaborators.map(c => c.name).join(" ")].join(" ").toLowerCase().includes(q));
+  if (!list.length){ $("#teamRows").replaceChildren(h("div",{class:"empty"}, h("p",{text:t("teamEmpty")}))); return; }
+  $("#teamRows").replaceChildren(...list.map(teamRow));
+}
+function teamRow(e){
+  const lead = e.lead
+    ? h("p",{class:"emeta"}, t("teamLeadLine",{name:e.lead.name + (e.lead.serviceId ? " · " + e.lead.serviceId : "")}) + " (" + t(e.lead.source === "admin" ? "teamLeadByAdmin" : "teamLeadByCreator") + ")" + (e.lead.approved ? "" : " · " + t("teamNotMember")))
+    : h("p",{class:"emeta", style:"color:var(--warn)", text:t("teamNoLead")});
+  const collabs = e.collaborators.length
+    ? h("p",{class:"emeta", text:t("teamCollabs",{list:e.collaborators.map(c => c.name + (c.approved ? "" : " (" + t("teamNotMember") + ")")).join(", ")})})
+    : h("p",{class:"emeta", text:t("teamNoCollabs")});
+  const acts = [h("button",{class:"btn sm" + (e.lead ? " ghost" : ""), type:"button", "data-team-lead":e.id, text:t(e.lead ? "teamChangeLead" : "teamSetLead"), onclick:() => teamAskLead(e)})]
+    .concat(e.collaborators.filter(c => c.serviceId).map(c => h("button",{class:"btn ghost sm warnbtn", type:"button", text:t("teamRemoveBtn",{name:c.name}), onclick:() => teamRemove(e, c)})));
+  return h("article",{class:"mrow", "data-team-event":e.id},
+    h("div",{},
+      h("h2",{class:"mname",text:e.name}),
+      h("p",{class:"emeta",text:[fmtWhen(e), e.id].filter(Boolean).join(" · ")}),
+      lead, collabs,
+      h("div",{class:"etags"},
+        !e.lead ? h("span",{class:"tag warn",text:t("teamSetLead")}) : null,
+        !e.editable ? h("span",{class:"tag plain",text:t("teamClosed")}) : null,
+        e.openInvites ? h("span",{class:"tag info",text:t("teamInvites",{n:e.openInvites})}) : null)),
+    h("div",{class:"mact"}, acts));
+}
+function teamReplace(ev){
+  const i = teamData.events.findIndex(x => x.id === ev.id);
+  if (i >= 0) teamData.events[i] = ev;
+  teamRender();
+}
+function teamAskLead(e){
+  teamCtx = {e, opener:document.activeElement};
+  $("#teamLeadEv").textContent = e.name + " · " + fmtWhen(e);
+  const sel = $("#teamLeadSel");
+  sel.replaceChildren(h("option",{value:"",text:t("teamLeadNone")}),
+    ...teamData.leaders.map(p => h("option",{value:p.serviceId,text:p.name + " · " + t("teamRole_" + p.role) + " · " + p.serviceId})));
+  sel.value = e.lead && e.lead.source === "admin" ? e.lead.serviceId : "";
+  $("#teamLeadModal").hidden = false; sel.focus();
+}
+function teamCloseLead(){ $("#teamLeadModal").hidden = true; const o = teamCtx && teamCtx.opener; teamCtx = null; if (o && o.focus) try{ o.focus(); }catch(x){} }
+async function teamSaveLead(){
+  if (!teamCtx) return;
+  const btn = $("#teamLeadOk"); btn.disabled = true;
+  try{
+    const r = await api("admin.teamSetLead", {eventId:teamCtx.e.id, serviceId:$("#teamLeadSel").value});
+    teamReplace(r.event); toast(t("teamSaved"), "good"); teamCloseLead();
+  }catch(err){ toast(err.message); if (err.code === "NOT_FOUND"){ teamCloseLead(); teamLoad(); } }
+  finally{ btn.disabled = false; }
+}
+async function teamRemove(e, c){
+  if (!window.confirm(t("teamRemoveQ",{name:c.name, event:e.name}))) return;
+  try{ const r = await api("admin.teamRemove", {eventId:e.id, serviceId:c.serviceId}); teamReplace(r.event); toast(t("teamRemoved"), "good"); }
+  catch(err){ toast(err.message); if (err.code === "NOT_FOUND") teamLoad(); }
+}
+
+/* ---- demo mode (no API_URL): made-up events and people ---- */
+const TEAM_DEMO = (() => {
+  const d0 = bkkNow().slice(0,10);
+  const leaders = [{serviceId:"SV-2611-0001", name:"สมหญิง ตัวอย่าง", role:"organizer"}, {serviceId:"SV-2611-0009", name:"เมฆา สายลม", role:"approver"}];
+  return { leaders, events:[
+    {id:"EV-DEMO-03", name:"Hualaem-X Session", date:addDays(d0,27), startTime:"13:00", status:"Approved", editable:true, lead:null, collaborators:[], openInvites:0},
+    {id:"EV-DEMO-02", name:"Board Game Night", date:d0, startTime:"13:00", status:"Approved", editable:true,
+      lead:{serviceId:"SV-2611-0009", name:"เมฆา สายลม", source:"creator", since:"", approved:true},
+      collaborators:[{serviceId:"SV-2611-0012", name:"ฝนทิพย์ กล้าหาญ", via:"invite", since:addDays(d0,-2)+" 19:20", approved:true}], openInvites:1},
+    {id:"EV-DEMO-00", name:"Community Meetup – October", date:addDays(d0,-20), startTime:"18:30", status:"Closed", editable:false,
+      lead:{serviceId:"SV-2611-0001", name:"สมหญิง ตัวอย่าง", source:"admin", since:addDays(d0,-40)+" 10:00", approved:true}, collaborators:[], openInvites:0}
+  ]};
+})();
+Admin.demo["admin.teamList"] = function(){ return {ok:true, now:bkkNow(), events:JSON.parse(JSON.stringify(TEAM_DEMO.events)), leaders:TEAM_DEMO.leaders}; };
+Admin.demo["admin.teamSetLead"] = function(data){
+  const e = TEAM_DEMO.events.find(x => x.id === data.eventId); if (!e) throw new ApiError("Event not found. Reload the page.", "NOT_FOUND");
+  const p = TEAM_DEMO.leaders.find(x => x.serviceId === data.serviceId);
+  e.lead = p ? {serviceId:p.serviceId, name:p.name, source:"admin", since:bkkNow(), approved:true} : (e.id === "EV-DEMO-02" ? {serviceId:"SV-2611-0009", name:"เมฆา สายลม", source:"creator", since:"", approved:true} : null);
+  if (p) e.collaborators = e.collaborators.filter(c => c.serviceId !== p.serviceId);
+  return {ok:true, unchanged:false, event:JSON.parse(JSON.stringify(e))};
+};
+Admin.demo["admin.teamRemove"] = function(data){
+  const e = TEAM_DEMO.events.find(x => x.id === data.eventId); if (!e) throw new ApiError("Event not found. Reload the page.", "NOT_FOUND");
+  const before = e.collaborators.length; e.collaborators = e.collaborators.filter(c => c.serviceId !== data.serviceId);
+  if (before === e.collaborators.length) throw new ApiError("This person is not a collaborator of this event (any more). Reload the page.", "NOT_FOUND");
+  return {ok:true, event:JSON.parse(JSON.stringify(e))};
+};
+
+/* ---- wire up ---- */
+$("#tabEventTeam").addEventListener("click", () => { if ($("#vEventTeam").hidden) teamLoad(); });
+$("#teamSearch").addEventListener("input", teamRender);
+$("#teamLeadOk").addEventListener("click", teamSaveLead);
+$("#teamLeadCancel").addEventListener("click", teamCloseLead);
+$("#teamLeadModal").addEventListener("click", e => { if (e.target.id === "teamLeadModal") teamCloseLead(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#teamLeadModal").hidden) teamCloseLead(); });
+
+Admin.register({
+  name: "event-team",
+  tab: { button: "tabEventTeam", view: "vEventTeam" },
+  onLang: function(){ if (!$("#vEventTeam").hidden) teamRender(); }
 });
 /* =====================================================================
    Wire up (shared parts) and start
