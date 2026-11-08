@@ -274,7 +274,7 @@ const CONFIG = {
   ORG_NAME: cfgText(SHARED.ORG_NAME),                    // shown in the consent text. Empty = "the organizers"
   HOME_LIFF_URL: cfgLiffUrl(SHARED_LIFF.home),           // landing page index.html
   ADMIN_OA_ID: cfgText(SHARED.ADMIN_OA_ID),              // used for the "Chat with admin" button
-  CONSENT_VERSION: "v2-2026-11",   // must match CONSENT_VERSION in Code.gs and event-join.html (it describes the wording on this page, so it is not in config.js)
+  CONSENT_VERSION: "v3-2026-11",   // must match app/shell/consent.json, CONSENT_VERSION in Code.gs and event-join.html (tools/check.js; it describes the wording on this page, so it is not in config.js)
   DEFAULT_LANG: "th"
 };
 
@@ -290,8 +290,8 @@ const T = {
   firstName:"ชื่อ", lastName:"นามสกุล", nowL:"ตอนนี้คุณ…",
   studying:"กำลังศึกษา", studyingD:"โรงเรียน / มหาวิทยาลัย", working:"ทำงานแล้ว", workingD:"บริษัท / หน่วยงาน",
   orgStudying:"ชื่อโรงเรียนหรือมหาวิทยาลัย", orgStudyingPh:"เช่น มหาวิทยาลัยตัวอย่าง", orgWorking:"ชื่อบริษัทหรือหน่วยงานที่ทำงาน", orgWorkingPh:"เช่น บริษัท ตัวอย่าง จำกัด",
-  consent:"ฉันยินยอมให้ {org} เก็บและใช้ชื่อ-นามสกุล สถานะ (ศึกษา/ทำงาน) ชื่อสถานศึกษาหรือที่ทำงาน บัญชี LINE และข้อมูลติดต่อที่ฉันให้ตอนลงทะเบียนกิจกรรม (อีเมล เบอร์มือถือ Instagram) เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียน และติดต่อเรื่องกิจกรรม",
-  consentSmall:"ข้อมูลเปิดให้เฉพาะทีมผู้จัดงาน ขอดูหรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล", orgFallback:"ผู้จัดกิจกรรม",
+  consent:"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน",
+  consentSmall:"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล", orgFallback:"ผู้จัดกิจกรรม",
   submit:"ส่งใบสมัคร", saveDetails:"บันทึกข้อมูล", submitting:"กำลังส่ง…", barSub:"ผู้ดูแลจะตรวจสอบก่อนอนุมัติ", barSubSave:"ไม่กระทบสิทธิ์ที่ได้รับอนุมัติแล้ว",
   req:"กรอกข้อมูลนี้", pickOne:"เลือก 1 ข้อ", consentReq:"กรุณายอมรับเพื่อดำเนินการต่อ", fixN:"ตรวจสอบ {n} จุดที่ยังไม่ครบ",
   pendingTitle:"ส่งใบสมัครแล้ว", pendingSub:"ผู้ดูแลกำลังตรวจสอบข้อมูลของคุณ", pendingChip:"รอตรวจสอบ",
@@ -307,7 +307,7 @@ const T = {
   chat:"แชทกับผู้ดูแล", noChat:"ติดต่อผู้ดูแลทางแชท LINE ของชุมชน และแจ้ง Service ID ของคุณ", copySid:"คัดลอก Service ID", copied:"คัดลอกแล้ว",
   chatPrefill:"สวัสดี ขอสอบถามเรื่องใบสมัครสมาชิก Service ID: {sid}",
   member:"สมาชิก", menuHome:"ไปหน้าหลัก", menuHomeD:"กิจกรรมที่กำลังจะมาถึง และติดตามสถานะของคุณ",
-  incompleteT:"ขอข้อมูลเพิ่มอีกเล็กน้อย", incompleteD:"คุณยังใช้งานได้ตามปกติ แต่ขอให้กรอกสถานะและสถานศึกษา/ที่ทำงานของคุณ", completeBtn:"กรอกข้อมูล",
+  incompleteT:"ขอข้อมูลเพิ่มอีกเล็กน้อย", incompleteD:"คุณยังใช้งานได้ตามปกติ แต่ขอให้ตรวจข้อมูลของคุณและยอมรับข้อตกลงความเป็นส่วนตัวฉบับใหม่", completeBtn:"กรอกข้อมูล",
   noLink:"ยังไม่ได้ตั้งค่าลิงก์เมนูนี้", errAuth:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท", errRate:"ส่งบ่อยเกินไป รอสักครู่แล้วลองใหม่",
   errNet:"ส่งไม่สำเร็จ ข้อมูลยังอยู่ ลองอีกครั้ง", errLoad:"โหลดข้อมูลไม่สำเร็จ", errLoadD:"ปิดหน้านี้แล้วเปิดใหม่จาก LINE", liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ", errSetup:"ระบบยังตั้งค่าไม่เสร็จ แจ้งผู้ดูแล"
  },
@@ -319,8 +319,8 @@ const T = {
   firstName:"First name", lastName:"Last name", nowL:"Right now you are…",
   studying:"Studying", studyingD:"School / university", working:"Working", workingD:"Company / organization",
   orgStudying:"School or university name", orgStudyingPh:"e.g. Example University", orgWorking:"Employer or organization name", orgWorkingPh:"e.g. Example Co., Ltd.",
-  consent:"I agree that {org} may collect and use my name, status (studying or working), school or employer, LINE account and the contact details I give when registering for events (email, mobile number, Instagram) to review my membership, manage registrations and contact me about events.",
-  consentSmall:"Only the organizing team can see it. To see or delete your data, message the admin in chat.", orgFallback:"the organizers",
+  consent:"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.",
+  consentSmall:"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat.", orgFallback:"the organizers",
   submit:"Submit application", saveDetails:"Save details", submitting:"Sending…", barSub:"An admin reviews it before approval", barSubSave:"Your approval is not affected",
   req:"Required", pickOne:"Choose one", consentReq:"Please agree to continue", fixN:"Fix {n} fields to continue",
   pendingTitle:"Application sent", pendingSub:"An admin is reviewing your details.", pendingChip:"Waiting for review",
@@ -336,7 +336,7 @@ const T = {
   chat:"Chat with admin", noChat:"Contact the admin in the community's LINE chat and give your Service ID.", copySid:"Copy Service ID", copied:"Copied",
   chatPrefill:"Hello, I have a question about my membership application. Service ID: {sid}",
   member:"Member", menuHome:"Go to home", menuHomeD:"Upcoming events and the status of your registrations and claims",
-  incompleteT:"A little more information, please", incompleteD:"You can keep using everything, but please fill in your status and school or workplace.", completeBtn:"Fill in",
+  incompleteT:"A little more information, please", incompleteD:"You can keep using everything, but please check your details and accept the updated privacy notice.", completeBtn:"Fill in",
   noLink:"This menu link isn't set up yet.", errAuth:"Your LINE session expired. Close this page and open it again from the chat.", errRate:"Too many tries. Wait a moment and try again.",
   errNet:"Couldn't send. Your details are still here. Try again.", errLoad:"Couldn't load", errLoadD:"Close this page and open it again from LINE.", liffFail:"Couldn't connect to LINE.", errSetup:"The system isn't fully set up yet. Tell the admin."
  }

@@ -6,466 +6,907 @@
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.line-scdn.net; connect-src https://script.google.com https://script.googleusercontent.com https://*.line.me https://*.line-scdn.net; frame-src https://*.line.me; object-src 'none'; base-uri 'none'">
-<title>หน้าหลัก | Home</title>
+<!-- GENERATED FILE: built by tools/build.js from app/shell and app/features. Never edit it by hand. -->
+<title>หัวแหลม | Community</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- LINE Front-end Framework (LIFF) SDK -->
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
+/* Design tokens from DESIGN.md (version 1, 8 Nov 2026). Placeholder teal brand: when the owner sends logo and
+   colours, change only the primary* and accent* values. Light by default; dark follows the phone unless the
+   member picks Light or Dark in Me (html[data-theme]). */
 :root{
-  --bg:#E6ECF2; --slip:#FFFFFF; --field:#F3F6F9; --ink:#0E1726; --muted:#586477; --line:#D3DBE5;
-  --accent:#2447D6; --accent-ink:#FFFFFF; --accent-soft:#E7ECFD; --err:#B42318; --err-bg:#FDECEA;
-  --ok:#0F7A55; --ok-bg:#E3F4EC; --warn:#8A5A00; --warn-bg:#FFF3D1; --grey-bg:#EDF1F5;
-  color-scheme: light dark;
+  --bg:#F3F6F5; --surface:#FFFFFF; --field:#EDF2F1; --ink:#0F1F1E; --muted:#526361; --line:#D5DFDD; --field-border:#7D8F8C;
+  --primary:#136B66; --on-primary:#FFFFFF; --primary-soft:#DCEFED; --on-primary-soft:#0F5753; --primary-press:#0F5A56;
+  --brand-teal:#72B5B3; --accent:#E8A33D; --stamp:#A85F00;
+  --success:#127A4E; --success-soft:#DDF3E8; --warning:#8A5300; --warning-soft:#FBEFD9; --error:#B42318; --error-soft:#FDE7E5;
+  --shadow-card:0 1px 2px rgba(15,31,30,.06); --shadow-raised:0 -4px 16px rgba(15,31,30,.08); --backdrop:rgba(15,31,30,.45);
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+  --appbar-h:64px; --tabbar-h:64px; --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
-  .seg button[aria-selected=true]{background:var(--line)}
-  :root{
-    --bg:#0C121B; --slip:#161F2C; --field:#0F1722; --ink:#E8EDF4; --muted:#9AA7B8; --line:#2A3647;
-    --accent:#8AA2FF; --accent-ink:#0C121B; --accent-soft:#1E2A4A; --err:#FF9189; --err-bg:#3A1C1C;
-    --ok:#5CD0A3; --ok-bg:#12302A; --warn:#F2C26B; --warn-bg:#33290F; --grey-bg:#1C2633;
+  :root:not([data-theme="light"]){
+    --bg:#0C1615; --surface:#13201F; --field:#1A2A29; --ink:#E6F0EE; --muted:#9DB0AD; --line:#283937; --field-border:#6F8380;
+    --primary:#66C7BF; --on-primary:#04211F; --primary-soft:#133533; --on-primary-soft:#8FDAD3; --primary-press:#55B3AB;
+    --accent:#F0B456; --stamp:#F0B456;
+    --success:#4CC38A; --success-soft:#123526; --warning:#F0B456; --warning-soft:#3A2A10; --error:#F97066; --error-soft:#3A1714;
+    --shadow-card:none; --shadow-raised:none; --backdrop:rgba(0,0,0,.6);
+    color-scheme:dark;
   }
 }
+:root[data-theme="dark"]{
+  --bg:#0C1615; --surface:#13201F; --field:#1A2A29; --ink:#E6F0EE; --muted:#9DB0AD; --line:#283937; --field-border:#6F8380;
+  --primary:#66C7BF; --on-primary:#04211F; --primary-soft:#133533; --on-primary-soft:#8FDAD3; --primary-press:#55B3AB;
+  --accent:#F0B456; --stamp:#F0B456;
+  --success:#4CC38A; --success-soft:#123526; --warning:#F0B456; --warning-soft:#3A2A10; --error:#F97066; --error-soft:#3A1714;
+  --shadow-card:none; --shadow-raised:none; --backdrop:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+/* Shell components (DESIGN.md "Components"). Features reuse these classes; a feature's own styles go in
+   app/features/<name>/screen.css and every selector there must carry the feature name (check.js). */
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Thai","Sarabun","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;
-  padding:env(safe-area-inset-top,0) 0 calc(40px + env(safe-area-inset-bottom,0))}
-.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Thai","Sarabun","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:24px;padding-top:var(--safe-t);padding-bottom:calc(var(--tabbar-h) + var(--safe-b) + 24px)}
+body.no-tabbar{padding-bottom:calc(24px + var(--safe-b))}
 [hidden]{display:none!important}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--primary)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:480px;margin:0 auto;padding:0 16px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* header */
-.top{display:flex;align-items:center;gap:12px;padding:18px 0 4px}
-.avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--accent-soft);color:var(--accent);flex:none;display:grid;place-items:center;font-weight:600;font-size:18px;border:2px solid var(--slip)}
-.hello{flex:1;min-width:0}
-.hello small{display:block;font-size:13px;color:var(--muted)}
-.hello b{display:block;font-size:17px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lang{flex:none;min-width:48px;height:36px;border:1px solid var(--line);background:var(--slip);border-radius:18px;font-size:14px;font-weight:500;padding:0 12px;cursor:pointer}
-.banner{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:14px}
+/* type scale */
+.t-display{font-size:30px;line-height:38px;font-weight:700}
+.t-h1,h1.t-h1{font-size:24px;line-height:32px;font-weight:700;margin:0}
+.t-h2,h2.t-h2{font-size:20px;line-height:28px;font-weight:600;margin:0}
+.t-lead{font-size:18px;line-height:26px;font-weight:600}
+.t-small{font-size:14px;line-height:20px}
+.t-caption{font-size:12px;line-height:16px;font-weight:600}
+.muted{color:var(--muted)}
 
-/* summary */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;margin-top:18px}
-.stat{background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;text-align:left;cursor:pointer;min-height:76px}
-.stat b{display:block;font-size:24px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}
-.stat span{display:block;font-size:13px;color:var(--muted);line-height:1.35}
-.stat.hot b{color:var(--accent)}
+/* app bar */
+.appbar{position:sticky;top:0;z-index:20;background:var(--bg)}
+.appbar .in{max-width:480px;margin:0 auto;height:var(--appbar-h);padding:0 16px;display:flex;align-items:center;gap:12px}
+.appbar .ttl{flex:1;min-width:0;display:flex;flex-direction:column}
+.appbar .ttl small{font-size:14px;line-height:20px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appbar .ttl h1{font-size:24px;line-height:32px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appbar .sync{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+.pill-btn{height:44px;min-width:44px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--surface);font-size:14px;line-height:20px;font-weight:600;cursor:pointer;flex:none}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:0;background:var(--field);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink);padding:0}
+.icon-btn svg{width:20px;height:20px}
+.avatar{width:44px;height:44px;border-radius:50%;flex:none;background:var(--primary-soft);color:var(--on-primary-soft);display:grid;place-items:center;font-weight:700;font-size:16px;border:0;padding:0;cursor:pointer;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* sections */
-.block{margin-top:26px}
-.block>h2{font-size:18px;font-weight:600;margin:0 0 10px}
-.seg{display:flex;gap:4px;background:var(--grey-bg);border-radius:12px;padding:4px;margin-bottom:12px}
-.seg button{flex:1;min-height:40px;border:0;border-radius:9px;background:transparent;font-size:14.5px;font-weight:500;color:var(--muted);cursor:pointer;padding:0 8px}
-.seg button[aria-selected=true]{background:var(--slip);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.list{display:flex;flex-direction:column;gap:10px}
+/* bottom tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-raised);padding-bottom:var(--safe-b)}
+.tabbar .in{max-width:480px;margin:0 auto;height:var(--tabbar-h);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:6px 8px 4px}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;border:0;background:none;color:var(--muted);font-size:12px;line-height:16px;font-weight:500;cursor:pointer;min-height:44px;padding:0;position:relative}
+.tab .pill{width:56px;height:32px;border-radius:var(--r-pill);display:grid;place-items:center}
+.tab svg{width:24px;height:24px}
+.tab[aria-current="page"]{color:var(--primary);font-weight:600}
+.tab[aria-current="page"] .pill{background:var(--primary-soft);color:var(--on-primary-soft)}
+.tab .dot{position:absolute;top:2px;left:calc(50% + 12px);width:8px;height:8px;border-radius:50%;background:var(--accent)}
 
-/* event row */
-.ev{display:grid;grid-template-columns:56px 1fr 16px;gap:12px;align-items:center;background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;width:100%;cursor:pointer;min-height:76px}
-.datebox{width:56px;height:60px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
-.datebox b{font-size:22px;font-weight:600}
-.datebox span{font-size:12.5px;font-weight:500}
-.ev .ename{font-size:16px;font-weight:600;line-height:1.35}
-.meta{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
-.go{color:var(--muted);font-size:20px}
-.tag{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:2px 10px;border-radius:13px;font-size:12.5px;font-weight:500;background:var(--grey-bg);color:var(--muted);margin-top:6px}
-.tag.ok{background:var(--ok-bg);color:var(--ok)}
-.tag.info{background:var(--accent-soft);color:var(--accent)}
-.tag.warn{background:var(--warn-bg);color:var(--warn)}
-.tag.bad{background:var(--err-bg);color:var(--err)}
+/* screens */
+.screen{padding-top:4px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.section{margin-top:24px}
+.section-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.section-head h2{flex:1;margin:0;font-size:20px;line-height:28px;font-weight:600}
 
-/* status rows */
-.item{background:var(--slip);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;width:100%;display:block}
-button.item{cursor:pointer}
-.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.item-top b{font-size:15.5px;font-weight:600;line-height:1.35}
-.item-top .tag{margin-top:0;flex:none}
-.amount{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:6px}
-.steps{display:flex;align-items:center;margin-top:12px;font-size:12px;color:var(--muted)}
-.steps .s{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;width:64px;text-align:center;line-height:1.2}
-.steps .dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
-.steps .s.done .dot{background:var(--ok)}
-.steps .s.done{color:var(--ok)}
-.steps .s.bad .dot{background:var(--err)}
-.steps .s.bad{color:var(--err)}
-.steps .ln{flex:1;height:2px;background:var(--line);margin:0 -14px 16px}
-.steps .ln.done{background:var(--ok)}
-.empty{background:var(--slip);border-radius:14px;padding:26px 18px;text-align:center;color:var(--muted);border:1px dashed var(--line);font-size:14.5px}
-.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:2px}
-.more{font-size:13px;color:var(--muted);text-align:center;margin:8px 0 0}
+/* cards and rows */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:16px}
+button.card,a.card{display:block;width:100%;text-align:left;cursor:pointer;color:inherit;text-decoration:none;font:inherit}
+.card.stack{display:flex}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:0 14px}
+.row{min-height:56px;display:flex;align-items:center;gap:12px;border:0;border-top:1px solid var(--line);background:none;width:100%;text-align:left;padding:8px 0;color:var(--ink);text-decoration:none;font:inherit;cursor:pointer}
+.rows>.row:first-child{border-top:0}
+.row .grow{flex:1;min-width:0;display:flex;flex-direction:column}
+.row .sub{font-size:14px;line-height:20px;color:var(--muted)}
+.row svg.lead{width:20px;height:20px;color:var(--primary);flex:none}
+.row svg.chev{width:18px;height:18px;color:var(--muted);flex:none}
+div.row{cursor:default}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:16px;cursor:pointer;width:100%;margin-top:12px}
-.btn.sec{background:transparent;color:var(--accent)}
-.btn.top{margin:0 0 12px}
-.hint{display:block;font-size:13px;color:var(--err);margin-top:8px}
-.links{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:28px}
-.linkbtn{background:none;border:0;color:var(--accent);font-weight:500;font-size:15px;min-height:44px;padding:0 10px;cursor:pointer}
-.asof{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px}
+/* buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;width:100%;padding:0 20px;border-radius:var(--r-md);border:1.5px solid var(--primary);background:var(--primary);color:var(--on-primary);font-size:16px;line-height:24px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:active{background:var(--primary-press);border-color:var(--primary-press)}
+.btn.secondary{background:transparent;color:var(--primary)}
+.btn.quiet{border-color:transparent;background:transparent;color:var(--primary);min-height:44px;width:auto;padding:0 10px}
+.btn[disabled]{background:var(--field);border-color:var(--field);color:var(--muted);cursor:default}
+.btn svg{width:20px;height:20px}
 
-.skel{background:var(--slip);border-radius:14px;height:76px;border:1px solid var(--line);position:relative;overflow:hidden;margin-top:10px}
-.skel.tall{height:110px;margin-top:18px}
-.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sh 1.2s infinite}
-@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-@media (prefers-reduced-motion:reduce){.skel::after{animation:none}}
-.toast{position:fixed;left:16px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0));max-width:528px;margin:0 auto;background:var(--err-bg);color:var(--err);border:1px solid var(--err);padding:12px 14px;border-radius:12px;font-weight:500;font-size:14.5px;z-index:11}
-.fatal{margin-top:20vh;text-align:center;color:var(--muted)}
-.fatal b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
+/* chips, banner */
+.chip{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:var(--r-sm);font-size:12px;line-height:16px;font-weight:600;background:var(--field);color:var(--muted);align-self:flex-start;white-space:nowrap}
+.chip svg{width:14px;height:14px}
+.chip.ok{background:var(--success-soft);color:var(--success)}
+.chip.info{background:var(--primary-soft);color:var(--on-primary-soft)}
+.chip.warn{background:var(--warning-soft);color:var(--warning)}
+.chip.bad{background:var(--error-soft);color:var(--error)}
+.banner{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--warning-soft);color:var(--warning);font-size:14px;line-height:20px;font-weight:500;border:0;width:100%;text-align:left;cursor:pointer;text-decoration:none}
+.banner.info{background:var(--primary-soft);color:var(--on-primary-soft)}
+.banner span{flex:1}
+.banner svg{width:20px;height:20px;flex:none}
+div.banner{cursor:default}
+
+/* segmented control */
+.seg{display:flex;gap:4px;background:var(--field);border-radius:var(--r-md);padding:4px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:9px;background:transparent;font-size:14px;line-height:20px;font-weight:600;color:var(--muted);cursor:pointer;padding:0 8px}
+.seg button[aria-selected="true"],.seg button[aria-checked="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-card)}
+.seg.small{border-radius:var(--r-pill);padding:3px}
+.seg.small button{min-height:36px;border-radius:var(--r-pill);flex:none;padding:0 12px}
+
+/* stat tile, empty state */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:12px;text-align:left;cursor:pointer;min-height:84px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-size:30px;line-height:38px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;line-height:20px;color:var(--muted)}
+.stat.hot b{color:var(--primary)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r-lg);padding:24px 16px;text-align:center;color:var(--muted);font-size:14px;line-height:20px}
+.empty b{display:block;color:var(--ink);font-size:16px;line-height:24px;margin-bottom:4px}
+.empty .btn{margin-top:16px}
+
+/* skeleton: field blocks at real sizes, no shimmer (DESIGN.md) */
+.sk{background:var(--field);border-radius:var(--r-lg)}
+.sk.line{height:16px;border-radius:var(--r-sm)}
+.sk-stack{display:flex;flex-direction:column;gap:12px}
+
+/* bottom sheet */
+.sheet-back{position:fixed;inset:0;z-index:50;background:var(--backdrop);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:480px;max-height:85vh;overflow:auto;background:var(--surface);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:8px 16px calc(24px + var(--safe-b));animation:sheetUp .2s ease-out}
+.sheet .grab{width:36px;height:4px;border-radius:2px;background:var(--line);margin:4px auto 12px}
+.sheet h2{font-size:20px;line-height:28px;font-weight:600;margin:0 0 12px}
+.sheet p{margin:0 0 12px}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+
+/* toast, fatal */
+.toast{position:fixed;left:16px;right:16px;bottom:calc(var(--tabbar-h) + var(--safe-b) + 12px);max-width:448px;margin:0 auto;z-index:60;background:var(--ink);color:var(--surface);padding:12px 16px;border-radius:var(--r-md);font-size:14px;line-height:20px;font-weight:500}
+body.no-tabbar .toast{bottom:calc(16px + var(--safe-b))}
+.fatal{margin-top:18vh;text-align:center;color:var(--muted);padding:0 16px}
+.fatal b{display:block;color:var(--ink);font-size:20px;line-height:28px;margin-bottom:8px}
+.fatal .btn{margin-top:20px}
+.asof{text-align:center;font-size:12px;line-height:16px;color:var(--muted);margin-top:16px}
+@media (prefers-reduced-motion: reduce){ .sheet{animation:none} *{scroll-behavior:auto!important} }
+/* home: event rows and status rows (DESIGN.md "Event card (list)") */
+.card.home-ev{display:flex;gap:14px;align-items:flex-start;padding:12px}
+.home-poster{width:72px;height:90px;flex:none;border-radius:var(--r-sm);background:var(--brand-teal);color:#FFFFFF;display:flex;align-items:flex-end;padding:8px;font-weight:700;font-size:15px;line-height:18px;overflow:hidden;word-break:break-word}
+.home-evbody{min-width:0;display:flex;flex-direction:column;gap:4px;flex:1}
+.home-when{font-size:14px;line-height:20px;font-weight:600;color:var(--primary)}
+.home-name{font-size:18px;line-height:26px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.home-meta{font-size:14px;line-height:20px;color:var(--muted);display:flex;gap:4px;align-items:flex-start}
+.home-meta svg{width:16px;height:16px;flex:none;margin-top:2px}
+.home-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.home-top b{font-size:16px;line-height:24px;font-weight:600}
+.home-amount{font-size:20px;line-height:28px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+.home-steps{display:flex;align-items:center;margin-top:12px;font-size:12px;line-height:16px;color:var(--muted)}
+.home-steps .home-s{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;width:64px;text-align:center}
+.home-steps .home-dot{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.home-steps .home-s.home-done{color:var(--success)}
+.home-steps .home-s.home-done .home-dot{background:var(--success)}
+.home-steps .home-s.home-bad{color:var(--error)}
+.home-steps .home-s.home-bad .home-dot{background:var(--error)}
+.home-steps .home-ln{flex:1;height:2px;background:var(--line);margin:0 -14px 20px}
+.home-steps .home-ln.home-done{background:var(--success)}
+.home-hint{display:block;font-size:14px;line-height:20px;color:var(--error);margin-top:8px}
+.home-wait{font-size:14px;line-height:20px;color:var(--muted)}
 </style>
 </head>
 <body>
-<main class="wrap">
-  <header class="top">
-    <div class="avatar" id="avatarBox" aria-hidden="true"></div>
-    <div class="hello"><small data-i18n="hello"></small><b id="lineName">&nbsp;</b></div>
-    <button type="button" class="lang" id="langBtn" aria-label="Language"></button>
-  </header>
-  <div class="banner" id="demoBanner" hidden data-i18n="demo"></div>
+<header class="appbar" id="appbar">
+  <div class="in">
+    <button type="button" class="icon-btn" id="backBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+    <div class="ttl"><small id="appSub"></small><h1 id="appTitle"></h1></div>
+    <span class="sync" id="syncDot" hidden></span>
+    <button type="button" class="pill-btn" id="langBtn"></button>
+    <button type="button" class="avatar" id="avatarBtn"></button>
+  </div>
+</header>
 
-  <!-- LOADING -->
-  <section id="vLoading"><div class="skel tall"></div><div class="skel"></div><div class="skel"></div></section>
+<main class="wrap" id="appMain">
+  <div class="banner info" id="demoBanner" hidden></div>
 
-  <!-- HOME -->
-  <section id="vHome" hidden>
-    <div class="stats" id="stats"></div>
+  <!-- first open with nothing saved on this phone yet -->
+  <section class="screen" id="shell-loading"><div class="sk-stack"><div class="sk" style="height:84px"></div><div class="sk" style="height:114px"></div><div class="sk" style="height:114px"></div></div></section>
 
-    <section class="block" id="secUpcoming">
-      <h2 data-i18n="upcomingT"></h2>
-      <div class="seg" role="tablist" id="upSeg">
-        <button type="button" role="tab" id="upAll" aria-selected="true"></button>
-        <button type="button" role="tab" id="upTodo" aria-selected="false"></button>
+  <!-- HOME tab (app/features/home) -->
+  <section class="screen" id="home-screen" hidden>
+    <div class="stack" id="home-todo"></div>
+    <div class="stats" id="home-stats"></div>
+
+    <section class="section" id="home-secUpcoming">
+      <div class="section-head"><h2 data-t="upcomingT"></h2></div>
+      <div class="seg" role="tablist" id="home-upSeg" style="margin-bottom:12px">
+        <button type="button" role="tab" id="home-upAll" aria-selected="true"></button>
+        <button type="button" role="tab" id="home-upTodo" aria-selected="false"></button>
       </div>
-      <div class="list" id="upList"></div>
+      <div class="stack" id="home-upList"></div>
     </section>
 
-    <section class="block" id="secStatus">
-      <h2 data-i18n="statusT"></h2>
-      <div class="seg" role="tablist" id="stSeg">
-        <button type="button" role="tab" id="stEvents" aria-selected="true"></button>
-        <button type="button" role="tab" id="stClaims" aria-selected="false"></button>
+    <section class="section" id="home-secStatus">
+      <div class="section-head"><h2 data-t="statusT"></h2></div>
+      <div class="seg" role="tablist" id="home-stSeg" style="margin-bottom:12px">
+        <button type="button" role="tab" id="home-stEvents" aria-selected="true"></button>
+        <button type="button" role="tab" id="home-stClaims" aria-selected="false"></button>
       </div>
-      <button type="button" class="btn top" id="newClaimBtn" hidden><span aria-hidden="true">＋</span><span data-i18n="newClaim"></span></button>
-      <div class="list" id="stList"></div>
-      <p class="more" id="stMore" hidden></p>
+      <button type="button" class="btn" id="home-newClaim" hidden style="margin-bottom:12px"></button>
+      <div class="stack" id="home-stList"></div>
+      <p class="asof" id="home-stMore" hidden></p>
     </section>
 
-    <div class="links">
-      <button type="button" class="linkbtn" id="memberBtn" data-i18n="myMembership"></button>
-      <button type="button" class="linkbtn" id="refreshBtn" data-i18n="refresh"></button>
+    <div style="display:flex;justify-content:center;margin-top:16px">
+      <button type="button" class="btn quiet" id="home-refresh"></button>
     </div>
-    <p class="asof" id="asOf"></p>
+    <p class="asof" id="home-asOf"></p>
   </section>
 
-  <div class="fatal" id="vFatal" hidden><b id="fatalT"></b><span id="fatalD"></span></div>
+  <!-- a tab no feature has claimed yet (see DEVELOPING.md, "Adding a screen to the LINE app") -->
+  <section class="screen" id="shell-placeholder" hidden></section>
+  <div class="fatal" id="shell-fatal" hidden><b id="fatalT"></b><span id="fatalD"></span><button type="button" class="btn secondary" id="fatalBtn" hidden></button></div>
 </main>
-<div class="toast" id="toast" role="alert" hidden></div>
+
+<nav class="tabbar" id="tabbar" hidden><div class="in" id="tabs"></div></nav>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script src="config.js"></script>
 <script>
 /* =====================================================================
-   Settings. Shared IDs and addresses come from config.js (one file for all pages). Only page-specific settings live here.
+   LINE app shell (index.html). Owned by the core lane: features never edit this file.
+   A feature adds screens with App.register (see DEVELOPING.md, "Adding a screen to the LINE app").
+   What the shell does: bottom tabs and routing, Thai/English, light/dark, the app bar, skeletons,
+   show-last-seen-then-refresh (App.view), the server session (App.api), toasts, sheets, settings.
    ===================================================================== */
-/* Shared settings come from config.js (one file for all pages, see config.example.js). Missing or broken file = demo mode. */
+
+/* ---------- settings: shared IDs and addresses come from config.js (one file for all pages) ---------- */
 const SHARED = window.COMMUNITY_CONFIG || {}, SHARED_LIFF = SHARED.LIFF || {};
 if (!window.COMMUNITY_CONFIG) console.warn("config.js not found or has an error: running in demo mode");
 const cfgText = x => { x = typeof x === "string" ? x.trim() : ""; return /^YOUR-/i.test(x) ? "" : x; };
 const cfgLiffId = x => cfgText(x).replace(/^https?:\/\/liff\.line\.me\//i, "").replace(/[\/?#].*$/, "");
 const cfgLiffUrl = x => { const id = cfgLiffId(x); return id ? "https://liff.line.me/" + id : ""; };
 const CONFIG = {
-  LIFF_ID: cfgLiffId(SHARED_LIFF.home),                  // HOME LIFF (this page)
+  LIFF_ID: cfgLiffId(SHARED_LIFF.home),                  // the app itself (the landing LIFF app)
   API_URL: cfgText(SHARED.API_URL),
-  EVENT_JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.event),    // event-join.html
+  ORG_NAME: cfgText(SHARED.ORG_NAME),
+  ADMIN_OA_ID: cfgText(SHARED.ADMIN_OA_ID),
+  EVENT_JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.event),    // event-join.html (until the app has its own event page)
   REIMBURSE_LIFF_URL: cfgLiffUrl(SHARED_LIFF.reimburse), // expense-reimbursement.html
   JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.join),           // sign-up.html. People who are not approved members are sent here
-  DEFAULT_LANG: "th"
+  DEFAULT_LANG: "th",
+  CACHE_DAYS: 30                                          // a saved copy older than this is not shown
 };
 
-/* =====================================================================
-   Text
-   ===================================================================== */
-const T = {
- th:{
-  hello:"สวัสดี", langBtn:"EN", demo:"โหมดทดลอง: ข้อมูลตัวอย่าง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์",
-  sTodo:"กิจกรรมที่ยังไม่ได้ลงทะเบียน", sMine:"กิจกรรมที่ลงทะเบียนไว้", sClaims:"คำขอเบิกที่รอดำเนินการ",
-  upcomingT:"กิจกรรมที่กำลังจะมาถึง", segAll:"ทั้งหมด ({n})", segTodo:"ยังไม่ลงทะเบียน ({n})",
-  regOpen:"เปิดรับสมัคร · ปิด {d}", regUpcoming:"เปิดรับสมัคร {d}", regClosed:"ปิดรับสมัครแล้ว", registered:"✓ ลงทะเบียนแล้ว",
-  emptyUpT:"ยังไม่มีกิจกรรมที่กำลังจะมาถึง", emptyUpD:"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่",
-  emptyTodoT:"ลงทะเบียนครบทุกกิจกรรมแล้ว", emptyTodoD:"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”",
-  statusT:"ติดตามสถานะ", segEvents:"กิจกรรมของฉัน", segClaims:"คำขอเบิก",
-  stUpcoming:"กำลังจะมาถึง", stEnded:"จบแล้ว", stCancelled:"ยกเลิกแล้ว",
-  cPending:"รออนุมัติ", cApproved:"อนุมัติแล้ว รอโอน", cRejected:"ไม่อนุมัติ", cPaid:"โอนเงินแล้ว",
-  stepSent:"ส่งคำขอ", stepApproved:"อนุมัติ", stepPaid:"โอนเงิน", stepRejected:"ไม่อนุมัติ",
-  rejectedHint:"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล",
-  refL:"เลขอ้างอิง {ref}", sentL:"ส่งเมื่อ {d}", itemsL:"{n} รายการ",
-  emptyEvT:"ยังไม่เคยลงทะเบียนกิจกรรม", emptyEvD:"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน",
-  emptyClT:"ยังไม่มีคำขอเบิก", emptyClD:"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่",
-  moreN:"แสดง {n} รายการล่าสุด",
-  newClaim:"ขอเบิกค่าใช้จ่าย", myMembership:"บัตรสมาชิกของฉัน", refresh:"รีเฟรช", asOf:"ข้อมูล ณ {d}",
-  noLink:"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล",
-  errAuth:"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท", errRate:"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่",
-  errNet:"โหลดไม่สำเร็จ ลองอีกครั้ง", errLoad:"โหลดข้อมูลไม่สำเร็จ", errLoadD:"ปิดหน้านี้แล้วเปิดใหม่จาก LINE", liffFail:"เชื่อมต่อ LINE ไม่สำเร็จ",
-  notMemberT:"ต้องเป็นสมาชิกก่อน", notMemberD:"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้"
- },
- en:{
-  hello:"Hello", langBtn:"ไทย", demo:"Demo mode: sample data. Add ?demo=organizer or ?demo=new to the address to see other versions.",
-  sTodo:"Events you haven't registered for", sMine:"Events you're registered for", sClaims:"Claims in progress",
-  upcomingT:"Upcoming events", segAll:"All ({n})", segTodo:"Not registered ({n})",
-  regOpen:"Open · closes {d}", regUpcoming:"Opens {d}", regClosed:"Registration closed", registered:"✓ Registered",
-  emptyUpT:"No upcoming events", emptyUpD:"New events will show up here.",
-  emptyTodoT:"You're registered for every event", emptyTodoD:"See them all in the “All” tab.",
-  statusT:"Track status", segEvents:"My events", segClaims:"My claims",
-  stUpcoming:"Upcoming", stEnded:"Ended", stCancelled:"Cancelled",
-  cPending:"Waiting for approval", cApproved:"Approved, payment pending", cRejected:"Not approved", cPaid:"Paid",
-  stepSent:"Sent", stepApproved:"Approved", stepPaid:"Paid", stepRejected:"Not approved",
-  rejectedHint:"Message the approvers in this chat to ask why.",
-  refL:"Reference {ref}", sentL:"Sent {d}", itemsL:"{n} items",
-  emptyEvT:"No registrations yet", emptyEvD:"Pick an event above to register.",
-  emptyClT:"No claims yet", emptyClD:"Expense claims you send will show up here.",
-  moreN:"Showing your latest {n}",
-  newClaim:"New expense claim", myMembership:"My membership", refresh:"Refresh", asOf:"Updated {d}",
-  noLink:"This menu isn't set up yet. Tell an admin.",
-  errAuth:"Your LINE session expired. Close this page and open it again from the chat.", errRate:"Too many tries. Wait a moment and try again.",
-  errNet:"Couldn't load. Try again.", errLoad:"Couldn't load your page", errLoadD:"Close this page and open it again from LINE.", liffFail:"Couldn't connect to LINE.",
-  notMemberT:"Members only", notMemberD:"Join the community and wait for an admin to approve you, then come back here."
- }
+/* ---------- small helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const store = {                                           // localStorage can be missing or full: never break the app
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
 };
-
-/* =====================================================================
-   Helpers
-   ===================================================================== */
-const $ = (s, r=document) => r.querySelector(s);
-const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
-let lang = CONFIG.DEFAULT_LANG;
-const t = (k, v) => { let s = (T[lang] && T[lang][k]) ?? T.en[k] ?? k; if (v) for (const [a,b] of Object.entries(v)) s = s.split("{"+a+"}").join(b); return s; };
-function h(tag, attrs, ...kids){                     // builds elements; text is always set as text, never as HTML
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Builds elements. Text is always set as text, never as HTML (people's text can't become markup).
+function h(tag, attrs, ...kids){
   const el = document.createElement(tag);
-  for (const [k,v] of Object.entries(attrs || {})){
+  for (const [k, v] of Object.entries(attrs || {})){
     if (v == null || v === false) continue;
     if (k === "class") el.className = v; else if (k === "text") el.textContent = v;
-    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v);
+    else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
   }
   kids.flat().forEach(c => { if (c != null && c !== false) el.append(c instanceof Node ? c : document.createTextNode(String(c))); });
   return el;
 }
-const loc = () => lang === "th" ? "th-TH" : "en-GB";
-function fmtDate(d, o){ if (!d) return ""; return new Intl.DateTimeFormat(loc(), Object.assign({weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}, o||{})).format(new Date(d.slice(0,10)+"T00:00:00Z")); }
-const fmtDT = s => s ? fmtDate(s, {weekday:undefined}) + " " + s.slice(11,16) : "";
-const fmtTime = ev => ev.startTime ? ev.startTime + (ev.endTime ? "–" + ev.endTime : "") : "";
-const money = n => "฿" + new Intl.NumberFormat("en-US", {minimumFractionDigits:2, maximumFractionDigits:2}).format(Number(n) || 0);
-let toastT;
-function toast(msg){ const el = $("#toast"); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 5000); }
-
-/* =====================================================================
-   State
-   ===================================================================== */
-const params = new URLSearchParams(location.search);
-const demo = !CONFIG.API_URL, demoMode = params.get("demo") || "participant";
-const state = { token:null, inClient:false, name:"", picture:"", data:null, view:"loading", upTab:"all", stTab:"events" };
-
-function applyLang(){
-  document.documentElement.lang = lang;
-  $$("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
-  $("#langBtn").textContent = t("langBtn");
-  if (state.view === "home") renderHome();
+// Icons: simple 24 px stroke icons (DESIGN.md), built as SVG elements.
+const ICONS = {
+  home: [["path", {d:"M3 10.5 12 3l9 7.5"}], ["path", {d:"M5 9.5V20h5v-6h4v6h5V9.5"}]],
+  events: [["rect", {x:3, y:4.5, width:18, height:16, rx:2.5}], ["path", {d:"M3 9.5h18M8 2.5v4M16 2.5v4"}]],
+  passport: [["rect", {x:5, y:2.5, width:14, height:19, rx:2}], ["circle", {cx:12, cy:10, r:3.2}], ["path", {d:"M8.5 17h7"}]],
+  me: [["circle", {cx:12, cy:8, r:4}], ["path", {d:"M4 21c1.2-4 4.4-6 8-6s6.8 2 8 6"}]],
+  chevron: [["path", {d:"m9 6 6 6-6 6"}]],
+  back: [["path", {d:"m15 6-6 6 6 6"}]],
+  globe: [["circle", {cx:12, cy:12, r:9}], ["path", {d:"M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"}]],
+  theme: [["path", {d:"M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"}]],
+  card: [["rect", {x:3, y:5, width:18, height:14, rx:2.5}], ["circle", {cx:9, cy:11, r:2.2}], ["path", {d:"M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2M14.5 10h4M14.5 13h3"}]],
+  shield: [["path", {d:"M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"}]],
+  chat: [["path", {d:"M4 11.5C4 7.4 7.6 4.5 12 4.5s8 2.9 8 7-3.6 7-8 7c-.9 0-1.8-.1-2.6-.3L5.5 20l.9-3.4A6.5 6.5 0 0 1 4 11.5z"}]],
+  trash: [["path", {d:"M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13"}]],
+  alert: [["circle", {cx:12, cy:12, r:9}], ["path", {d:"M12 7.5v5M12 16v.01"}]],
+  check: [["path", {d:"m5 12.5 4.5 4.5L19 7.5"}]],
+  clock: [["circle", {cx:12, cy:12, r:9}], ["path", {d:"M12 7.5V12l3 2"}]],
+  pin: [["path", {d:"M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"}], ["circle", {cx:12, cy:10, r:2.3}]],
+  plus: [["path", {d:"M12 5v14M5 12h14"}]],
+  x: [["path", {d:"M6 6l12 12M18 6 6 18"}]],
+  refresh: [["path", {d:"M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"}], ["path", {d:"M5 3v4h4M19 21v-4h-4"}]]
+};
+function icon(name, cls){
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+  [["viewBox", "0 0 24 24"], ["fill", "none"], ["stroke", "currentColor"], ["stroke-width", "1.75"], ["stroke-linecap", "round"], ["stroke-linejoin", "round"], ["aria-hidden", "true"]]
+    .forEach(([k, v]) => svg.setAttribute(k, v));
+  if (cls) svg.setAttribute("class", cls);
+  (ICONS[name] || []).forEach(([tag, a]) => { const el = document.createElementNS(NS, tag); Object.entries(a).forEach(([k, v]) => el.setAttribute(k, v)); svg.append(el); });
+  return svg;
 }
-function show(view){
-  state.view = view;
-  $("#vLoading").hidden = view !== "loading"; $("#vHome").hidden = view !== "home"; $("#vFatal").hidden = view !== "fatal";
-}
-function fatal(title, detail){ $("#fatalT").textContent = title; $("#fatalD").textContent = detail || ""; show("fatal"); }
-function go(url){ if (!url){ toast(t("noLink")); return; } location.href = url; }
-function eventUrl(id){ return CONFIG.EVENT_JOIN_LIFF_URL ? CONFIG.EVENT_JOIN_LIFF_URL.replace(/\/$/, "") + "?event=" + encodeURIComponent(id) : ""; }
 
-/* =====================================================================
-   API (the LINE ID token travels in the body; Code.gs checks it with LINE and decides who you are)
-   ===================================================================== */
-class ApiError extends Error { constructor(m, c){ super(m); this.code = c; } }
-function goJoin(){
+/* ---------- state ---------- */
+const PARAMS = new URLSearchParams(location.search);
+const S = {
+  lang: CONFIG.DEFAULT_LANG, theme: "auto",
+  demo: !CONFIG.API_URL, demoMode: PARAMS.get("demo") || "participant",
+  token: null, session: null,             // LINE ID token (first request) and the short server session (memory only, never saved)
+  inClient: false, name: "", picture: "", owner: null, liffDone: false,
+  route: null, routeKey: "", tab: "home", def: null, depth: 0, scroll: {}, shown: {}, syncing: 0
+};
+let readyResolve;
+const READY = new Promise(r => { readyResolve = r; });   // LINE login done: the token is ready
+
+/* ---------- text: shell text + one dictionary per feature (no clashes between features) ---------- */
+const SHELL_TEXT = { th: {}, en: {} };
+const CONSENT = { version: "", th: {}, en: {} };
+function fill(s, v){ if (v) for (const [a, b] of Object.entries(v)) s = String(s).split("{" + a + "}").join(b); return s; }
+function look(dict, k){ return (dict[S.lang] && dict[S.lang][k] != null) ? dict[S.lang][k] : (dict.en && dict.en[k] != null) ? dict.en[k] : (dict.th && dict.th[k] != null) ? dict.th[k] : null; }
+function tShell(k, v){ const s = look(SHELL_TEXT, k); return fill(s == null ? k : s, v); }
+function textFor(dict){ return (k, v) => { const s = look(dict, k); return s == null ? tShell(k, v) : fill(s, v); }; }
+
+/* ---------- formats (Thailand time; Thai mode shows the Buddhist year, e.g. ส. 21 พ.ย. 2569) ---------- */
+const loc = () => S.lang === "th" ? "th-TH" : "en-GB";
+function fmtDate(d, o){ if (!d) return ""; return new Intl.DateTimeFormat(loc(), Object.assign({weekday:"short", day:"numeric", month:"short", year:"numeric", timeZone:"UTC"}, o || {})).format(new Date(String(d).slice(0, 10) + "T00:00:00Z")); }
+const fmtDT = s => s ? fmtDate(s, {weekday: undefined}) + " " + String(s).slice(11, 16) : "";
+const fmtTime = ev => ev && ev.startTime ? ev.startTime + (ev.endTime ? "–" + ev.endTime : "") : "";
+const money = n => "฿" + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(Number(n) || 0);
+function fmtStamp(ms){ const d = new Date(ms + 7 * 3600e3); return fmtDT(d.toISOString().slice(0, 10) + " " + d.toISOString().slice(11, 16)); }
+
+/* ---------- toast, sheet, fatal ---------- */
+let toastTimer;
+function toast(msg){ const el = $("#toast"); el.textContent = msg; el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 4000); }
+function sheet(title, ...body){
+  closeSheet();
+  const back = h("div", {class: "sheet-back", id: "shell-sheet", onclick: e => { if (e.target === back) closeSheet(); }},
+    h("div", {class: "sheet", role: "dialog", "aria-modal": "true", "aria-label": title},
+      h("div", {class: "grab", "aria-hidden": "true"}), h("h2", {text: title}), ...body,
+      h("button", {type: "button", class: "btn secondary", id: "shell-sheet-close", onclick: closeSheet, text: tShell("close")})));
+  document.body.append(back);
+  $("#shell-sheet-close").focus();
+  return back;
+}
+function closeSheet(){ const s = $("#shell-sheet"); if (s) s.remove(); }
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+function fatal(title, detail, button){
+  $$("#appMain > .screen").forEach(s => { s.hidden = true; });
+  $("#fatalT").textContent = title; $("#fatalD").textContent = detail || "";
+  const b = $("#fatalBtn"); b.hidden = !button;
+  if (button){ b.textContent = button.text; b.onclick = button.onclick; }
+  $("#shell-fatal").hidden = false;
+}
+function skeleton(heights){ return h("div", {class: "sk-stack", "aria-hidden": "true"}, (heights || [84, 114, 114]).map(x => h("div", {class: "sk", style: "height:" + Number(x) + "px"}))); }
+function emptyState(title, detail, button){
+  return h("div", {class: "empty"}, h("b", {text: title}), detail || "",
+    button ? h("button", {type: "button", class: "btn secondary", onclick: button.onclick, text: button.text}) : null);
+}
+function go(url){ if (!url){ toast(tShell("noLink")); return; } location.href = url; }
+function openExternal(url){
+  if (!url){ toast(tShell("noLink")); return; }
+  if (S.inClient && window.liff && liff.openWindow) liff.openWindow({url, external: false}); else location.href = url;
+}
+function notMember(){
+  cacheClear();
   if (CONFIG.JOIN_LIFF_URL){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
-  fatal(t("notMemberT"), t("notMemberD"));
+  fatal(tShell("notMemberT"), tShell("notMemberD"));
 }
-async function post(action, data){
-  if (demo) return demoApi(action);
-  let res;
-  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 60000);
+
+/* ---------- API: the LINE ID token on the first request, then the short server session ----------
+   Code.gs checks the LINE ID token with LINE once and answers with a signed session (appSession, a few hours).
+   Later requests send only the session; Code.gs checks its signature and expiry, and still checks membership
+   and role on every request (architecture notes, principle 3 and 4). The session lives in memory only. */
+class ApiError extends Error { constructor(m, c){ super(m); this.code = c; } }
+const DEMO = {};                              // demo answers by action, added by features: App.demo["x.y"] = (body, mode) => reply
+async function api(action, data){
+  if (S.demo){
+    await sleep(350);
+    const fn = DEMO[action];
+    if (!fn) throw new ApiError(tShell("errNet"), "VALIDATION");
+    return JSON.parse(JSON.stringify(fn(data || {}, S.demoMode)));
+  }
+  await READY;
+  for (let attempt = 0; attempt < 2; attempt++){
+    const body = Object.assign({}, data, {action});
+    const useSession = !!(S.session && S.session.exp * 1000 - Date.now() > 60e3);
+    if (useSession) body.appSession = S.session.token; else { body.lineIdToken = S.token; body.wantSession = true; }
+    let res;
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 60000);
+    try{
+      const r = await fetch(CONFIG.API_URL, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify(body), signal: ctl.signal});
+      res = await r.json();
+    }catch(e){ throw new ApiError(tShell("errNet"), "NET"); }
+    finally{ clearTimeout(to); }
+    if (res && res.appSession){ S.session = res.appSession; delete res.appSession; }
+    if (res && res.ok) return res;
+    if (res && res.code === "SESSION" && useSession){ S.session = null; continue; }   // expired or replaced: once more with the LINE token
+    const map = {AUTH: "errAuth", RATE: "errRate", SERVER: "errNet", SESSION: "errAuth"};
+    throw new ApiError(map[res && res.code] ? tShell(map[res.code]) : (res && res.error) || tShell("errNet"), res && res.code);
+  }
+  throw new ApiError(tShell("errAuth"), "AUTH");
+}
+
+/* ---------- saved copy on this phone (show last seen, then refresh) ----------
+   Never saved: anything about claims, PromptPay, payees, receipts, slips or bank details (any key with those words,
+   at any depth), whatever a feature asks. One saved copy per LINE account (a hash of the LINE user ID, not the ID). */
+const PRIVATE_KEY = /claim|promptpay|payee|receipt|slip|bank/i;
+function scrub(v){
+  if (Array.isArray(v)) return v.map(scrub);
+  if (v && typeof v === "object"){ const o = {}; Object.keys(v).forEach(k => { if (!PRIVATE_KEY.test(k)) o[k] = scrub(v[k]); }); return o; }
+  return v;
+}
+const cacheName = () => S.demo ? "app.saved.demo-" + S.demoMode.replace(/[^a-z]/g, "") : "app.saved";
+function cacheRead(){ const c = store.get(cacheName()); return c && typeof c === "object" && c.items ? c : {owner: null, items: {}}; }
+function cacheGet(key){
+  const c = cacheRead();
+  if (S.owner && c.owner && c.owner !== S.owner){ cacheClear(); return null; }
+  const it = c.items[key];
+  return it && Date.now() - it.at < CONFIG.CACHE_DAYS * 864e5 ? it : null;
+}
+function cachePut(key, data){
+  let c = cacheRead();
+  if (S.owner && c.owner !== S.owner) c = {owner: S.owner, items: {}};
+  c.items[key] = {at: Date.now(), data: scrub(data)};
+  if (JSON.stringify(c).length > 300000) return;          // too big for a phone: just don't save
+  store.set(cacheName(), c);
+}
+function cacheClear(){ store.del(cacheName()); store.del("app.saved"); }
+async function ownerOf(sub){
+  if (!sub) return null;
   try{
-    const r = await fetch(CONFIG.API_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body: JSON.stringify(Object.assign({}, data, {action, lineIdToken:state.token})), signal:ctl.signal});
-    res = await r.json();
-  }catch(e){ throw new ApiError(t("errNet"), "NET"); }
-  finally{ clearTimeout(to); }
-  if (res.ok) return res;
-  const map = {AUTH:"errAuth", RATE:"errRate", SERVER:"errNet"};
-  throw new ApiError(map[res.code] ? t(map[res.code]) : res.error, res.code);
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("hualaem:" + sub));
+    return Array.from(new Uint8Array(buf)).slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join("");
+  }catch(e){ return null; }
 }
 
-/* =====================================================================
-   Render
-   ===================================================================== */
-function setSeg(btns, active){ btns.forEach(([el, on]) => el.setAttribute("aria-selected", on ? "true" : "false")); }
-function renderHome(){
-  const d = state.data; if (!d) return;
-  const todo = d.upcoming.filter(e => !e.myReference);
-  const mine = d.myEvents.filter(e => e.status === "upcoming");
-  const openClaims = d.myClaims.filter(c => c.status === "Pending" || c.status === "Approved");
-  const showClaims = d.canClaim || d.myClaims.length > 0;
-
-  const stat = (n, label, hot, onclick) => h("button",{type:"button",class:"stat" + (hot ? " hot" : ""),onclick}, h("b",{text:String(n)}), h("span",{text:label}));
-  $("#stats").replaceChildren(...[
-    stat(todo.length, t("sTodo"), todo.length > 0, () => { state.upTab = "todo"; renderHome(); $("#secUpcoming").scrollIntoView({behavior:"smooth"}); }),
-    stat(mine.length, t("sMine"), false, () => { state.stTab = "events"; renderHome(); $("#secStatus").scrollIntoView({behavior:"smooth"}); }),
-    showClaims ? stat(openClaims.length, t("sClaims"), false, () => { state.stTab = "claims"; renderHome(); $("#secStatus").scrollIntoView({behavior:"smooth"}); }) : null
-  ].filter(Boolean));
-
-  // upcoming
-  $("#upAll").textContent = t("segAll", {n:d.upcoming.length}); $("#upTodo").textContent = t("segTodo", {n:todo.length});
-  setSeg([[$("#upAll"), state.upTab === "all"], [$("#upTodo"), state.upTab === "todo"]]);
-  const list = state.upTab === "todo" ? todo : d.upcoming;
-  $("#upList").replaceChildren(...(list.length ? list.map(evRow) :
-    [state.upTab === "todo" && d.upcoming.length ? empty("emptyTodoT","emptyTodoD") : empty("emptyUpT","emptyUpD")]));
-
-  // status
-  if (!showClaims) state.stTab = "events";
-  $("#stSeg").hidden = !showClaims;
-  $("#stEvents").textContent = t("segEvents"); $("#stClaims").textContent = t("segClaims");
-  setSeg([[$("#stEvents"), state.stTab === "events"], [$("#stClaims"), state.stTab === "claims"]]);
-  const rows = state.stTab === "claims" ? d.myClaims : d.myEvents;
-  $("#stList").replaceChildren(...(rows.length ? rows.map(state.stTab === "claims" ? claimRow : myEventRow) :
-    [state.stTab === "claims" ? empty("emptyClT","emptyClD") : empty("emptyEvT","emptyEvD")]));
-  $("#stMore").hidden = rows.length < 20; $("#stMore").textContent = t("moreN", {n:rows.length});
-  $("#newClaimBtn").hidden = !(d.canClaim && state.stTab === "claims");
-  $("#asOf").textContent = t("asOf", {d:fmtDT(d.now)});
+/* App.view: one screen's data. Shows the saved copy at once (or a skeleton), then asks the server and shows the answer.
+   o = { key, action, body?: () => ({...}), cache?: true, el?: container for the error state,
+         skeleton?: () => void, render: (data, {stale, at}) => void, onError?: (err) => true if handled } */
+const VIEWS = [];
+function view(o){
+  const v = {data: null, meta: null, busy: null};
+  v.start = function(){
+    if (!v.data){
+      const c = o.cache ? cacheGet(o.key) : null;
+      if (c){ v.data = c.data; v.meta = {stale: true, at: c.at}; o.render(v.data, v.meta); }
+      else if (o.skeleton) o.skeleton();
+    }
+    return v.refresh();
+  };
+  v.refresh = function(){
+    if (v.busy) return v.busy;
+    syncing(1);
+    v.busy = (async () => {
+      try{
+        const d = await api(o.action, o.body ? o.body() : {});
+        v.data = d; v.meta = {stale: false, at: Date.now()};
+        if (o.cache) cachePut(o.key, d);
+        o.render(d, v.meta);
+      }catch(e){
+        if (e.code === "NOT_MEMBER"){ notMember(); return; }
+        if (o.onError && o.onError(e)) return;
+        if (v.data){ toast(v.meta && v.meta.stale ? tShell("offlineSaved") : e.message); return; }
+        if (o.el) o.el.replaceChildren(emptyState(tShell("errLoad"), e.code === "AUTH" ? tShell("errAuth") : e.message, {text: tShell("retry"), onclick: () => v.refresh()}));
+        else fatal(tShell("errLoad"), e.message);
+      }finally{ syncing(-1); v.busy = null; }
+    })();
+    return v.busy;
+  };
+  v.rerender = () => { if (v.data) o.render(v.data, v.meta); };
+  v.reset = () => { v.data = null; v.meta = null; if (o.skeleton) o.skeleton(); };
+  VIEWS.push(v);
+  return v;
 }
-function empty(tk, dk){ return h("div",{class:"empty"}, h("b",{text:t(tk)}), t(dk)); }
-function dateBox(date){
-  const x = new Date(date.slice(0,10) + "T00:00:00Z");
-  return h("div",{class:"datebox","aria-hidden":"true"},
-    h("b",{text:String(x.getUTCDate())}), h("span",{text:new Intl.DateTimeFormat(loc(), {month:"short",timeZone:"UTC"}).format(x)}));
-}
-function evTag(ev){
-  if (ev.myReference) return h("span",{class:"tag ok",text:t("registered")});
-  if (ev.regState === "open") return h("span",{class:"tag info",text:t("regOpen",{d:fmtDT(ev.regClose)})});
-  if (ev.regState === "upcoming") return h("span",{class:"tag warn",text:t("regUpcoming",{d:fmtDT(ev.regOpen)})});
-  return h("span",{class:"tag",text:t("regClosed")});
-}
-function evRow(ev){
-  const when = [fmtDate(ev.date, {year:undefined}), fmtTime(ev)].filter(Boolean).join(" · ");
-  return h("button",{type:"button",class:"ev","data-event":ev.id,onclick:() => go(eventUrl(ev.id))},
-    dateBox(ev.date),
-    h("div",{}, h("div",{class:"ename",text:ev.name}), h("span",{class:"meta",text:when}), ev.location ? h("span",{class:"meta",text:"📍 " + ev.location}) : null, evTag(ev)),
-    h("span",{class:"go","aria-hidden":"true",text:"›"}));
-}
-function myEventRow(r){
-  const tag = {upcoming:["tag info","stUpcoming"], ended:["tag","stEnded"], cancelled:["tag bad","stCancelled"]}[r.status] || ["tag",""];
-  const when = [fmtDate(r.date), fmtTime(r)].filter(Boolean).join(" · ");
-  const body = [h("div",{class:"item-top"}, h("b",{text:r.eventName}), h("span",{class:tag[0],text:t(tag[1])})),
-    when ? h("span",{class:"meta",text:when}) : null, r.location ? h("span",{class:"meta",text:"📍 " + r.location}) : null,
-    h("span",{class:"meta",text:t("refL",{ref:r.reference})})];
-  return r.status === "upcoming"
-    ? h("button",{type:"button",class:"item","data-ref":r.reference,onclick:() => go(eventUrl(r.eventId))}, ...body)
-    : h("div",{class:"item","data-ref":r.reference}, ...body);
-}
-function claimRow(c){
-  const cls = {Pending:"tag warn", Approved:"tag info", Rejected:"tag bad", Paid:"tag ok"}[c.status] || "tag";
-  const reached = {Pending:1, Approved:2, Paid:3, Rejected:1}[c.status] || 1;
-  const step = (i, key, bad) => h("div",{class:"s" + (bad ? " bad" : i <= reached ? " done" : "")}, h("span",{class:"dot"}), t(key));
-  const line = i => h("span",{class:"ln" + (c.status !== "Rejected" && i < reached ? " done" : "")});
-  const steps = c.status === "Rejected"
-    ? h("div",{class:"steps","aria-hidden":"true"}, step(1,"stepSent"), line(1), step(2,"stepRejected",true))
-    : h("div",{class:"steps","aria-hidden":"true"}, step(1,"stepSent"), line(1), step(2,"stepApproved"), line(2), step(3,"stepPaid"));
-  return h("div",{class:"item","data-ref":c.reference},
-    h("div",{class:"item-top"}, h("b",{text:c.eventName}), h("span",{class:cls,text:t("c" + c.status)})),
-    h("div",{class:"amount",text:money(c.total)}),
-    h("span",{class:"meta",text:t("itemsL",{n:c.items}) + " · " + t("sentL",{d:fmtDT(c.submittedAt)})}),
-    h("span",{class:"meta",text:t("refL",{ref:c.reference})}),
-    steps,
-    c.status === "Rejected" ? h("span",{class:"hint",text:t("rejectedHint")}) : null);
+function syncing(n){
+  S.syncing = Math.max(0, S.syncing + n);
+  const dot = $("#syncDot"); dot.hidden = S.syncing === 0; dot.title = tShell("syncing");
+  $("#appMain").setAttribute("aria-busy", S.syncing ? "true" : "false");
 }
 
-/* =====================================================================
-   Header (LINE picture + name)
-   ===================================================================== */
-function renderHeader(){
-  $("#lineName").textContent = state.name || " ";
-  const box = $("#avatarBox");
-  if (state.picture && /^https:\/\/[a-z0-9.-]+\.line-scdn\.net\//i.test(state.picture)){
-    const img = h("img",{class:"avatar",alt:"",src:state.picture + "/small",referrerpolicy:"no-referrer"});
-    img.onerror = () => { img.replaceWith(initials()); };
-    box.replaceWith(img); img.id = "avatarBox";
-  } else box.textContent = (state.name || "?").trim().charAt(0).toUpperCase();
-  function initials(){ const d = h("div",{class:"avatar",id:"avatarBox","aria-hidden":"true"}); d.textContent = (state.name || "?").trim().charAt(0).toUpperCase(); return d; }
+/* ---------- registry: features plug in here ---------- */
+const TABS = ["home", "events", "passport", "me"];
+const MODS = {}, TAB_OWNER = {}, ROUTES = {};
+let booted = false;
+// Called by the build for each app/features/<name> folder: App.module("<name>", <text.json>, function (App, t) { ...screen.js... })
+function defineModule(name, text, fn){
+  if (MODS[name]) throw new Error("App module " + name + " is defined twice");
+  MODS[name] = {name, text: text || {th: {}, en: {}}, spec: null};
+  fn(App, textFor(MODS[name].text));
+}
+// spec = { name, tab?, screen?: "<id>", title?: () => string | {title, sub}, show?: (ctx) => void, onLang?: () => void,
+//          routes?: { <route>: { screen: "<id>", title?, show?, tabBar?: false } } }
+function register(spec){
+  const m = MODS[spec && spec.name];
+  if (!m) throw new Error("App.register: name must be the feature folder name");
+  if (m.spec) throw new Error("App.register called twice by " + spec.name);
+  if (spec.tab){
+    if (TABS.indexOf(spec.tab) < 0) throw new Error(spec.name + ": unknown tab " + spec.tab);
+    if (TAB_OWNER[spec.tab]) throw new Error("tab " + spec.tab + " is already owned by " + TAB_OWNER[spec.tab]);
+    if (!spec.screen || !document.getElementById(spec.screen)) throw new Error(spec.name + ": screen element #" + spec.screen + " is missing");
+    TAB_OWNER[spec.tab] = spec.name;
+  }
+  Object.keys(spec.routes || {}).forEach(r => {
+    if (TABS.indexOf(r) >= 0 || ROUTES[r]) throw new Error(spec.name + ": route " + r + " is taken");
+    if (!/^[a-z][a-z0-9-]*$/.test(r)) throw new Error(spec.name + ": route names are lowercase words");
+    if (!document.getElementById(spec.routes[r].screen)) throw new Error(spec.name + ": screen element #" + spec.routes[r].screen + " is missing");
+    ROUTES[r] = {mod: spec.name, def: spec.routes[r]};
+  });
+  m.spec = spec;
+  if (booted && spec.tab === S.tab && S.route && S.route.name === spec.tab) render(S.route);
 }
 
-/* =====================================================================
-   Demo data (no API_URL): ?demo=participant (default) | organizer | new
-   ===================================================================== */
-async function demoApi(action){
-  await new Promise(r => setTimeout(r, 350));
-  if (action !== "home.bootstrap") throw new ApiError("Unknown", "VALIDATION");
-  const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
-  const now = iso(0) + " 10:00";
-  const upcoming = [
-    {id:"EV-DEMO-01", name:"Community Meetup – November", date:iso(9), startTime:"18:30", endTime:"21:00", location:"Co-working space, Ari", regOpen:iso(-3)+" 09:00", regClose:iso(7)+" 23:59", regState:"open", hasPoster:false, myReference:""},
-    {id:"EV-DEMO-02", name:"Board Game Night", date:iso(16), startTime:"19:00", endTime:"22:00", location:"Cafe, Phrom Phong", regOpen:iso(-1)+" 09:00", regClose:iso(14)+" 23:59", regState:"open", hasPoster:false, myReference:"RG-DEMO-0012"},
-    {id:"EV-DEMO-03", name:"Year-end Gathering", date:iso(40), startTime:"17:00", endTime:"22:00", location:"Rooftop, Sukhumvit 24", regOpen:iso(10)+" 09:00", regClose:iso(37)+" 23:59", regState:"upcoming", hasPoster:false, myReference:""}
-  ];
-  const myEvents = [
-    {reference:"RG-DEMO-0012", eventId:"EV-DEMO-02", eventName:"Board Game Night", date:iso(16), startTime:"19:00", endTime:"22:00", location:"Cafe, Phrom Phong", registeredAt:iso(-1)+" 12:10", status:"upcoming"},
-    {reference:"RG-DEMO-0007", eventId:"EV-DEMO-00", eventName:"Community Meetup – October", date:iso(-20), startTime:"18:30", endTime:"21:00", location:"Co-working space, Ari", registeredAt:iso(-30)+" 20:15", status:"ended"},
-    {reference:"RG-DEMO-0003", eventId:"EV-DEMO-99", eventName:"Picnic in the Park", date:iso(-45), startTime:"09:00", endTime:"12:00", location:"Benjakitti Park", registeredAt:iso(-50)+" 08:00", status:"cancelled"}
-  ];
-  const myClaims = [
-    {reference:"RC-DEMO-0021", status:"Pending", eventName:"Community Meetup – November", total:1850, items:3, submittedAt:iso(-1)+" 21:40", decidedAt:""},
-    {reference:"RC-DEMO-0015", status:"Approved", eventName:"Community Meetup – October", total:4200.5, items:5, submittedAt:iso(-18)+" 09:12", decidedAt:iso(-15)+" 10:00"},
-    {reference:"RC-DEMO-0009", status:"Paid", eventName:"Picnic in the Park", total:960, items:2, submittedAt:iso(-44)+" 13:05", decidedAt:iso(-40)+" 16:30"},
-    {reference:"RC-DEMO-0004", status:"Rejected", eventName:"Picnic in the Park", total:320, items:1, submittedAt:iso(-44)+" 13:20", decidedAt:iso(-40)+" 16:31"}
-  ];
-  if (demoMode === "new") return {ok:true, now, role:"participant", firstName:"มานี", upcoming:upcoming.map(e => Object.assign({}, e, {myReference:""})), myEvents:[], canClaim:false, myClaims:[]};
-  const org = demoMode === "organizer";
-  return {ok:true, now, role:org ? "organizer" : "participant", firstName:"สมชาย", upcoming, myEvents, canClaim:org, myClaims:org ? myClaims : []};
+/* ---------- routing: #home #events #passport #me are tabs; #<route>/<id> are detail screens ----------
+   Tab switches replace the address (no back-button history); detail screens push one step, so Back returns to the tab. */
+function parseHash(){
+  const raw = decodeURIComponent((location.hash || "").replace(/^#\/?/, ""));
+  const i = raw.indexOf("/");
+  const name = (i < 0 ? raw : raw.slice(0, i)).toLowerCase(), arg = i < 0 ? "" : raw.slice(i + 1);
+  return name ? {name, arg} : null;
 }
-
-/* =====================================================================
-   Boot
-   ===================================================================== */
-async function initLiff(){
-  if (demo || !CONFIG.LIFF_ID || !window.liff){ state.name = "Kim (demo)"; return true; }
-  await liff.init({liffId:CONFIG.LIFF_ID});
-  if (!liff.isLoggedIn()){ liff.login({redirectUri:location.href}); return false; }
-  state.inClient = liff.isInClient();
-  state.token = liff.getIDToken();        // LINE ID token (needs the openid scope); Code.gs checks it with LINE
-  try{ const p = await liff.getProfile(); state.name = p.displayName || ""; state.picture = p.pictureUrl || ""; }catch(e){}
-  if (!store.get("home.lang")){ const l = (liff.getLanguage && liff.getLanguage() || "").toLowerCase(); if (l) lang = l.startsWith("th") ? "th" : "en"; }
+function initialRoute(){
+  const fromHash = parseHash();
+  if (fromHash) return fromHash;
+  const tab = (PARAMS.get("tab") || "").toLowerCase();
+  if (TABS.indexOf(tab) >= 0) return {name: tab, arg: ""};
+  const ev = PARAMS.get("event");                          // old links: ...?event=ID opens the event page once a feature provides it
+  if (ev && ROUTES.event) return {name: "event", arg: ev};
+  return {name: "home", arg: ""};
+}
+function routeKey(r){ return r.name + (r.arg ? "/" + r.arg : ""); }
+function goRoute(name, arg){
+  const r = {name, arg: arg || ""}, isTab = TABS.indexOf(name) >= 0;
+  if (!isTab && !ROUTES[name]) return false;
+  if (S.liffDone){                                          // never touch the address while LINE login is still starting
+    const url = location.pathname + location.search + "#" + encodeURIComponent(name) + (r.arg ? "/" + encodeURIComponent(r.arg) : "");
+    if (isTab || !S.route || TABS.indexOf(S.route.name) < 0) history.replaceState(null, "", url);
+    else { history.pushState(null, "", url); S.depth++; }
+  }
+  render(r);
   return true;
 }
-async function load(){
-  try{
-    state.data = await post("home.bootstrap");
-  }catch(e){
-    if (e.code === "NOT_MEMBER"){ goJoin(); return; }        // sign-up.html shows sign-up, "waiting for review" or "not approved"
-    if (state.data){ toast(e.message); return; }              // a refresh failed: keep what is on screen
-    fatal(t("errLoad"), e.code === "AUTH" ? t("errAuth") : e.code === "RATE" ? t("errRate") : t("errLoadD")); return;
-  }
-  show("home"); renderHome();
+// Open a detail screen if a feature provides it, otherwise the old page (e.g. event-join.html) so nothing breaks meanwhile.
+function open(route, arg, fallbackUrl){ if (ROUTES[route]) return goRoute(route, arg); go(fallbackUrl); return false; }
+window.addEventListener("popstate", () => { S.depth = Math.max(0, S.depth - 1); render(parseHash() || {name: S.tab, arg: ""}); });
+
+function placeholderDef(tab){
+  return {
+    title: () => tShell("tab_" + tab),
+    show(){
+      const el = $("#shell-placeholder");
+      if (tab === "me") el.replaceChildren(meCard(), settingsPanel());
+      else if (tab === "events") el.replaceChildren(emptyState(tShell("ph_events_t"), tShell("ph_events_d"), {text: tShell("ph_events_btn"), onclick: () => goRoute("home")}));
+      else el.replaceChildren(emptyState(tShell("ph_" + tab + "_t"), tShell("ph_" + tab + "_d"), {text: tShell("ph_events_btn"), onclick: () => goRoute("home")}));
+    },
+    onLang(){ this.show(); }
+  };
+}
+function render(r){
+  if (S.routeKey) S.scroll[S.routeKey] = window.scrollY;
+  const isTab = TABS.indexOf(r.name) >= 0;
+  let def, el;
+  if (isTab){
+    const owner = TAB_OWNER[r.name];
+    def = owner ? MODS[owner].spec : placeholderDef(r.name);
+    el = owner ? document.getElementById(def.screen) : $("#shell-placeholder");
+    S.tab = r.name;
+  } else if (ROUTES[r.name]){
+    def = ROUTES[r.name].def; el = document.getElementById(def.screen);
+  } else { r = {name: "home", arg: ""}; return render(r); }
+  closeSheet();
+  $$("#appMain > .screen").forEach(s => { s.hidden = s !== el; });
+  $("#shell-fatal").hidden = true;
+  const key = routeKey(r), first = !S.shown[key];
+  S.route = r; S.routeKey = key; S.def = def; S.shown[key] = true;
+  const bar = isTab || def.tabBar === true;
+  $("#tabbar").hidden = !bar; document.body.classList.toggle("no-tabbar", !bar);
+  $("#backBtn").hidden = isTab;
+  $$("#tabs .tab").forEach(b => { if (b.dataset.tab === S.tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  setTitle();
+  if (def.show) def.show({first, arg: r.arg, params: PARAMS});
+  window.scrollTo(0, S.scroll[key] || 0);
+}
+function setTitle(){
+  const def = S.def; let t = def && def.title ? def.title() : tShell("tab_" + S.tab);
+  if (typeof t === "string") t = {title: t};
+  $("#appTitle").textContent = t.title || "";
+  $("#appSub").textContent = t.sub || ""; $("#appSub").hidden = !t.sub;
+  document.title = (t.title || tShell("appName")) + " | " + (CONFIG.ORG_NAME || tShell("appName"));
+}
+function buildTabs(){
+  $("#tabbar").setAttribute("aria-label", tShell("nav"));
+  $("#tabs").replaceChildren(...TABS.map(tab => h("button", {type: "button", class: "tab", "data-tab": tab, id: "tab-" + tab, onclick: () => {
+    if (S.route && S.route.name === tab) window.scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+    else goRoute(tab);
+  }}, h("span", {class: "pill"}, icon(tab)), h("span", {class: "lbl", text: tShell("tab_" + tab)}), h("span", {class: "dot", hidden: true}))));
+}
+function setBadge(tab, on){ const d = $("#tab-" + tab + " .dot"); if (d) d.hidden = !on; }
+$("#backBtn").addEventListener("click", () => { if (S.depth > 0) history.back(); else goRoute(S.tab); });
+
+/* ---------- language and theme ---------- */
+function applyLang(){
+  document.documentElement.lang = S.lang;
+  $("#langBtn").textContent = tShell("langBtn"); $("#langBtn").setAttribute("aria-label", tShell("langAria"));
+  $("#backBtn").setAttribute("aria-label", tShell("back")); $("#avatarBtn").setAttribute("aria-label", tShell("avatar"));
+  $("#demoBanner").textContent = tShell("demo");
+  $$("#tabs .tab").forEach(b => { $(".lbl", b).textContent = tShell("tab_" + b.dataset.tab); });
+  $("#tabbar").setAttribute("aria-label", tShell("nav"));
+  Object.values(MODS).forEach(m => { if (m.spec && m.spec.onLang) m.spec.onLang(); });
+  if (S.def && !TAB_OWNER[S.tab] && TABS.indexOf(S.route && S.route.name) >= 0 && S.def.onLang) S.def.onLang();
+  setTitle();
+}
+function setLang(l){ S.lang = l === "en" ? "en" : "th"; store.set("app.lang", S.lang); applyLang(); }
+function applyTheme(){
+  if (S.theme === "light" || S.theme === "dark") document.documentElement.dataset.theme = S.theme;
+  else delete document.documentElement.dataset.theme;
+}
+function setTheme(x){ S.theme = ["light", "dark"].indexOf(x) >= 0 ? x : "auto"; store.set("app.theme", S.theme); applyTheme(); }
+
+/* ---------- header (LINE picture or initials) ---------- */
+function renderAvatar(){
+  const b = $("#avatarBtn"), initial = (S.name || "?").trim().charAt(0).toUpperCase();
+  if (S.picture && /^https:\/\/[a-z0-9.-]+\.line-scdn\.net\//i.test(S.picture)){
+    const img = h("img", {alt: "", src: S.picture + "/small", referrerpolicy: "no-referrer"});
+    img.onerror = () => { b.replaceChildren(initial); };
+    b.replaceChildren(img);
+  } else b.replaceChildren(initial);
+}
+$("#avatarBtn").addEventListener("click", () => goRoute("me"));
+$("#langBtn").addEventListener("click", () => setLang(S.lang === "th" ? "en" : "th"));
+
+/* ---------- Me pieces the shell owns (a members Me screen reuses settingsPanel) ---------- */
+function meCard(){
+  const av = h("span", {class: "avatar", "aria-hidden": "true", style: "width:56px;height:56px;font-size:22px;cursor:default"});
+  if (S.picture && /^https:\/\/[a-z0-9.-]+\.line-scdn\.net\//i.test(S.picture)) av.append(h("img", {alt: "", src: S.picture + "/small", referrerpolicy: "no-referrer"}));
+  else av.textContent = (S.name || "?").trim().charAt(0).toUpperCase();
+  return h("div", {class: "card", style: "display:flex;align-items:center;gap:14px"}, av,
+    h("div", {style: "min-width:0"}, h("div", {class: "t-lead", id: "shell-me-name", text: S.name || " "}), h("div", {class: "t-small muted", text: tShell("fromLine")})));
+}
+function consentText(lang){
+  const d = CONSENT[lang || S.lang] || CONSENT.th;
+  return {version: CONSENT.version, consent: fill(d.consent || "", {org: CONFIG.ORG_NAME || tShell("orgFallback")}), small: d.consentSmall || ""};
+}
+function privacySheet(){
+  const c = consentText();
+  sheet(tShell("privTitle"),
+    h("p", {class: "t-small muted", text: tShell("privVersion", {v: c.version})}),
+    h("p", {text: c.consent}), h("p", {class: "t-small", text: c.small}),
+    h("p", {class: "t-small", text: tShell("privDevice")}), h("p", {class: "t-small", text: tShell("privAsk")}));
+}
+function settingsPanel(){
+  const seg = (label, opts, current, pick) => h("div", {class: "seg small", role: "radiogroup", "aria-label": label},
+    opts.map(([val, text]) => h("button", {type: "button", role: "radio", "aria-checked": val === current ? "true" : "false", "data-val": val,
+      onclick: e => { pick(val); $$("button", e.currentTarget.parentNode).forEach(b => b.setAttribute("aria-checked", b.dataset.val === val ? "true" : "false")); }, text})));
+  const row = (ic, title, sub, onclick, id) => h(onclick ? "button" : "div", {type: onclick ? "button" : null, class: "row", id, onclick},
+    icon(ic, "lead"), h("span", {class: "grow"}, h("span", {text: title}), sub ? h("span", {class: "sub", text: sub}) : null), onclick ? icon("chevron", "chev") : null);
+  const oaId = CONFIG.ADMIN_OA_ID.replace(/[^@A-Za-z0-9._-]/g, "");
+  const oa = oaId ? "https://line.me/R/oaMessage/" + (oaId.startsWith("@") ? oaId : "@" + oaId) + "/" : "";
+  return h("section", {class: "section", id: "shell-settings"},
+    h("div", {class: "section-head"}, h("h2", {text: tShell("setTitle")})),
+    h("div", {class: "rows"},
+      h("div", {class: "row"}, icon("globe", "lead"), h("span", {class: "grow", text: tShell("setLang")}),
+        seg(tShell("setLang"), [["th", "ไทย"], ["en", "EN"]], S.lang, setLang)),
+      h("div", {class: "row"}, icon("theme", "lead"), h("span", {class: "grow", text: tShell("setTheme")}),
+        seg(tShell("setTheme"), [["auto", tShell("themeAuto")], ["light", tShell("themeLight")], ["dark", tShell("themeDark")]], S.theme, setTheme)),
+      row("card", tShell("setMember"), tShell("setMemberSub"), () => go(CONFIG.JOIN_LIFF_URL), "shell-member"),
+      row("shield", tShell("setPrivacy"), tShell("setPrivacySub", {v: CONSENT.version}), privacySheet, "shell-privacy"),
+      oa ? row("chat", tShell("setContact"), "", () => openExternal(oa), "shell-contact") : null,
+      row("trash", tShell("setClear"), tShell("setClearSub"), () => { cacheClear(); toast(tShell("cleared")); }, "shell-clear")));
+}
+
+/* ---------- the object features use ---------- */
+const App = {
+  module: defineModule, register,
+  t: tShell, h, $, $$, icon, store, toast, sheet, closeSheet, fatal, skeleton, emptyState,
+  api, view, demo: DEMO, ApiError,
+  go: goRoute, open, back: () => $("#backBtn").click(), setBadge, setTitle,
+  link: go, openExternal, notMember,
+  fmt: {date: fmtDate, dateTime: fmtDT, time: fmtTime, money, stamp: fmtStamp},
+  settingsPanel, privacySheet, consent: consentText, meCard,
+  get lang(){ return S.lang; }, get demoMode(){ return S.demo ? S.demoMode : ""; }, get isDemo(){ return S.demo; },
+  get user(){ return {name: S.name, picture: S.picture}; },
+  get config(){ return Object.assign({}, CONFIG); },
+  ready: READY,
+  _shellText(d){ ["th", "en"].forEach(l => Object.assign(SHELL_TEXT[l], (d || {})[l] || {})); },
+  _consent(d){ CONSENT.version = d.version; CONSENT.th = d.th; CONSENT.en = d.en; }
+};
+App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account"}});
+App._consent({"version":"v3-2026-11","note":"The one consent wording (brief 10.2). Changing it means a new version: change version here, CONSENT_VERSION in backend/core/00-config.gs, and the consent/consentSmall text and CONSENT_VERSION in sign-up.html and event-join.html. tools/check.js fails if any of them differ.","th":{"consent":"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน","consentSmall":"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล"},"en":{"consent":"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.","consentSmall":"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat."}});
+// ---- app/features/home ----
+App.module("home", {"th":{"hello":"สวัสดี, {name}","helloPlain":"สวัสดี","sTodo":"กิจกรรมที่ยังไม่ได้ลงทะเบียน","sMine":"กิจกรรมที่ลงทะเบียนไว้","sClaims":"คำขอเบิกที่รอดำเนินการ","upcomingT":"กิจกรรมที่กำลังจะมาถึง","segAll":"ทั้งหมด ({n})","segTodo":"ยังไม่ลงทะเบียน ({n})","regOpen":"เปิดรับสมัคร · ปิด {d}","regUpcoming":"เปิดรับสมัคร {d}","regClosed":"ปิดรับสมัครแล้ว","registered":"ลงทะเบียนแล้ว","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมาถึง","emptyUpD":"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่","emptyTodoT":"ลงทะเบียนครบทุกกิจกรรมแล้ว","emptyTodoD":"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”","statusT":"ติดตามสถานะ","segEvents":"กิจกรรมของฉัน","segClaims":"คำขอเบิก","stUpcoming":"กำลังจะมาถึง","stEnded":"จบแล้ว","stCancelled":"ยกเลิกแล้ว","cPending":"รออนุมัติ","cApproved":"อนุมัติแล้ว รอโอน","cRejected":"ไม่อนุมัติ","cPaid":"โอนเงินแล้ว","stepSent":"ส่งคำขอ","stepApproved":"อนุมัติ","stepPaid":"โอนเงิน","stepRejected":"ไม่อนุมัติ","rejectedHint":"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล","refL":"เลขอ้างอิง {ref}","sentL":"ส่งเมื่อ {d}","itemsL":"{n} รายการ","emptyEvT":"ยังไม่เคยลงทะเบียนกิจกรรม","emptyEvD":"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน","emptyClT":"ยังไม่มีคำขอเบิก","emptyClD":"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่","claimsWait":"กำลังโหลดคำขอเบิกล่าสุด (คำขอเบิกไม่ถูกเก็บไว้ในเครื่อง)","moreN":"แสดง {n} รายการล่าสุด","newClaim":"ขอเบิกค่าใช้จ่าย","refresh":"รีเฟรช","todoConsent":"เราปรับข้อตกลงความเป็นส่วนตัว (ฉบับ {v}) แตะเพื่ออ่านและยอมรับ ใช้งานต่อได้ตามปกติ"},"en":{"hello":"Hello, {name}","helloPlain":"Hello","sTodo":"Events you haven't registered for","sMine":"Events you're registered for","sClaims":"Claims in progress","upcomingT":"Upcoming events","segAll":"All ({n})","segTodo":"Not registered ({n})","regOpen":"Open · closes {d}","regUpcoming":"Opens {d}","regClosed":"Registration closed","registered":"Registered","emptyUpT":"No upcoming events","emptyUpD":"New events will show up here.","emptyTodoT":"You're registered for every event","emptyTodoD":"See them all in the “All” tab.","statusT":"Track status","segEvents":"My events","segClaims":"My claims","stUpcoming":"Upcoming","stEnded":"Ended","stCancelled":"Cancelled","cPending":"Waiting for approval","cApproved":"Approved, payment pending","cRejected":"Not approved","cPaid":"Paid","stepSent":"Sent","stepApproved":"Approved","stepPaid":"Paid","stepRejected":"Not approved","rejectedHint":"Message the approvers in this chat to ask why.","refL":"Reference {ref}","sentL":"Sent {d}","itemsL":"{n} items","emptyEvT":"No registrations yet","emptyEvD":"Pick an event above to register.","emptyClT":"No claims yet","emptyClD":"Expense claims you send will show up here.","claimsWait":"Loading your latest claims (claims are never saved on the phone)","moreN":"Showing your latest {n}","newClaim":"New expense claim","refresh":"Refresh","todoConsent":"We updated the privacy notice (version {v}). Tap to read and accept. You can keep using the app."}}, function (App, t) {
+// Home tab of the LINE app (moved from the old index.html landing page, 8 Nov 2026).
+// Data: home.bootstrap (backend/features/home). The shell shows the copy saved on this phone first, then refreshes;
+// the saved copy never holds claims (the shell removes any key about claims, PromptPay, payees or receipts).
+const $ = App.$, h = App.h, F = App.fmt;
+const S = { upTab: "all", stTab: "events" };
+const screen = $("#home-screen");
+const cfg = App.config;
+
+const data = App.view({
+  key: "home", action: "home.bootstrap", cache: true, el: $("#home-upList"),
+  skeleton(){ $("#home-stats").replaceChildren(); $("#home-todo").replaceChildren(); $("#home-upList").replaceChildren(App.skeleton([114, 114])); $("#home-stList").replaceChildren(App.skeleton([96])); },
+  render
+});
+
+function fillText(){ App.$$("[data-t]", screen).forEach(el => { el.textContent = t(el.dataset.t); }); $("#home-refresh").textContent = t("refresh"); $("#home-newClaim").replaceChildren(App.icon("plus"), t("newClaim")); }
+function eventUrl(id){ return cfg.EVENT_JOIN_LIFF_URL ? cfg.EVENT_JOIN_LIFF_URL + "?event=" + encodeURIComponent(id) : ""; }
+function setSeg(pairs){ pairs.forEach(([el, on]) => el.setAttribute("aria-selected", on ? "true" : "false")); }
+const chip = (cls, ic, text) => h("span", {class: "chip " + cls}, ic ? App.icon(ic) : null, text);
+
+function render(d, meta){
+  const claimsKnown = Array.isArray(d.myClaims);           // not known while showing the saved copy (claims are never saved)
+  const myClaims = claimsKnown ? d.myClaims : [];
+  const canClaim = d.canClaim !== undefined ? d.canClaim : (d.role === "organizer" || d.role === "approver");
+  const upcoming = d.upcoming || [], myEvents = d.myEvents || [];
+  const todo = upcoming.filter(e => !e.myReference);
+  const mine = myEvents.filter(e => e.status === "upcoming");
+  const openClaims = myClaims.filter(c => c.status === "Pending" || c.status === "Approved");
+  const showClaims = canClaim || myClaims.length > 0;
+
+  // to-dos (consent v3 for members who accepted an older wording; sign-up.html asks again)
+  $("#home-todo").replaceChildren(...(d.needsConsent ? [h("button", {type: "button", class: "banner", id: "home-consentTodo", onclick: () => App.link(cfg.JOIN_LIFF_URL)},
+    App.icon("alert"), h("span", {text: t("todoConsent", {v: App.consent().version})}), App.icon("chevron"))] : []));
+  App.setBadge("home", !!d.needsConsent);
+
+  const stat = (n, label, hot, onclick, show) => show === false ? null :
+    h("button", {type: "button", class: "stat" + (hot ? " hot" : ""), onclick}, h("b", {text: String(n)}), h("span", {text: label}));
+  $("#home-stats").replaceChildren(...[
+    stat(todo.length, t("sTodo"), todo.length > 0, () => { S.upTab = "todo"; data.rerender(); $("#home-secUpcoming").scrollIntoView({behavior: "smooth"}); }),
+    stat(mine.length, t("sMine"), false, () => { S.stTab = "events"; data.rerender(); $("#home-secStatus").scrollIntoView({behavior: "smooth"}); }),
+    stat(claimsKnown ? openClaims.length : "–", t("sClaims"), false, () => { S.stTab = "claims"; data.rerender(); $("#home-secStatus").scrollIntoView({behavior: "smooth"}); }, showClaims)
+  ].filter(Boolean));
+
+  // upcoming events
+  $("#home-upAll").textContent = t("segAll", {n: upcoming.length}); $("#home-upTodo").textContent = t("segTodo", {n: todo.length});
+  setSeg([[$("#home-upAll"), S.upTab === "all"], [$("#home-upTodo"), S.upTab === "todo"]]);
+  const list = S.upTab === "todo" ? todo : upcoming;
+  $("#home-upList").replaceChildren(...(list.length ? list.map(evRow) :
+    [S.upTab === "todo" && upcoming.length ? App.emptyState(t("emptyTodoT"), t("emptyTodoD")) : App.emptyState(t("emptyUpT"), t("emptyUpD"))]));
+
+  // status: my events / my claims
+  if (!showClaims) S.stTab = "events";
+  $("#home-stSeg").hidden = !showClaims;
+  $("#home-stEvents").textContent = t("segEvents"); $("#home-stClaims").textContent = t("segClaims");
+  setSeg([[$("#home-stEvents"), S.stTab === "events"], [$("#home-stClaims"), S.stTab === "claims"]]);
+  let rows;
+  if (S.stTab === "claims" && !claimsKnown) rows = [h("p", {class: "home-wait", text: t("claimsWait")})];
+  else if (S.stTab === "claims") rows = myClaims.length ? myClaims.map(claimRow) : [App.emptyState(t("emptyClT"), t("emptyClD"))];
+  else rows = myEvents.length ? myEvents.map(myEventRow) : [App.emptyState(t("emptyEvT"), t("emptyEvD"))];
+  $("#home-stList").replaceChildren(...rows);
+  const n = S.stTab === "claims" ? myClaims.length : myEvents.length;
+  $("#home-stMore").hidden = n < 20; $("#home-stMore").textContent = t("moreN", {n});
+  $("#home-newClaim").hidden = !(canClaim && S.stTab === "claims");
+  $("#home-asOf").textContent = meta && meta.stale ? App.t("savedAt", {d: F.stamp(meta.at)}) : App.t("asOf", {d: F.dateTime(d.now)});
+  S.firstName = d.firstName || "";
+  App.setTitle();
+}
+
+function evChip(ev){
+  if (ev.myReference) return chip("ok", "check", t("registered"));
+  if (ev.regState === "open") return chip("info", "clock", t("regOpen", {d: F.dateTime(ev.regClose)}));
+  if (ev.regState === "upcoming") return chip("warn", "clock", t("regUpcoming", {d: F.dateTime(ev.regOpen)}));
+  return chip("", "x", t("regClosed"));
+}
+function evRow(ev){
+  const when = [F.date(ev.date, {year: undefined}), ev.startTime].filter(Boolean).join(" · ");
+  const first = String(ev.name || "").trim().split(/\s+/)[0] || "";
+  return h("button", {type: "button", class: "card home-ev", "data-event": ev.id, onclick: () => App.open("event", ev.id, eventUrl(ev.id))},
+    h("span", {class: "home-poster", "aria-hidden": "true", text: first}),
+    h("span", {class: "home-evbody"},
+      h("span", {class: "home-when", text: when}),
+      h("span", {class: "home-name", text: ev.name}),
+      ev.location ? h("span", {class: "home-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null,
+      evChip(ev)));
+}
+function myEventRow(r){
+  const st = {upcoming: ["info", "clock", "stUpcoming"], ended: ["", "check", "stEnded"], cancelled: ["bad", "x", "stCancelled"]}[r.status] || ["", null, ""];
+  const when = [F.date(r.date), F.time(r)].filter(Boolean).join(" · ");
+  const body = [h("span", {class: "home-top"}, h("b", {text: r.eventName}), chip(st[0], st[1], t(st[2]))),
+    when ? h("span", {class: "home-meta", text: when}) : null,
+    r.location ? h("span", {class: "home-meta"}, App.icon("pin"), h("span", {text: r.location})) : null,
+    h("span", {class: "home-meta", text: t("refL", {ref: r.reference})})];
+  return r.status === "upcoming"
+    ? h("button", {type: "button", class: "card stack", style: "gap:4px", "data-ref": r.reference, onclick: () => App.open("event", r.eventId, eventUrl(r.eventId))}, ...body)
+    : h("div", {class: "card stack", style: "gap:4px", "data-ref": r.reference}, ...body);
+}
+function claimRow(c){
+  const cls = {Pending: ["warn", "clock"], Approved: ["info", "check"], Rejected: ["bad", "x"], Paid: ["ok", "check"]}[c.status] || ["", null];
+  const reached = {Pending: 1, Approved: 2, Paid: 3, Rejected: 1}[c.status] || 1;
+  const step = (i, key, bad) => h("span", {class: "home-s" + (bad ? " home-bad" : i <= reached ? " home-done" : "")}, h("span", {class: "home-dot"}), t(key));
+  const line = i => h("span", {class: "home-ln" + (c.status !== "Rejected" && i < reached ? " home-done" : "")});
+  const steps = c.status === "Rejected"
+    ? h("div", {class: "home-steps", "aria-hidden": "true"}, step(1, "stepSent"), line(1), step(2, "stepRejected", true))
+    : h("div", {class: "home-steps", "aria-hidden": "true"}, step(1, "stepSent"), line(1), step(2, "stepApproved"), line(2), step(3, "stepPaid"));
+  return h("div", {class: "card stack", style: "gap:4px", "data-ref": c.reference},
+    h("span", {class: "home-top"}, h("b", {text: c.eventName}), chip(cls[0], cls[1], t("c" + c.status))),
+    h("span", {class: "home-amount", text: F.money(c.total)}),
+    h("span", {class: "home-meta", text: t("itemsL", {n: c.items}) + " · " + t("sentL", {d: F.dateTime(c.submittedAt)})}),
+    h("span", {class: "home-meta", text: t("refL", {ref: c.reference})}),
+    steps,
+    c.status === "Rejected" ? h("span", {class: "home-hint", text: t("rejectedHint")}) : null);
+}
+
+$("#home-upAll").addEventListener("click", () => { S.upTab = "all"; data.rerender(); });
+$("#home-upTodo").addEventListener("click", () => { S.upTab = "todo"; data.rerender(); });
+$("#home-stEvents").addEventListener("click", () => { S.stTab = "events"; data.rerender(); });
+$("#home-stClaims").addEventListener("click", () => { S.stTab = "claims"; data.rerender(); });
+$("#home-newClaim").addEventListener("click", () => App.link(cfg.REIMBURSE_LIFF_URL));
+$("#home-refresh").addEventListener("click", () => data.refresh());
+
+App.register({
+  name: "home",
+  tab: "home",
+  screen: "home-screen",
+  title: () => ({sub: cfg.ORG_NAME || App.t("appName"), title: (S.firstName || App.user.name) ? t("hello", {name: S.firstName || App.user.name}) : t("helloPlain")}),
+  show(ctx){ fillText(); if (ctx.first) data.start(); else data.refresh(); },
+  onLang(){ fillText(); data.rerender(); }
+});
+
+/* Demo answers (no API_URL in config.js): ?demo=participant (default) | organizer | new */
+App.demo["home.bootstrap"] = function (body, mode){
+  const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+  const now = iso(0) + " 10:00";
+  const upcoming = [
+    {id: "EV-DEMO-01", name: "Community Meetup – November", date: iso(9), startTime: "18:30", endTime: "21:00", location: "Co-working space, Ari", regOpen: iso(-3) + " 09:00", regClose: iso(7) + " 23:59", regState: "open", hasPoster: false, myReference: ""},
+    {id: "EV-DEMO-02", name: "Board Game Night", date: iso(16), startTime: "19:00", endTime: "22:00", location: "Cafe, Phrom Phong", regOpen: iso(-1) + " 09:00", regClose: iso(14) + " 23:59", regState: "open", hasPoster: false, myReference: "RG-DEMO-0012"},
+    {id: "EV-DEMO-03", name: "Year-end Gathering", date: iso(40), startTime: "17:00", endTime: "22:00", location: "Rooftop, Sukhumvit 24", regOpen: iso(10) + " 09:00", regClose: iso(37) + " 23:59", regState: "upcoming", hasPoster: false, myReference: ""}
+  ];
+  const myEvents = [
+    {reference: "RG-DEMO-0012", eventId: "EV-DEMO-02", eventName: "Board Game Night", date: iso(16), startTime: "19:00", endTime: "22:00", location: "Cafe, Phrom Phong", registeredAt: iso(-1) + " 12:10", status: "upcoming"},
+    {reference: "RG-DEMO-0007", eventId: "EV-DEMO-00", eventName: "Community Meetup – October", date: iso(-20), startTime: "18:30", endTime: "21:00", location: "Co-working space, Ari", registeredAt: iso(-30) + " 20:15", status: "ended"},
+    {reference: "RG-DEMO-0003", eventId: "EV-DEMO-99", eventName: "Picnic in the Park", date: iso(-45), startTime: "09:00", endTime: "12:00", location: "Benjakitti Park", registeredAt: iso(-50) + " 08:00", status: "cancelled"}
+  ];
+  const myClaims = [
+    {reference: "RC-DEMO-0021", status: "Pending", eventName: "Community Meetup – November", total: 1850, items: 3, submittedAt: iso(-1) + " 21:40", decidedAt: ""},
+    {reference: "RC-DEMO-0015", status: "Approved", eventName: "Community Meetup – October", total: 4200.5, items: 5, submittedAt: iso(-18) + " 09:12", decidedAt: iso(-15) + " 10:00"},
+    {reference: "RC-DEMO-0009", status: "Paid", eventName: "Picnic in the Park", total: 960, items: 2, submittedAt: iso(-44) + " 13:05", decidedAt: iso(-40) + " 16:30"},
+    {reference: "RC-DEMO-0004", status: "Rejected", eventName: "Picnic in the Park", total: 320, items: 1, submittedAt: iso(-44) + " 13:20", decidedAt: iso(-40) + " 16:31"}
+  ];
+  if (mode === "new") return {ok: true, now, role: "participant", firstName: "มานี", needsConsent: true, upcoming: upcoming.map(e => Object.assign({}, e, {myReference: ""})), myEvents: [], canClaim: false, myClaims: []};
+  const org = mode === "organizer";
+  return {ok: true, now, role: org ? "organizer" : "participant", firstName: "สมชาย", needsConsent: false, upcoming, myEvents, canClaim: org, myClaims: org ? myClaims : []};
+};
+});
+/* ---------- start: draw at once (saved copy or skeleton), then sign in with LINE, then refresh ---------- */
+async function initLiff(){
+  if (S.demo || !CONFIG.LIFF_ID || !window.liff){ S.name = "Kim (demo)"; S.owner = "demo"; return true; }
+  await liff.init({liffId: CONFIG.LIFF_ID});
+  if (!liff.isLoggedIn()){ liff.login({redirectUri: location.href}); return false; }
+  S.inClient = liff.isInClient();
+  S.token = liff.getIDToken();               // LINE ID token (openid scope); Code.gs checks it with LINE, then answers with a session
+  const dec = (liff.getDecodedIDToken && liff.getDecodedIDToken()) || {};
+  S.name = dec.name || ""; S.picture = dec.picture || "";
+  let sub = dec.sub || "";
+  if (!S.name || !sub){ try{ const p = await liff.getProfile(); S.name = S.name || p.displayName || ""; S.picture = S.picture || p.pictureUrl || ""; sub = sub || p.userId || ""; }catch(e){} }
+  S.owner = await ownerOf(sub);
+  if (!store.get("app.lang") && !store.get("home.lang")){ const l = ((liff.getLanguage && liff.getLanguage()) || "").toLowerCase(); if (l) S.lang = l.startsWith("th") ? "th" : "en"; }
+  return true;
 }
 (async function boot(){
-  const saved = store.get("home.lang"); if (saved) lang = saved;
+  S.lang = store.get("app.lang") || store.get("home.lang") || CONFIG.DEFAULT_LANG;
+  S.theme = store.get("app.theme") || "auto";
+  applyTheme();
+  buildTabs();
+  $("#tabbar").hidden = false;
+  $("#demoBanner").hidden = !S.demo;
   applyLang();
-  $("#demoBanner").hidden = !demo;
+  $("#shell-loading").hidden = true;
+  booted = true;
+  render(initialRoute());                    // instant: what this phone saw last time, or a skeleton
   try{ if (!(await initLiff())) return; }
-  catch(e){ console.error(e); applyLang(); fatal(t("liffFail"), t("errLoadD")); return; }
-  applyLang(); renderHeader();
-  await load();
+  catch(e){ console.error(e); fatal(tShell("liffFail"), tShell("errLoadD")); return; }
+  S.liffDone = true;
+  // a saved copy from another LINE account on this phone is dropped before anything new is shown
+  const c = store.get(cacheName());
+  if (c && c.owner && S.owner && c.owner !== S.owner){ cacheClear(); VIEWS.forEach(v => { if (v.meta && v.meta.stale) v.reset(); }); }
+  if (S.route) history.replaceState(null, "", location.pathname + location.search + "#" + encodeURIComponent(S.route.name) + (S.route.arg ? "/" + encodeURIComponent(S.route.arg) : ""));
+  renderAvatar();
+  applyLang();
+  readyResolve();
 })();
-
-$("#langBtn").addEventListener("click", () => { lang = lang === "th" ? "en" : "th"; store.set("home.lang", lang); applyLang(); });
-$("#upAll").addEventListener("click", () => { state.upTab = "all"; renderHome(); });
-$("#upTodo").addEventListener("click", () => { state.upTab = "todo"; renderHome(); });
-$("#stEvents").addEventListener("click", () => { state.stTab = "events"; renderHome(); });
-$("#stClaims").addEventListener("click", () => { state.stTab = "claims"; renderHome(); });
-$("#newClaimBtn").addEventListener("click", () => go(CONFIG.REIMBURSE_LIFF_URL));
-$("#memberBtn").addEventListener("click", () => go(CONFIG.JOIN_LIFF_URL));
-$("#refreshBtn").addEventListener("click", load);
 </script>
 </body>
 </html>

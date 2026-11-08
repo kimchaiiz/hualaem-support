@@ -257,7 +257,7 @@ const CONFIG = {
   HOME_LIFF_URL: cfgLiffUrl(SHARED_LIFF.home),           // landing page index.html. Shows "Back to home" after registering
   // "Send to friends in LINE" needs shareTargetPicker switched ON for this LIFF app in the LINE Developers console; without it the page copies the link instead.
   SEND_CHAT_MESSAGE: true,// post a confirmation in the LINE chat (needs the chat_message.write scope)
-  CONSENT_VERSION: "v2-2026-11",   // must match CONSENT_VERSION in Code.gs and sign-up.html (it describes the wording on this page, so it is not in config.js)
+  CONSENT_VERSION: "v3-2026-11",   // must match app/shell/consent.json, CONSENT_VERSION in Code.gs and sign-up.html (tools/check.js; it describes the wording on this page, so it is not in config.js)
   DEFAULT_LANG: "th"
 };
 
@@ -273,8 +273,8 @@ const T = {
   stRegistered:"คุณลงทะเบียนกิจกรรมนี้แล้ว", stRegisteredD:"เลขอ้างอิง {ref}", stUpcoming:"ยังไม่เปิดรับสมัคร", stUpcomingD:"เปิดรับสมัคร {d}", stClosed:"ปิดรับสมัครแล้ว", stClosedD:"ขอบคุณที่สนใจ ติดตามกิจกรรมครั้งถัดไป",
   yourInfo:"ข้อมูลผู้ลงทะเบียน", prefilled:"เราเติมข้อมูลจากครั้งก่อนให้แล้ว ตรวจสอบหรือแก้ไขได้",
   firstName:"ชื่อ", lastName:"นามสกุล", email:"อีเมล", phone:"เบอร์มือถือ", ig:"Instagram", optional:"(ไม่บังคับ)",
-  consent:"ฉันยินยอมให้ {org} เก็บและใช้ชื่อ-นามสกุล สถานะ (ศึกษา/ทำงาน) ชื่อสถานศึกษาหรือที่ทำงาน บัญชี LINE และข้อมูลติดต่อที่ฉันให้ตอนลงทะเบียนกิจกรรม (อีเมล เบอร์มือถือ Instagram) เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียน และติดต่อเรื่องกิจกรรม",
-  consentSmall:"ข้อมูลเปิดให้เฉพาะทีมผู้จัดงาน และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ขอดูหรือขอลบข้อมูลได้โดยติดต่อผู้จัดงานทาง LINE นี้",
+  consent:"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน",
+  consentSmall:"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล",
   orgFallback:"ผู้จัดกิจกรรม",
   submit:"ลงทะเบียน", submitting:"กำลังส่ง…", notOpenBtn:"ยังไม่เปิดรับสมัคร", closedBtn:"ปิดรับสมัครแล้ว", doneBtn:"ลงทะเบียนแล้ว",
   req:"กรอกข้อมูลนี้", emailBad:"รูปแบบอีเมลไม่ถูกต้อง", phoneBad:"ใส่เบอร์มือถือ 9–10 หลัก เช่น 0812345678", igBad:"ใช้ได้เฉพาะ a-z, 0-9, จุด และขีดล่าง (ไม่เกิน 30 ตัว)", consentReq:"กรุณายอมรับเพื่อลงทะเบียน",
@@ -300,8 +300,8 @@ const T = {
   stRegistered:"You're registered for this event", stRegisteredD:"Reference {ref}", stUpcoming:"Registration isn't open yet", stUpcomingD:"Opens {d}", stClosed:"Registration has closed", stClosedD:"Thanks for your interest. See you at the next one.",
   yourInfo:"Your details", prefilled:"We filled in your details from last time. Check or edit them.",
   firstName:"First name", lastName:"Last name", email:"Email", phone:"Mobile number", ig:"Instagram", optional:"(optional)",
-  consent:"I agree that {org} may collect and use my name, status (studying or working), school or employer, LINE account and the contact details I give when registering for events (email, mobile number, Instagram) to review my membership, manage registrations and contact me about events.",
-  consentSmall:"Only the organizing team can see it, and it is used to fill in the form for you next time. To see or delete your data, message the organizers in this LINE chat.",
+  consent:"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.",
+  consentSmall:"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat.",
   orgFallback:"the organizers",
   submit:"Register", submitting:"Sending…", notOpenBtn:"Not open yet", closedBtn:"Registration closed", doneBtn:"Registered",
   req:"Required", emailBad:"Email doesn't look right", phoneBad:"Enter a 9–10 digit mobile number, e.g. 0812345678", igBad:"Use a-z, 0-9, dots and underscores only (max 30)", consentReq:"Please agree to register",
