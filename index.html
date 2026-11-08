@@ -171,6 +171,54 @@ body.no-tabbar .toast{bottom:calc(16px + var(--safe-b))}
 .fatal .btn{margin-top:20px}
 .asof{text-align:center;font-size:12px;line-height:16px;color:var(--muted);margin-top:16px}
 @media (prefers-reduced-motion: reduce){ .sheet{animation:none} *{scroll-behavior:auto!important} }
+
+/* ---------- shared form pieces (C1, DESIGN.md "Form field", "Section toggle", "Detail screens") ----------
+   App.field() builds: <div class="field"><label>Name<span class="req"> *</span></label><input class="input"><p class="hint"><p class="err"></div>
+   Every control is 48 px tall with 16 px text (iPhone does not zoom, date and time look like text boxes). */
+.field{display:flex;flex-direction:column;gap:6px;min-width:0;margin:0;padding:0;border:0}
+.field>label,.field>legend{font-size:14px;line-height:20px;font-weight:600;color:var(--ink);padding:0}
+.field .req{color:var(--error)}
+.field .opt{color:var(--muted);font-weight:500}
+.input{display:block;width:100%;min-width:0;height:48px;margin:0;padding:0 14px;border-radius:var(--r-sm);border:1px solid var(--field-border);background:var(--field);color:var(--ink);
+  font-size:16px;line-height:24px;-webkit-appearance:none;appearance:none}
+textarea.input{height:auto;min-height:96px;padding:12px 14px;resize:vertical}
+select.input{padding-right:40px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 21px,calc(100% - 15px) 21px;background-size:5px 5px;background-repeat:no-repeat}
+input.input[type="date"],input.input[type="time"],input.input[type="datetime-local"]{line-height:46px;text-align:left}
+input.input::-webkit-date-and-time-value{text-align:left;min-height:24px}
+input.input::-webkit-datetime-edit{padding:0}
+.input::placeholder{color:var(--muted)}
+.input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+.input[aria-invalid="true"],.field.bad .input{border:2px solid var(--error)}
+.field .hint{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.field .err{margin:0;display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;color:var(--error);font-weight:500}
+.field .err svg{width:16px;height:16px;flex:none}
+
+/* switch 52 x 32 (on = primary) and the organizer's section toggle row */
+.switch{width:52px;height:32px;flex:none;padding:3px;border-radius:var(--r-pill);border:0;background:var(--field-border);display:flex;justify-content:flex-start;align-items:center;cursor:pointer}
+.switch span{width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 2px rgba(15,31,30,.3);transition:transform .15s ease-out}
+.switch[aria-checked="true"]{background:var(--primary)}
+.switch[aria-checked="true"] span{transform:translateX(20px)}
+.switch-row{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 0}
+.switch-row .grow{flex:1;min-width:0;display:flex;flex-direction:column}
+.switch-row b{font-weight:600}
+.switch-row .sub{font-size:14px;line-height:20px;color:var(--muted)}
+.rows>.switch-row{border-top:1px solid var(--line)}
+.rows>.switch-row:first-child{border-top:0}
+
+/* sticky action bar of a detail screen: at most one primary and one secondary button (72 px + safe area) */
+.actionbar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-raised);padding:12px 16px calc(12px + var(--safe-b))}
+.actionbar .in{max-width:448px;margin:0 auto;display:flex;gap:12px}
+.actionbar .btn{flex:1}
+.actionbar-space{height:72px}
+body:has(.screen:not([hidden]) .actionbar) .toast{bottom:calc(84px + var(--safe-b))}
+
+/* share sheet rows: icon tile 40 (radius 12, field) */
+.share-rows{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:0 14px;margin-bottom:12px}
+.share-rows>.row:first-child{border-top:0}
+.share-tile{width:40px;height:40px;border-radius:var(--r-md);background:var(--field);color:var(--primary);display:grid;place-items:center;flex:none}
+.share-tile svg{width:20px;height:20px}
+@media (prefers-reduced-motion: reduce){ .switch span{transition:none} }
 /* home: event rows and status rows (DESIGN.md "Event card (list)") */
 .card.home-ev{display:flex;gap:14px;align-items:flex-start;padding:12px}
 .home-poster{width:72px;height:90px;flex:none;border-radius:var(--r-sm);background:var(--brand-teal);color:#FFFFFF;display:flex;align-items:flex-end;padding:8px;font-weight:700;font-size:15px;line-height:18px;overflow:hidden;word-break:break-word}
@@ -603,7 +651,7 @@ const CONFIG = {
   ADMIN_OA_ID: cfgText(SHARED.ADMIN_OA_ID),
   EVENT_JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.event),    // event-join.html (until the app has its own event page)
   REIMBURSE_LIFF_URL: cfgLiffUrl(SHARED_LIFF.reimburse), // expense-reimbursement.html
-  JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.join),           // sign-up.html. People who are not approved members are sent here
+  JOIN_LIFF_URL: cfgLiffUrl(SHARED_LIFF.join),           // sign-up.html (since C1 a forwarder back to this app). Used only while no feature provides the route "signup"
   DEFAULT_LANG: "th",
   CACHE_DAYS: 30                                          // a saved copy older than this is not shown
 };
@@ -649,7 +697,16 @@ const ICONS = {
   pin: [["path", {d:"M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"}], ["circle", {cx:12, cy:10, r:2.3}]],
   plus: [["path", {d:"M12 5v14M5 12h14"}]],
   x: [["path", {d:"M6 6l12 12M18 6 6 18"}]],
-  refresh: [["path", {d:"M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"}], ["path", {d:"M5 3v4h4M19 21v-4h-4"}]]
+  refresh: [["path", {d:"M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"}], ["path", {d:"M5 3v4h4M19 21v-4h-4"}]],
+  // added by C1 (8 Nov 2026) for event-team, events, registration: share sheet, invite, search, Manage
+  link: [["path", {d:"M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"}], ["path", {d:"M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"}]],
+  search: [["circle", {cx:11, cy:11, r:6.5}], ["path", {d:"m16 16 4.5 4.5"}]],
+  userPlus: [["circle", {cx:10, cy:8, r:4}], ["path", {d:"M3 20.5c1-3.7 3.8-5.5 7-5.5 1.5 0 2.9.4 4 1.1M18.5 14v6M15.5 17h6"}]],
+  copy: [["rect", {x:8.5, y:8.5, width:12, height:12, rx:2.5}], ["path", {d:"M15.5 5.5v-1A2 2 0 0 0 13.5 2.5h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1"}]],
+  users: [["circle", {cx:9, cy:8, r:3.8}], ["path", {d:"M2.5 20.5c.9-3.6 3.5-5.5 6.5-5.5s5.6 1.9 6.5 5.5M15.5 4.6a3.8 3.8 0 0 1 0 6.8M18 15.4c1.8.8 3 2.5 3.5 5.1"}]],
+  share: [["path", {d:"M12 15V3.5M7.5 8 12 3.5 16.5 8"}], ["path", {d:"M5 12.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6.5"}]],
+  image: [["rect", {x:3, y:4, width:18, height:16, rx:2.5}], ["circle", {cx:8.5, cy:9.5, r:1.8}], ["path", {d:"m21 15.5-5-5-9 9.5"}]],
+  camera: [["path", {d:"M4 8.5A1.5 1.5 0 0 1 5.5 7h2.3l1.5-2.5h5.4L16.2 7h2.3A1.5 1.5 0 0 1 20 8.5V18a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18z"}], ["circle", {cx:12, cy:13, r:3.5}]]
 };
 function icon(name, cls){
   const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
@@ -667,7 +724,8 @@ const S = {
   demo: !CONFIG.API_URL, demoMode: PARAMS.get("demo") || "participant",
   token: null, session: null,             // LINE ID token (first request) and the short server session (memory only, never saved)
   inClient: false, name: "", picture: "", owner: null, liffDone: false,
-  route: null, routeKey: "", tab: "home", def: null, depth: 0, scroll: {}, shown: {}, syncing: 0
+  route: null, routeKey: "", tab: "home", def: null, depth: 0, stack: [], scroll: {}, shown: {}, syncing: 0,
+  consumed: []                            // ?<route>=<arg> link parameters already opened (removed from the address after LINE login)
 };
 let readyResolve;
 const READY = new Promise(r => { readyResolve = r; });   // LINE login done: the token is ready
@@ -720,9 +778,20 @@ function openExternal(url){
   if (!url){ toast(tShell("noLink")); return; }
   if (S.inClient && window.liff && liff.openWindow) liff.openWindow({url, external: false}); else location.href = url;
 }
+/* Not an approved member (a server answer said NOT_MEMBER): open the in-app sign-up when a feature provides the route
+   "signup" (members: it shows the form, "waiting for review" or "not approved"), otherwise the old sign-up page.
+   The sign-up screen replaces the current one and Back goes to the Me tab, so Back never lands on a screen that sends
+   the person here again. No loops: sign-up.html forwards to this app with ?signup=1, and the app never sends anyone
+   back there while it has the route (check.js section 9 refuses a forwarder whose route no feature provides). */
 function notMember(){
   cacheClear();
-  if (CONFIG.JOIN_LIFF_URL){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
+  if (ROUTES.signup){
+    if (S.route && S.route.name === "signup") return;    // several screens can say so at once: open it once
+    S.tab = "me";
+    goRoute("signup", "", {replace: true});
+    return;
+  }
+  if (CONFIG.JOIN_LIFF_URL && PARAMS.get("signup") !== "1"){ location.replace(CONFIG.JOIN_LIFF_URL); return; }
   fatal(tShell("notMemberT"), tShell("notMemberD"));
 }
 
@@ -845,10 +914,12 @@ let booted = false;
 function defineModule(name, text, fn){
   if (MODS[name]) throw new Error("App module " + name + " is defined twice");
   MODS[name] = {name, text: text || {th: {}, en: {}}, spec: null};
-  fn(App, textFor(MODS[name].text));
+  // each feature gets the same App, except that what it adds (panels) is labelled with its own name
+  const scoped = Object.create(App, {addPanel: {value: (host, p) => addPanel(name, host, p)}});
+  fn(scoped, textFor(MODS[name].text));
 }
 // spec = { name, tab?, screen?: "<id>", title?: () => string | {title, sub}, show?: (ctx) => void, onLang?: () => void,
-//          routes?: { <route>: { screen: "<id>", title?, show?, tabBar?: false } } }
+//          routes?: { <route>: { screen: "<id>", title?, show?, tabBar?: false, once?: true (a step: replaced by the next detail screen) } } }
 function register(spec){
   const m = MODS[spec && spec.name];
   if (!m) throw new Error("App.register: name must be the feature folder name");
@@ -877,30 +948,63 @@ function parseHash(){
   const name = (i < 0 ? raw : raw.slice(0, i)).toLowerCase(), arg = i < 0 ? "" : raw.slice(i + 1);
   return name ? {name, arg} : null;
 }
+/* Where the app opens: #<route>/<arg> in the address, else ?tab=<tab>, else ?<route>=<arg> for any route a feature
+   registered (C1: ?event=ID, ?teamjoin=<token>, ?manage=<eventId>; dashes in a route name may be left out, so ?teamjoin
+   opens "team-join"; the value "1" or empty opens the route without an argument, e.g. ?manage=1), else Home.
+   A route parameter is opened once: it is removed from the address after LINE login, so a reload or Back keeps the
+   screen (it is in the #hash) without opening the link again. */
+function routeParam(){
+  const names = Object.keys(ROUTES).sort();
+  for (const [k, v] of PARAMS.entries()){
+    const key = k.toLowerCase();
+    const name = ROUTES[key] ? key : names.find(r => r.replace(/-/g, "") === key);
+    if (!name) continue;
+    const arg = String(v || "").trim().slice(0, 200);
+    return {name, arg: arg === "1" ? "" : arg, param: k};
+  }
+  return null;
+}
 function initialRoute(){
   const fromHash = parseHash();
   if (fromHash) return fromHash;
   const tab = (PARAMS.get("tab") || "").toLowerCase();
   if (TABS.indexOf(tab) >= 0) return {name: tab, arg: ""};
-  const ev = PARAMS.get("event");                          // old links: ...?event=ID opens the event page once a feature provides it
-  if (ev && ROUTES.event) return {name: "event", arg: ev};
+  const r = routeParam();
+  if (r){ S.consumed.push(r.param); return {name: r.name, arg: r.arg}; }
   return {name: "home", arg: ""};
 }
+// the address without the ?<route>= parameters already opened (other parameters such as ?tab and ?demo stay)
+function searchLeft(){
+  if (!S.consumed.length) return location.search;
+  const p = new URLSearchParams(location.search);
+  S.consumed.forEach(k => p.delete(k));
+  const q = p.toString();
+  return q ? "?" + q : "";
+}
 function routeKey(r){ return r.name + (r.arg ? "/" + r.arg : ""); }
-function goRoute(name, arg){
+/* Tabs replace the address (no history). A detail screen pushes one step, also from another detail screen (C1), so Back
+   from #event-edit/ID returns to #event/ID. Going to the screen just before the current one is the same as Back
+   (e.g. "save" on an edit form that opens the event page again): the step is taken back instead of pushing a new one,
+   so Back never shows the form again. A route registered with once: true (a step such as a "create" form) is replaced by
+   the next detail screen it opens, so Back skips it. opts.replace: replace the current screen (used by notMember). */
+function goRoute(name, arg, opts){
   const r = {name, arg: arg || ""}, isTab = TABS.indexOf(name) >= 0;
   if (!isTab && !ROUTES[name]) return false;
+  const key = routeKey(r);
   if (S.liffDone){                                          // never touch the address while LINE login is still starting
-    const url = location.pathname + location.search + "#" + encodeURIComponent(name) + (r.arg ? "/" + encodeURIComponent(r.arg) : "");
-    if (isTab || !S.route || TABS.indexOf(S.route.name) < 0) history.replaceState(null, "", url);
-    else { history.pushState(null, "", url); S.depth++; }
+    const url = location.pathname + searchLeft() + "#" + encodeURIComponent(name) + (r.arg ? "/" + encodeURIComponent(r.arg) : "");
+    const onDetail = S.route && TABS.indexOf(S.route.name) < 0;
+    if (isTab){ history.replaceState(null, "", url); S.depth = 0; S.stack = []; }
+    else if (onDetail && !(opts && opts.replace) && S.stack.length >= 2 && S.stack[S.stack.length - 2] === key){ history.back(); return true; }   // popstate draws it
+    else if ((opts && opts.replace) || !S.route || (onDetail && S.def && S.def.once)){ history.replaceState(null, "", url); if (S.stack.length) S.stack[S.stack.length - 1] = key; }
+    else { history.pushState(null, "", url); S.depth++; S.stack.push(key); }
   }
   render(r);
   return true;
 }
 // Open a detail screen if a feature provides it, otherwise the old page (e.g. event-join.html) so nothing breaks meanwhile.
 function open(route, arg, fallbackUrl){ if (ROUTES[route]) return goRoute(route, arg); go(fallbackUrl); return false; }
-window.addEventListener("popstate", () => { S.depth = Math.max(0, S.depth - 1); render(parseHash() || {name: S.tab, arg: ""}); });
+window.addEventListener("popstate", () => { S.depth = Math.max(0, S.depth - 1); S.stack.pop(); render(parseHash() || {name: S.tab, arg: ""}); });
 
 function placeholderDef(tab){
   return {
@@ -1006,7 +1110,11 @@ function privacySheet(){
     h("p", {text: c.consent}), h("p", {class: "t-small", text: c.small}),
     h("p", {class: "t-small", text: tShell("privDevice")}), h("p", {class: "t-small", text: tShell("privAsk")}));
 }
-function settingsPanel(){
+// settingsPanel(opts): opts.memberRow true/false shows or hides "My membership card". By default it is hidden when a
+// feature owns the Me tab (members shows the card there itself) and shown on the shell's placeholder Me.
+function settingsPanel(opts){
+  opts = opts || {};
+  const memberRow = opts.memberRow != null ? !!opts.memberRow : !TAB_OWNER.me;
   const seg = (label, opts, current, pick) => h("div", {class: "seg small", role: "radiogroup", "aria-label": label},
     opts.map(([val, text]) => h("button", {type: "button", role: "radio", "aria-checked": val === current ? "true" : "false", "data-val": val,
       onclick: e => { pick(val); $$("button", e.currentTarget.parentNode).forEach(b => b.setAttribute("aria-checked", b.dataset.val === val ? "true" : "false")); }, text})));
@@ -1021,10 +1129,110 @@ function settingsPanel(){
         seg(tShell("setLang"), [["th", "ไทย"], ["en", "EN"]], S.lang, setLang)),
       h("div", {class: "row"}, icon("theme", "lead"), h("span", {class: "grow", text: tShell("setTheme")}),
         seg(tShell("setTheme"), [["auto", tShell("themeAuto")], ["light", tShell("themeLight")], ["dark", tShell("themeDark")]], S.theme, setTheme)),
-      row("card", tShell("setMember"), tShell("setMemberSub"), () => go(CONFIG.JOIN_LIFF_URL), "shell-member"),
+      memberRow ? row("card", tShell("setMember"), tShell("setMemberSub"), () => { if (ROUTES.signup) goRoute("signup"); else go(CONFIG.JOIN_LIFF_URL); }, "shell-member") : null,
       row("shield", tShell("setPrivacy"), tShell("setPrivacySub", {v: CONSENT.version}), privacySheet, "shell-privacy"),
       oa ? row("chat", tShell("setContact"), "", () => openExternal(oa), "shell-contact") : null,
       row("trash", tShell("setClear"), tShell("setClearSub"), () => { cacheClear(); toast(tShell("cleared")); }, "shell-clear")));
+}
+
+/* ---------- panels: one feature's part inside another feature's screen (C1) ----------
+   A route has one owner, but some screens show parts from several features, e.g. Manage (event-team owns the route
+   "manage"): Participants (registration, order 10), Collaborators (event-team, 20), Expenses (reimbursement, 30).
+   A feature adds its part while its screen.js loads:
+     App.addPanel("manage", { order: 10, label: ctx => t("participants"), mount: (el, ctx) => { ...draw into el... } })
+   and the host screen asks App.panelsFor("manage") (sorted by order) and calls mount(el, ctx) for the chosen one.
+   name defaults to the feature's name (one panel per feature per host; a second one needs its own name starting with it).
+   Who may see what is still decided by the server on every request: a panel only draws what its own actions return. */
+const PANELS = {};
+function addPanel(owner, host, p){
+  if (!/^[a-z][a-z0-9-]*$/.test(String(host || ""))) throw new Error(owner + ": App.addPanel needs the host route or tab name");
+  if (!p || typeof p.mount !== "function") throw new Error(owner + ": App.addPanel(" + host + ") needs mount(el, ctx)");
+  const name = String(p.name || owner);
+  if (name !== owner && name.indexOf(owner + "-") !== 0) throw new Error(owner + ": a panel name must be " + owner + " or start with " + owner + "-");
+  const list = PANELS[host] || (PANELS[host] = []);
+  if (list.some(x => x.name === name)) throw new Error("panel " + name + " is already added to " + host);
+  list.push({name, owner, order: Number(p.order) || 50, label: typeof p.label === "function" ? p.label : (() => String(p.label || name)), mount: p.mount});
+}
+function panelsFor(host){ return (PANELS[host] || []).slice().sort((a, b) => a.order - b.order || (a.name < b.name ? -1 : 1)).map(x => Object.assign({}, x)); }
+
+/* ---------- shared form pieces (C1; DESIGN.md "Form field", "Section toggle", "Detail screens") ----------
+   Features may keep their own copies (members-field, events-field, event-team-input); new screens use these.
+   CSS: .field, .input, .hint, .err, .req, .opt, .switch, .switch-row, .actionbar (base.css). */
+let fieldSeq = 0;
+// App.field({ label, control?: element, type?, value?, attrs?, required?, optional?, hint?, id? })
+//  -> { el, input, setError(text | ""), value() }. Without control, a 48 px <input> is made (type "textarea" or "select" too).
+function field(o){
+  o = o || {};
+  let c = o.control;
+  if (!c){
+    const tag = o.type === "textarea" ? "textarea" : o.type === "select" ? "select" : "input";
+    c = h(tag, Object.assign({class: "input", type: tag === "input" ? (o.type || "text") : null, autocomplete: "off"}, o.attrs || {}),
+      tag === "select" ? (o.options || []).map(([v, text]) => h("option", {value: v, text})) : null);
+    if (o.value != null) c.value = o.value;
+  } else if (!c.classList.contains("input") && /^(INPUT|SELECT|TEXTAREA)$/.test(c.tagName)) c.classList.add("input");
+  if (!c.id) c.id = o.id || ("shell-f" + (++fieldSeq));
+  const err = h("p", {class: "err", id: c.id + "-err", hidden: true});
+  const hint = o.hint ? h("p", {class: "hint", id: c.id + "-hint", text: o.hint}) : null;
+  c.setAttribute("aria-describedby", [hint ? c.id + "-hint" : "", c.id + "-err"].filter(Boolean).join(" "));
+  if (o.required) c.setAttribute("aria-required", "true");
+  const lab = h("label", {for: c.id}, o.label || "",
+    o.required ? h("span", {class: "req", "aria-hidden": "true", text: " *"}) : o.optional ? h("span", {class: "opt", text: " (" + tShell("optional") + ")"}) : null);
+  const el = h("div", {class: "field"}, lab, c, hint, err);
+  return {
+    el, input: c, value: () => String(c.value || "").trim(),
+    setError(text){
+      el.classList.toggle("bad", !!text); c.setAttribute("aria-invalid", text ? "true" : "false");
+      if (text){ err.replaceChildren(icon("alert"), h("span", {text})); err.hidden = false; } else err.hidden = true;
+    }
+  };
+}
+// App.switch({ checked, label, onChange(on), id }) -> <button role="switch">; .checked to read, .set(on) to change
+function makeSwitch(o){
+  o = o || {};
+  const b = h("button", {type: "button", class: "switch", role: "switch", id: o.id, "aria-label": o.label || null, "aria-checked": o.checked ? "true" : "false"}, h("span", {"aria-hidden": "true"}));
+  Object.defineProperty(b, "checked", {get: () => b.getAttribute("aria-checked") === "true"});
+  b.set = on => b.setAttribute("aria-checked", on ? "true" : "false");
+  b.addEventListener("click", () => { b.set(!b.checked); if (o.onChange) o.onChange(b.checked); });
+  return b;
+}
+// App.switchRow({ title, desc?, checked, onChange, id }) -> a row with title, one line and the switch (organizer section toggles)
+function switchRow(o){
+  o = o || {};
+  const sw = makeSwitch({checked: o.checked, onChange: o.onChange, id: o.id, label: o.title});
+  const row = h("div", {class: "switch-row"}, h("span", {class: "grow"}, h("b", {text: o.title || ""}), o.desc ? h("span", {class: "sub", text: o.desc}) : null), sw);
+  row.switch = sw;
+  return row;
+}
+// App.actionBar(primaryButton, secondaryButton?) -> the sticky bar at the bottom of a detail screen (72 px + safe area).
+// Put it inside the screen's <section> so it disappears with the screen; a spacer keeps the last content visible.
+function actionBar(...buttons){
+  const bs = buttons.filter(Boolean);
+  return h("div", {class: "actionbar-wrap"}, h("div", {class: "actionbar-space", "aria-hidden": "true"}),
+    h("div", {class: "actionbar"}, h("div", {class: "in"}, ...bs)));
+}
+
+/* ---------- share sheet (C1): App.share({ text, url, title?, rows? }) ----------
+   Rows: LINE (LINE's share screen, a friend or group picker; no LIFF setting needed), copy link, the phone's own share
+   menu (when the phone has one). rows: extra rows a feature adds first, e.g. registration's Instagram story image:
+   [{ icon: "camera", title, sub?, onclick, id? }]. Never put personal data in text or url (the link is all people need). */
+async function copyText(text){
+  try{ if (navigator.clipboard && navigator.clipboard.writeText){ await navigator.clipboard.writeText(text); return true; } }catch(e){}
+  try{
+    const ta = h("textarea", {readonly: true, style: "position:fixed;top:0;left:0;opacity:0"}); ta.value = text;
+    document.body.append(ta); ta.select(); const ok = document.execCommand && document.execCommand("copy"); ta.remove(); return !!ok;
+  }catch(e){ return false; }
+}
+function share(o){
+  o = o || {};
+  const url = String(o.url || ""), text = String(o.text || "");
+  const msg = [text, url].filter(Boolean).join("\n");
+  const row = (ic, title, sub, onclick, id) => h("button", {type: "button", class: "row share-row", id, onclick},
+    h("span", {class: "share-tile", "aria-hidden": "true"}, icon(ic)), h("span", {class: "grow"}, h("span", {text: title}), sub ? h("span", {class: "sub", text: sub}) : null));
+  const rows = (o.rows || []).map(r => row(r.icon || "share", r.title, r.sub, () => { closeSheet(); r.onclick(); }, r.id));
+  rows.push(row("chat", tShell("shareLine"), tShell("shareLineSub"), () => { closeSheet(); openExternal("https://line.me/R/share?text=" + encodeURIComponent(msg)); }, "shell-share-line"));
+  if (url) rows.push(row("copy", tShell("shareCopy"), tShell("shareCopySub"), async () => { const ok = await copyText(url); closeSheet(); toast(ok ? tShell("shareCopied") : url); }, "shell-share-copy"));
+  if (navigator.share) rows.push(row("share", tShell("sharePhone"), tShell("sharePhoneSub"), () => { closeSheet(); navigator.share({title: o.title || text || undefined, text: text || undefined, url: url || undefined}).catch(() => {}); }, "shell-share-phone"));
+  return sheet(o.title || tShell("shareTitle"), h("div", {class: "share-rows"}, ...rows));
 }
 
 /* ---------- the object features use ---------- */
@@ -1036,6 +1244,8 @@ const App = {
   link: go, openExternal, notMember,
   fmt: {date: fmtDate, dateTime: fmtDT, time: fmtTime, money, stamp: fmtStamp},
   settingsPanel, privacySheet, consent: consentText, meCard,
+  addPanel(){ throw new Error("App.addPanel: call it from a feature's screen.js"); }, panelsFor,
+  field, switch: makeSwitch, switchRow, actionBar, share, copyText,
   get lang(){ return S.lang; }, get demoMode(){ return S.demo ? S.demoMode : ""; }, get isDemo(){ return S.demo; },
   get user(){ return {name: S.name, picture: S.picture}; },
   get config(){ return Object.assign({}, CONFIG); },
@@ -1043,7 +1253,7 @@ const App = {
   _shellText(d){ ["th", "en"].forEach(l => Object.assign(SHELL_TEXT[l], (d || {})[l] || {})); },
   _consent(d){ CONSENT.version = d.version; CONSENT.th = d.th; CONSENT.en = d.en; }
 };
-App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account"}});
+App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE","optional":"ไม่บังคับ","shareTitle":"แชร์","shareLine":"ส่งใน LINE","shareLineSub":"เลือกเพื่อนหรือกลุ่มใน LINE","shareCopy":"คัดลอกลิงก์","shareCopySub":"วางในแชตหรือโซเชียลอื่น","shareCopied":"คัดลอกลิงก์แล้ว","sharePhone":"แชร์ด้วยเมนูของโทรศัพท์","sharePhoneSub":"แอปอื่นในเครื่อง"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account","optional":"optional","shareTitle":"Share","shareLine":"Send in LINE","shareLineSub":"Pick friends or groups in LINE","shareCopy":"Copy link","shareCopySub":"Paste it in any chat or social app","shareCopied":"Link copied","sharePhone":"Share with the phone menu","sharePhoneSub":"Other apps on this phone"}});
 App._consent({"version":"v3-2026-11","note":"The one consent wording (brief 10.2). Changing it means a new version: change version here, CONSENT_VERSION in backend/core/00-config.gs, and the consent/consentSmall text and CONSENT_VERSION in sign-up.html and event-join.html. tools/check.js fails if any of them differ.","th":{"consent":"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน","consentSmall":"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล"},"en":{"consent":"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.","consentSmall":"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat."}});
 // ---- app/features/home ----
 App.module("home", {"th":{"hello":"สวัสดี, {name}","helloPlain":"สวัสดี","sTodo":"กิจกรรมที่ยังไม่ได้ลงทะเบียน","sMine":"กิจกรรมที่ลงทะเบียนไว้","sClaims":"คำขอเบิกที่รอดำเนินการ","upcomingT":"กิจกรรมที่กำลังจะมาถึง","segAll":"ทั้งหมด ({n})","segTodo":"ยังไม่ลงทะเบียน ({n})","regOpen":"เปิดรับสมัคร · ปิด {d}","regUpcoming":"เปิดรับสมัคร {d}","regClosed":"ปิดรับสมัครแล้ว","registered":"ลงทะเบียนแล้ว","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมาถึง","emptyUpD":"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่","emptyTodoT":"ลงทะเบียนครบทุกกิจกรรมแล้ว","emptyTodoD":"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”","statusT":"ติดตามสถานะ","segEvents":"กิจกรรมของฉัน","segClaims":"คำขอเบิก","stUpcoming":"กำลังจะมาถึง","stEnded":"จบแล้ว","stCancelled":"ยกเลิกแล้ว","cPending":"รออนุมัติ","cApproved":"อนุมัติแล้ว รอโอน","cRejected":"ไม่อนุมัติ","cPaid":"โอนเงินแล้ว","stepSent":"ส่งคำขอ","stepApproved":"อนุมัติ","stepPaid":"โอนเงิน","stepRejected":"ไม่อนุมัติ","rejectedHint":"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล","refL":"เลขอ้างอิง {ref}","sentL":"ส่งเมื่อ {d}","itemsL":"{n} รายการ","emptyEvT":"ยังไม่เคยลงทะเบียนกิจกรรม","emptyEvD":"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน","emptyClT":"ยังไม่มีคำขอเบิก","emptyClD":"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่","claimsWait":"กำลังโหลดคำขอเบิกล่าสุด (คำขอเบิกไม่ถูกเก็บไว้ในเครื่อง)","moreN":"แสดง {n} รายการล่าสุด","newClaim":"ขอเบิกค่าใช้จ่าย","refresh":"รีเฟรช","todoConsent":"เราปรับข้อตกลงความเป็นส่วนตัว (ฉบับ {v}) แตะเพื่ออ่านและยอมรับ ใช้งานต่อได้ตามปกติ"},"en":{"hello":"Hello, {name}","helloPlain":"Hello","sTodo":"Events you haven't registered for","sMine":"Events you're registered for","sClaims":"Claims in progress","upcomingT":"Upcoming events","segAll":"All ({n})","segTodo":"Not registered ({n})","regOpen":"Open · closes {d}","regUpcoming":"Opens {d}","regClosed":"Registration closed","registered":"Registered","emptyUpT":"No upcoming events","emptyUpD":"New events will show up here.","emptyTodoT":"You're registered for every event","emptyTodoD":"See them all in the “All” tab.","statusT":"Track status","segEvents":"My events","segClaims":"My claims","stUpcoming":"Upcoming","stEnded":"Ended","stCancelled":"Cancelled","cPending":"Waiting for approval","cApproved":"Approved, payment pending","cRejected":"Not approved","cPaid":"Paid","stepSent":"Sent","stepApproved":"Approved","stepPaid":"Paid","stepRejected":"Not approved","rejectedHint":"Message the approvers in this chat to ask why.","refL":"Reference {ref}","sentL":"Sent {d}","itemsL":"{n} items","emptyEvT":"No registrations yet","emptyEvD":"Pick an event above to register.","emptyClT":"No claims yet","emptyClD":"Expense claims you send will show up here.","claimsWait":"Loading your latest claims (claims are never saved on the phone)","moreN":"Showing your latest {n}","newClaim":"New expense claim","refresh":"Refresh","todoConsent":"We updated the privacy notice (version {v}). Tap to read and accept. You can keep using the app."}}, function (App, t) {
@@ -2671,7 +2881,8 @@ async function initLiff(){
   // a saved copy from another LINE account on this phone is dropped before anything new is shown
   const c = store.get(cacheName());
   if (c && c.owner && S.owner && c.owner !== S.owner){ cacheClear(); VIEWS.forEach(v => { if (v.meta && v.meta.stale) v.reset(); }); }
-  if (S.route) history.replaceState(null, "", location.pathname + location.search + "#" + encodeURIComponent(S.route.name) + (S.route.arg ? "/" + encodeURIComponent(S.route.arg) : ""));
+  // the screen goes into the #hash; a ?<route>=<arg> link parameter already opened leaves the address (opened once)
+  if (S.route) history.replaceState(null, "", location.pathname + searchLeft() + "#" + encodeURIComponent(S.route.name) + (S.route.arg ? "/" + encodeURIComponent(S.route.arg) : ""));
   renderAvatar();
   applyLang();
   readyResolve();
