@@ -204,7 +204,13 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
 .toast.good{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
 .loading{padding:40px 0;color:var(--muted);text-align:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-
+/* reimbursement (admin): Expenses tab */
+.reimb-claims{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+.reimb-claims th,.reimb-claims td{text-align:left;padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}
+.reimb-claims td.reimb-num,.reimb-claims th.reimb-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.reimb-wrap{overflow-x:auto}
+.reimb-details summary{cursor:pointer;color:var(--accent,#136B66);font-weight:600;margin-top:8px}
+.reimb-cat{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -220,6 +226,7 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
       <button class="tab" type="button" id="tabEvents" aria-pressed="true"><span data-i18n="events"></span></button>
       <button class="tab" type="button" id="tabMembers" aria-pressed="false"><span data-i18n="members"></span><span class="badge" id="memBadge" hidden></span></button>
       <button class="tab" type="button" id="tabEventTeam" aria-pressed="false"><span data-i18n="teamTab"></span><span class="badge" id="teamBadge" hidden></span></button>
+      <button class="tab" type="button" id="tabReimb" aria-pressed="false"><span data-i18n="reimbTab"></span><span class="badge" id="reimbBadge" hidden></span></button>
     </div>
   </nav>
 </header>
@@ -416,6 +423,19 @@ td.num{font-variant-numeric:tabular-nums;color:var(--muted)}
     </div>
     <p class="pdpa" data-i18n="teamPdpa"></p>
     <div class="rows" id="teamRows"><div class="loading" data-i18n="loading"></div></div>
+  </section>
+
+  <!-- EXPENSES (admin/features/reimbursement): budget and claims per event, read only -->
+  <section id="vReimb" hidden>
+    <div class="phead">
+      <div><h1 data-i18n="reimbTitle"></h1><p class="sub" id="reimbSub"></p></div>
+    </div>
+    <div class="tools">
+      <label class="sr" for="reimbSearch" data-i18n="search"></label>
+      <input type="search" id="reimbSearch" data-i18n-ph="reimbSearchPh">
+    </div>
+    <p class="pdpa" data-i18n="reimbPdpa"></p>
+    <div class="rows" id="reimbRows"><div class="loading" data-i18n="loading"></div></div>
   </section>
 </main>
 
@@ -1291,6 +1311,93 @@ Admin.register({
   name: "event-team",
   tab: { button: "tabEventTeam", view: "vEventTeam" },
   onLang: function(){ if (!$("#vEventTeam").hidden) teamRender(); }
+});
+
+// ---- admin/features/reimbursement ----
+Admin.addText({"th":{"reimbTab":"ค่าใช้จ่าย","reimbTitle":"ค่าใช้จ่ายของแต่ละกิจกรรม","reimbSub":"{n} งาน · คำขอรอตรวจ {w}","reimbOrphans":"คำขอ {n} รายการของงานที่ถูกลบไปแล้ว (ดูในชีต Claims)","reimbSearchPh":"ค้นหาชื่องาน รหัสงาน เลขอ้างอิง หรือชื่อคน","reimbPdpa":"ดูอย่างเดียว ผู้อนุมัติตรวจคำขอและงบในแอป LINE (จัดการงาน › ค่าใช้จ่าย) หน้านี้ไม่แสดงเลขพร้อมเพย์ ชื่อบัญชี และใบเสร็จ ข้อมูลเหล่านั้นอยู่ในชีต Claims และโฟลเดอร์ Drive ส่วนตัว","reimbNone":"ยังไม่มีงานที่มีงบหรือค่าใช้จ่าย","reimbEmpty":"ไม่พบงานที่ตรงกับคำค้น","reimbBudget":"งบที่อนุมัติ {b} · ใช้ไป {s} · เหลือ {r}","reimbNoBudget":"ยังไม่มีงบที่อนุมัติ · ใช้ไป {s}","reimbSplit":"รอตรวจ {w} · อนุมัติแล้ว {a} · จ่ายแล้ว {p} · ไม่อนุมัติ {x}","reimbWaiting":"รอตรวจ {n}","reimbBudgetReq":"งบรออนุมัติ {x}","reimbBudgetRej":"งบไม่อนุมัติ","reimbOver":"เกินงบ","reimbClosed":"ยกเลิกแล้ว","reimbClaimsN":"คำขอเบิก {n} รายการ","reimbThRef":"เลขอ้างอิง","reimbThWho":"ผู้เบิก","reimbThWhat":"รายการ","reimbThSent":"ส่งเมื่อ","reimbThStatus":"สถานะ","reimbThTotal":"ยอดรวม","reimbSt_Pending":"รอตรวจ","reimbSt_Approved":"อนุมัติแล้ว","reimbSt_Paid":"จ่ายแล้ว","reimbSt_Rejected":"ไม่อนุมัติ","reimbCat_venue":"สถานที่","reimbCat_food":"อาหารและเครื่องดื่ม","reimbCat_supplies":"อุปกรณ์และวัสดุ","reimbCat_print":"สิ่งพิมพ์และป้าย","reimbCat_transport":"เดินทางและขนส่ง","reimbCat_other":"อื่น ๆ"},"en":{"reimbTab":"Expenses","reimbTitle":"Expenses per event","reimbSub":"{n} events · {w} claims waiting","reimbOrphans":"{n} claims of deleted events (see the Claims tab)","reimbSearchPh":"Search event name, ID, reference or person","reimbPdpa":"Read only. Approvers decide claims and budgets in the LINE app (Manage › Expenses). This page never shows PromptPay numbers, account names or receipts: they stay in the Claims tab and the private Drive folder.","reimbNone":"No events with a budget or expenses yet","reimbEmpty":"No event matches your search","reimbBudget":"Approved budget {b} · spent {s} · left {r}","reimbNoBudget":"No approved budget · spent {s}","reimbSplit":"Waiting {w} · approved {a} · paid {p} · not approved {x}","reimbWaiting":"{n} waiting","reimbBudgetReq":"Budget waiting {x}","reimbBudgetRej":"Budget not approved","reimbOver":"Over budget","reimbClosed":"Cancelled","reimbClaimsN":"{n} claims","reimbThRef":"Reference","reimbThWho":"Claimant","reimbThWhat":"What","reimbThSent":"Sent","reimbThStatus":"Status","reimbThTotal":"Total","reimbSt_Pending":"Waiting","reimbSt_Approved":"Approved","reimbSt_Paid":"Paid","reimbSt_Rejected":"Not approved","reimbCat_venue":"Venue","reimbCat_food":"Food & drinks","reimbCat_supplies":"Equipment & supplies","reimbCat_print":"Printing & signage","reimbCat_transport":"Transport","reimbCat_other":"Other"}});
+/* =====================================================================
+   Expenses (reimbursement, S7): budget, spent, remaining, by category and every claim per event (brief 10.3).
+   Read only: approvers decide claims in the LINE app (Manage › Expenses or #expenses); admins can still edit the Claims tab.
+   No PromptPay numbers, payee names or receipt links ever reach this page. Every name is prefixed "reimb".
+   Shared helpers come from the shell: $, h, t, api, show, toast, fmtDate, fmtDT, fmtWhen.
+   ===================================================================== */
+let reimbData = null;
+const reimbMoney = n => "฿" + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(Number(n) || 0);
+const REIMB_CATS = ["venue", "food", "supplies", "print", "transport", "other"];
+async function reimbLoad(){
+  show("vReimb");
+  $("#reimbRows").replaceChildren(h("div", {class: "loading", text: t("loading")}));
+  try{ reimbData = await api("admin.expenses"); reimbRender(); }
+  catch(e){ $("#reimbRows").replaceChildren(h("div", {class: "empty"}, h("h2", {text: e.message}))); }
+}
+function reimbRender(){
+  if (!reimbData) return;
+  const evs = reimbData.events;
+  const waiting = evs.reduce((s, e) => s + e.totals.waitingCount, 0);
+  $("#reimbSub").textContent = t("reimbSub", {n: evs.length, w: waiting}) + (reimbData.orphanClaims ? " · " + t("reimbOrphans", {n: reimbData.orphanClaims}) : "");
+  const b = $("#reimbBadge"); b.hidden = !waiting; b.textContent = String(waiting);
+  if (!evs.length){ $("#reimbRows").replaceChildren(h("div", {class: "empty"}, h("h2", {text: t("reimbNone")}))); return; }
+  const q = $("#reimbSearch").value.trim().toLowerCase();
+  const list = evs.filter(e => !q || [e.event.id, e.event.name, e.claims.map(c => c.reference + " " + c.who + " " + c.lineName + " " + c.first).join(" ")].join(" ").toLowerCase().includes(q));
+  if (!list.length){ $("#reimbRows").replaceChildren(h("div", {class: "empty"}, h("p", {text: t("reimbEmpty")}))); return; }
+  $("#reimbRows").replaceChildren(...list.map(reimbRow));
+}
+function reimbStatusTag(st){
+  const cls = {Pending: "warn", Approved: "info", Paid: "ok", Rejected: "plain"}[st] || "warn";
+  return h("span", {class: "tag " + cls, text: t("reimbSt_" + (["Pending", "Approved", "Paid", "Rejected"].indexOf(st) >= 0 ? st : "Pending"))});
+}
+function reimbRow(e){
+  const b = e.budget, tot = e.totals;
+  const budgetLine = b.approved !== null && b.approved !== undefined
+    ? t("reimbBudget", {b: reimbMoney(b.approved), s: reimbMoney(tot.spent), r: reimbMoney(tot.remaining)})
+    : t("reimbNoBudget", {s: reimbMoney(tot.spent)});
+  const cats = e.byCategory.map(c => t("reimbCat_" + (REIMB_CATS.indexOf(c.category) >= 0 ? c.category : "other")) + " " + reimbMoney(c.amount)).join(" · ");
+  const table = e.claims.length ? h("details", {class: "reimb-details"}, h("summary", {text: t("reimbClaimsN", {n: e.claims.length})}),
+    h("div", {class: "reimb-wrap"}, h("table", {class: "reimb-claims"},
+      h("thead", {}, h("tr", {}, ...["reimbThRef", "reimbThWho", "reimbThWhat", "reimbThSent", "reimbThStatus"].map(k => h("th", {text: t(k)})), h("th", {class: "reimb-num", text: t("reimbThTotal")}))),
+      h("tbody", {}, ...e.claims.map(c => h("tr", {"data-reimb-ref": c.reference},
+        h("td", {text: c.reference}), h("td", {text: [c.who, c.lineName && c.lineName !== c.who ? "(" + c.lineName + ")" : ""].filter(Boolean).join(" ")}),
+        h("td", {text: [c.first, c.items > 1 ? "+" + (c.items - 1) : ""].filter(Boolean).join(" ") + (c.decisionNote ? " — " + c.decisionNote : "")}),
+        h("td", {text: fmtDT(c.submittedAt)}), h("td", {}, reimbStatusTag(c.status)), h("td", {class: "reimb-num", text: reimbMoney(c.total)}))))))) : null;
+  return h("article", {class: "mrow", "data-reimb-event": e.event.id},
+    h("div", {},
+      h("h2", {class: "mname", text: e.event.name}),
+      h("p", {class: "emeta", text: [fmtWhen(e.event), e.event.id].filter(Boolean).join(" · ")}),
+      h("p", {class: "emeta", text: budgetLine, style: tot.overBudget ? "color:var(--err)" : null}),
+      h("p", {class: "emeta", text: t("reimbSplit", {w: reimbMoney(tot.waiting), a: reimbMoney(tot.approved - tot.paid), p: reimbMoney(tot.paid), x: reimbMoney(tot.rejected)})}),
+      cats ? h("p", {class: "reimb-cat", text: cats}) : null,
+      h("div", {class: "etags"},
+        tot.waitingCount ? h("span", {class: "tag warn", text: t("reimbWaiting", {n: tot.waitingCount})}) : null,
+        b.status === "Requested" ? h("span", {class: "tag warn", text: t("reimbBudgetReq", {x: reimbMoney(b.requested)})}) : null,
+        b.status === "Rejected" ? h("span", {class: "tag plain", text: t("reimbBudgetRej")}) : null,
+        tot.overBudget ? h("span", {class: "tag warn", text: t("reimbOver")}) : null,
+        e.event.status === "Closed" ? h("span", {class: "tag plain", text: t("reimbClosed")}) : null),
+      table),
+    h("div", {class: "mact"}));
+}
+
+/* ---- demo mode (no API_URL): made-up events and claims ---- */
+Admin.demo["admin.expenses"] = function(){
+  const d0 = bkkNow().slice(0, 10);
+  const C = (reference, who, first, status, total, items) => ({reference, who, lineName: who, first, status, total, items, submittedAt: addDays(d0, -2) + " 19:20", decidedAt: "", paidAt: "", decisionNote: status === "Rejected" ? "ไม่มีวันที่ในใบเสร็จ" : ""});
+  return {ok: true, now: bkkNow(), orphanClaims: 0, events: [
+    {event: {id: "EV-DEMO-02", name: "Board Game Night", date: d0, startTime: "13:00", status: "Approved"}, budget: {approved: 3500, requested: 3500, status: "Approved"},
+      totals: {spent: 2140, waiting: 890, approved: 1250, paid: 0, rejected: 300, waitingCount: 1, count: 2, remaining: 1360, overBudget: false},
+      byCategory: [{category: "food", amount: 1250}, {category: "supplies", amount: 890}],
+      claims: [C("RC-DEMO-0005", "พี่เมฆ", "บอร์ดเกมเช่า", "Pending", 890, 1), C("RC-DEMO-0003", "ฝน", "อาหารว่าง", "Approved", 1250, 2), C("RC-DEMO-0002", "ฝน", "ค่ารถ", "Rejected", 300, 1)]},
+    {event: {id: "EV-DEMO-01", name: "Hualaem-X Session", date: addDays(d0, 13), startTime: "13:00", status: "Approved"}, budget: {approved: null, requested: 6000, status: "Requested"},
+      totals: {spent: 0, waiting: 0, approved: 0, paid: 0, rejected: 0, waitingCount: 0, count: 0, remaining: null, overBudget: false}, byCategory: [], claims: []}
+  ]};
+};
+
+/* ---- wire up ---- */
+$("#tabReimb").addEventListener("click", () => { if ($("#vReimb").hidden) reimbLoad(); });
+$("#reimbSearch").addEventListener("input", reimbRender);
+
+Admin.register({
+  name: "reimbursement",
+  tab: { button: "tabReimb", view: "vReimb" },
+  onLang: function(){ if (!$("#vReimb").hidden) reimbRender(); }
 });
 /* =====================================================================
    Wire up (shared parts) and start

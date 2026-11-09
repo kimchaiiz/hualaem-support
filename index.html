@@ -568,6 +568,111 @@ input[type="date"].members-input{padding-right:10px}
 .members-sheet-form .btn{margin-top:4px}
 .members-status{display:flex;flex-direction:column;gap:12px}
 .members-status b{font-size:18px;line-height:26px}
+/* passport: header card, stamps, claims (DESIGN.md "Stat tile", "Stamp", canvas screen "Passport") */
+.passport-card{background:var(--primary);color:var(--on-primary);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:14px}
+.passport-who{display:flex;align-items:center;gap:12px;min-width:0}
+.passport-av{width:48px;height:48px;flex:none;border-radius:var(--r-pill);background:var(--primary-soft);color:var(--on-primary-soft);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.passport-name{display:flex;flex-direction:column;min-width:0}
+.passport-name b{font-size:18px;line-height:26px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.passport-name span,.passport-note{font-size:14px;line-height:20px;opacity:.9}
+.passport-note{font-size:12px;line-height:16px}
+.passport-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.passport-count{border-radius:var(--r-md);background:rgba(0,0,0,.16);padding:10px;display:flex;flex-direction:column;min-width:0}
+.passport-count b{font-size:30px;line-height:38px;font-weight:700;font-variant-numeric:tabular-nums}
+.passport-count span{font-size:14px;line-height:20px;opacity:.92;overflow-wrap:anywhere}
+.passport-grid{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:16px 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px;justify-items:center}
+.passport-stamp{width:84px;height:84px;border-radius:var(--r-pill);border:2px solid var(--stamp);color:var(--stamp);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 9px;gap:1px;overflow:hidden}
+.passport-stamp b{font-size:12px;line-height:15px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.passport-stamp span{font-size:12px;line-height:15px;font-weight:500}
+.passport-stamp i{font-style:normal;font-size:12px;line-height:15px;font-weight:700}
+.passport-stamp.passport-soon{border-style:dashed;border-color:var(--field-border);color:var(--muted)}
+.passport-stamp.passport-slot{border-style:dashed;border-color:var(--line);color:var(--muted)}
+.passport-hint{font-size:14px;line-height:20px;color:var(--muted);margin:12px 0 0;text-align:center}
+.passport-claim .grow b{font-size:16px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.passport-claim .chip{align-self:center}
+.passport-wait{font-size:14px;line-height:20px;color:var(--muted)}
+.passport-refresh{display:flex;justify-content:center;margin-top:16px}
+.passport-amount{font-size:24px;line-height:32px;font-weight:700;font-variant-numeric:tabular-nums}
+.passport-steps{list-style:none;margin:8px 0 16px;padding:0;display:flex;flex-direction:column}
+.passport-steps li{display:flex;gap:12px;min-height:52px;position:relative}
+.passport-steps li::before{content:"";position:absolute;left:11px;top:26px;bottom:-2px;width:2px;background:var(--line)}
+.passport-steps li:last-child::before{display:none}
+.passport-steps .passport-dot{width:24px;height:24px;flex:none;border-radius:var(--r-pill);background:var(--field);color:var(--muted);display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.passport-steps .passport-dot svg{width:14px;height:14px}
+.passport-steps li.passport-done .passport-dot{background:var(--success);color:var(--surface)}
+.passport-steps li.passport-bad .passport-dot{background:var(--error);color:var(--surface)}
+.passport-steps li.passport-done::before{background:var(--success)}
+.passport-steps .passport-st{display:flex;flex-direction:column}
+.passport-steps .passport-st b{font-size:16px;line-height:24px;font-weight:600}
+.passport-steps .passport-st span{font-size:14px;line-height:20px;color:var(--muted)}
+.passport-steps li.passport-todo .passport-st b{color:var(--muted);font-weight:500}
+.passport-sheetHint{font-size:14px;line-height:20px;color:var(--muted);margin:0 0 16px}
+/* reimbursement: Manage › Expenses, #expenses and the claim form (DESIGN.md "Stat tile", "Status chip", "Form field", "Bottom sheet") */
+.reimbursement-panel{display:flex;flex-direction:column;gap:12px}
+#reimbursement-expBody,#reimbursement-claimBody{gap:12px}
+.reimbursement-intro{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.reimbursement-lbl{font-size:14px;line-height:20px;color:var(--muted)}
+.reimbursement-big{font-size:24px;line-height:32px;font-weight:700}
+.reimbursement-hint{margin:0;font-size:14px;line-height:20px;color:var(--muted)}
+.reimbursement-note{margin:4px 0 0;font-size:12px;line-height:16px;color:var(--muted)}
+.reimbursement-good{color:var(--success)}
+.reimbursement-hint.reimbursement-bad,.reimbursement-bad{color:var(--error)}
+.card.reimbursement-budget{display:flex;flex-direction:column;gap:10px}
+.reimbursement-spentRow,.reimbursement-budRow{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.reimbursement-spentRow .reimbursement-lbl,.reimbursement-budRow .reimbursement-lbl{flex:1}
+.reimbursement-budRow .chip{align-self:center}
+.reimbursement-bar{height:8px;border-radius:var(--r-pill);background:var(--field);overflow:hidden}
+.reimbursement-bar span{display:block;height:8px;background:var(--primary)}
+.reimbursement-bar.reimbursement-isOver span{background:var(--error)}
+.reimbursement-sec{display:flex;flex-direction:column;gap:8px}
+.reimbursement-h2{margin:8px 0 0;font-size:16px;line-height:24px;font-weight:600}
+.reimbursement-h3{margin:12px 0 6px;font-size:14px;line-height:20px;font-weight:600}
+.reimbursement-catRow{min-height:48px;cursor:default}
+.row.reimbursement-claimRow{align-items:center;min-height:64px}
+.reimbursement-cTitle{font-size:16px;line-height:24px;font-weight:600;overflow-wrap:anywhere}
+.reimbursement-mine{color:var(--primary);font-weight:600}
+.reimbursement-cRight{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.reimbursement-cRight .chip{align-self:flex-end}
+.reimbursement-decide{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.btn.reimbursement-armed{background:var(--warning);border-color:var(--warning);color:#FFFFFF}
+.reimbursement-sheet{display:flex;flex-direction:column;margin-bottom:12px}
+.reimbursement-sTop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.row.reimbursement-rec{align-items:flex-start;cursor:default}
+.btn.quiet.reimbursement-rcpt{align-self:flex-start;padding:0;min-height:40px;font-size:14px}
+.reimbursement-quote{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;padding:10px 12px;border-radius:var(--r-md);background:var(--field)}
+.reimbursement-pay{margin:0;font-weight:600;overflow-wrap:anywhere}
+/* #expenses list */
+.card.reimbursement-ev{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%;font:inherit;color:var(--ink);cursor:pointer}
+.reimbursement-when{font-size:14px;line-height:20px;font-weight:600;color:var(--primary)}
+.reimbursement-evName{font-size:18px;line-height:26px;font-weight:600;overflow-wrap:anywhere}
+.reimbursement-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.card.reimbursement-head{display:flex;flex-direction:column;gap:4px}
+.btn.quiet.reimbursement-link{padding:0;font-size:14px}
+/* claim form */
+.card.reimbursement-formCard{display:flex;flex-direction:column;gap:12px}
+.card.reimbursement-item{display:flex;flex-direction:column;gap:12px}
+.reimbursement-itemHead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.reimbursement-itemHead .reimbursement-h3{margin:0;font-size:16px;line-height:24px}
+.btn.quiet.reimbursement-remove{color:var(--error);padding:0 4px}
+.reimbursement-flabel{font-size:14px;line-height:20px;font-weight:600}
+.reimbursement-drop{border:1.5px dashed var(--field-border);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:8px}
+.reimbursement-drop.reimbursement-has{flex-direction:row;align-items:center;border-style:solid;border-color:var(--line)}
+.reimbursement-dropBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.reimbursement-dropBtns .btn{padding:0 8px}
+.reimbursement-thumb{width:56px;height:56px;border-radius:var(--r-sm);object-fit:cover;flex:none;background:var(--field)}
+.reimbursement-pdf{width:56px;height:56px;border-radius:var(--r-sm);flex:none;display:grid;place-items:center;background:var(--error-soft);color:var(--error);font-weight:700;font-size:14px}
+.reimbursement-fileInfo{flex:1;min-width:0;display:flex;flex-direction:column}
+.reimbursement-fname{font-size:14px;line-height:20px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reimbursement-err{margin:0;display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;color:var(--error);font-weight:500}
+.reimbursement-err svg{width:16px;height:16px;flex:none}
+.reimbursement-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:359px){.reimbursement-two,.reimbursement-dropBtns{grid-template-columns:1fr}}
+.card.reimbursement-total{display:flex;flex-direction:column;gap:2px}
+.reimbursement-gateName{margin:12px 0 0;color:var(--ink);font-weight:600}
+.card.reimbursement-done{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.reimbursement-doneIc{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--success-soft);color:var(--success)}
+.reimbursement-doneIc svg{width:28px;height:28px}
+.rows.reimbursement-doneRows{width:100%;text-align:left;margin:8px 0}
 </style>
 </head>
 <body>
@@ -809,6 +914,37 @@ input[type="date"].members-input{padding-right:10px}
     <div id="members-suBody"></div>
   </section>
 
+  <!-- PASSPORT tab (app/features/passport) -->
+  <section class="screen" id="passport-screen" hidden>
+    <div id="passport-head"></div>
+
+    <section class="section" id="passport-secStamps">
+      <div class="section-head"><h2 data-t="stampsT"></h2></div>
+      <div id="passport-stamps"></div>
+    </section>
+
+    <section class="section" id="passport-secClaims" hidden>
+      <div class="section-head"><h2 data-t="claimsT"></h2></div>
+      <div id="passport-claims"></div>
+    </section>
+
+    <div class="passport-refresh">
+      <button type="button" class="btn quiet" id="passport-refresh"></button>
+    </div>
+    <p class="asof" id="passport-asOf"></p>
+  </section>
+
+  <!-- EXPENSES (app/features/reimbursement): #expenses = events whose expenses I may see, #expenses/<eventId> = one event -->
+  <section class="screen" id="reimbursement-expenses" hidden>
+    <div class="stack" id="reimbursement-expBody"></div>
+  </section>
+
+  <!-- CLAIM FORM: #claim or #claim/<eventId> (the old expense-reimbursement.html forwards here with ?claim=1) -->
+  <section class="screen" id="reimbursement-claim" hidden>
+    <div class="stack" id="reimbursement-claimBody"></div>
+    <div id="reimbursement-claimBar"></div>
+  </section>
+
   <!-- a tab no feature has claimed yet (see DEVELOPING.md, "Adding a screen to the LINE app") -->
   <section class="screen" id="shell-placeholder" hidden></section>
   <div class="fatal" id="shell-fatal" hidden><b id="fatalT"></b><span id="fatalD"></span><button type="button" class="btn secondary" id="fatalBtn" hidden></button></div>
@@ -962,17 +1098,86 @@ function emptyState(title, detail, button){
     button ? h("button", {type: "button", class: "btn secondary", onclick: button.onclick, text: button.text}) : null);
 }
 function go(url){ if (!url){ toast(tShell("noLink")); return; } location.href = url; }
-function openExternal(url){
+/* App.openExternal(url, {external?}) (C2): a link that should leave the app.
+   - LINE's own links (line.me, liff.line.me: share screen, OA chat, another LIFF app) stay inside LINE (external: false).
+   - Other web links (Google Maps, Instagram web, forms) leave LINE's in-app browser: liff.openWindow({external: true})
+     opens the phone's browser, which hands Maps/Instagram links to their app when it is installed.
+   - App links such as instagram://story-camera are handed to the phone (location.href); LIFF opens only web addresses.
+   - Outside LINE (a normal browser, demo mode): the link opens in the same tab, as before.
+   opts.external true/false overrides the choice for a web link. */
+const LINE_LINK = /^https:\/\/([a-z0-9-]+\.)*line\.me(\/|$|\?)/i;
+function openExternal(url, opts){
   if (!url){ toast(tShell("noLink")); return; }
-  if (S.inClient && window.liff && liff.openWindow) liff.openWindow({url, external: false}); else location.href = url;
+  url = String(url);
+  const web = /^https?:\/\//i.test(url);
+  if (!web){ location.href = url; return; }
+  const external = opts && typeof opts.external === "boolean" ? opts.external : !LINE_LINK.test(url);
+  if (S.inClient && window.liff && typeof liff.openWindow === "function"){
+    try{ liff.openWindow({url, external}); return; }catch(e){ /* fall through to the address bar */ }
+  }
+  location.href = url;
 }
-/* Not an approved member (a server answer said NOT_MEMBER): open the in-app sign-up when a feature provides the route
-   "signup" (members: it shows the form, "waiting for review" or "not approved"), otherwise the old sign-up page.
-   The sign-up screen replaces the current one and Back goes to the Me tab, so Back never lands on a screen that sends
-   the person here again. No loops: sign-up.html forwards to this app with ?signup=1, and the app never sends anyone
-   back there while it has the route (check.js section 9 refuses a forwarder whose route no feature provides). */
+/* App.sendChat(text) (C2): posts text into the LINE chat the app was opened from (1-to-1, group or room), as the person,
+   like the old event-join.html did. Resolves true when sent, false when it can't (not opened from a chat, outside LINE,
+   demo mode, or the LIFF app lacks the "chat_message.write" scope): silently skipped, never an error for the person.
+   Never put other people's data in it; the person and the others in that chat see the message. */
+async function sendChat(text){
+  text = String(text == null ? "" : text).trim().slice(0, 5000);
+  if (!text || S.demo) return false;
+  await READY;
+  const L = window.liff;
+  if (!S.inClient || !L || typeof L.sendMessages !== "function" || typeof L.getContext !== "function") return false;
+  let ctx = null;
+  try{ ctx = L.getContext(); }catch(e){ return false; }
+  if (!ctx || ["utou", "group", "room", "square_chat"].indexOf(ctx.type) < 0) return false;
+  try{ await L.sendMessages([{type: "text", text}]); return true; }catch(e){ return false; }
+}
+/* App.scanCode() (C2): opens the LINE camera (liff.scanCodeV2). Resolves to the QR text, or null when the person closed
+   the camera without a code. Rejects with ApiError code "NO_CAMERA" when the camera can't open here: outside the LINE
+   app, demo mode, "Scan QR" off in the LIFF app settings, or camera permission refused. One camera at a time (a second
+   call while it is open gets the same answer). A feature keeps its own demo stand-in (demo mode has no camera). */
+let scanning = null;
+function scanCode(){
+  if (scanning) return scanning;
+  const noCam = () => new ApiError(tShell("noCamera"), "NO_CAMERA");
+  scanning = (async () => {
+    if (S.demo) throw noCam();
+    await READY;
+    const L = window.liff;
+    if (!S.inClient || !L || typeof L.scanCodeV2 !== "function") throw noCam();
+    let can = true;
+    try{ if (typeof L.isApiAvailable === "function") can = !!L.isApiAvailable("scanCodeV2"); }catch(e){ can = false; }
+    if (!can) throw noCam();
+    let r;
+    try{ r = await L.scanCodeV2(); }catch(e){ throw noCam(); }
+    return r && typeof r.value === "string" && r.value ? r.value : null;
+  })();
+  const done = () => { scanning = null; };
+  scanning.then(done, done);
+  return scanning;
+}
+// App.canScan(): true when App.scanCode() can open the camera now (inside LINE, Scan QR on). For showing a hint early.
+function canScan(){
+  if (S.demo || !S.liffDone || !S.inClient) return false;
+  const L = window.liff;
+  try{ return !!(L && typeof L.scanCodeV2 === "function" && (typeof L.isApiAvailable !== "function" || L.isApiAvailable("scanCodeV2"))); }catch(e){ return false; }
+}
+/* Not an approved member (a server answer said NOT_MEMBER). Since C2, when a feature owns the Me tab and provides the
+   route "signup" (members), the person lands on the Me tab exactly as if they had opened the sign-up link
+   (?tab=me&signup=1): newcomers go on to the form (#signup; Back returns to Me), pending and rejected people stay on
+   the Me tab with their status ("waiting for review" with the Service ID, or "not approved"); a pending person can
+   still open their application from there. The Me tab is drawn as on a first visit: ctx.first, ctx.params has
+   signup=1, ctx.reason = "notMember". Without a Me tab owner: the in-app #signup (C1), then the old sign-up page.
+   No loops: the Me tab and #signup never answer NOT_MEMBER, sign-up.html forwards to this app with ?signup=1, and the
+   app never sends anyone back there while it has the route "signup" (check.js section 9). */
 function notMember(){
   cacheClear();
+  if (TAB_OWNER.me && ROUTES.signup){
+    if (S.route && (S.route.name === "signup" || S.route.name === "me")) return;   // several screens can say so at once
+    S.notMember = true; S.shown.me = false;
+    goRoute("me");
+    return;
+  }
   if (ROUTES.signup){
     if (S.route && S.route.name === "signup") return;    // several screens can say so at once: open it once
     S.tab = "me";
@@ -1228,7 +1433,12 @@ function render(r){
   $("#backBtn").hidden = isTab;
   $$("#tabs .tab").forEach(b => { if (b.dataset.tab === S.tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   setTitle();
-  if (def.show) def.show({first, arg: r.arg, params: PARAMS});
+  let params = PARAMS, reason = "";
+  if (S.notMember && r.name === "me"){                       // notMember(): the Me tab behaves as if opened by ?tab=me&signup=1
+    S.notMember = false; reason = "notMember";
+    params = new URLSearchParams(PARAMS); params.set("signup", "1");
+  }
+  if (def.show) def.show({first, arg: r.arg, params, reason});
   window.scrollTo(0, S.scroll[key] || 0);
 }
 function setTitle(){
@@ -1429,7 +1639,7 @@ const App = {
   t: tShell, h, $, $$, icon, store, toast, sheet, closeSheet, fatal, skeleton, emptyState,
   api, view, demo: DEMO, ApiError,
   go: goRoute, open, back: () => $("#backBtn").click(), setBadge, setTitle,
-  link: go, openExternal, notMember,
+  link: go, openExternal, notMember, sendChat, scanCode, canScan,
   fmt: {date: fmtDate, dateTime: fmtDT, time: fmtTime, money, stamp: fmtStamp},
   settingsPanel, privacySheet, consent: consentText, meCard,
   addPanel(){ throw new Error("App.addPanel: call it from a feature's screen.js"); }, panelsFor,
@@ -1441,7 +1651,7 @@ const App = {
   _shellText(d){ ["th", "en"].forEach(l => Object.assign(SHELL_TEXT[l], (d || {})[l] || {})); },
   _consent(d){ CONSENT.version = d.version; CONSENT.th = d.th; CONSENT.en = d.en; }
 };
-App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE","optional":"ไม่บังคับ","shareTitle":"แชร์","shareLine":"ส่งใน LINE","shareLineSub":"เลือกเพื่อนหรือกลุ่มใน LINE","shareCopy":"คัดลอกลิงก์","shareCopySub":"วางในแชตหรือโซเชียลอื่น","shareCopied":"คัดลอกลิงก์แล้ว","sharePhone":"แชร์ด้วยเมนูของโทรศัพท์","sharePhoneSub":"แอปอื่นในเครื่อง"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account","optional":"optional","shareTitle":"Share","shareLine":"Send in LINE","shareLineSub":"Pick friends or groups in LINE","shareCopy":"Copy link","shareCopySub":"Paste it in any chat or social app","shareCopied":"Link copied","sharePhone":"Share with the phone menu","sharePhoneSub":"Other apps on this phone"}});
+App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","noCamera":"เปิดกล้องสแกนไม่ได้ในหน้านี้ ลองเปิดจากแอป LINE","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE","optional":"ไม่บังคับ","shareTitle":"แชร์","shareLine":"ส่งใน LINE","shareLineSub":"เลือกเพื่อนหรือกลุ่มใน LINE","shareCopy":"คัดลอกลิงก์","shareCopySub":"วางในแชตหรือโซเชียลอื่น","shareCopied":"คัดลอกลิงก์แล้ว","sharePhone":"แชร์ด้วยเมนูของโทรศัพท์","sharePhoneSub":"แอปอื่นในเครื่อง"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","noCamera":"The camera can't open here. Open this from the LINE app.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account","optional":"optional","shareTitle":"Share","shareLine":"Send in LINE","shareLineSub":"Pick friends or groups in LINE","shareCopy":"Copy link","shareCopySub":"Paste it in any chat or social app","shareCopied":"Link copied","sharePhone":"Share with the phone menu","sharePhoneSub":"Other apps on this phone"}});
 App._consent({"version":"v3-2026-11","note":"The one consent wording (brief 10.2). Changing it means a new version: change version here, CONSENT_VERSION in backend/core/00-config.gs, and the consent/consentSmall text and CONSENT_VERSION in sign-up.html and event-join.html. tools/check.js fails if any of them differ.","th":{"consent":"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน","consentSmall":"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล"},"en":{"consent":"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.","consentSmall":"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat."}});
 // ---- app/features/home ----
 App.module("home", {"th":{"hello":"สวัสดี, {name}","helloPlain":"สวัสดี","sTodo":"กิจกรรมที่ยังไม่ได้ลงทะเบียน","sMine":"กิจกรรมที่ลงทะเบียนไว้","sClaims":"คำขอเบิกที่รอดำเนินการ","upcomingT":"กิจกรรมที่กำลังจะมาถึง","segAll":"ทั้งหมด ({n})","segTodo":"ยังไม่ลงทะเบียน ({n})","regOpen":"เปิดรับสมัคร · ปิด {d}","regUpcoming":"เปิดรับสมัคร {d}","regClosed":"ปิดรับสมัครแล้ว","registered":"ลงทะเบียนแล้ว","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมาถึง","emptyUpD":"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่","emptyTodoT":"ลงทะเบียนครบทุกกิจกรรมแล้ว","emptyTodoD":"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”","statusT":"ติดตามสถานะ","segEvents":"กิจกรรมของฉัน","segClaims":"คำขอเบิก","stUpcoming":"กำลังจะมาถึง","stEnded":"จบแล้ว","stCancelled":"ยกเลิกแล้ว","cPending":"รออนุมัติ","cApproved":"อนุมัติแล้ว รอโอน","cRejected":"ไม่อนุมัติ","cPaid":"โอนเงินแล้ว","stepSent":"ส่งคำขอ","stepApproved":"อนุมัติ","stepPaid":"โอนเงิน","stepRejected":"ไม่อนุมัติ","rejectedHint":"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล","refL":"เลขอ้างอิง {ref}","sentL":"ส่งเมื่อ {d}","itemsL":"{n} รายการ","emptyEvT":"ยังไม่เคยลงทะเบียนกิจกรรม","emptyEvD":"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน","emptyClT":"ยังไม่มีคำขอเบิก","emptyClD":"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่","claimsWait":"กำลังโหลดคำขอเบิกล่าสุด (คำขอเบิกไม่ถูกเก็บไว้ในเครื่อง)","moreN":"แสดง {n} รายการล่าสุด","newClaim":"ขอเบิกค่าใช้จ่าย","refresh":"รีเฟรช","todoConsent":"เราปรับข้อตกลงความเป็นส่วนตัว (ฉบับ {v}) แตะเพื่ออ่านและยอมรับ ใช้งานต่อได้ตามปกติ"},"en":{"hello":"Hello, {name}","helloPlain":"Hello","sTodo":"Events you haven't registered for","sMine":"Events you're registered for","sClaims":"Claims in progress","upcomingT":"Upcoming events","segAll":"All ({n})","segTodo":"Not registered ({n})","regOpen":"Open · closes {d}","regUpcoming":"Opens {d}","regClosed":"Registration closed","registered":"Registered","emptyUpT":"No upcoming events","emptyUpD":"New events will show up here.","emptyTodoT":"You're registered for every event","emptyTodoD":"See them all in the “All” tab.","statusT":"Track status","segEvents":"My events","segClaims":"My claims","stUpcoming":"Upcoming","stEnded":"Ended","stCancelled":"Cancelled","cPending":"Waiting for approval","cApproved":"Approved, payment pending","cRejected":"Not approved","cPaid":"Paid","stepSent":"Sent","stepApproved":"Approved","stepPaid":"Paid","stepRejected":"Not approved","rejectedHint":"Message the approvers in this chat to ask why.","refL":"Reference {ref}","sentL":"Sent {d}","itemsL":"{n} items","emptyEvT":"No registrations yet","emptyEvD":"Pick an event above to register.","emptyClT":"No claims yet","emptyClD":"Expense claims you send will show up here.","claimsWait":"Loading your latest claims (claims are never saved on the phone)","moreN":"Showing your latest {n}","newClaim":"New expense claim","refresh":"Refresh","todoConsent":"We updated the privacy notice (version {v}). Tap to read and accept. You can keep using the app."}}, function (App, t) {
@@ -4046,6 +4256,836 @@ App.demo["member.update"] = (body, mode) => {
   if (body.group === "work") STATUSES.forEach(s => STATUS_FIELDS[s].forEach(k => { d.profile[k] = ""; }));
   Object.assign(d.profile, body.profile); d.changed = Object.keys(body.profile);
   return d;
+};
+});
+
+// ---- app/features/passport ----
+App.module("passport", {"th":{"title":"พาสปอร์ต","memberSince":"สมาชิกตั้งแต่ {d}","joined":"เข้าร่วม","hosted":"เป็นผู้จัด","collaborated":"ร่วมจัด","note":"เข้าร่วม = งานที่เช็กอินแล้ว · เห็นได้เฉพาะคุณและแอดมิน","countsLabel":"เข้าร่วม {j} งาน เป็นผู้จัด {h} งาน ร่วมจัด {c} งาน","stampsT":"แสตมป์ของฉัน","kLead":"ผู้จัด","kCollaborator":"ร่วมจัด","kJoined":"เข้าร่วม","soon":"เร็ว ๆ นี้","nextSlot":"งานถัดไป","stampLabel":"{name}, {d}, {k}","soonLabel":"{name}, {d}, {k} (ยังไม่ถึงวันงาน)","slotLabel":"ช่องว่างสำหรับแสตมป์ถัดไป","emptyStamps":"เช็กอินที่งานแรกของคุณเพื่อรับแสตมป์ดวงแรก","seeEvents":"ดูกิจกรรม","stampsHint":"แสตมป์ได้เมื่อผู้จัดเช็กอินให้ที่หน้างาน","moreStamps":"แสดง {n} ดวงล่าสุด","claimsT":"การเบิกค่าใช้จ่ายของฉัน","claimsWait":"กำลังโหลดการเบิกค่าใช้จ่าย…","emptyClT":"ยังไม่มีการเบิกค่าใช้จ่าย","emptyClD":"เมื่อส่งคำขอเบิกแล้ว สถานะจะแสดงที่นี่","cPending":"รอตรวจ","cApproved":"อนุมัติแล้ว","cRejected":"ไม่อนุมัติ","cPaid":"จ่ายแล้ว","sentL":"ส่ง {d}","itemsL":"{n} รายการ","refL":"เลขที่ {ref}","stepSent":"ส่งคำขอแล้ว","stepApproved":"อนุมัติ","stepRejected":"ไม่อนุมัติ","stepPaid":"โอนเงินแล้ว","stepWaiting":"รอผู้อนุมัติตรวจ","stepNext":"ยังไม่ถึงขั้นนี้","decidedL":"เมื่อ {d}","rejectedHint":"สอบถามเหตุผลได้จากผู้อนุมัติหรือแอดมิน","claimSheetT":"สถานะการเบิก","refresh":"รีเฟรช"},"en":{"title":"Passport","memberSince":"Member since {d}","joined":"Joined","hosted":"Hosted","collaborated":"Co-hosted","note":"Joined = events you were checked in at · Only you and the admins can see this","countsLabel":"Joined {j}, hosted {h}, co-hosted {c} events","stampsT":"My stamps","kLead":"Host","kCollaborator":"Co-host","kJoined":"Joined","soon":"Coming up","nextSlot":"Next event","stampLabel":"{name}, {d}, {k}","soonLabel":"{name}, {d}, {k} (not happened yet)","slotLabel":"Empty slot for your next stamp","emptyStamps":"Get checked in at your first event to earn your first stamp","seeEvents":"See events","stampsHint":"You get a stamp when the organizers check you in at the event","moreStamps":"Showing the latest {n}","claimsT":"My expense claims","claimsWait":"Loading your claims…","emptyClT":"No expense claims yet","emptyClD":"When you send a claim, its status shows here","cPending":"Waiting for review","cApproved":"Approved","cRejected":"Not approved","cPaid":"Paid","sentL":"Sent {d}","itemsL":"{n} items","refL":"Ref. {ref}","stepSent":"Claim sent","stepApproved":"Approved","stepRejected":"Not approved","stepPaid":"Money transferred","stepWaiting":"Waiting for an approver","stepNext":"Not yet","decidedL":"On {d}","rejectedHint":"Ask the approver or an admin for the reason","claimSheetT":"Claim status","refresh":"Refresh"}}, function (App, t) {
+// Passport tab of the LINE app (S8, 8 Nov 2026). Data: passport.summary (backend/features/passport).
+// The shell shows the copy saved on this phone first (counts and stamps), then the server's answer.
+// My claims are NEVER saved on the phone: the shell drops every key about claims, and this screen draws the
+// claims section only from a fresh answer (meta.stale = false); while the saved copy shows, the section stays hidden.
+const $ = App.$, h = App.h, F = App.fmt;
+const screen = $("#passport-screen");
+
+const data = App.view({
+  key: "passport", action: "passport.summary", cache: true, el: $("#passport-stamps"),
+  skeleton(){
+    $("#passport-head").replaceChildren(App.skeleton([168]));
+    $("#passport-stamps").replaceChildren(App.skeleton([220]));
+    $("#passport-secClaims").hidden = true;
+  },
+  render
+});
+
+function fillText(){
+  App.$$("[data-t]", screen).forEach(el => { el.textContent = t(el.dataset.t); });
+  $("#passport-refresh").replaceChildren(App.icon("refresh"), t("refresh"));
+}
+const KIND = {lead: "kLead", collaborator: "kCollaborator", joined: "kJoined"};
+const CLAIM = {Pending: ["warn", "clock", "cPending"], Approved: ["info", "check", "cApproved"], Rejected: ["bad", "x", "cRejected"], Paid: ["ok", "check", "cPaid"]};
+const chip = (cls, ic, text) => h("span", {class: "chip " + cls}, ic ? App.icon(ic) : null, text);
+// a small fixed tilt per event (−6° to 6°), so a stamp keeps its angle between visits (DESIGN.md "Stamp")
+function tilt(id){ let n = 0; for (const ch of String(id || "")) n = (n * 31 + ch.charCodeAt(0)) % 9973; return (n % 13) - 6; }
+const shortDate = d => d ? F.date(d, {weekday: undefined, year: "2-digit"}) : "";
+
+function render(d, meta){
+  const me = d.me || {}, c = d.counts || {joined: 0, hosted: 0, collaborated: 0};
+  const fresh = !(meta && meta.stale);
+
+  // header card: who I am + the three counts
+  const initial = String(me.nickname || me.name || App.user.name || "?").trim().charAt(0).toUpperCase();
+  const sub = [me.serviceId, me.memberSince ? t("memberSince", {d: F.date(me.memberSince, {weekday: undefined, day: undefined})}) : ""].filter(Boolean).join(" · ");
+  const count = (n, key, id) => h("div", {class: "passport-count", id}, h("b", {text: String(Number(n) || 0)}), h("span", {text: t(key)}));
+  $("#passport-head").replaceChildren(h("section", {class: "passport-card", "aria-label": t("title")},
+    h("div", {class: "passport-who"},
+      h("span", {class: "passport-av", "aria-hidden": "true", text: initial}),
+      h("div", {class: "passport-name"},
+        h("b", {id: "passport-myName", text: me.nickname && me.name ? me.name + " (" + me.nickname + ")" : (me.name || App.user.name || "")}),
+        sub ? h("span", {id: "passport-mySub", text: sub}) : null)),
+    h("div", {class: "passport-counts", role: "group", "aria-label": t("countsLabel", {j: c.joined || 0, h: c.hosted || 0, c: c.collaborated || 0})},
+      count(c.joined, "joined", "passport-nJoined"), count(c.hosted, "hosted", "passport-nHosted"), count(c.collaborated, "collaborated", "passport-nCollab")),
+    h("span", {class: "passport-note", text: t("note")})));
+
+  // stamps: one per event (strongest role), upcoming team events dashed, one empty slot for the next stamp
+  const stamps = d.stamps || [];
+  const cells = stamps.map(stamp);
+  cells.push(h("div", {class: "passport-stamp passport-slot", role: "img", "aria-label": t("slotLabel")}, h("b", {text: t("nextSlot")})));
+  while (cells.length % 3) cells.push(h("div", {class: "passport-stamp passport-slot", "aria-hidden": "true"}));
+  const done = stamps.filter(s => !s.upcoming).length;
+  $("#passport-stamps").replaceChildren(
+    h("div", {class: "passport-grid", id: "passport-grid"}, ...cells),
+    done ? h("p", {class: "passport-hint", text: stamps.length >= 60 ? t("moreStamps", {n: stamps.length}) : t("stampsHint")})
+      : h("div", {class: "passport-hint"}, h("p", {style: "margin:0 0 12px", text: t("emptyStamps")}),
+          h("button", {type: "button", class: "btn secondary", id: "passport-seeEvents", onclick: () => App.go("events"), text: t("seeEvents")})));
+
+  // my claims: only from a fresh answer (never saved on the phone)
+  const sec = $("#passport-secClaims");
+  if (!fresh || !Array.isArray(d.myClaims)) sec.hidden = true;
+  else {
+    sec.hidden = !(d.canClaim || d.myClaims.length);
+    $("#passport-claims").replaceChildren(d.myClaims.length
+      ? h("div", {class: "rows", id: "passport-claimList"}, ...d.myClaims.map(claimRow))
+      : App.emptyState(t("emptyClT"), t("emptyClD")));
+  }
+  $("#passport-asOf").textContent = fresh ? App.t("asOf", {d: F.dateTime(d.now)}) : App.t("savedAt", {d: F.stamp(meta.at)});
+}
+
+function stamp(s){
+  const k = t(KIND[s.kind] || "kJoined"), d = shortDate(s.date);
+  if (s.upcoming) return h("div", {class: "passport-stamp passport-soon", role: "img", "data-event": s.eventId, "aria-label": t("soonLabel", {name: s.name, d, k})},
+    h("b", {text: s.name}), h("span", {text: d}), h("i", {text: t("soon")}));
+  return h("div", {class: "passport-stamp", role: "img", "data-event": s.eventId, "data-kind": s.kind, style: "transform:rotate(" + tilt(s.eventId) + "deg)",
+    "aria-label": t("stampLabel", {name: s.name, d, k})},
+    h("b", {text: s.name}), h("span", {text: d}), h("i", {text: k}));
+}
+
+function claimRow(c){
+  const st = CLAIM[c.status] || ["", null, ""];
+  return h("button", {type: "button", class: "row passport-claim", "data-ref": c.reference, onclick: () => claimSheet(c)},
+    h("span", {class: "grow"},
+      h("b", {text: F.money(c.total) + " · " + c.eventName}),
+      h("span", {class: "sub", text: c.reference + " · " + t("sentL", {d: F.date(c.submittedAt, {weekday: undefined, year: undefined})})})),
+    chip(st[0], st[1], st[2] ? t(st[2]) : c.status),
+    App.icon("chevron", "chev"));
+}
+
+// status timeline (brief 10.1 "my claims with status timeline"): sent → approved → paid, or sent → not approved
+function claimSheet(c){
+  const step = (state, ic, title, when) => h("li", {class: "passport-" + state},
+    h("span", {class: "passport-dot", "aria-hidden": "true"}, ic ? App.icon(ic) : null),
+    h("span", {class: "passport-st"}, h("b", {text: title}), when ? h("span", {text: when}) : null));
+  const sent = step("done", "check", t("stepSent"), F.dateTime(c.submittedAt));
+  const decided = c.decidedAt ? t("decidedL", {d: F.dateTime(c.decidedAt)}) : "";
+  let steps;
+  if (c.status === "Rejected") steps = [sent, step("bad", "x", t("stepRejected"), decided)];
+  else if (c.status === "Paid") steps = [sent, step("done", "check", t("stepApproved"), decided), step("done", "check", t("stepPaid"), "")];
+  else if (c.status === "Approved") steps = [sent, step("done", "check", t("stepApproved"), decided), step("todo", null, t("stepPaid"), t("stepNext"))];
+  else steps = [sent, step("todo", "clock", t("stepApproved"), t("stepWaiting")), step("todo", null, t("stepPaid"), t("stepNext"))];
+  const st = CLAIM[c.status] || ["", null, ""];
+  App.sheet(t("claimSheetT"),
+    h("div", {class: "stack", style: "gap:4px;margin-bottom:8px"},
+      h("b", {class: "t-lead", text: c.eventName}),
+      h("span", {class: "passport-amount", text: F.money(c.total)}),
+      h("span", {class: "t-small muted", text: t("itemsL", {n: c.items}) + " · " + t("refL", {ref: c.reference})}),
+      chip(st[0], st[1], st[2] ? t(st[2]) : c.status)),
+    h("ol", {class: "passport-steps", id: "passport-steps"}, ...steps),
+    c.status === "Rejected" ? h("p", {class: "passport-sheetHint", text: t("rejectedHint")}) : null);
+}
+
+$("#passport-refresh").addEventListener("click", () => data.refresh());
+
+App.register({
+  name: "passport",
+  tab: "passport",
+  screen: "passport-screen",
+  title: () => t("title"),
+  show(ctx){ fillText(); if (ctx.first) data.start(); else data.refresh(); },
+  onLang(){ fillText(); data.rerender(); }
+});
+
+/* Demo answers (no API_URL in config.js): ?demo=participant (default) | organizer | new. Sample names and amounts are fake. */
+App.demo["passport.summary"] = function (body, mode){
+  const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+  const now = iso(0) + " 10:00";
+  const me = {name: "มะลิ ตัวอย่าง", nickname: "ลิ", serviceId: "SV-2611-0007", memberSince: iso(-120)};
+  if (mode === "new") return {ok: true, now, me: Object.assign({}, me, {name: "มานี ตัวอย่าง", nickname: "", serviceId: "SV-2611-0042", memberSince: iso(-2)}),
+    counts: {joined: 0, hosted: 0, collaborated: 0}, stamps: [], canClaim: false, myClaims: []};
+  const joined = [
+    {eventId: "EV-DEMO-00", name: "Community Meetup – October", date: iso(-20), kind: "joined", upcoming: false},
+    {eventId: "EV-DEMO-98", name: "Hualaem Talk", date: iso(-48), kind: "joined", upcoming: false},
+    {eventId: "EV-DEMO-97", name: "Picnic in the Park", date: iso(-75), kind: "joined", upcoming: false}
+  ];
+  if (mode !== "organizer") return {ok: true, now, me, counts: {joined: 3, hosted: 0, collaborated: 0}, stamps: joined, canClaim: false, myClaims: []};
+  return {ok: true, now, me, counts: {joined: 5, hosted: 2, collaborated: 1},
+    stamps: [
+      {eventId: "EV-DEMO-02", name: "Board Game Night", date: iso(16), kind: "lead", upcoming: true},
+      {eventId: "EV-DEMO-96", name: "Hualaem-X Session", date: iso(-6), kind: "lead", upcoming: false},
+      joined[0],
+      {eventId: "EV-DEMO-95", name: "ค่ายพี่สอนน้อง", date: iso(-40), kind: "collaborator", upcoming: false},
+      joined[1],
+      {eventId: "EV-DEMO-94", name: "Year-start Gathering", date: iso(-90), kind: "lead", upcoming: false}
+    ],
+    canClaim: true,
+    myClaims: [
+      {reference: "RC-DEMO-0021", status: "Pending", eventName: "Hualaem-X Session", total: 890, items: 2, submittedAt: iso(-5) + " 21:40", decidedAt: ""},
+      {reference: "RC-DEMO-0015", status: "Approved", eventName: "ค่ายพี่สอนน้อง", total: 4200.5, items: 5, submittedAt: iso(-38) + " 09:12", decidedAt: iso(-35) + " 10:00"},
+      {reference: "RC-DEMO-0009", status: "Paid", eventName: "Year-start Gathering", total: 1250, items: 3, submittedAt: iso(-88) + " 13:05", decidedAt: iso(-84) + " 16:30"},
+      {reference: "RC-DEMO-0004", status: "Rejected", eventName: "Year-start Gathering", total: 320, items: 1, submittedAt: iso(-88) + " 13:20", decidedAt: iso(-84) + " 16:31"}
+    ]};
+};
+});
+
+// ---- app/features/reimbursement ----
+App.module("reimbursement", {"th":{"panel":"ค่าใช้จ่าย","panelN":"ค่าใช้จ่าย · รอตรวจ {n}","expT":"ค่าใช้จ่าย","listT":"ค่าใช้จ่ายของกิจกรรม","listIntroAppr":"งานที่มีค่าใช้จ่ายหรือมีงบ งานที่รอคุณตรวจอยู่บนสุด","listIntroTeam":"ค่าใช้จ่ายของงานที่คุณเป็นผู้จัดหรือผู้ร่วมจัด","listEmptyT":"ยังไม่มีงานให้ดูค่าใช้จ่าย","listEmptyD":"งานที่คุณเป็นผู้จัดหรือผู้ร่วมจัดจะแสดงที่นี่","newClaim":"เบิกค่าใช้จ่าย","needsMe":"รอคุณตรวจ {n}","budgetWaits":"งบรออนุมัติ","spentOf":"ใช้ไป {spent} จากงบ {budget}","spentNoBudget":"ใช้ไป {spent} · ยังไม่มีงบที่อนุมัติ","cancelled":"ยกเลิกแล้ว","spentL":"ใช้ไปแล้ว","budgetApproved":"งบที่อนุมัติ {x}","left":"เหลือ {x}","over":"เกินงบ {x}","budgetAria":"ใช้งบไปแล้ว","bReq":"งบรออนุมัติ","bReqAmt":"ขอไว้ {x}","bRej":"งบไม่ได้รับอนุมัติ","bNone":"ยังไม่ได้ขอบงบ ขอได้ที่หน้าแก้ไขงาน","bReqHint":"เพิ่มค่าใช้จ่ายได้ระหว่างรอ ผู้อนุมัติจะเห็นว่างบยังไม่อนุมัติ","split":"รอตรวจ {w} · อนุมัติแล้ว {a} · จ่ายแล้ว {p}","approveBudget":"อนุมัติงบ {x}","confirmBudget":"ยืนยันอนุมัติงบ {x}","rejectBudget":"ไม่อนุมัติงบ","rejectBudgetReason":"เหตุผล (ผู้จัดจะเห็น)","confirmReject":"ยืนยันไม่อนุมัติ","cancel":"ยกเลิก","budgetDone":"อนุมัติงบแล้ว","budgetRejected":"บันทึกว่าไม่อนุมัติงบแล้ว","byCatT":"แยกตามหมวด","claimsT":"รายการเบิก","emptyT":"ยังไม่มีค่าใช้จ่าย","emptyD":"กด “เพิ่มค่าใช้จ่าย” เพื่อส่งใบเสร็จของงานนี้","emptyDNoClaim":"ยังไม่มีใครส่งใบเสร็จของงานนี้","addExp":"เพิ่มค่าใช้จ่าย","itemsOne":"{n} รายการ","itemsMany":"{n} รายการ","mine":"ของฉัน","stPending":"รอตรวจ","stApproved":"อนุมัติแล้ว","stRejected":"ไม่อนุมัติ","stPaid":"จ่ายแล้ว","cat_venue":"สถานที่","cat_food":"อาหารและเครื่องดื่ม","cat_supplies":"อุปกรณ์และวัสดุ","cat_print":"สิ่งพิมพ์และป้าย","cat_transport":"เดินทางและขนส่ง","cat_other":"อื่น ๆ","eventPage":"หน้ากิจกรรม","summaryNote":"เห็นได้เฉพาะทีมผู้จัดของงานนี้ ผู้อนุมัติ และแอดมิน ไม่มีข้อมูลพร้อมเพย์หรือใบเสร็จในหน้านี้","cRecords":"รายการ","cNote":"ข้อความจากผู้เบิก","cDecisionNote":"หมายเหตุผู้อนุมัติ","cPayee":"โอนคืนให้","cPayeeLine":"{name} · พร้อมเพย์ {pp}","cPayeeHint":"เลขพร้อมเพย์เต็มอยู่ในชีต Claims (เปิดได้เฉพาะผู้ดูแลการเงิน)","cReceipt":"ดูใบเสร็จ","cReceiptHint":"ใบเสร็จอยู่ในโฟลเดอร์ Drive ส่วนตัว เปิดได้เฉพาะบัญชี Google ที่มีสิทธิ์","cBy":"{who} · ส่ง {d}","cApprove":"อนุมัติ {x}","cConfirmApprove":"ยืนยันอนุมัติ {x}","cReject":"ไม่อนุมัติ","cRejectReason":"เหตุผล (ผู้เบิกจะเห็น)","cPaid":"บันทึกว่าโอนเงินแล้ว","cConfirmPaid":"ยืนยัน: โอนเงิน {x} แล้ว","cPaidHint":"โอนเงินตามข้อมูลในชีต Claims ก่อน แล้วจึงกดปุ่มนี้","cOptNote":"หมายเหตุ (ไม่บังคับ)","cDoneApprove":"อนุมัติแล้ว","cDoneReject":"บันทึกว่าไม่อนุมัติแล้ว","cDonePaid":"บันทึกว่าจ่ายแล้ว","cOwn":"นี่คือคำขอของคุณเอง ให้ผู้อนุมัติคนอื่นเป็นผู้ตรวจ","reasonReq":"เขียนเหตุผลอย่างน้อย 3 ตัวอักษร","claimT":"เบิกค่าใช้จ่าย","fEvent":"กิจกรรม","fEventPh":"เลือกกิจกรรม","fNotThis":"งานที่เปิดมาเบิกไม่ได้ เลือกงานที่คุณเบิกได้","fBudgetReq":"งบรออนุมัติ (ขอไว้ {x}) ส่งคำขอได้ ผู้อนุมัติจะเห็นว่างบยังไม่อนุมัติ","fBudgetNone":"งานนี้ยังไม่มีงบที่อนุมัติ ส่งคำขอได้ ผู้อนุมัติจะเห็นข้อมูลนี้","fPayeeT":"รับเงินคืนที่","fName":"ชื่อ-นามสกุลบัญชีพร้อมเพย์","fPP":"หมายเลขพร้อมเพย์","fPPHint":"เบอร์มือถือ 10 หลัก หรือเลขบัตรประชาชน 13 หลัก","fPayeeNote":"ผู้อนุมัติเห็นข้อมูลนี้ แอปไม่เก็บไว้ในเครื่อง ครั้งหน้าจะเติมให้จากคำขอล่าสุดของคุณ","fItemsT":"รายการค่าใช้จ่าย","fItemN":"รายการที่ {n}","fRemove":"ลบรายการ","fClear":"ล้างรายการ","fReceipt":"ใบเสร็จ","fTakePhoto":"ถ่ายรูป","fChoose":"เลือกไฟล์","fReceiptHint":"ให้เห็นยอดรวมและวันที่ชัดเจน (รูปหรือ PDF ไม่เกิน {mb} MB)","fReplace":"เปลี่ยนไฟล์","fPreparing":"กำลังเตรียมไฟล์…","fDate":"วันที่ในใบเสร็จ","fAmount":"จำนวนเงิน (บาท)","fCat":"หมวดหมู่","fCatPh":"เลือกหมวดหมู่","fDesc":"ใช้ไปกับอะไร","fDescPh":"เช่น ค่าเช่าห้อง 3 ชั่วโมง","fAdd":"เพิ่มรายการ","fLimit":"เพิ่มได้สูงสุด {n} รายการต่อคำขอ","fNote":"ข้อความถึงผู้อนุมัติ","fTotal":"ยอดรวม ({n})","fOver":"เกินงบที่อนุมัติ {x} ผู้อนุมัติจะเห็นข้อมูลนี้","fSubmit":"ส่งคำขอเบิก {x}","fSending":"กำลังส่ง…","fPrivacy":"ใบเสร็จเก็บในโฟลเดอร์ Drive ส่วนตัวที่เปิดได้เฉพาะผู้อนุมัติ ทีมผู้จัดของงานนี้เห็นรายการและยอดเงิน แต่ไม่เห็นพร้อมเพย์และใบเสร็จ","req":"กรอกข้อมูลนี้","eventReq":"เลือกกิจกรรม","catReq":"เลือกหมวดหมู่","ppBad":"ตรวจสอบหมายเลข: เบอร์มือถือ 10 หลัก หรือเลขบัตรประชาชน 13 หลักที่ถูกต้อง","amountBad":"ใส่จำนวนเงินมากกว่า 0","amountMax":"จำนวนเงินสูงเกินไป ตรวจสอบอีกครั้ง","dateFuture":"วันที่ต้องไม่เป็นวันในอนาคต","dateReq":"เลือกวันที่","receiptReq":"แนบใบเสร็จ","fileBig":"ไฟล์ใหญ่เกิน {mb} MB","fileType":"รองรับเฉพาะรูปภาพและ PDF","totalBig":"ไฟล์ใบเสร็จรวมกันใหญ่เกิน {mb} MB แยกเป็นหลายคำขอหรือลดขนาดไฟล์","fixN":"ตรวจสอบ {n} จุดที่ยังไม่ครบ","sendFail":"ส่งไม่สำเร็จ ข้อมูลของคุณยังอยู่ ลองส่งอีกครั้ง","gateT":"ยังไม่มีสิทธิ์เบิกค่าใช้จ่าย","gateD":"เบิกได้เมื่อคุณเป็นผู้จัดกิจกรรมหรือผู้อนุมัติ หรืออยู่ในทีมผู้จัดของงานนั้น ขอสิทธิ์จากผู้ดูแล หรือให้ผู้จัดหลักเชิญคุณเข้าทีม","gateName":"ชื่อ LINE: {name}","noEventsT":"ยังไม่มีกิจกรรมที่เปิดให้เบิก","noEventsD":"เบิกได้เฉพาะกิจกรรมที่เผยแพร่แล้ว","doneT":"ส่งคำขอแล้ว","doneSub":"สถานะ: รอการอนุมัติ","doneDup":"คำขอนี้ส่งไปแล้ว นี่คือเลขอ้างอิงเดิม","ref":"เลขอ้างอิง","doneEvent":"กิจกรรม","doneTotal":"ยอดรวม","doneSee":"ดูค่าใช้จ่ายของงานนี้","doneAgain":"ส่งคำขออื่น","doneBack":"เสร็จแล้ว","doneTrack":"ติดตามสถานะคำขอได้ที่หน้าแรก","reviewLink":"ตรวจคำขอเบิกและงบ","errForbidden":"คุณไม่มีสิทธิ์ดูค่าใช้จ่ายของงานนี้","errGone":"ไม่พบข้อมูลนี้แล้ว ลองโหลดใหม่","errConflict":"มีคนเปลี่ยนข้อมูลนี้ไปแล้ว โหลดใหม่แล้วตรวจอีกครั้ง","errSetup":"ระบบต้องอัปเดตก่อน: แจ้งผู้ดูแลให้กด Run setup ใน Apps Script อีกครั้ง","errOwn":"ตัดสินคำขอของตัวเองไม่ได้ ให้ผู้อนุมัติคนอื่นตรวจ","notTeamT":"ดูค่าใช้จ่ายของงานนี้ไม่ได้","notTeamD":"เฉพาะทีมผู้จัดของงานนี้และผู้อนุมัติ"},"en":{"panel":"Expenses","panelN":"Expenses · {n} waiting","expT":"Expenses","listT":"Event expenses","listIntroAppr":"Events with expenses or a budget. The ones waiting for you are on top.","listIntroTeam":"Expenses of the events you lead or help with.","listEmptyT":"No events to show yet","listEmptyD":"Events you lead or help with will show up here.","newClaim":"New expense claim","needsMe":"{n} waiting for you","budgetWaits":"Budget waiting","spentOf":"Spent {spent} of {budget}","spentNoBudget":"Spent {spent} · no approved budget yet","cancelled":"Cancelled","spentL":"Spent so far","budgetApproved":"Approved budget {x}","left":"{x} left","over":"{x} over budget","budgetAria":"Budget used","bReq":"Budget waiting for approval","bReqAmt":"Requested {x}","bRej":"Budget not approved","bNone":"No budget requested yet. Ask for one on the event's edit page.","bReqHint":"You can add expenses while you wait. The approver will see that the budget is not approved yet.","split":"Waiting {w} · Approved {a} · Paid {p}","approveBudget":"Approve budget {x}","confirmBudget":"Confirm: approve {x}","rejectBudget":"Don't approve","rejectBudgetReason":"Reason (the organizer sees it)","confirmReject":"Confirm: don't approve","cancel":"Cancel","budgetDone":"Budget approved","budgetRejected":"Budget not approved: saved","byCatT":"By category","claimsT":"Claims","emptyT":"No expenses yet","emptyD":"Tap “Add expense” to send a receipt for this event.","emptyDNoClaim":"Nobody has sent a receipt for this event yet.","addExp":"Add expense","itemsOne":"{n} item","itemsMany":"{n} items","mine":"Mine","stPending":"Waiting","stApproved":"Approved","stRejected":"Not approved","stPaid":"Paid","cat_venue":"Venue","cat_food":"Food & drinks","cat_supplies":"Equipment & supplies","cat_print":"Printing & signage","cat_transport":"Transport","cat_other":"Other","eventPage":"Event page","summaryNote":"Only this event's team, approvers and admins can see this. No PromptPay numbers or receipts on this screen.","cRecords":"Expenses","cNote":"Note from the claimant","cDecisionNote":"Approver's note","cPayee":"Pay back to","cPayeeLine":"{name} · PromptPay {pp}","cPayeeHint":"The full PromptPay number is in the Claims tab (finance only).","cReceipt":"Open receipt","cReceiptHint":"Receipts are in a private Drive folder: only Google accounts with access can open them.","cBy":"{who} · sent {d}","cApprove":"Approve {x}","cConfirmApprove":"Confirm: approve {x}","cReject":"Don't approve","cRejectReason":"Reason (the claimant sees it)","cPaid":"Mark as paid","cConfirmPaid":"Confirm: {x} paid","cPaidHint":"Pay from the details in the Claims tab first, then tap this.","cOptNote":"Note (optional)","cDoneApprove":"Approved","cDoneReject":"Not approved: saved","cDonePaid":"Marked as paid","cOwn":"This is your own claim: another approver decides it.","reasonReq":"Write a reason of at least 3 characters","claimT":"Expense claim","fEvent":"Event","fEventPh":"Choose an event","fNotThis":"You can't claim for the event you opened. Choose one you can claim for.","fBudgetReq":"Budget waiting for approval (requested {x}). You can still claim; the approver will see this.","fBudgetNone":"This event has no approved budget yet. You can still claim; the approver will see this.","fPayeeT":"Pay back to","fName":"Full name on the PromptPay account","fPP":"PromptPay number","fPPHint":"10-digit mobile number or 13-digit national ID","fPayeeNote":"Approvers see this. The app does not save it on the phone; next time it is filled in from your last claim.","fItemsT":"Expenses","fItemN":"Expense {n}","fRemove":"Remove","fClear":"Clear","fReceipt":"Receipt","fTakePhoto":"Take photo","fChoose":"Choose file","fReceiptHint":"Total and date must be readable (photo or PDF, up to {mb} MB)","fReplace":"Replace file","fPreparing":"Preparing file…","fDate":"Receipt date","fAmount":"Amount (THB)","fCat":"Category","fCatPh":"Choose a category","fDesc":"What it was for","fDescPh":"e.g. Room rental, 3 hours","fAdd":"Add expense","fLimit":"Up to {n} expenses per claim","fNote":"Message to the approver","fTotal":"Total ({n})","fOver":"Over the approved budget by {x}. The approver will see this.","fSubmit":"Submit claim {x}","fSending":"Submitting…","fPrivacy":"Receipts are kept in a private Drive folder that only approvers open. The event's team sees the items and amounts, never the PromptPay number or receipts.","req":"Required","eventReq":"Choose an event","catReq":"Choose a category","ppBad":"Enter a valid 10-digit mobile number or 13-digit national ID","amountBad":"Enter an amount above 0","amountMax":"Amount is too high. Check it again.","dateFuture":"Date can't be in the future","dateReq":"Choose a date","receiptReq":"Attach a receipt","fileBig":"File is over {mb} MB","fileType":"Only photos and PDFs are supported","totalBig":"Receipts add up to more than {mb} MB. Split into two claims or use smaller files.","fixN":"Fix {n} fields to continue","sendFail":"Couldn't submit. Your entries are still here. Try again.","gateT":"You can't claim expenses yet","gateD":"You can claim when you are an organizer or approver, or on the team of that event. Ask an admin for the role, or ask the lead organizer to invite you to the team.","gateName":"LINE name: {name}","noEventsT":"No events open for claims yet","noEventsD":"You can claim for published events only.","doneT":"Claim submitted","doneSub":"Status: waiting for approval","doneDup":"This claim was already sent. Here is its reference.","ref":"Reference","doneEvent":"Event","doneTotal":"Total","doneSee":"See this event's expenses","doneAgain":"Submit another claim","doneBack":"Done","doneTrack":"Follow the status of your claims on Home","reviewLink":"Review claims and budgets","errForbidden":"You can't see this event's expenses","errGone":"This is no longer here. Try reloading.","errConflict":"Someone else changed this. Reload and check it again.","errSetup":"The system needs an update first: ask the admin to run setup in Apps Script again.","errOwn":"You can't decide your own claim. Ask another approver.","notTeamT":"You can't see this event's expenses","notTeamD":"Only this event's team and approvers can."}}, function (App, t) {
+/* =====================================================================
+   Expenses (feature "reimbursement", LINE app v2 session S7; brief 10.3, design canvas "Manage › Expenses").
+   - Manage › Expenses: a panel inside event-team's #manage/<eventId> (App.addPanel "manage", order 30): budget, spent,
+     remaining, by category, the claims; "Add expense"; approvers approve the budget (events' action event.decideBudget)
+     and decide claims (claim.decide).
+   - #expenses: the events whose expenses I may see (approvers: the ones waiting for me first). #expenses/<eventId>: the
+     same summary as the panel, for approvers who are not on that event's team.
+   - #claim or #claim/<eventId>: the claim form (receipts as photo or PDF). expense-reimbursement.html forwards to ?claim=1.
+   Who may do what is decided on the server on every request (claim right: organizer/approver for any published event,
+   the event's team for that event; summary: the event's team and approvers).
+   Nothing here is saved on the phone: no App.view cache (claims, payees, PromptPay and receipts never are).
+   ===================================================================== */
+const $ = App.$, h = App.h, F = App.fmt;
+const money = F.money;
+const CATS = ["venue", "food", "supplies", "print", "transport", "other"];
+const LIM = {maxItems: 10, fileMb: 5, totalMb: 15, imagePx: 1600, quality: 0.82};
+const catLabel = c => t("cat_" + (CATS.indexOf(c) >= 0 ? c : "other"));
+const itemsText = n => t(n === 1 ? "itemsOne" : "itemsMany", {n});
+const today = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);   // Thailand date
+const uuid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : "k-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+const when = ev => [F.date(ev.date), ev.startTime || ""].filter(Boolean).join(" · ");
+function chip(cls, ic, text){ return h("span", {class: "chip" + (cls ? " " + cls : "")}, ic ? App.icon(ic) : null, text); }
+function statusChip(st){
+  const m = {Pending: ["warn", "clock", "stPending"], Approved: ["info", "check", "stApproved"], Rejected: ["bad", "x", "stRejected"], Paid: ["ok", "check", "stPaid"]}[st] || ["warn", "clock", "stPending"];
+  return chip(m[0], m[1], t(m[2]));
+}
+function errText(e){
+  const k = {FORBIDDEN: "errForbidden", NOT_FOUND: "errGone", CONFLICT: "errConflict", SETUP: "errSetup"}[e && e.code];
+  return k ? t(k) : (e && e.message) || App.t("errNet");
+}
+// a button that asks once more before it acts (no browser dialogs inside LINE)
+function confirmBtn(o){
+  const b = h("button", {type: "button", class: o.cls || "btn", id: o.id, text: o.text});
+  let armed = false, timer = null;
+  b.addEventListener("click", async () => {
+    if (b.disabled) return;
+    if (!armed){ armed = true; b.textContent = o.confirm; b.classList.add("reimbursement-armed"); clearTimeout(timer);
+      timer = setTimeout(() => { armed = false; b.textContent = o.text; b.classList.remove("reimbursement-armed"); }, 6000); return; }
+    clearTimeout(timer); b.disabled = true;
+    try{ await o.run(); }finally{ armed = false; if (b.isConnected){ b.disabled = false; b.textContent = o.text; b.classList.remove("reimbursement-armed"); } }
+  });
+  return b;
+}
+
+/* =====================================================================
+   The summary of one event (panel and #expenses/<id>)
+   ===================================================================== */
+const SUM = {};                                   // eventId -> {data, at, busy}
+function loadSummary(eventId, force){
+  const s = SUM[eventId] || (SUM[eventId] = {data: null, at: 0, busy: null});
+  if (s.busy) return s.busy;
+  if (!force && s.data && Date.now() - s.at < 3000) return Promise.resolve(s.data);
+  s.busy = App.api("expense.summary", {eventId}).then(d => { s.data = d; s.at = Date.now(); return d; })
+    .finally(() => { s.busy = null; });
+  return s.busy;
+}
+function stale(eventId){ if (SUM[eventId]) SUM[eventId].at = 0; LIST.at = 0; }
+
+function summaryView(d, opts){
+  const ev = d.event, b = d.budget, tot = d.totals, parts = [];
+  // budget card: spent, approved budget, remaining (DESIGN.md "Stat tile"; canvas Manage › Expenses)
+  const card = h("div", {class: "card reimbursement-budget", id: "reimbursement-budget"},
+    h("div", {class: "reimbursement-spentRow"}, h("span", {class: "reimbursement-lbl", text: t("spentL")}),
+      h("b", {class: "reimbursement-big num", id: "reimbursement-spent", text: money(tot.spent)})));
+  const put = (...xs) => card.append(...xs.filter(Boolean));
+  if (b.approved !== null && b.approved !== undefined){
+    const pct = b.approved > 0 ? Math.min(100, Math.round(tot.spent / b.approved * 100)) : (tot.spent > 0 ? 100 : 0);
+    put(h("div", {class: "reimbursement-bar" + (tot.overBudget ? " reimbursement-isOver" : ""), role: "progressbar", "aria-label": t("budgetAria"),
+        "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": String(pct)}, h("span", {style: "width:" + pct + "%"})),
+      h("div", {class: "reimbursement-budRow"}, h("span", {class: "reimbursement-lbl", text: t("budgetApproved", {x: money(b.approved)})}),
+        h("b", {class: "num " + (tot.overBudget ? "reimbursement-bad" : "reimbursement-good"), id: "reimbursement-left",
+          text: tot.overBudget ? t("over", {x: money(-tot.remaining)}) : t("left", {x: money(tot.remaining)})})));
+  }
+  if (b.status === "Requested") put(h("div", {class: "reimbursement-budRow"}, chip("warn", "clock", t("bReq")),
+    h("span", {class: "reimbursement-lbl num", text: t("bReqAmt", {x: money(b.requested)})})),
+    d.canDecideBudget ? null : h("p", {class: "reimbursement-hint", text: t("bReqHint")}));
+  else if (b.status === "Rejected") put(h("div", {class: "reimbursement-budRow"}, chip("bad", "x", t("bRej")),
+    b.requested !== null ? h("span", {class: "reimbursement-lbl num", text: t("bReqAmt", {x: money(b.requested)})}) : null),
+    b.note ? h("p", {class: "reimbursement-hint", text: b.note}) : null);
+  else if (b.approved === null || b.approved === undefined) put(h("p", {class: "reimbursement-hint", text: t("bNone")}));
+  if (tot.count) put(h("p", {class: "reimbursement-hint num", text: t("split", {w: money(tot.waiting), a: money(tot.approved - tot.paid), p: money(tot.paid)})}));
+  if (d.canDecideBudget) put(budgetDecision(d, opts));
+  parts.push(card);
+
+  // by category
+  if (d.byCategory.length) parts.push(h("div", {class: "reimbursement-sec"}, h("h2", {class: "reimbursement-h2", text: t("byCatT")}),
+    h("div", {class: "rows reimbursement-cats"}, ...d.byCategory.map(c => h("div", {class: "row reimbursement-catRow"},
+      h("span", {class: "grow", text: catLabel(c.category)}), h("b", {class: "num", text: money(c.amount)}))))));
+
+  // the claims
+  if (d.claims.length) parts.push(h("div", {class: "reimbursement-sec"},
+    h("h2", {class: "reimbursement-h2", text: t("claimsT") + " (" + d.claims.length + ")"}),
+    h("div", {class: "rows", id: "reimbursement-claims"}, ...d.claims.map(c => claimRow(c, d, opts)))));
+  else parts.push(App.emptyState(t("emptyT"), d.canClaim ? t("emptyD") : t("emptyDNoClaim")));
+
+  parts.push(h("p", {class: "reimbursement-note", text: t("summaryNote")}));
+  if (d.canClaim) parts.push(App.actionBar(h("button", {type: "button", class: "btn", id: "reimbursement-add", onclick: () => App.go("claim", ev.id)}, App.icon("plus"), t("addExp"))));
+  return parts;
+}
+function claimRow(c, d, opts){
+  const title = [c.first || catLabel(c.category), c.who].filter(Boolean).join(" · ");
+  const sub = [c.reference, F.dateTime(c.submittedAt), itemsText(c.items)].filter(Boolean).join(" · ");
+  return h("button", {type: "button", class: "row reimbursement-claimRow", "data-ref": c.reference, onclick: () => openClaim(c.reference, d.event.id, opts)},
+    h("span", {class: "grow"}, h("span", {class: "reimbursement-cTitle", text: title}), h("span", {class: "sub", text: sub}),
+      c.mine ? h("span", {class: "sub reimbursement-mine", text: t("mine")}) : null),
+    h("span", {class: "reimbursement-cRight"}, h("b", {class: "num", text: money(c.total)}), statusChip(c.status)));
+}
+// approver: approve or reject the requested budget (events decides and logs it; not for their own event)
+function budgetDecision(d, opts){
+  const box = h("div", {class: "reimbursement-decide", id: "reimbursement-budgetDecide"});
+  const amount = d.budget.requested;
+  const send = async (decision, note) => {
+    try{
+      await App.api("event.decideBudget", {eventId: d.event.id, decision, amount, note: note || ""});
+      App.toast(t(decision === "approve" ? "budgetDone" : "budgetRejected"));
+      if (App.isDemo) demoBudget(d.event.id, decision, note);
+    }catch(e){ App.toast(errText(e)); }
+    stale(d.event.id); opts.reload();
+  };
+  const approve = confirmBtn({id: "reimbursement-budgetOk", text: t("approveBudget", {x: money(amount)}), confirm: t("confirmBudget", {x: money(amount)}), run: () => send("approve")});
+  const reject = h("button", {type: "button", class: "btn secondary", id: "reimbursement-budgetNo", text: t("rejectBudget"), onclick: () => {
+    const f = App.field({label: t("rejectBudgetReason"), type: "textarea", required: true, id: "reimbursement-budgetReason", attrs: {maxlength: "300", rows: "3"}});
+    const ok = h("button", {type: "button", class: "btn", id: "reimbursement-budgetNoOk", text: t("confirmReject"), onclick: async () => {
+      if (f.value().length < 3){ f.setError(t("reasonReq")); f.input.focus(); return; }
+      ok.disabled = true; await send("reject", f.value());
+    }});
+    box.replaceChildren(f.el, ok, h("button", {type: "button", class: "btn quiet", text: t("cancel"), onclick: () => box.replaceChildren(approve, reject)}));
+    f.input.focus();
+  }});
+  box.append(approve, reject);
+  return box;
+}
+
+/* ---------- one claim (bottom sheet) ---------- */
+async function openClaim(reference, eventId, opts){
+  const body = h("div", {class: "reimbursement-sheet", id: "reimbursement-claimSheet"}, App.skeleton([64, 120]));
+  App.sheet(reference, body);
+  let c;
+  try{ c = (await App.api("claim.get", {reference})).claim; }
+  catch(e){ if (body.isConnected) body.replaceChildren(App.emptyState(App.t("errLoad"), errText(e))); return; }
+  if (!body.isConnected) return;
+  const parts = [
+    h("div", {class: "reimbursement-sTop"}, statusChip(c.status), h("b", {class: "reimbursement-big num", text: money(c.total)})),
+    h("p", {class: "reimbursement-hint", text: [c.eventName, t("cBy", {who: c.who || "—", d: F.dateTime(c.submittedAt)})].join(" · ")}),
+    h("h3", {class: "reimbursement-h3", text: t("cRecords")}),
+    h("div", {class: "rows"}, ...c.records.map(r => h("div", {class: "row reimbursement-rec"},
+      h("span", {class: "grow"}, h("span", {text: r.description}), h("span", {class: "sub", text: [catLabel(r.category), F.date(r.date)].join(" · ")}),
+        r.receipt ? h("button", {type: "button", class: "btn quiet reimbursement-rcpt", onclick: () => App.openExternal(r.receipt)}, App.icon("image"), t("cReceipt")) : null),
+      h("b", {class: "num", text: money(r.amount)}))))
+  ];
+  if (c.records.some(r => r.receipt)) parts.push(h("p", {class: "reimbursement-hint", text: t("cReceiptHint")}));
+  if (c.note) parts.push(h("h3", {class: "reimbursement-h3", text: t("cNote")}), h("p", {class: "reimbursement-quote", text: c.note}));
+  if (c.decisionNote) parts.push(h("h3", {class: "reimbursement-h3", text: t("cDecisionNote")}), h("p", {class: "reimbursement-quote", text: c.decisionNote}));
+  if (c.payee) parts.push(h("h3", {class: "reimbursement-h3", text: t("cPayee")}), h("p", {class: "reimbursement-pay", text: t("cPayeeLine", {name: c.payee.name, pp: c.payee.promptpay})}),
+    c.canDecide ? h("p", {class: "reimbursement-hint", text: t("cPayeeHint")}) : null);
+  if (c.canApprove || c.canPay) parts.push(claimDecision(c, eventId, opts));
+  else if (c.mine && opts && opts.isApprover && (c.status === "Pending" || c.status === "Approved")) parts.push(h("p", {class: "reimbursement-hint", text: t("cOwn")}));
+  body.replaceChildren(...parts);
+}
+function claimDecision(c, eventId, opts){
+  const box = h("div", {class: "reimbursement-decide", id: "reimbursement-claimDecide"});
+  const send = async (decision, note) => {
+    try{
+      await App.api("claim.decide", {reference: c.reference, decision, note: note || "", expectedStatus: c.status});
+      App.toast(t({approve: "cDoneApprove", reject: "cDoneReject", paid: "cDonePaid"}[decision]));
+      App.closeSheet();
+    }catch(e){ App.toast(e && e.code === "FORBIDDEN" && c.mine ? t("errOwn") : errText(e)); App.closeSheet(); }
+    stale(eventId); if (opts && opts.reload) opts.reload();
+  };
+  if (c.canPay){
+    box.append(h("p", {class: "reimbursement-hint", text: t("cPaidHint")}),
+      confirmBtn({id: "reimbursement-paid", text: t("cPaid"), confirm: t("cConfirmPaid", {x: money(c.total)}), run: () => send("paid")}));
+    return box;
+  }
+  const approve = confirmBtn({id: "reimbursement-approve", text: t("cApprove", {x: money(c.total)}), confirm: t("cConfirmApprove", {x: money(c.total)}), run: () => send("approve")});
+  const reject = h("button", {type: "button", class: "btn secondary", id: "reimbursement-reject", text: t("cReject"), onclick: () => {
+    const f = App.field({label: t("cRejectReason"), type: "textarea", required: true, id: "reimbursement-reason", attrs: {maxlength: "300", rows: "3"}});
+    const ok = h("button", {type: "button", class: "btn", id: "reimbursement-rejectOk", text: t("confirmReject"), onclick: async () => {
+      if (f.value().length < 3){ f.setError(t("reasonReq")); f.input.focus(); return; }
+      ok.disabled = true; await send("reject", f.value());
+    }});
+    box.replaceChildren(f.el, ok, h("button", {type: "button", class: "btn quiet", text: t("cancel"), onclick: () => box.replaceChildren(approve, reject)}));
+    f.input.focus();
+  }});
+  box.append(approve, reject);
+  return box;
+}
+
+/* ---------- Manage › Expenses (event-team hosts it; Participants 10, Collaborators 20, Expenses 30) ---------- */
+const PANEL = {eventId: "", el: null};
+function mountPanel(el, ctx){
+  const id = String(ctx.eventId || "");
+  PANEL.eventId = id;
+  PANEL.el = h("div", {class: "reimbursement-panel", id: "reimbursement-panel"});
+  el.replaceChildren(PANEL.el);
+  const s = SUM[id];
+  if (s && s.data) drawPanel(); else PANEL.el.replaceChildren(App.skeleton([132, 56, 56]));
+  refreshPanel(id, false);
+}
+function refreshPanel(id, force){
+  return loadSummary(id, force).then(() => { if (PANEL.eventId === id) drawPanel(); }).catch(e => {
+    if (PANEL.eventId !== id || !PANEL.el || !PANEL.el.isConnected) return;
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    if (SUM[id] && SUM[id].data){ App.toast(errText(e)); return; }
+    PANEL.el.replaceChildren(App.emptyState(App.t("errLoad"), errText(e), {text: App.t("retry"), onclick: () => refreshPanel(id, true)}));
+  });
+}
+function drawPanel(){
+  const el = PANEL.el, s = SUM[PANEL.eventId];
+  if (!el || !el.isConnected || !s || !s.data) return;
+  el.replaceChildren(...summaryView(s.data, {isApprover: s.data.isApprover, reload: () => refreshPanel(PANEL.eventId, true)}));
+}
+App.addPanel("manage", {
+  order: 30,
+  label: ctx => { const s = ctx && SUM[ctx.eventId]; const n = s && s.data ? s.data.totals.waitingCount : 0; return n ? t("panelN", {n}) : t("panel"); },
+  mount: mountPanel
+});
+
+/* =====================================================================
+   #expenses and #expenses/<eventId>
+   ===================================================================== */
+const LIST = {data: null, at: 0, busy: null};
+const X = {id: ""};                                         // the event shown on #expenses/<id>
+const expBody = $("#reimbursement-expBody");
+function showExpenses(ctx){
+  X.id = String(ctx.arg || "");
+  App.setTitle();
+  if (X.id) return showOne(X.id);
+  if (LIST.data) drawList(); else expBody.replaceChildren(App.skeleton([84, 96, 96]));
+  loadList(!ctx.first);
+}
+function loadList(force){
+  if (LIST.busy) return LIST.busy;
+  if (!force && LIST.data && Date.now() - LIST.at < 3000){ drawList(); return Promise.resolve(LIST.data); }
+  LIST.busy = App.api("expense.list", {}).then(d => { LIST.data = d; LIST.at = Date.now(); if (!X.id) drawList(); return d; }).catch(e => {
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return null; }
+    if (X.id) return null;
+    if (LIST.data) App.toast(errText(e));
+    else expBody.replaceChildren(App.emptyState(App.t("errLoad"), errText(e), {text: App.t("retry"), onclick: () => loadList(true)}));
+    return null;
+  }).finally(() => { LIST.busy = null; });
+  return LIST.busy;
+}
+function drawList(){
+  const d = LIST.data; if (!d || X.id) return;
+  const parts = [h("p", {class: "reimbursement-intro", text: t(d.isApprover ? "listIntroAppr" : "listIntroTeam")})];
+  if (d.canClaim) parts.push(h("button", {type: "button", class: "btn secondary", id: "reimbursement-newClaim", onclick: () => App.go("claim")}, App.icon("plus"), t("newClaim")));
+  if (!d.events.length) parts.push(App.emptyState(t("listEmptyT"), t("listEmptyD")));
+  d.events.forEach(e => {
+    const line = e.budget.approved !== null && e.budget.approved !== undefined
+      ? t("spentOf", {spent: money(e.spent), budget: money(e.budget.approved)}) : t("spentNoBudget", {spent: money(e.spent)});
+    parts.push(h("button", {type: "button", class: "card reimbursement-ev", "data-event": e.id, onclick: () => App.go("expenses", e.id)},
+      h("span", {class: "reimbursement-when", text: when(e)}),
+      h("span", {class: "reimbursement-evName", text: e.name}),
+      h("span", {class: "reimbursement-hint num" + (e.overBudget ? " reimbursement-bad" : ""), text: line}),
+      h("span", {class: "reimbursement-chips"},
+        e.waitingForMe ? chip("warn", "clock", t("needsMe", {n: e.waitingForMe})) : null,
+        e.budgetWaits ? chip("warn", "clock", t("budgetWaits")) : null,
+        !e.waitingForMe && e.waitingCount ? chip("warn", "clock", t("stPending") + " " + e.waitingCount) : null,
+        e.status === "Closed" ? chip("", null, t("cancelled")) : null)));
+  });
+  expBody.replaceChildren(...parts);
+}
+function showOne(id){
+  const s = SUM[id];
+  if (s && s.data) drawOne(id); else expBody.replaceChildren(App.skeleton([84, 132, 56, 56]));
+  return loadSummary(id, true).then(() => { if (X.id === id){ drawOne(id); App.setTitle(); } }).catch(e => {
+    if (X.id !== id) return;
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    if (e.code === "FORBIDDEN" || e.code === "NOT_FOUND"){
+      expBody.replaceChildren(App.emptyState(t(e.code === "FORBIDDEN" ? "notTeamT" : "errGone"), e.code === "FORBIDDEN" ? t("notTeamD") : "",
+        {text: t("listT"), onclick: () => App.go("expenses")}));
+      return;
+    }
+    if (SUM[id] && SUM[id].data) App.toast(errText(e));
+    else expBody.replaceChildren(App.emptyState(App.t("errLoad"), errText(e), {text: App.t("retry"), onclick: () => showOne(id)}));
+  });
+}
+function drawOne(id){
+  const d = SUM[id] && SUM[id].data; if (!d || X.id !== id) return;
+  const ev = d.event;
+  const head = h("div", {class: "card reimbursement-head"},
+    h("span", {class: "reimbursement-when", text: when(ev)}),
+    ev.location ? h("span", {class: "reimbursement-hint"}, ev.location) : null,
+    h("span", {class: "reimbursement-chips"}, ev.status === "Closed" ? chip("", null, t("cancelled")) : null,
+      h("button", {type: "button", class: "btn quiet reimbursement-link", id: "reimbursement-eventPage", onclick: () => App.open("event", ev.id, ""), text: t("eventPage")})));
+  expBody.replaceChildren(head, ...summaryView(d, {isApprover: d.isApprover, reload: () => showOne(id)}));
+}
+function expTitle(){
+  if (!X.id) return t("listT");
+  const d = SUM[X.id] && SUM[X.id].data;
+  return d ? {title: t("expT"), sub: d.event.name} : t("expT");
+}
+
+/* =====================================================================
+   #claim/<eventId>: the claim form
+   ===================================================================== */
+const CF = {boot: null, bootAt: 0, eventId: "", items: [], key: null, sending: false, done: null, seq: 0, f: {}};
+const cBody = $("#reimbursement-claimBody"), cBar = $("#reimbursement-claimBar");
+function showClaim(ctx){
+  const id = String(ctx.arg || "");
+  if (CF.done || id !== CF.eventId || !CF.items.length) resetForm(id);
+  App.setTitle();
+  if (CF.boot && Date.now() - CF.bootAt < 60000){ drawForm(); return; }
+  cBody.replaceChildren(App.skeleton([84, 160, 260])); cBar.replaceChildren();
+  App.api("claim.bootstrap", {}).then(d => { CF.boot = d; CF.bootAt = Date.now(); drawForm(true); }).catch(e => {
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    cBody.replaceChildren(App.emptyState(App.t("errLoad"), errText(e), {text: App.t("retry"), onclick: () => { CF.bootAt = 0; showClaim({arg: CF.eventId}); }}));
+  });
+}
+function resetForm(eventId){
+  CF.items.forEach(it => { if (it.url) URL.revokeObjectURL(it.url); });
+  CF.eventId = eventId; CF.items = []; CF.key = null; CF.done = null; CF.sending = false; CF.f = {}; CF.prefilled = false;
+}
+const curEvent = () => CF.boot ? (CF.boot.events || []).find(e => e.id === (CF.f.event ? CF.f.event.value() : CF.eventId)) || null : null;
+function drawForm(fresh){
+  const d = CF.boot; if (!d) return;
+  if (CF.done) return drawDone();
+  if (d.memberStatus && d.memberStatus !== "approved"){ App.notMember(); return; }   // not a member (yet): the Me tab says why
+  if (!d.allowed || !d.events.length){
+    cBar.replaceChildren();
+    cBody.replaceChildren(d.allowed
+      ? App.emptyState(t("noEventsT"), t("noEventsD"))
+      : h("div", {class: "empty", id: "reimbursement-gate"}, h("b", {text: t("gateT")}), t("gateD"),
+          h("p", {class: "reimbursement-gateName", text: t("gateName", {name: d.lineName || App.user.name || ""})})));
+    return;
+  }
+  const keep = !fresh && CF.f.name ? {name: CF.f.name.value(), pp: CF.f.pp.input.value, note: CF.f.note.input.value, event: CF.f.event ? CF.f.event.value() : CF.eventId} : null;
+  const parts = [];
+  if (d.role === "approver") parts.push(h("button", {type: "button", class: "banner info", id: "reimbursement-review", onclick: () => App.go("expenses")}, App.icon("check"), h("span", {text: t("reviewLink")}), App.icon("chevron")));
+
+  // event
+  const asked = CF.eventId, known = d.events.some(e => e.id === asked);
+  const evSec = h("div", {class: "card reimbursement-formCard"});
+  if (asked && known){
+    CF.f.event = null;
+    const ev = d.events.find(e => e.id === asked);
+    evSec.append(h("span", {class: "reimbursement-lbl", text: t("fEvent")}), h("b", {class: "reimbursement-evName", text: ev.name}),
+      h("span", {class: "reimbursement-when", text: when(ev)}), h("p", {class: "reimbursement-hint", id: "reimbursement-budgetLine"}));
+  } else {
+    const sel = App.field({label: t("fEvent"), type: "select", required: true, id: "reimbursement-event",
+      options: [["", t("fEventPh")]].concat(d.events.map(e => [e.id, e.name + " · " + F.date(e.date)]))});
+    sel.input.value = keep ? keep.event : (known ? asked : (d.events.length === 1 ? d.events[0].id : ""));
+    sel.input.addEventListener("change", () => { sel.setError(""); budgetLine(); totals(); });
+    CF.f.event = sel;
+    if (asked && !known) evSec.append(h("div", {class: "banner", id: "reimbursement-notThis"}, App.icon("alert"), h("span", {text: t("fNotThis")})));
+    evSec.append(sel.el, h("p", {class: "reimbursement-hint", id: "reimbursement-budgetLine"}));
+  }
+  parts.push(evSec);
+
+  // payee (prefilled from my last claim, from the server; never saved on the phone)
+  const name = App.field({label: t("fName"), required: true, id: "reimbursement-name", attrs: {maxlength: "80", autocomplete: "name"}});
+  const pp = App.field({label: t("fPP"), required: true, hint: t("fPPHint"), id: "reimbursement-pp", attrs: {inputmode: "numeric", maxlength: "20", autocomplete: "off"}});
+  const pay = d.payee || {};
+  name.input.value = keep ? keep.name : (pay.name || ""); pp.input.value = keep ? keep.pp : (pay.promptpay || "");
+  name.input.addEventListener("input", () => name.setError("")); pp.input.addEventListener("input", () => pp.setError(""));
+  CF.f.name = name; CF.f.pp = pp;
+  parts.push(h("div", {class: "card reimbursement-formCard"}, h("h2", {class: "reimbursement-h2", text: t("fPayeeT")}), name.el, pp.el,
+    h("p", {class: "reimbursement-hint", text: t("fPayeeNote")})));
+
+  // expenses
+  if (!CF.items.length) addItem(false);
+  const list = h("div", {class: "stack", id: "reimbursement-items"});
+  CF.items.forEach(it => list.append(it.el));
+  const add = h("button", {type: "button", class: "btn secondary", id: "reimbursement-addItem", onclick: () => { const it = addItem(true); list.append(it.el); renumber(); it.el.scrollIntoView({block: "center"}); }},
+    App.icon("plus"), t("fAdd"));
+  CF.addBtn = add;
+  parts.push(h("h2", {class: "reimbursement-h2", text: t("fItemsT")}), list, add, h("p", {class: "reimbursement-hint", id: "reimbursement-limit", text: t("fLimit", {n: LIM.maxItems})}));
+
+  // note, total, privacy
+  const note = App.field({label: t("fNote"), type: "textarea", optional: true, id: "reimbursement-note", attrs: {maxlength: "500", rows: "3"}});
+  note.input.value = keep ? keep.note : "";
+  CF.f.note = note;
+  parts.push(note.el,
+    h("div", {class: "card reimbursement-total", id: "reimbursement-total"}, h("span", {class: "reimbursement-lbl", id: "reimbursement-totalL"}),
+      h("b", {class: "reimbursement-big num", id: "reimbursement-totalV"}), h("p", {class: "reimbursement-bad reimbursement-hint", id: "reimbursement-over", hidden: true})),
+    h("p", {class: "reimbursement-note", text: t("fPrivacy")}));
+  cBody.replaceChildren(...parts);
+  const send = h("button", {type: "button", class: "btn", id: "reimbursement-submit", onclick: submit});
+  CF.sendBtn = send;
+  cBar.replaceChildren(App.actionBar(send));
+  renumber(); budgetLine(); totals();
+}
+function budgetLine(){
+  const el = $("#reimbursement-budgetLine"); if (!el) return;
+  const ev = curEvent();
+  el.textContent = !ev ? "" : ev.budgetStatus === "Requested" ? t("fBudgetReq", {x: money(ev.budgetRequested)})
+    : ev.budget > 0 ? t("budgetApproved", {x: money(ev.budget)}) : t("fBudgetNone");
+}
+
+/* ---------- one expense record ---------- */
+function addItem(){
+  if (CF.items.length >= LIM.maxItems) return null;
+  const n = ++CF.seq, it = {n, file: null, url: null};
+  const pick = h("input", {type: "file", accept: "image/*,application/pdf", hidden: true, id: "reimbursement-pick" + n, class: "reimbursement-file"});
+  const cam = h("input", {type: "file", accept: "image/*", capture: "environment", hidden: true, id: "reimbursement-cam" + n});
+  [pick, cam].forEach(inp => inp.addEventListener("change", () => { const f = inp.files && inp.files[0]; inp.value = ""; if (f) attach(it, f); }));
+  it.rcErr = h("p", {class: "reimbursement-err", role: "alert", hidden: true});
+  it.drop = h("div", {class: "reimbursement-drop"});
+  it.title = h("h3", {class: "reimbursement-h3"});
+  it.remove = h("button", {type: "button", class: "btn quiet reimbursement-remove", onclick: () => removeItem(it)});
+  it.date = App.field({label: t("fDate"), type: "date", required: true, id: "reimbursement-date" + n, attrs: {max: today()}, value: today()});
+  it.amount = App.field({label: t("fAmount"), required: true, id: "reimbursement-amount" + n, attrs: {inputmode: "decimal", placeholder: "0.00", autocomplete: "off", maxlength: "14"}});
+  it.cat = App.field({label: t("fCat"), type: "select", required: true, id: "reimbursement-cat" + n, options: [["", t("fCatPh")]].concat(CATS.map(c => [c, catLabel(c)]))});
+  it.desc = App.field({label: t("fDesc"), required: true, id: "reimbursement-desc" + n, attrs: {maxlength: "120", placeholder: t("fDescPh")}});
+  it.amount.input.addEventListener("input", () => { it.amount.input.value = it.amount.input.value.replace(/[^0-9.,]/g, ""); it.amount.setError(""); totals(); });
+  it.amount.input.addEventListener("blur", () => { const s = toSatang(it.amount.input.value); if (!isNaN(s) && s > 0) it.amount.input.value = (s / 100).toFixed(2); totals(); });
+  [it.date, it.cat, it.desc].forEach(f => f.input.addEventListener("input", () => f.setError("")));
+  it.cat.input.addEventListener("change", () => it.cat.setError(""));
+  it.el = h("div", {class: "card reimbursement-item", "data-item": String(n)},
+    h("div", {class: "reimbursement-itemHead"}, it.title, it.remove),
+    h("div", {class: "field"}, h("span", {class: "reimbursement-flabel"}, t("fReceipt"), h("span", {class: "req", "aria-hidden": "true", text: " *"})), it.drop, it.rcErr, pick, cam),
+    h("div", {class: "reimbursement-two"}, it.date.el, it.amount.el), it.cat.el, it.desc.el);
+  it.pick = pick; it.cam = cam;
+  CF.items.push(it);
+  drawDrop(it);
+  return it;
+}
+function drawDrop(it, busy){
+  if (busy){ it.drop.replaceChildren(h("p", {class: "reimbursement-hint", text: t("fPreparing")})); return; }
+  if (!it.file){
+    it.drop.classList.remove("reimbursement-has");
+    it.drop.replaceChildren(h("div", {class: "reimbursement-dropBtns"},
+      h("button", {type: "button", class: "btn secondary", onclick: () => it.cam.click()}, App.icon("camera"), t("fTakePhoto")),
+      h("button", {type: "button", class: "btn secondary", onclick: () => it.pick.click()}, App.icon("image"), t("fChoose"))),
+      h("p", {class: "reimbursement-hint", text: t("fReceiptHint", {mb: LIM.fileMb})}));
+    return;
+  }
+  it.drop.classList.add("reimbursement-has");
+  it.drop.replaceChildren(
+    it.url ? h("img", {class: "reimbursement-thumb", src: it.url, alt: ""}) : h("span", {class: "reimbursement-pdf", "aria-hidden": "true", text: "PDF"}),
+    h("span", {class: "reimbursement-fileInfo"}, h("span", {class: "reimbursement-fname", text: it.file.name}), h("span", {class: "reimbursement-hint", text: fmtBytes(it.file.size)})),
+    h("button", {type: "button", class: "btn quiet", onclick: () => it.pick.click(), text: t("fReplace")}));
+}
+function removeItem(it){
+  if (CF.items.length === 1){                               // always keep one record: clear it instead
+    if (it.url) URL.revokeObjectURL(it.url);
+    it.file = null; it.url = null; it.amount.input.value = ""; it.desc.input.value = ""; it.cat.input.value = ""; it.date.input.value = today();
+    [it.date, it.amount, it.cat, it.desc].forEach(f => f.setError("")); it.rcErr.hidden = true;
+    drawDrop(it); totals(); return;
+  }
+  if (it.url) URL.revokeObjectURL(it.url);
+  it.el.remove();
+  CF.items = CF.items.filter(x => x !== it);
+  renumber(); totals();
+}
+function renumber(){
+  CF.items.forEach((it, i) => { it.title.textContent = t("fItemN", {n: i + 1}); it.remove.textContent = CF.items.length === 1 ? t("fClear") : t("fRemove"); });
+  const full = CF.items.length >= LIM.maxItems;
+  if (CF.addBtn) CF.addBtn.hidden = full;
+}
+const fmtBytes = b => b > 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1024)) + " KB";
+const toSatang = v => { const s = String(v == null ? "" : v).replace(/,/g, "").trim(); if (!/^\d+(\.\d*)?$/.test(s)) return NaN; return Math.round(parseFloat(s) * 100); };
+async function compressImage(file){
+  const bmp = await createImageBitmap(file, {imageOrientation: "from-image"});
+  const scale = Math.min(1, LIM.imagePx / Math.max(bmp.width, bmp.height));
+  const c = h("canvas", {width: Math.round(bmp.width * scale), height: Math.round(bmp.height * scale)});
+  const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(bmp, 0, 0, c.width, c.height);
+  const blob = await new Promise(res => c.toBlob(res, "image/jpeg", LIM.quality));
+  if (!blob) throw new Error("encode");
+  return new File([blob], (file.name || "receipt").replace(/\.[^.]+$/, "") + ".jpg", {type: "image/jpeg"});
+}
+async function attach(it, file){
+  it.rcErr.hidden = true;
+  const isPdf = file.type === "application/pdf", isImg = /^image\//.test(file.type);
+  if (!isPdf && !isImg){ rcError(it, t("fileType")); return; }
+  drawDrop(it, true);
+  let out = file;
+  if (isImg){ try{ out = await compressImage(file); }catch(e){ out = file; } }
+  if (out.size > LIM.fileMb * 1048576){ drawDrop(it); rcError(it, t("fileBig", {mb: LIM.fileMb})); return; }
+  if (!/^(image\/(jpeg|png|webp)|application\/pdf)$/.test(out.type)){ drawDrop(it); rcError(it, t("fileType")); return; }
+  if (it.url) URL.revokeObjectURL(it.url);
+  it.file = out; it.url = isImg ? URL.createObjectURL(out) : null;
+  drawDrop(it);
+}
+function rcError(it, text){ it.rcErr.replaceChildren(App.icon("alert"), h("span", {text})); it.rcErr.hidden = false; }
+function totalSatang(){ return CF.items.reduce((s, it) => { const v = toSatang(it.amount.input.value); return s + (isNaN(v) || v < 0 ? 0 : v); }, 0); }
+function totals(){
+  const lab = $("#reimbursement-totalL"); if (!lab) return;
+  const total = totalSatang() / 100, ev = curEvent(), over = $("#reimbursement-over");
+  lab.textContent = t("fTotal", {n: itemsText(CF.items.length)});
+  $("#reimbursement-totalV").textContent = money(total);
+  if (ev && ev.budget > 0 && total > ev.budget){ over.hidden = false; over.textContent = t("fOver", {x: money(total - ev.budget)}); } else over.hidden = true;
+  if (CF.sendBtn && !CF.sending) CF.sendBtn.textContent = t("fSubmit", {x: money(total)});
+}
+function ppOk(raw){
+  let d = String(raw || "").replace(/\D/g, "");
+  if (/^66\d{9}$/.test(d)) d = "0" + d.slice(2);
+  if (/^0\d{9}$/.test(d) || /^\d{15}$/.test(d)) return d;
+  if (/^\d{13}$/.test(d)){ let s = 0; for (let i = 0; i < 12; i++) s += (+d[i]) * (13 - i); return ((11 - (s % 11)) % 10) === +d[12] ? d : ""; }
+  return "";
+}
+function validate(){
+  const bad = [];
+  const check = (f, msg) => { f.setError(msg || ""); if (msg) bad.push(f.el); };
+  if (CF.f.event) check(CF.f.event, CF.f.event.value() ? "" : t("eventReq"));
+  check(CF.f.name, CF.f.name.value().length >= 2 ? "" : t("req"));
+  check(CF.f.pp, ppOk(CF.f.pp.input.value) ? "" : t("ppBad"));
+  CF.items.forEach(it => {
+    if (!it.file){ rcError(it, t("receiptReq")); bad.push(it.drop); } else it.rcErr.hidden = true;
+    const dt = it.date.value();
+    check(it.date, !dt ? t("dateReq") : dt > today() ? t("dateFuture") : "");
+    const s = toSatang(it.amount.input.value);
+    check(it.amount, isNaN(s) || s <= 0 ? t("amountBad") : s > 100000000 ? t("amountMax") : "");
+    check(it.cat, it.cat.value() ? "" : t("catReq"));
+    check(it.desc, it.desc.value() ? "" : t("req"));
+  });
+  return bad;
+}
+const toBase64 = file => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
+async function submit(){
+  if (CF.sending) return;
+  const bad = validate();
+  if (bad.length){ App.toast(t("fixN", {n: bad.length})); bad[0].scrollIntoView({block: "center"}); return; }
+  const bytes = CF.items.reduce((s, it) => s + it.file.size, 0);
+  if (bytes > LIM.totalMb * 1048576){ App.toast(t("totalBig", {mb: LIM.totalMb})); return; }
+  const ev = curEvent();
+  CF.sending = true; CF.sendBtn.disabled = true; CF.sendBtn.textContent = t("fSending");
+  CF.key = CF.key || uuid();                              // same key on a retry: the server keeps one claim
+  try{
+    const items = CF.items.map((it, i) => ({date: it.date.value(), category: it.cat.value(), description: it.desc.value(),
+      amount: toSatang(it.amount.input.value) / 100, receiptField: "receipt_" + (i + 1)}));
+    const receipts = await Promise.all(CF.items.map(async (it, i) => ({field: "receipt_" + (i + 1), name: it.file.name, type: it.file.type, data: await toBase64(it.file)})));
+    const r = await App.api("claim.submit", {idempotencyKey: CF.key, event: {id: ev.id}, payee: {name: CF.f.name.value(), promptpay: ppOk(CF.f.pp.input.value)},
+      note: CF.f.note.value(), items, receipts});
+    CF.done = {reference: r.reference, duplicate: !!r.duplicate, eventId: ev.id, eventName: ev.name, total: totalSatang() / 100, canSee: !!r.canSee};
+    CF.boot.payee = {name: CF.f.name.value(), promptpay: ppOk(CF.f.pp.input.value)};
+    stale(ev.id);
+    drawDone();
+  }catch(e){
+    if (e.code === "NOT_MEMBER"){ App.notMember(); return; }
+    App.toast(e.code === "NET" ? t("sendFail") : errText(e));
+  }finally{
+    CF.sending = false;
+    if (CF.sendBtn && CF.sendBtn.isConnected){ CF.sendBtn.disabled = false; totals(); }
+  }
+}
+function drawDone(){
+  const d = CF.done;
+  cBody.replaceChildren(h("div", {class: "card reimbursement-done", id: "reimbursement-done", role: "status"},
+    h("span", {class: "reimbursement-doneIc", "aria-hidden": "true"}, App.icon("check")),
+    h("h2", {class: "reimbursement-h2", text: t("doneT")}),
+    h("p", {class: "reimbursement-hint", text: d.duplicate ? t("doneDup") : t("doneSub")}),
+    h("div", {class: "rows reimbursement-doneRows"},
+      h("div", {class: "row"}, h("span", {class: "grow", text: t("ref")}), h("b", {class: "num", id: "reimbursement-ref", text: d.reference})),
+      h("div", {class: "row"}, h("span", {class: "grow", text: t("doneEvent")}), h("span", {text: d.eventName})),
+      h("div", {class: "row"}, h("span", {class: "grow", text: t("doneTotal")}), h("b", {class: "num", text: money(d.total)}))),
+    h("p", {class: "reimbursement-hint", text: t("doneTrack")})));
+  const again = h("button", {type: "button", class: "btn secondary", id: "reimbursement-again", text: t("doneAgain"), onclick: () => { resetForm(d.eventId); drawForm(true); window.scrollTo(0, 0); }});
+  const main = d.canSee
+    ? h("button", {type: "button", class: "btn", id: "reimbursement-see", text: t("doneSee"), onclick: () => App.go("expenses", d.eventId)})
+    : h("button", {type: "button", class: "btn", id: "reimbursement-back", text: t("doneBack"), onclick: () => App.back()});
+  cBar.replaceChildren(App.actionBar(main, again));
+  window.scrollTo(0, 0);
+}
+
+App.register({
+  name: "reimbursement",
+  routes: {
+    expenses: { screen: "reimbursement-expenses", title: expTitle, show: showExpenses },
+    claim: { screen: "reimbursement-claim", title: () => t("claimT"), once: true, show: showClaim }
+  },
+  onLang(){
+    if (PANEL.el && PANEL.el.isConnected) drawPanel();
+    if (X.id) drawOne(X.id); else if (LIST.data) drawList();
+    if (CF.boot && cBody.isConnected){
+      if (CF.done) drawDone();
+      else if (CF.f.name){ renumber(); budgetLine(); totals(); CF.items.forEach(drawDropText); }
+    }
+  }
+});
+// language switch on an open form: keep what was typed, only redraw the words
+function drawDropText(it){ if (!it.file) drawDrop(it); }
+
+/* =====================================================================
+   Demo answers (no API_URL in config.js): ?demo=participant | organizer | approver. Amounts and names are made up.
+   Event IDs follow event-team's demo (EV-DEMO-02 Board Game Night, EV-DEMO-03) and events' (EV-DEMO-01 has a budget
+   waiting for approval, so an approver can try event.decideBudget).
+   ===================================================================== */
+const DEMO = (() => {
+  const day = n => { const x = new Date(Date.now() + 7 * 3600e3); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const ev = (id, name, date, budget) => ({id, name, date, startTime: "13:00", endTime: "17:00", location: "บ้านหัวแหลม อโศก", status: "Approved", budget});
+  const C = (reference, eventId, who, mine, status, first, category, total, items, ago) => ({reference, eventId, who, mine, status, first, category, total, items,
+    submittedAt: day(-ago) + " 19:20", decidedAt: status === "Pending" ? "" : day(-ago + 1) + " 10:00", paidAt: status === "Paid" ? day(-ago + 2) + " 10:00" : ""});
+  return {
+    seq: 7, day,
+    events: {
+      "EV-DEMO-02": ev("EV-DEMO-02", "Board Game Night", day(0), {approved: 3500, requested: 3500, status: "Approved", note: "", decidedAt: day(-6) + " 10:00"}),
+      "EV-DEMO-03": ev("EV-DEMO-03", "Hualaem-X Session", day(27), {approved: null, requested: null, status: "", note: "", decidedAt: ""}),
+      "EV-DEMO-01": ev("EV-DEMO-01", "Board Game Night", day(13), {approved: null, requested: 3500, status: "Requested", note: "", decidedAt: ""})
+    },
+    claims: [
+      C("RC-DEMO-0003", "EV-DEMO-02", "ฝน", false, "Approved", "อาหารว่าง", "food", 1250, 2, 3),
+      C("RC-DEMO-0005", "EV-DEMO-02", "พี่เมฆ", true, "Pending", "บอร์ดเกมเช่า", "supplies", 890, 1, 1),
+      C("RC-DEMO-0006", "EV-DEMO-01", "พี่อรุณ", false, "Pending", "ค่ามัดจำห้อง", "venue", 1000, 1, 2)
+    ]
+  };
+})();
+// who sees which event in demo mode (event-team's demo: organizer = lead of EV-DEMO-02, collaborator of EV-DEMO-03;
+// participant = collaborator of EV-DEMO-02; approver = no team, sees everything)
+function demoTeam(id, mode){ return mode === "organizer" ? (id === "EV-DEMO-02" ? "lead" : id === "EV-DEMO-03" ? "collaborator" : "") : mode === "participant" && id === "EV-DEMO-02" ? "collaborator" : ""; }
+function demoSees(id, mode){ return mode === "approver" || !!demoTeam(id, mode); }
+function demoMine(c, mode){ return mode === "organizer" ? c.mine : false; }
+function demoTotals(claims, b){
+  const t0 = {spent: 0, waiting: 0, approved: 0, paid: 0, rejected: 0, waitingCount: 0, count: 0};
+  claims.forEach(c => { if (c.status === "Rejected"){ t0.rejected += c.total; return; } t0.count++; t0.spent += c.total;
+    if (c.status === "Pending"){ t0.waiting += c.total; t0.waitingCount++; } if (c.status === "Approved") t0.approved += c.total; if (c.status === "Paid"){ t0.paid += c.total; t0.approved += c.total; } });
+  t0.remaining = b.approved === null ? null : b.approved - t0.spent; t0.overBudget = b.approved !== null && t0.spent > b.approved;
+  return t0;
+}
+function demoBudget(id, decision, note){
+  const e = DEMO.events[id]; if (!e) return;
+  e.budget = decision === "approve" ? Object.assign({}, e.budget, {approved: e.budget.requested, status: "Approved"}) : Object.assign({}, e.budget, {status: "Rejected", note: note || ""});
+}
+App.demo["expense.summary"] = (b, mode) => {
+  const e = DEMO.events[b.eventId];
+  if (!e) throw new App.ApiError(t("errGone"), "NOT_FOUND");
+  if (!demoSees(e.id, mode)) throw new App.ApiError(t("notTeamD"), "FORBIDDEN");
+  const claims = DEMO.claims.filter(c => c.eventId === e.id);
+  const cat = {}; claims.filter(c => c.status !== "Rejected").forEach(c => { cat[c.category] = (cat[c.category] || 0) + c.total; });
+  return {ok: true, now: DEMO.day(0) + " 10:00", event: {id: e.id, name: e.name, date: e.date, startTime: e.startTime, endTime: e.endTime, location: e.location, status: e.status},
+    budget: e.budget, canDecideBudget: mode === "approver" && e.budget.status === "Requested", totals: demoTotals(claims, e.budget),
+    byCategory: Object.keys(cat).map(k => ({category: k, amount: cat[k]})).sort((x, y) => y.amount - x.amount),
+    claims: claims.map(c => Object.assign({}, c, {mine: demoMine(c, mode), canDecide: mode === "approver" && (c.status === "Pending" || c.status === "Approved")})),
+    canClaim: mode === "organizer" || mode === "approver" || !!demoTeam(e.id, mode), isApprover: mode === "approver"};
+};
+App.demo["expense.list"] = (b, mode) => {
+  const events = Object.keys(DEMO.events).filter(id => demoSees(id, mode)).map(id => {
+    const e = DEMO.events[id], claims = DEMO.claims.filter(c => c.eventId === id), tot = demoTotals(claims, e.budget);
+    const waitingForMe = mode === "approver" ? claims.filter(c => c.status === "Pending").length : 0, budgetWaits = mode === "approver" && e.budget.status === "Requested";
+    return {id, name: e.name, date: e.date, startTime: e.startTime, status: e.status, myRole: demoTeam(id, mode), budget: e.budget, spent: tot.spent, remaining: tot.remaining,
+      overBudget: tot.overBudget, waitingCount: tot.waitingCount, claimCount: tot.count, needsMe: waitingForMe > 0 || budgetWaits, waitingForMe, budgetWaits};
+  }).sort((x, y) => (y.needsMe - x.needsMe) || y.date.localeCompare(x.date));
+  return {ok: true, now: DEMO.day(0) + " 10:00", role: mode, isApprover: mode === "approver", canClaim: mode === "organizer" || mode === "approver" || events.length > 0, events};
+};
+App.demo["claim.get"] = (b, mode) => {
+  const c = DEMO.claims.find(x => x.reference === b.reference);
+  if (!c || !demoSees(c.eventId, mode)) throw new App.ApiError(t("errGone"), "NOT_FOUND");
+  const mine = demoMine(c, mode), appr = mode === "approver", e = DEMO.events[c.eventId];
+  const records = [{no: 1, date: DEMO.day(-4), category: c.category, description: c.first, amount: c.items > 1 ? c.total - 250 : c.total, receipt: ""}];
+  if (c.items > 1) records.push({no: 2, date: DEMO.day(-4), category: "food", description: "น้ำดื่ม", amount: 250, receipt: ""});
+  const canDecide = appr && (c.status === "Pending" || c.status === "Approved");
+  return {ok: true, claim: Object.assign({}, c, {mine, canDecide, canApprove: canDecide && c.status === "Pending", canPay: canDecide && c.status === "Approved",
+    note: c.status === "Pending" ? "ร้านไม่มีใบกำกับภาษี มีแต่บิลเงินสด" : "", decisionNote: "", eventId: c.eventId, eventName: e.name, records,
+    payee: appr || mine ? {name: "[ชื่อบัญชี]", promptpay: "•••• 0000"} : undefined})};
+};
+App.demo["claim.decide"] = (b, mode) => {
+  const c = DEMO.claims.find(x => x.reference === b.reference);
+  if (mode !== "approver" || !c) throw new App.ApiError(t("errForbidden"), "FORBIDDEN");
+  if (c.status !== b.expectedStatus) throw new App.ApiError(t("errConflict"), "CONFLICT");
+  c.status = {approve: "Approved", reject: "Rejected", paid: "Paid"}[b.decision];
+  return {ok: true, reference: c.reference, status: c.status, decidedAt: DEMO.day(0) + " 10:00"};
+};
+App.demo["claim.bootstrap"] = (b, mode) => {
+  const events = Object.keys(DEMO.events).filter(id => mode === "organizer" || mode === "approver" || demoTeam(id, mode))
+    .map(id => { const e = DEMO.events[id]; return {id, name: e.name, date: e.date, startTime: e.startTime, budget: e.budget.approved || 0, budgetStatus: e.budget.status, budgetRequested: e.budget.requested}; });
+  const allowed = events.length > 0;
+  return {ok: true, allowed, memberStatus: "approved", role: mode === "organizer" || mode === "approver" ? mode : "participant", lineName: "Kim (demo)", events: allowed ? events : [],
+    limits: {maxItems: 10, maxReceiptMb: 8, categories: CATS}, payee: allowed ? null : undefined};
+};
+App.demo["claim.submit"] = (b, mode) => {
+  const e = DEMO.events[b.event && b.event.id];
+  if (!e) throw new App.ApiError("This event is not open for claims.", "VALIDATION");
+  const total = (b.items || []).reduce((s, it) => s + Number(it.amount || 0), 0);
+  const reference = "RC-DEMO-" + String(++DEMO.seq).padStart(4, "0");
+  DEMO.claims.unshift({reference, eventId: e.id, who: mode === "organizer" ? "พี่เมฆ" : "Kim", mine: true, status: "Pending", first: (b.items[0] || {}).description || "",
+    category: (b.items[0] || {}).category || "other", total, items: (b.items || []).length, submittedAt: DEMO.day(0) + " 10:00", decidedAt: "", paidAt: ""});
+  return {ok: true, reference, duplicate: false, eventId: e.id, canSee: demoSees(e.id, mode)};
 };
 });
 /* ---------- start: draw at once (saved copy or skeleton), then sign in with LINE, then refresh ---------- */
