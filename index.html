@@ -241,6 +241,26 @@ body:has(.screen:not([hidden]) .actionbar) .toast{bottom:calc(84px + var(--safe-
 .home-steps .home-ln.home-done{background:var(--success)}
 .home-hint{display:block;font-size:14px;line-height:20px;color:var(--error);margin-top:8px}
 .home-wait{font-size:14px;line-height:20px;color:var(--muted)}
+.home-todaybadge{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:var(--r-sm);background:var(--accent);color:#0F1F1E;font-size:12px;line-height:16px;font-weight:700}
+.home-card{display:flex;flex-direction:column;gap:14px;padding:16px}
+.home-prog{display:flex;flex-direction:column;gap:6px}
+.home-progtxt{display:flex;font-size:14px;line-height:20px;color:var(--muted)}
+.home-progtxt b{margin-left:auto;color:var(--ink);font-variant-numeric:tabular-nums}
+.home-bar{height:8px;border-radius:999px;background:var(--field);overflow:hidden}
+.home-bar i{display:block;height:8px;border-radius:999px;background:var(--primary)}
+.home-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.home-two .btn{padding:0 8px}
+.card.home-mrow{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.home-mrow .home-evbody{gap:4px}
+.home-mrow>svg{width:20px;height:20px;flex:none;color:var(--muted)}
+.home-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.home-tile{min-height:72px;padding:12px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);color:var(--ink);display:flex;flex-direction:column;gap:6px;text-align:left;font-size:14px;line-height:20px;font-weight:600;cursor:pointer}
+.home-tile svg{width:22px;height:22px;color:var(--primary)}
+.home-ticket{padding:0;overflow:hidden}
+.home-tk-top{display:flex;gap:14px;padding:16px}
+.home-datebox{width:60px;flex:none;border-radius:var(--r-md);background:var(--primary);color:var(--on-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0;font-size:12px;line-height:16px;font-weight:600}
+.home-datebox b{font-size:26px;line-height:30px;font-weight:700}
+.home-tk-foot{border-top:1px dashed var(--line);padding:12px 16px}
 /* events: Events tab, event page, create/edit. Every selector carries an "events-" class or id (check.js). DESIGN.md components. */
 .events-top{position:fixed;z-index:24;bottom:calc(var(--tabbar-h) + var(--safe-b) + 16px);right:max(16px, calc((100vw - 480px) / 2 + 16px));pointer-events:none}
 .events-create{pointer-events:auto;height:52px;padding:0 20px 0 16px;border-radius:var(--r-pill);border:0;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;gap:8px;font-size:16px;line-height:24px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(15,31,30,.24)}
@@ -692,29 +712,28 @@ input[type="date"].members-input{padding-right:10px}
   <!-- first open with nothing saved on this phone yet -->
   <section class="screen" id="shell-loading"><div class="sk-stack"><div class="sk" style="height:84px"></div><div class="sk" style="height:114px"></div><div class="sk" style="height:114px"></div></div></section>
 
-  <!-- HOME tab (app/features/home) -->
+  <!-- HOME tab (app/features/home): to-dos, events I manage (organizers), shortcuts, my next event as a ticket, events open for registration -->
   <section class="screen" id="home-screen" hidden>
     <div class="stack" id="home-todo"></div>
-    <div class="stats" id="home-stats"></div>
 
-    <section class="section" id="home-secUpcoming">
-      <div class="section-head"><h2 data-t="upcomingT"></h2></div>
-      <div class="seg" role="tablist" id="home-upSeg" style="margin-bottom:12px">
-        <button type="button" role="tab" id="home-upAll" aria-selected="true"></button>
-        <button type="button" role="tab" id="home-upTodo" aria-selected="false"></button>
-      </div>
-      <div class="stack" id="home-upList"></div>
+    <section class="section" id="home-secManage" hidden>
+      <div class="section-head"><h2 data-t="manageT"></h2><span class="home-todaybadge" id="home-todayBadge" hidden></span><button type="button" class="btn quiet" id="home-manageAll"></button></div>
+      <div class="stack" id="home-manageList"></div>
     </section>
 
-    <section class="section" id="home-secStatus">
-      <div class="section-head"><h2 data-t="statusT"></h2></div>
-      <div class="seg" role="tablist" id="home-stSeg" style="margin-bottom:12px">
-        <button type="button" role="tab" id="home-stEvents" aria-selected="true"></button>
-        <button type="button" role="tab" id="home-stClaims" aria-selected="false"></button>
-      </div>
-      <button type="button" class="btn" id="home-newClaim" hidden style="margin-bottom:12px"></button>
-      <div class="stack" id="home-stList"></div>
-      <p class="asof" id="home-stMore" hidden></p>
+    <section class="section" id="home-secShort" hidden>
+      <div class="section-head"><h2 data-t="shortT"></h2></div>
+      <div class="home-tiles" id="home-tiles"></div>
+    </section>
+
+    <section class="section" id="home-secNext">
+      <div class="section-head"><h2 data-t="nextT"></h2></div>
+      <div id="home-next"></div>
+    </section>
+
+    <section class="section" id="home-secOpen">
+      <div class="section-head"><h2 data-t="openT"></h2><button type="button" class="btn quiet" id="home-openAll"></button></div>
+      <div class="stack" id="home-upList"></div>
     </section>
 
     <div style="display:flex;justify-content:center;margin-top:16px">
@@ -1654,81 +1673,136 @@ const App = {
 App._shellText({"th":{"appName":"ชุมชนของเรา","orgFallback":"ผู้จัดกิจกรรม","tab_home":"หน้าแรก","tab_events":"กิจกรรม","tab_passport":"พาสปอร์ต","tab_me":"ฉัน","nav":"เมนูหลัก","langBtn":"EN","langAria":"Switch to English","back":"ย้อนกลับ","avatar":"ฉัน: โปรไฟล์และการตั้งค่า","demo":"โหมดทดลอง: ข้อมูลตัวอย่าง ไม่มีการส่งข้อมูลจริง ดูแบบอื่นได้โดยเติม ?demo=organizer หรือ ?demo=new ท้ายลิงก์","syncing":"กำลังอัปเดต…","asOf":"ข้อมูล ณ {d}","savedAt":"ข้อมูลที่บันทึกไว้ ณ {d} กำลังอัปเดต…","offlineSaved":"เชื่อมต่อไม่ได้ ตอนนี้แสดงข้อมูลล่าสุดที่บันทึกไว้","retry":"ลองอีกครั้ง","errAuth":"การเชื่อมต่อ LINE หมดอายุ ปิดหน้านี้แล้วเปิดใหม่จากแชท","errRate":"เปิดบ่อยเกินไป รอสักครู่แล้วลองใหม่","errNet":"โหลดไม่สำเร็จ ลองอีกครั้ง","errLoad":"โหลดข้อมูลไม่สำเร็จ","errLoadD":"ปิดหน้านี้แล้วเปิดใหม่จาก LINE","liffFail":"เชื่อมต่อ LINE ไม่สำเร็จ","noLink":"เมนูนี้ยังไม่ได้ตั้งค่า แจ้งผู้ดูแล","noCamera":"เปิดกล้องสแกนไม่ได้ในหน้านี้ ลองเปิดจากแอป LINE","notMemberT":"ต้องเป็นสมาชิกก่อน","notMemberD":"สมัครสมาชิกและรอผู้ดูแลอนุมัติ แล้วกลับมาที่หน้านี้","ph_events_t":"รายการกิจกรรมแบบเต็มกำลังจะมา","ph_events_d":"ตอนนี้ดูกิจกรรมที่เปิดรับสมัครและลงทะเบียนได้จากหน้าแรก","ph_events_btn":"ไปหน้าแรก","ph_passport_t":"พาสปอร์ตกำลังจะมา","ph_passport_d":"จำนวนกิจกรรมที่คุณเข้าร่วม แสตมป์เช็กอิน และคำขอเบิกของคุณจะรวมอยู่ที่นี่ ระหว่างนี้ดูสถานะได้ที่หน้าแรก","setTitle":"การตั้งค่า","setLang":"ภาษา","setTheme":"ธีม","themeAuto":"ตามเครื่อง","themeLight":"สว่าง","themeDark":"มืด","setMember":"บัตรสมาชิกของฉัน","setMemberSub":"เลขสมาชิกและข้อมูลที่สมัครไว้","setPrivacy":"ความเป็นส่วนตัว","setPrivacySub":"ความยินยอมฉบับ {v} · ขอดูหรือขอลบข้อมูล","setContact":"ติดต่อผู้ดูแลใน LINE","setClear":"ลบข้อมูลที่บันทึกไว้ในเครื่องนี้","setClearSub":"หน้าที่เคยเปิดจะโหลดใหม่จากระบบ","cleared":"ลบข้อมูลในเครื่องนี้แล้ว","privTitle":"ความเป็นส่วนตัว","privVersion":"ข้อตกลงความยินยอมฉบับ {v}","privDevice":"เพื่อให้เปิดได้ทันที แอปเก็บสำเนาหน้าที่คุณเห็นล่าสุดไว้ในเครื่องนี้ (ไม่รวมคำขอเบิก พร้อมเพย์ และใบเสร็จ) ลบได้ทุกเมื่อที่ “ลบข้อมูลที่บันทึกไว้ในเครื่องนี้”","privAsk":"ขอดู แก้ไข หรือขอลบข้อมูลของคุณ: แชทหาผู้ดูแล","close":"ปิด","fromLine":"บัญชี LINE","optional":"ไม่บังคับ","shareTitle":"แชร์","shareLine":"ส่งใน LINE","shareLineSub":"เลือกเพื่อนหรือกลุ่มใน LINE","shareCopy":"คัดลอกลิงก์","shareCopySub":"วางในแชตหรือโซเชียลอื่น","shareCopied":"คัดลอกลิงก์แล้ว","sharePhone":"แชร์ด้วยเมนูของโทรศัพท์","sharePhoneSub":"แอปอื่นในเครื่อง"},"en":{"appName":"Our community","orgFallback":"the organizers","tab_home":"Home","tab_events":"Events","tab_passport":"Passport","tab_me":"Me","nav":"Main menu","langBtn":"ไทย","langAria":"เปลี่ยนเป็นภาษาไทย","back":"Back","avatar":"Me: profile and settings","demo":"Demo mode: sample data, nothing is sent. Add ?demo=organizer or ?demo=new to the address to see other versions.","syncing":"Updating…","asOf":"Updated {d}","savedAt":"Saved copy from {d}. Updating…","offlineSaved":"Can't connect. Showing what you saw last time.","retry":"Try again","errAuth":"Your LINE session expired. Close this page and open it again from the chat.","errRate":"Too many tries. Wait a moment and try again.","errNet":"Couldn't load. Try again.","errLoad":"Couldn't load your page","errLoadD":"Close this page and open it again from LINE.","liffFail":"Couldn't connect to LINE.","noLink":"This menu isn't set up yet. Tell an admin.","noCamera":"The camera can't open here. Open this from the LINE app.","notMemberT":"Members only","notMemberD":"Join the community and wait for an admin to approve you, then come back here.","ph_events_t":"The full event list is coming soon","ph_events_d":"For now, see open events and register from Home.","ph_events_btn":"Go to Home","ph_passport_t":"Passport is coming soon","ph_passport_d":"Events you joined, check-in stamps and your claims will live here. For now, see your status on Home.","setTitle":"Settings","setLang":"Language","setTheme":"Theme","themeAuto":"Auto","themeLight":"Light","themeDark":"Dark","setMember":"My membership card","setMemberSub":"Service ID and the details you gave","setPrivacy":"Privacy","setPrivacySub":"Consent {v} · see or delete your data","setContact":"Message the admin in LINE","setClear":"Clear what this phone saved","setClearSub":"Pages load fresh from the server next time","cleared":"Cleared from this phone","privTitle":"Privacy","privVersion":"Consent version {v}","privDevice":"To open instantly, the app keeps a copy of what you saw last on this phone (never claims, PromptPay or receipts). Remove it any time with “Clear what this phone saved”.","privAsk":"To see, correct or delete your data, message the admin in chat.","close":"Close","fromLine":"LINE account","optional":"optional","shareTitle":"Share","shareLine":"Send in LINE","shareLineSub":"Pick friends or groups in LINE","shareCopy":"Copy link","shareCopySub":"Paste it in any chat or social app","shareCopied":"Link copied","sharePhone":"Share with the phone menu","sharePhoneSub":"Other apps on this phone"}});
 App._consent({"version":"v3-2026-11","note":"The one consent wording (brief 10.2). Changing it means a new version: change version here, CONSENT_VERSION in backend/core/00-config.gs, and the consent/consentSmall text and CONSENT_VERSION in sign-up.html and event-join.html. tools/check.js fails if any of them differ.","th":{"consent":"ฉันยินยอมให้ {org} เก็บและใช้ข้อมูลที่ฉันให้ไว้ ได้แก่ คำนำหน้า ชื่อ-นามสกุล ชื่อเล่น วันเกิด จังหวัดภูมิลำเนา เบอร์มือถือ อีเมล Instagram สถานะปัจจุบัน (นักเรียน นักศึกษา ทำงาน หรืออื่น ๆ) และรายละเอียดการเรียนหรือการทำงาน (โรงเรียน ระดับชั้น สายการเรียน มหาวิทยาลัย คณะ สาขา ชั้นปี ตำแหน่ง บริษัท อุตสาหกรรม) รวมถึงบัญชี LINE ของฉัน และประวัติการลงทะเบียนและเช็กอินกิจกรรม เพื่อพิจารณาการเป็นสมาชิก จัดการการลงทะเบียนและการเช็กอิน แจ้งเตือนกิจกรรมทาง LINE ติดต่อเรื่องกิจกรรม และสรุปสถิติการเข้าร่วมของชุมชน","consentSmall":"ข้อมูลเปิดให้เฉพาะผู้ดูแลและทีมผู้จัดของกิจกรรมที่คุณสมัคร ไม่ขายหรือส่งต่อให้ผู้อื่น และใช้เติมข้อมูลให้อัตโนมัติครั้งถัดไป ข้อมูลสุขภาพ เช่น อาหารที่แพ้ จะถามแยกเป็นรายกิจกรรมพร้อมขอความยินยอมแยก ขอดู แก้ไข หรือขอลบข้อมูลได้โดยแชทหาผู้ดูแล"},"en":{"consent":"I agree that {org} may collect and use the details I give: title, first and last name, nickname, date of birth, home province, mobile number, email, Instagram, current status (high school, university, working or other) and my study or work details (school, grade, program, university, faculty, major, year, job title, company, industry), plus my LINE account and my event registration and check-in history, to review my membership, manage registration and check-in, send event reminders in LINE, contact me about events and count community participation.","consentSmall":"Only the admins and the organizing team of the events you join can see it. It is never sold or passed on, and it fills in forms for you next time. Health details such as food allergies are asked per event, with a separate consent. To see, correct or delete your data, message the admin in chat."}});
 // ---- app/features/home ----
-App.module("home", {"th":{"hello":"สวัสดี, {name}","helloPlain":"สวัสดี","sTodo":"กิจกรรมที่ยังไม่ได้ลงทะเบียน","sMine":"กิจกรรมที่ลงทะเบียนไว้","sClaims":"คำขอเบิกที่รอดำเนินการ","upcomingT":"กิจกรรมที่กำลังจะมาถึง","segAll":"ทั้งหมด ({n})","segTodo":"ยังไม่ลงทะเบียน ({n})","regOpen":"เปิดรับสมัคร · ปิด {d}","regUpcoming":"เปิดรับสมัคร {d}","regClosed":"ปิดรับสมัครแล้ว","registered":"ลงทะเบียนแล้ว","emptyUpT":"ยังไม่มีกิจกรรมที่กำลังจะมาถึง","emptyUpD":"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่","emptyTodoT":"ลงทะเบียนครบทุกกิจกรรมแล้ว","emptyTodoD":"ดูรายละเอียดได้ในแท็บ “ทั้งหมด”","statusT":"ติดตามสถานะ","segEvents":"กิจกรรมของฉัน","segClaims":"คำขอเบิก","stUpcoming":"กำลังจะมาถึง","stEnded":"จบแล้ว","stCancelled":"ยกเลิกแล้ว","cPending":"รออนุมัติ","cApproved":"อนุมัติแล้ว รอโอน","cRejected":"ไม่อนุมัติ","cPaid":"โอนเงินแล้ว","stepSent":"ส่งคำขอ","stepApproved":"อนุมัติ","stepPaid":"โอนเงิน","stepRejected":"ไม่อนุมัติ","rejectedHint":"ติดต่อผู้อนุมัติทางแชทนี้เพื่อสอบถามเหตุผล","refL":"เลขอ้างอิง {ref}","sentL":"ส่งเมื่อ {d}","itemsL":"{n} รายการ","emptyEvT":"ยังไม่เคยลงทะเบียนกิจกรรม","emptyEvD":"เลือกกิจกรรมด้านบนเพื่อลงทะเบียน","emptyClT":"ยังไม่มีคำขอเบิก","emptyClD":"คำขอเบิกค่าใช้จ่ายที่คุณส่งจะแสดงที่นี่","claimsWait":"กำลังโหลดคำขอเบิกล่าสุด (คำขอเบิกไม่ถูกเก็บไว้ในเครื่อง)","moreN":"แสดง {n} รายการล่าสุด","newClaim":"ขอเบิกค่าใช้จ่าย","refresh":"รีเฟรช","todoConsent":"เราปรับข้อตกลงความเป็นส่วนตัว (ฉบับ {v}) แตะเพื่ออ่านและยอมรับ ใช้งานต่อได้ตามปกติ"},"en":{"hello":"Hello, {name}","helloPlain":"Hello","sTodo":"Events you haven't registered for","sMine":"Events you're registered for","sClaims":"Claims in progress","upcomingT":"Upcoming events","segAll":"All ({n})","segTodo":"Not registered ({n})","regOpen":"Open · closes {d}","regUpcoming":"Opens {d}","regClosed":"Registration closed","registered":"Registered","emptyUpT":"No upcoming events","emptyUpD":"New events will show up here.","emptyTodoT":"You're registered for every event","emptyTodoD":"See them all in the “All” tab.","statusT":"Track status","segEvents":"My events","segClaims":"My claims","stUpcoming":"Upcoming","stEnded":"Ended","stCancelled":"Cancelled","cPending":"Waiting for approval","cApproved":"Approved, payment pending","cRejected":"Not approved","cPaid":"Paid","stepSent":"Sent","stepApproved":"Approved","stepPaid":"Paid","stepRejected":"Not approved","rejectedHint":"Message the approvers in this chat to ask why.","refL":"Reference {ref}","sentL":"Sent {d}","itemsL":"{n} items","emptyEvT":"No registrations yet","emptyEvD":"Pick an event above to register.","emptyClT":"No claims yet","emptyClD":"Expense claims you send will show up here.","claimsWait":"Loading your latest claims (claims are never saved on the phone)","moreN":"Showing your latest {n}","newClaim":"New expense claim","refresh":"Refresh","todoConsent":"We updated the privacy notice (version {v}). Tap to read and accept. You can keep using the app."}}, function (App, t) {
-// Home tab of the LINE app (moved from the old index.html landing page, 8 Nov 2026).
-// Data: home.bootstrap (backend/features/home). The shell shows the copy saved on this phone first, then refreshes;
-// the saved copy never holds claims (the shell removes any key about claims, PromptPay, payees or receipts).
+App.module("home", {"th":{"hello":"สวัสดี, {name}","helloPlain":"สวัสดี","todoConsent":"เราปรับข้อตกลงความเป็นส่วนตัว (ฉบับ {v}) แตะเพื่ออ่านและยอมรับ ใช้งานต่อได้ตามปกติ","todoProfile":"กรอกโปรไฟล์ให้ครบ แล้วสมัครกิจกรรมได้ในแตะเดียว","todoRejected":"คำขอเบิกของคุณ {n} รายการไม่ได้รับอนุมัติ แตะเพื่อดูในพาสปอร์ต","todoApprove":"รอคุณอนุมัติ: คำขอเบิก {c} · งบกิจกรรม {b}","todoClosing":"“{name}” ปิดรับสมัคร{when}","whenToday":"วันนี้","whenTomorrow":"พรุ่งนี้","whenInN":"ใน {n} วัน","closes":"ปิดรับ{when}","manageT":"งานที่คุณดูแล","today":"วันนี้","seeAll":"ดูทั้งหมด","roleLead":"คุณเป็นผู้จัด","roleCollab":"คุณเป็นผู้ร่วมจัด","checkedInOf":"เช็กอินแล้ว","registeredN":"ลงทะเบียน {n}","scanQr":"สแกน QR","manageBtn":"จัดการงาน","draft":"ฉบับร่าง","budgetWait":"งบ {b} รออนุมัติ","shortT":"ทางลัด","createEvent":"สร้างกิจกรรม","newClaim":"ขอเบิกค่าใช้จ่าย","nextT":"งานถัดไปของคุณ","registered":"ลงทะเบียนแล้ว","checkedIn":"เช็กอินแล้ว","showTicket":"แสดงตั๋วและ QR เช็กอิน","inToday":"วันนี้","inTomorrow":"พรุ่งนี้","inDays":"อีก {n} วัน","noNextT":"ยังไม่มีงานที่ลงทะเบียนไว้","noNextD":"เลือกกิจกรรมที่สนใจแล้วลงทะเบียนได้เลย","seeEvents":"ดูกิจกรรม","openT":"เปิดรับสมัคร","regOpen":"เปิดรับสมัคร","emptyOpenT":"ยังไม่มีกิจกรรมที่เปิดรับสมัคร","emptyOpenD":"เมื่อมีกิจกรรมใหม่ จะแสดงที่นี่","refresh":"รีเฟรช"},"en":{"hello":"Hello, {name}","helloPlain":"Hello","todoConsent":"We updated the privacy notice (version {v}). Tap to read and accept. You can keep using the app.","todoProfile":"Complete your profile to register for events in one tap.","todoRejected":"{n} of your expense claims were not approved. Tap to see them in Passport.","todoApprove":"Waiting for you: claims {c} · event budgets {b}","todoClosing":"“{name}” closes {when}","whenToday":"today","whenTomorrow":"tomorrow","whenInN":"in {n} days","closes":"Closes {when}","manageT":"Events you manage","today":"Today","seeAll":"See all","roleLead":"You are the organizer","roleCollab":"You are a co-organizer","checkedInOf":"Checked in","registeredN":"{n} registered","scanQr":"Scan QR","manageBtn":"Manage","draft":"Draft","budgetWait":"Budget {b} waiting","shortT":"Shortcuts","createEvent":"Create event","newClaim":"New expense claim","nextT":"Your next event","registered":"Registered","checkedIn":"Checked in","showTicket":"Show ticket and check-in QR","inToday":"Today","inTomorrow":"Tomorrow","inDays":"In {n} days","noNextT":"No event registered yet","noNextD":"Pick an event you like and register.","seeEvents":"See events","openT":"Open for registration","regOpen":"Open","emptyOpenT":"No events open for registration","emptyOpenD":"New events will show up here.","refresh":"Refresh"}}, function (App, t) {
+// Home tab of the LINE app (Home v2, S9, 9 Nov 2026; design canvas screens Main and HomeOrganizer).
+// Data: home.bootstrap (backend/features/home). The shell shows the copy saved on this phone first, then refreshes.
+// The saved copy holds events and counts only: no claims, PromptPay, payee or receipt data ever reach Home.
 const $ = App.$, h = App.h, F = App.fmt;
-const S = { upTab: "all", stTab: "events" };
+const S = { firstName: "" };
 const screen = $("#home-screen");
 const cfg = App.config;
+const NODATE = {weekday: undefined, day: undefined, month: undefined, year: undefined};
 
 const data = App.view({
   key: "home", action: "home.bootstrap", cache: true, el: $("#home-upList"),
-  skeleton(){ $("#home-stats").replaceChildren(); $("#home-todo").replaceChildren(); $("#home-upList").replaceChildren(App.skeleton([114, 114])); $("#home-stList").replaceChildren(App.skeleton([96])); },
+  skeleton(){
+    $("#home-todo").replaceChildren(); $("#home-secManage").hidden = true; $("#home-secShort").hidden = true;
+    $("#home-next").replaceChildren(App.skeleton([150])); $("#home-upList").replaceChildren(App.skeleton([114, 114]));
+  },
   render
 });
 
-function fillText(){ App.$$("[data-t]", screen).forEach(el => { el.textContent = t(el.dataset.t); }); $("#home-refresh").textContent = t("refresh"); $("#home-newClaim").replaceChildren(App.icon("plus"), t("newClaim")); }
+function fillText(){
+  App.$$("[data-t]", screen).forEach(el => { el.textContent = t(el.dataset.t); });
+  $("#home-refresh").textContent = t("refresh"); $("#home-openAll").textContent = t("seeAll"); $("#home-manageAll").textContent = t("seeAll");
+  $("#home-todayBadge").textContent = t("today");
+}
 function eventUrl(id){ return cfg.EVENT_JOIN_LIFF_URL ? cfg.EVENT_JOIN_LIFF_URL + "?event=" + encodeURIComponent(id) : ""; }
-function setSeg(pairs){ pairs.forEach(([el, on]) => el.setAttribute("aria-selected", on ? "true" : "false")); }
 const chip = (cls, ic, text) => h("span", {class: "chip " + cls}, ic ? App.icon(ic) : null, text);
+const dayMs = s => Date.parse(String(s).slice(0, 10) + "T00:00:00Z");
+const daysBetween = (from, to) => Math.round((dayMs(to) - dayMs(from)) / 864e5);
+const openSignup = () => App.open("signup", "", cfg.JOIN_LIFF_URL);
+
+function whenWord(n){ return n <= 0 ? t("whenToday") : n === 1 ? t("whenTomorrow") : t("whenInN", {n}); }
 
 function render(d, meta){
-  const claimsKnown = Array.isArray(d.myClaims);           // not known while showing the saved copy (claims are never saved)
-  const myClaims = claimsKnown ? d.myClaims : [];
-  const canClaim = d.canClaim !== undefined ? d.canClaim : (d.role === "organizer" || d.role === "approver");
-  const upcoming = d.upcoming || [], myEvents = d.myEvents || [];
-  const todo = upcoming.filter(e => !e.myReference);
-  const mine = myEvents.filter(e => e.status === "upcoming");
-  const openClaims = myClaims.filter(c => c.status === "Pending" || c.status === "Approved");
-  const showClaims = canClaim || myClaims.length > 0;
+  const today = String(d.now || "").slice(0, 10);
+  const staff = d.role === "organizer" || d.role === "approver";
+  const canClaim = d.canClaim !== undefined ? d.canClaim : staff;      // the shell never saves "claim" keys: fall back to the role
+  const canCreate = d.canCreate !== undefined ? d.canCreate : staff;
+  const openList = (d.upcoming || []).filter(e => !e.myReference && e.regState === "open");
+  const ap = d.approvals || {pending: 0, budgets: 0};
+  const approvals = (Number(ap.pending) || 0) + (Number(ap.budgets) || 0);
+  const rejected = Number(d.rejectedRecent) || 0;
 
-  // to-dos (consent v3 for members who accepted an older wording; sign-up.html asks again)
-  $("#home-todo").replaceChildren(...(d.needsConsent ? [h("button", {type: "button", class: "banner", id: "home-consentTodo", onclick: () => App.link(cfg.JOIN_LIFF_URL)},
-    App.icon("alert"), h("span", {text: t("todoConsent", {v: App.consent().version})}), App.icon("chevron"))] : []));
-  App.setBadge("home", !!d.needsConsent);
+  // to-dos: consent or profile (both open the in-app sign-up), rejected claims, approvals waiting, a registration closing soon
+  const todo = (id, cls, ic, text, onclick) => h("button", {type: "button", class: "banner" + (cls ? " " + cls : ""), id, onclick}, App.icon(ic), h("span", {text}), App.icon("chevron"));
+  const todos = [];
+  if (d.needsConsent) todos.push(todo("home-consentTodo", "", "alert", t("todoConsent", {v: App.consent().version}), openSignup));
+  else if (d.needsProfile) todos.push(todo("home-profileTodo", "", "alert", t("todoProfile"), openSignup));
+  if (rejected > 0) todos.push(todo("home-rejectedTodo", "", "alert", t("todoRejected", {n: rejected}), () => App.go("passport")));
+  if (approvals > 0) todos.push(todo("home-approveTodo", "info", "check", t("todoApprove", {c: ap.pending || 0, b: ap.budgets || 0}), () => App.go("expenses")));
+  const soon = openList.map(e => ({e, n: daysBetween(today, e.regClose)})).filter(x => x.n <= 2).sort((a, b) => a.n - b.n)[0];
+  if (soon) todos.push(todo("home-closingTodo", "info", "clock", t("todoClosing", {name: soon.e.name, when: whenWord(soon.n)}), () => App.open("event", soon.e.id, eventUrl(soon.e.id))));
+  $("#home-todo").replaceChildren(...todos);
+  App.setBadge("home", !!(d.needsConsent || d.needsProfile || rejected || approvals));
 
-  const stat = (n, label, hot, onclick, show) => show === false ? null :
-    h("button", {type: "button", class: "stat" + (hot ? " hot" : ""), onclick}, h("b", {text: String(n)}), h("span", {text: label}));
-  $("#home-stats").replaceChildren(...[
-    stat(todo.length, t("sTodo"), todo.length > 0, () => { S.upTab = "todo"; data.rerender(); $("#home-secUpcoming").scrollIntoView({behavior: "smooth"}); }),
-    stat(mine.length, t("sMine"), false, () => { S.stTab = "events"; data.rerender(); $("#home-secStatus").scrollIntoView({behavior: "smooth"}); }),
-    stat(claimsKnown ? openClaims.length : "–", t("sClaims"), false, () => { S.stTab = "claims"; data.rerender(); $("#home-secStatus").scrollIntoView({behavior: "smooth"}); }, showClaims)
-  ].filter(Boolean));
+  // organizers: events I manage (today's event gets Scan QR + Manage)
+  const manage = d.manage || [];
+  const isToday = m => m.isToday && m.status === "Approved";
+  $("#home-secManage").hidden = !manage.length;
+  $("#home-todayBadge").hidden = !manage.some(isToday);
+  $("#home-manageList").replaceChildren(...manage.map(m => isToday(m) ? manageToday(m) : manageRow(m)));
 
-  // upcoming events
-  $("#home-upAll").textContent = t("segAll", {n: upcoming.length}); $("#home-upTodo").textContent = t("segTodo", {n: todo.length});
-  setSeg([[$("#home-upAll"), S.upTab === "all"], [$("#home-upTodo"), S.upTab === "todo"]]);
-  const list = S.upTab === "todo" ? todo : upcoming;
-  $("#home-upList").replaceChildren(...(list.length ? list.map(evRow) :
-    [S.upTab === "todo" && upcoming.length ? App.emptyState(t("emptyTodoT"), t("emptyTodoD")) : App.emptyState(t("emptyUpT"), t("emptyUpD"))]));
+  // shortcuts
+  const tile = (id, ic, text, onclick) => h("button", {type: "button", class: "home-tile", id, onclick}, App.icon(ic), h("span", {text}));
+  const tiles = [];
+  if (canCreate) tiles.push(tile("home-newEvent", "plus", t("createEvent"), () => App.go("event-new")));
+  if (canClaim) tiles.push(tile("home-newClaim", "card", t("newClaim"), () => App.open("claim", "", cfg.REIMBURSE_LIFF_URL)));
+  $("#home-secShort").hidden = !tiles.length;
+  $("#home-tiles").replaceChildren(...tiles);
 
-  // status: my events / my claims
-  if (!showClaims) S.stTab = "events";
-  $("#home-stSeg").hidden = !showClaims;
-  $("#home-stEvents").textContent = t("segEvents"); $("#home-stClaims").textContent = t("segClaims");
-  setSeg([[$("#home-stEvents"), S.stTab === "events"], [$("#home-stClaims"), S.stTab === "claims"]]);
-  let rows;
-  if (S.stTab === "claims" && !claimsKnown) rows = [h("p", {class: "home-wait", text: t("claimsWait")})];
-  else if (S.stTab === "claims") rows = myClaims.length ? myClaims.map(claimRow) : [App.emptyState(t("emptyClT"), t("emptyClD"))];
-  else rows = myEvents.length ? myEvents.map(myEventRow) : [App.emptyState(t("emptyEvT"), t("emptyEvD"))];
-  $("#home-stList").replaceChildren(...rows);
-  const n = S.stTab === "claims" ? myClaims.length : myEvents.length;
-  $("#home-stMore").hidden = n < 20; $("#home-stMore").textContent = t("moreN", {n});
-  $("#home-newClaim").hidden = !(canClaim && S.stTab === "claims");
+  // my next event as a ticket
+  $("#home-next").replaceChildren(d.next ? ticket(d.next, today) :
+    App.emptyState(t("noNextT"), t("noNextD"), {text: t("seeEvents"), onclick: () => App.go("events")}));
+
+  // events open for registration
+  $("#home-upList").replaceChildren(...(openList.length ? openList.slice(0, 5).map(ev => evRow(ev, today)) :
+    [App.emptyState(t("emptyOpenT"), t("emptyOpenD"))]));
+  $("#home-openAll").hidden = !openList.length;
+
   $("#home-asOf").textContent = meta && meta.stale ? App.t("savedAt", {d: F.stamp(meta.at)}) : App.t("asOf", {d: F.dateTime(d.now)});
   S.firstName = d.firstName || "";
   App.setTitle();
 }
 
-function evChip(ev){
-  if (ev.myReference) return chip("ok", "check", t("registered"));
-  if (ev.regState === "open") return chip("info", "clock", t("regOpen", {d: F.dateTime(ev.regClose)}));
-  if (ev.regState === "upcoming") return chip("warn", "clock", t("regUpcoming", {d: F.dateTime(ev.regOpen)}));
-  return chip("", "x", t("regClosed"));
+function roleText(m){ return m.role === "lead" ? t("roleLead") : t("roleCollab"); }
+function manageToday(m){
+  const hasCount = typeof m.checkedIn === "number";
+  const prog = hasCount && m.registered > 0
+    ? h("div", {class: "home-prog"},
+        h("div", {class: "home-progtxt"}, h("span", {text: t("checkedInOf")}), h("b", {text: m.checkedIn + " / " + m.registered})),
+        h("div", {class: "home-bar", role: "progressbar", "aria-valuenow": String(m.checkedIn), "aria-valuemin": "0", "aria-valuemax": String(m.registered), "aria-label": t("checkedInOf")},
+          h("i", {style: "width:" + Math.min(100, Math.round(100 * m.checkedIn / m.registered)) + "%"})))
+    : h("div", {class: "home-meta", text: t("registeredN", {n: m.registered})});
+  return h("div", {class: "card home-card", "data-event": m.id, "data-today": "1"},
+    h("div", {class: "stack", style: "gap:2px"},
+      h("span", {class: "home-name", text: m.name}),
+      h("span", {class: "home-meta", text: [m.startTime, m.location, roleText(m)].filter(Boolean).join(" · ")})),
+    prog,
+    h("div", {class: "home-two"},
+      h("button", {type: "button", class: "btn", id: "home-scan", onclick: () => App.open("scan", m.id, "")}, App.icon("camera"), t("scanQr")),
+      h("button", {type: "button", class: "btn secondary", id: "home-manage", onclick: () => App.open("manage", m.id, ""), text: t("manageBtn")})));
 }
-function evRow(ev){
+function manageRow(m){
+  const meta = [F.date(m.date, {year: undefined}), t("registeredN", {n: m.registered}), roleText(m)].join(" · ");
+  const chips = [];
+  if (m.status === "Draft") chips.push(chip("", "clock", t("draft")));
+  if (m.budgetStatus === "Requested" && m.budgetRequested != null) chips.push(chip("warn", "clock", t("budgetWait", {b: F.money(m.budgetRequested)})));
+  return h("button", {type: "button", class: "card home-mrow", "data-event": m.id, onclick: () => App.open("manage", m.id, "")},
+    h("span", {class: "home-evbody"}, h("b", {text: m.name}), h("span", {class: "home-meta", text: meta}), ...chips), App.icon("chevron"));
+}
+function ticket(n, today){
+  const part = o => F.date(n.date, Object.assign({}, NODATE, o));
+  const left = daysBetween(today, n.date);
+  const until = left <= 0 ? t("inToday") : left === 1 ? t("inTomorrow") : t("inDays", {n: left});
+  const meta = [F.time(n), n.location].filter(Boolean).join(" · ");
+  return h("div", {class: "card home-ticket", "data-event": n.eventId},
+    h("div", {class: "home-tk-top"},
+      h("div", {class: "home-datebox", "aria-hidden": "true"}, h("span", {text: part({weekday: "short"})}), h("b", {text: part({day: "numeric"})}), h("span", {text: part({month: "short"})})),
+      h("div", {class: "home-evbody"},
+        n.checkedIn ? chip("ok", "check", t("checkedIn")) : chip("ok", "check", t("registered")),
+        h("span", {class: "home-name", text: n.name}),
+        meta ? h("span", {class: "home-meta", text: meta}) : null,
+        h("span", {class: "home-meta", text: until}))),
+    h("div", {class: "home-tk-foot"},
+      h("button", {type: "button", class: "btn", id: "home-ticketBtn", onclick: () => App.open("ticket", n.eventId, eventUrl(n.eventId))}, App.icon("card"), t("showTicket"))));
+}
+function evChip(ev, today){
+  const n = daysBetween(today, ev.regClose);
+  return n <= 3 ? chip("warn", "clock", t("closes", {when: whenWord(n)})) : chip("info", "", t("regOpen"));
+}
+function evRow(ev, today){
   const when = [F.date(ev.date, {year: undefined}), ev.startTime].filter(Boolean).join(" · ");
   const first = String(ev.name || "").trim().split(/\s+/)[0] || "";
   return h("button", {type: "button", class: "card home-ev", "data-event": ev.id, onclick: () => App.open("event", ev.id, eventUrl(ev.id))},
@@ -1737,41 +1811,11 @@ function evRow(ev){
       h("span", {class: "home-when", text: when}),
       h("span", {class: "home-name", text: ev.name}),
       ev.location ? h("span", {class: "home-meta"}, App.icon("pin"), h("span", {text: ev.location})) : null,
-      evChip(ev)));
-}
-function myEventRow(r){
-  const st = {upcoming: ["info", "clock", "stUpcoming"], ended: ["", "check", "stEnded"], cancelled: ["bad", "x", "stCancelled"]}[r.status] || ["", null, ""];
-  const when = [F.date(r.date), F.time(r)].filter(Boolean).join(" · ");
-  const body = [h("span", {class: "home-top"}, h("b", {text: r.eventName}), chip(st[0], st[1], t(st[2]))),
-    when ? h("span", {class: "home-meta", text: when}) : null,
-    r.location ? h("span", {class: "home-meta"}, App.icon("pin"), h("span", {text: r.location})) : null,
-    h("span", {class: "home-meta", text: t("refL", {ref: r.reference})})];
-  return r.status === "upcoming"
-    ? h("button", {type: "button", class: "card stack", style: "gap:4px", "data-ref": r.reference, onclick: () => App.open("event", r.eventId, eventUrl(r.eventId))}, ...body)
-    : h("div", {class: "card stack", style: "gap:4px", "data-ref": r.reference}, ...body);
-}
-function claimRow(c){
-  const cls = {Pending: ["warn", "clock"], Approved: ["info", "check"], Rejected: ["bad", "x"], Paid: ["ok", "check"]}[c.status] || ["", null];
-  const reached = {Pending: 1, Approved: 2, Paid: 3, Rejected: 1}[c.status] || 1;
-  const step = (i, key, bad) => h("span", {class: "home-s" + (bad ? " home-bad" : i <= reached ? " home-done" : "")}, h("span", {class: "home-dot"}), t(key));
-  const line = i => h("span", {class: "home-ln" + (c.status !== "Rejected" && i < reached ? " home-done" : "")});
-  const steps = c.status === "Rejected"
-    ? h("div", {class: "home-steps", "aria-hidden": "true"}, step(1, "stepSent"), line(1), step(2, "stepRejected", true))
-    : h("div", {class: "home-steps", "aria-hidden": "true"}, step(1, "stepSent"), line(1), step(2, "stepApproved"), line(2), step(3, "stepPaid"));
-  return h("div", {class: "card stack", style: "gap:4px", "data-ref": c.reference},
-    h("span", {class: "home-top"}, h("b", {text: c.eventName}), chip(cls[0], cls[1], t("c" + c.status))),
-    h("span", {class: "home-amount", text: F.money(c.total)}),
-    h("span", {class: "home-meta", text: t("itemsL", {n: c.items}) + " · " + t("sentL", {d: F.dateTime(c.submittedAt)})}),
-    h("span", {class: "home-meta", text: t("refL", {ref: c.reference})}),
-    steps,
-    c.status === "Rejected" ? h("span", {class: "home-hint", text: t("rejectedHint")}) : null);
+      evChip(ev, today)));
 }
 
-$("#home-upAll").addEventListener("click", () => { S.upTab = "all"; data.rerender(); });
-$("#home-upTodo").addEventListener("click", () => { S.upTab = "todo"; data.rerender(); });
-$("#home-stEvents").addEventListener("click", () => { S.stTab = "events"; data.rerender(); });
-$("#home-stClaims").addEventListener("click", () => { S.stTab = "claims"; data.rerender(); });
-$("#home-newClaim").addEventListener("click", () => App.link(cfg.REIMBURSE_LIFF_URL));
+$("#home-openAll").addEventListener("click", () => App.go("events"));
+$("#home-manageAll").addEventListener("click", () => App.open("manage", "", ""));
 $("#home-refresh").addEventListener("click", () => data.refresh());
 
 App.register({
@@ -1788,24 +1832,18 @@ App.demo["home.bootstrap"] = function (body, mode){
   const d = new Date(), iso = n => { const x = new Date(d); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
   const now = iso(0) + " 10:00";
   const upcoming = [
-    {id: "EV-DEMO-01", name: "Community Meetup – November", date: iso(9), startTime: "18:30", endTime: "21:00", location: "Co-working space, Ari", regOpen: iso(-3) + " 09:00", regClose: iso(7) + " 23:59", regState: "open", hasPoster: false, myReference: ""},
-    {id: "EV-DEMO-02", name: "Board Game Night", date: iso(16), startTime: "19:00", endTime: "22:00", location: "Cafe, Phrom Phong", regOpen: iso(-1) + " 09:00", regClose: iso(14) + " 23:59", regState: "open", hasPoster: false, myReference: "RG-DEMO-0012"},
-    {id: "EV-DEMO-03", name: "Year-end Gathering", date: iso(40), startTime: "17:00", endTime: "22:00", location: "Rooftop, Sukhumvit 24", regOpen: iso(10) + " 09:00", regClose: iso(37) + " 23:59", regState: "upcoming", hasPoster: false, myReference: ""}
+    {id: "EV-DEMO-01", name: "Community Meetup – November", date: iso(9), startTime: "18:30", endTime: "", location: "Co-working space, Ari", regOpen: iso(-3) + " 09:00", regClose: iso(1) + " 23:59", regState: "open", hasPoster: false, myReference: ""},
+    {id: "EV-DEMO-02", name: "Board Game Night", date: iso(13), startTime: "13:00", endTime: "", location: "Cafe, Phrom Phong", regOpen: iso(-1) + " 09:00", regClose: iso(12) + " 23:59", regState: "open", hasPoster: false, myReference: "RG-DEMO-0012"},
+    {id: "EV-DEMO-04", name: "Hualaem-X Session", date: iso(25), startTime: "13:00", endTime: "", location: "Hualaem House, Asok", regOpen: iso(-1) + " 09:00", regClose: iso(20) + " 23:59", regState: "open", hasPoster: false, myReference: ""},
+    {id: "EV-DEMO-03", name: "Year-end Gathering", date: iso(40), startTime: "17:00", endTime: "", location: "Rooftop, Sukhumvit 24", regOpen: iso(10) + " 09:00", regClose: iso(37) + " 23:59", regState: "upcoming", hasPoster: false, myReference: ""}
   ];
-  const myEvents = [
-    {reference: "RG-DEMO-0012", eventId: "EV-DEMO-02", eventName: "Board Game Night", date: iso(16), startTime: "19:00", endTime: "22:00", location: "Cafe, Phrom Phong", registeredAt: iso(-1) + " 12:10", status: "upcoming"},
-    {reference: "RG-DEMO-0007", eventId: "EV-DEMO-00", eventName: "Community Meetup – October", date: iso(-20), startTime: "18:30", endTime: "21:00", location: "Co-working space, Ari", registeredAt: iso(-30) + " 20:15", status: "ended"},
-    {reference: "RG-DEMO-0003", eventId: "EV-DEMO-99", eventName: "Picnic in the Park", date: iso(-45), startTime: "09:00", endTime: "12:00", location: "Benjakitti Park", registeredAt: iso(-50) + " 08:00", status: "cancelled"}
-  ];
-  const myClaims = [
-    {reference: "RC-DEMO-0021", status: "Pending", eventName: "Community Meetup – November", total: 1850, items: 3, submittedAt: iso(-1) + " 21:40", decidedAt: ""},
-    {reference: "RC-DEMO-0015", status: "Approved", eventName: "Community Meetup – October", total: 4200.5, items: 5, submittedAt: iso(-18) + " 09:12", decidedAt: iso(-15) + " 10:00"},
-    {reference: "RC-DEMO-0009", status: "Paid", eventName: "Picnic in the Park", total: 960, items: 2, submittedAt: iso(-44) + " 13:05", decidedAt: iso(-40) + " 16:30"},
-    {reference: "RC-DEMO-0004", status: "Rejected", eventName: "Picnic in the Park", total: 320, items: 1, submittedAt: iso(-44) + " 13:20", decidedAt: iso(-40) + " 16:31"}
-  ];
-  if (mode === "new") return {ok: true, now, role: "participant", firstName: "มานี", needsConsent: true, upcoming: upcoming.map(e => Object.assign({}, e, {myReference: ""})), myEvents: [], canClaim: false, myClaims: []};
-  const org = mode === "organizer";
-  return {ok: true, now, role: org ? "organizer" : "participant", firstName: "สมชาย", needsConsent: false, upcoming, myEvents, canClaim: org, myClaims: org ? myClaims : []};
+  const next = {eventId: "EV-DEMO-02", name: "Board Game Night", date: iso(13), startTime: "13:00", endTime: "", location: "Cafe, Phrom Phong", reference: "RG-DEMO-0012", checkedIn: false};
+  const base = {ok: true, now, firstName: "สมชาย", needsConsent: false, needsProfile: false, next, upcoming, manage: [], canClaim: false, canCreate: false, approvals: {pending: 0, budgets: 0}, rejectedRecent: 0};
+  if (mode === "new") return Object.assign(base, {role: "participant", firstName: "มานี", needsConsent: true, needsProfile: true, next: null, upcoming: upcoming.map(e => Object.assign({}, e, {myReference: ""}))});
+  if (mode === "organizer") return Object.assign(base, {role: "approver", canClaim: true, canCreate: true, approvals: {pending: 2, budgets: 1}, rejectedRecent: 1, needsProfile: true, manage: [
+    {id: "EV-DEMO-05", name: "Board Game Night", date: iso(0), startTime: "13:00", location: "Hualaem House, Asok", role: "lead", status: "Approved", isToday: true, registered: 32, checkedIn: 18, budgetStatus: "", budgetRequested: null},
+    {id: "EV-DEMO-04", name: "Hualaem-X Session", date: iso(25), startTime: "13:00", location: "Hualaem House, Asok", role: "collaborator", status: "Approved", isToday: false, registered: 41, checkedIn: null, budgetStatus: "Requested", budgetRequested: 3500}]});
+  return base;
 };
 });
 
